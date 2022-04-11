@@ -13,8 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -46,7 +45,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void  deleteById(Long teacherId) {
+    public void deleteById(Long teacherId) {
         boolean teacherId1 = teacherRepository.existsById(teacherId);
 
         if (!teacherId1) {
@@ -60,7 +59,45 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherResponse updateTeacher(Long id, TeacherRequest teacherRequest) {
-        return null;
+        Teacher teacher = findById(id);
+
+        if (!teacher.getTeacherName().equals(teacherRequest.getTeacherName())) {
+            teacher.setTeacherName(teacherRequest.getTeacherName());
+        }
+
+        if (!teacher.getLastName().equals(teacherRequest.getTeacherName())) {
+            teacher.setLastName(teacherRequest.getLastName());
+        }
+
+        if (!teacher.getPhoneNumber().equals(teacherRequest.getTeacherName())) {
+            teacher.setPhoneNumber(teacherRequest.getPhoneNumber());
+        }
+
+        if (!teacher.getSpecialization().equals(teacherRequest.getSpecialization())) {
+            teacher.setSpecialization(teacherRequest.getSpecialization());
+        }
+
+        if (!teacher.getUser().getEmail().equals(teacherRequest.getEmail())) {
+            teacher.getUser().setEmail(teacherRequest.getEmail());
+        }
+
+        if (!passwordEncoder.matches(teacher.getUser().getPassword(), teacherRequest.getPassword()))
+            teacher.getUser().setPassword(passwordEncoder.encode(teacherRequest.getPassword()));
+
+        return teacherMapper.deConvert(teacher);
+
+    }
+
+    @Override
+    public Teacher findById(Long id) {
+        return teacherRepository.findById(id).
+                orElseThrow(() -> new NotFoundException(String.format("teacher with id %s does not exists", id)));
+
+    }
+
+    @Override
+    public List<Teacher> findAll() {
+        return teacherRepository.findAll();
     }
 
 
