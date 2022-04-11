@@ -9,7 +9,7 @@ public class PeaksoftlmsBB4Application {
     public static void main(String[] args) {
         SpringApplication.run(PeaksoftlmsBB4Application.class, args);
         System.out.println("Welcome colleagues, project name is Peaksoftlms-B");
-        System.out.println("mimoza");
+        System.out.println("Welcome");
 
     }
 
