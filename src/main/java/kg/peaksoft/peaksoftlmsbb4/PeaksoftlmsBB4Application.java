@@ -10,6 +10,7 @@ public class PeaksoftlmsBB4Application {
         SpringApplication.run(PeaksoftlmsBB4Application.class, args);
         System.out.println("Welcome colleagues, project name is Peaksoftlms-B");
         System.out.println("Welcome");
+        System.out.println("Welcome");
 
     }
 
