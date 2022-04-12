@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.dto1;
+package kg.peaksoft.peaksoftlmsbb4.dto;
 
 import lombok.Builder;
 import lombok.Getter;

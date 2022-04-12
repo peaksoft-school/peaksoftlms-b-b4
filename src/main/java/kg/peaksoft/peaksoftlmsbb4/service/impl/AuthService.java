@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto1.AuthRequestDto;
-import kg.peaksoft.peaksoftlmsbb4.dto1.AuthResponseDto;
+import kg.peaksoft.peaksoftlmsbb4.dto.AuthRequestDto;
+import kg.peaksoft.peaksoftlmsbb4.dto.AuthResponseDto;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

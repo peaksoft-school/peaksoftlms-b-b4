@@ -1,17 +1,20 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
-public class User {
+public class User implements UserDetails {
 
     @Id
     @SequenceGenerator(
@@ -26,7 +29,23 @@ public class User {
     private Long id;
     private String email;
     private String password;
+    private boolean isAccountNonExpired;
+    private boolean isEnabled;
+    private boolean isCredentialsNonExpired;
+    private boolean isAccountNonLocked;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(role);
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 
 }
