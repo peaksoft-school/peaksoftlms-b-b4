@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
+import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,10 +30,10 @@ public class User implements UserDetails {
     private Long id;
     private String email;
     private String password;
-    private boolean isAccountNonExpired;
-    private boolean isEnabled;
-    private boolean isCredentialsNonExpired;
-    private boolean isAccountNonLocked;
+    private boolean isAccountNonExpired = true;
+    private boolean isAccountNonLocked = true;
+    private boolean isCredentialsNonExpired = true;
+    private boolean isEnabled = true;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -45,7 +46,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return getEmail();
     }
 
 }

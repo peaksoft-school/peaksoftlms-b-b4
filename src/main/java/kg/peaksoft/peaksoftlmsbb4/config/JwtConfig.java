@@ -15,10 +15,6 @@ public class JwtConfig {
     private String tokenPrefix;
     private Long expirationDateAfterDays;
 
-    public void setTokenExpirationAfterDays(Long tokenExpirationAfterDays) {
-        this.expirationDateAfterDays = tokenExpirationAfterDays * 8600000;
-    }
-
     public String getAuthorizationHeader() {
         return HttpHeaders.AUTHORIZATION;
     }

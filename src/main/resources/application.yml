@@ -7,7 +7,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 
 server:
@@ -18,7 +18,7 @@ server:
 
 application:
   jwt:
-    secretKey: java4
+    secretKey: rahim123
     tokenPrefix: Bearer
     expirationDateAfterDays: 30
 

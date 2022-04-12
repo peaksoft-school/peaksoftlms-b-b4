@@ -5,4 +5,5 @@ import kg.peaksoft.peaksoftlmsbb4.dto.AdminResponse;
 
 public interface AdminService {
     AdminResponse saveAdmin(AdminRequest adminRequest);
+    void deleteById(Long id);
 }

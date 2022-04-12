@@ -20,6 +20,7 @@ public class AdminServiceImpl  implements AdminService {
 
     @Override
     public AdminResponse saveAdmin(AdminRequest adminRequest) {
+
         String email = adminRequest.getEmail();
         boolean exists = adminRepository.existsByUser_Email(email);
         if (exists) {
@@ -32,5 +33,10 @@ public class AdminServiceImpl  implements AdminService {
         Admin admin= adminMapper.convert(adminRequest);
         Admin save = adminRepository.save(admin);
         return adminMapper.deConvert(save);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        adminRepository.deleteById(id);
     }
 }

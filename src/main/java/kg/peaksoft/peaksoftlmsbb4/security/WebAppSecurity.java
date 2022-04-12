@@ -4,7 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.config.JwtConfig;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtUtils;
-import kg.peaksoft.peaksoftlmsbb4.repository.AdminRepository;
+import kg.peaksoft.peaksoftlmsbb4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,25 +14,22 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(
         prePostEnabled = true,
-        securedEnabled = true
-)
+        securedEnabled = true,
+        proxyTargetClass = true)
 @AllArgsConstructor
 public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
-    private final AdminRepository authInfoRepository;
+    private final UserRepository userRepository;
     private final JwtConfig jwtConfig;
     private final JwtUtils jwtUtils;
 
@@ -50,10 +47,8 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService getUserDetailsService() {
-        return (email) -> (UserDetails) authInfoRepository.findByUserEmail(email)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("not found exception=%s", email)
-                ));
+        return (email) -> userRepository.findByEmail(email)
+                .orElseThrow(NotFoundException::new);
     }
 
     @Override

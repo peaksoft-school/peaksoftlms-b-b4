@@ -1,9 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4;
 
+import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@AllArgsConstructor
 public class PeaksoftlmsBB4Application {
 
     public static void main(String[] args) {
