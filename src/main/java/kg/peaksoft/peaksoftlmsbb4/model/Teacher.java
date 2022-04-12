@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,12 +10,19 @@ import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name = "teachers")
-@Getter
-@Setter
+@Data
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "teacher_sequence",
+            sequenceName = "teacher_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "teacher_sequence"
+    )
     private Long id;
 
     private String teacherName;

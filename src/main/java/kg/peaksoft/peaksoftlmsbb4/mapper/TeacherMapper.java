@@ -6,6 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.dto.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -36,6 +37,8 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
         teacherResponse.setLastName(teacher.getLastName());
         teacherResponse.setPhoneNumber(teacher.getPhoneNumber());
         teacherResponse.setSpecialization(teacher.getSpecialization());
+        teacherResponse.setEmail(teacher.getUser().getEmail());
+        teacherResponse.setPassword(teacher.getUser().getPassword());
         return teacherResponse;
 
     }

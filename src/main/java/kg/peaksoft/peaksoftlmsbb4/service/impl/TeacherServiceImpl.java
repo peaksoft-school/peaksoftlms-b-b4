@@ -8,21 +8,20 @@ import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.repository.TeacherRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.TeacherService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
 
     private final TeacherRepository teacherRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final ModelMapper modelMapper;
     private final TeacherMapper teacherMapper;
+
 
     @Override
     public TeacherResponse register(TeacherRequest request) {
@@ -31,13 +30,11 @@ public class TeacherServiceImpl implements TeacherService {
             throw new BadRequestException(String.format("teacher with email = %s already in use  ", email));
 
         }
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
 
         Teacher teacher1 = teacherMapper.convert(request);
 
         Teacher teacher = teacherRepository.save(teacher1);
-
-        request.setPassword(encodedPassword);
+        log.info("successful save teacher:{}", teacher);
 
         return teacherMapper.deConvert(teacher);
 
@@ -55,6 +52,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         }
         teacherRepository.deleteById(teacherId);
+        log.info("successful delete by id:{}",teacherId);
     }
 
     @Override
@@ -81,8 +79,8 @@ public class TeacherServiceImpl implements TeacherService {
             teacher.getUser().setEmail(teacherRequest.getEmail());
         }
 
-        if (!passwordEncoder.matches(teacher.getUser().getPassword(), teacherRequest.getPassword()))
-            teacher.getUser().setPassword(passwordEncoder.encode(teacherRequest.getPassword()));
+        if (!teacher.getUser().getPassword().equals(teacherRequest.getPassword()))
+            teacher.getUser().setPassword(teacherRequest.getPassword());
 
         return teacherMapper.deConvert(teacher);
 

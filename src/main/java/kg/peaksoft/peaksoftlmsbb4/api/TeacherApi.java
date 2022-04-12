@@ -1,12 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
-import io.jsonwebtoken.impl.crypto.MacProvider;
 import kg.peaksoft.peaksoftlmsbb4.dto.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.service.TeacherService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
