@@ -18,7 +18,7 @@ public class AuthApi {
     private final AuthService authService;
 
     @PermitAll
-    @PostMapping("/token")
+    @PostMapping("/login")
     private AuthResponseDto authentication(@RequestBody AuthRequestDto authRequestDto) {
         return authService.authenticate(authRequestDto);
     }

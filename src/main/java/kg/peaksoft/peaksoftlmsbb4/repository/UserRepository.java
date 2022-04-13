@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.repository;
 
-import kg.peaksoft.peaksoftlmsbb4.model.Admin;
 import kg.peaksoft.peaksoftlmsbb4.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
