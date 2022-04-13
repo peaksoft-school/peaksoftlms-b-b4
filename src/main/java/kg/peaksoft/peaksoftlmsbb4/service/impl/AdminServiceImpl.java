@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class AdminServiceImpl  implements AdminService {
     private final AdminRepository adminRepository;
     private final AdminMapper adminMapper;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public AdminResponse saveAdmin(AdminRequest adminRequest) {
@@ -28,8 +27,6 @@ public class AdminServiceImpl  implements AdminService {
                     String.format("admin with email = %s has already exists", email)
             );
         }
-        String encoderPassword = passwordEncoder.encode(adminRequest.getPassword());
-        adminRequest.setPassword(encoderPassword);
         Admin admin= adminMapper.convert(adminRequest);
         Admin save = adminRepository.save(admin);
         return adminMapper.deConvert(save);
