@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+
 @Entity
 @Table(name = "student")
 @Getter
@@ -28,5 +29,5 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;
     @OneToOne(cascade = CascadeType.ALL)
-private User user;
+    private User user;
 }

@@ -1,7 +1,13 @@
 package kg.peaksoft.peaksoftlmsbb4.enums;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
     ADMIN,
     TEACHER,
-    STUDENT
+    STUDENT;
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }
