@@ -35,8 +35,8 @@ public class Teacher {
     private String specialization;
 
     @OneToOne(cascade = {MERGE, REFRESH,PERSIST}, orphanRemoval = true,
-            fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+            fetch = FetchType.EAGER)
+    @JoinColumn(name = "auth_info_id")
     private User user;
 
 }

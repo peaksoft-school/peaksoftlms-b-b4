@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.mapper;
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.model.User;
 import org.springframework.stereotype.Component;
@@ -16,10 +17,8 @@ public class StudentMapper implements Converter<Student, StudentRequest, Student
         student.setLastName(studentRequest.getLastName());
         student.setPhoneNumber(studentRequest.getPhoneNumber());
         student.setStudyFormat(studentRequest.getStudyFormat());
-
-        User user=new User();
-        user.setEmail(studentRequest.getEmail());
-        user.setPassword(studentRequest.getPassword());
+        student.setEmail(studentRequest.getEmail());
+        student.setRole(Role.STUDENT);
         return student;
     }
 
@@ -27,12 +26,14 @@ public class StudentMapper implements Converter<Student, StudentRequest, Student
     public StudentResponse deConvert(Student student) {
 
         StudentResponse studentResponse=new StudentResponse();
+        studentResponse.setId(String.valueOf(student.getId()));
         studentResponse.setStudentName(student.getStudentName());
         studentResponse.setLastName(student.getLastName());
+        studentResponse.setEmail(student.getEmail());
+        studentResponse.setRole(student.getRole());
         studentResponse.setPhoneNumber(student.getPhoneNumber());
         studentResponse.setStudyFormat(student.getStudyFormat());
-        studentResponse.setEmail(student.getUser().getEmail());
-        studentResponse.setPassword(student.getUser().getPassword());
+
         return studentResponse;
     }
 }

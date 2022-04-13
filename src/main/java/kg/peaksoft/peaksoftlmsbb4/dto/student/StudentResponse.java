@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.dto.student;
 
+import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,6 @@ public class StudentResponse {
     private String phoneNumber;
     private String lastName;
     private String email;
-    private String password;
+    private Role role;
 
 }

@@ -77,7 +77,7 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher findById(Long id) {
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("client with id = %s does not exists", id)
+                        String.format("teacher with id = %s does not exists", id)
                 ));
     }
 
