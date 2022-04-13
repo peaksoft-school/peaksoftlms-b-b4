@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.StudentRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.model.User;
 import org.springframework.stereotype.Component;

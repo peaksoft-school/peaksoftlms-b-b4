@@ -1,5 +1,6 @@
-package kg.peaksoft.peaksoftlmsbb4.dto;
+package kg.peaksoft.peaksoftlmsbb4.dto.teacher;
 
+import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,4 +21,6 @@ public class TeacherResponse {
     private String email;
 
     private String password;
+
+    private Role role;
 }

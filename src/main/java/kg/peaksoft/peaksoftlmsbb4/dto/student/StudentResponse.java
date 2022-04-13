@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.dto;
+package kg.peaksoft.peaksoftlmsbb4.dto.student;
 
 import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
 import lombok.Getter;

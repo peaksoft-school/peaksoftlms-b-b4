@@ -5,7 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.PERSIST;
 
 @Entity
 @Table(name = "teachers")
@@ -33,7 +34,9 @@ public class Teacher {
 
     private String specialization;
 
-    @OneToOne(cascade = ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = {MERGE, REFRESH,PERSIST}, orphanRemoval = true,
+            fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
 }
