@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.dto;
 
+import kg.peaksoft.peaksoftlmsbb4.annotations.password.ValidPassword;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +23,7 @@ public class AdminRequest {
     @Size(min = 2, max = 20, message = "last name should be between 2 and 20 characters")
     private String email;
 
-    @NotBlank
+    @ValidPassword
     private String password;
 
 }

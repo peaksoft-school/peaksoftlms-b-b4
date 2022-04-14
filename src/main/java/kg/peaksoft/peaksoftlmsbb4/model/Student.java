@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
+import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,9 +26,10 @@ public class Student {
     private Long id;
     private String studentName;
     private String lastName;
+    private String email;
+    private Role role;
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;
-    @OneToOne(cascade = CascadeType.ALL)
-    private User user;
+
 }

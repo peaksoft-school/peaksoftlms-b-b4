@@ -8,6 +8,7 @@ import kg.peaksoft.peaksoftlmsbb4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -24,8 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableGlobalMethodSecurity(
         prePostEnabled = true,
-        securedEnabled = true,
-        proxyTargetClass = true)
+        securedEnabled = true)
 @AllArgsConstructor
 public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
@@ -48,7 +48,9 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService getUserDetailsService() {
         return (email) -> userRepository.findByEmail(email)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("not found =%s", email)
+                ));
     }
 
     @Override

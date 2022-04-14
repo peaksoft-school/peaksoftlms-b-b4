@@ -21,7 +21,7 @@ public class AdminMapper implements Converter<Admin, AdminRequest, AdminResponse
         admin.setLastName(request.getLastName());
         User user = new User();
         user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setPassword(request.getPassword());
         user.setRole(Role.ADMIN);
         admin.setUser(user);
         return admin;

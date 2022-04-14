@@ -14,24 +14,11 @@ import javax.annotation.PostConstruct;
 @SpringBootApplication
 @AllArgsConstructor
 public class PeaksoftlmsBB4Application {
-     private final AdminRepository adminRepository;
-     private final PasswordEncoder passwordEncoder;
+
     public static void main(String[] args) {
         SpringApplication.run(PeaksoftlmsBB4Application.class, args);
         System.out.println("Welcome colleagues, project name is Peaksoftlms-B");
 
-    }
-    @PostConstruct
-    private void init(){
-        Admin admin=new Admin();
-        admin.setFirstName("Rahim");
-        admin.setLastName("Kurbanov");
-        User user =new User();
-        user.setRole(Role.ADMIN);
-        user.setEmail("kurbanov@gmail.com");
-        user.setPassword(passwordEncoder.encode("123123"));
-        admin.setUser(user);
-        adminRepository.save(admin);
     }
 
 }
