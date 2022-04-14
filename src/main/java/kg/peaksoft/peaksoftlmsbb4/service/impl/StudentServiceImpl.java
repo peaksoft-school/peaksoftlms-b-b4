@@ -8,6 +8,7 @@ import kg.peaksoft.peaksoftlmsbb4.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.StudentService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
@@ -27,7 +29,9 @@ public class StudentServiceImpl implements StudentService {
 
         Student student1 = studentRepository.save(student);
 
+        log.info("save ok");
         return studentMapper.deConvert(student1);
+
     }
     @Override
     public StudentResponse updateStudent(Long id, StudentRequest studentRequest) {
@@ -47,6 +51,7 @@ public class StudentServiceImpl implements StudentService {
         if (!student.getEmail().equals(studentRequest.getEmail())) {
             student.setEmail(studentRequest.getEmail());
         }
+        log.info("update ok");
         return studentMapper.deConvert(student);
     }
 
@@ -54,6 +59,7 @@ public class StudentServiceImpl implements StudentService {
     public Student findById(Long id) {
         return studentRepository.findById(id).orElseThrow(()->new NotFoundException
                 (String.format("student with id = %s does not exists ",id)));
+
     }
 
     @Override
@@ -64,12 +70,13 @@ public class StudentServiceImpl implements StudentService {
         if(!exists){
             throw new BadRequestException(String.format("student with id = %s does not exists",id));
         }
+        log.info("delete ok");
         studentRepository.deleteById(id);
     }
 
-
     @Override
     public List<StudentResponse> findAllStudent() {
+        log.info("findAll ok");
         return studentRepository.findAll()
                 .stream()
                 .map(studentMapper::deConvert)

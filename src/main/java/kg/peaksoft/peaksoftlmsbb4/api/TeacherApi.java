@@ -24,8 +24,8 @@ public class TeacherApi {
     }
 
     @PostMapping("/saveTeacher")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public TeacherResponse saveTeacher(@RequestBody @Valid TeacherRequest teacherRequest){
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    public TeacherResponse saveTeacher(@Valid @RequestBody TeacherRequest teacherRequest){
         return teacherService.saveTeacher(teacherRequest);
     }
 

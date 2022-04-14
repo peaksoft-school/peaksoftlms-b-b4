@@ -17,7 +17,7 @@ import javax.annotation.security.PermitAll;
 public class AuthApi {
     private final AuthService authService;
 
-    @PostMapping
+    @PostMapping("/login")
     @PermitAll
     private AuthResponseDto authentication(@RequestBody AuthRequestDto authRequestDto) {
         return authService.authenticate(authRequestDto);

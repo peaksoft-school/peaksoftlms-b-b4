@@ -10,6 +10,7 @@ import kg.peaksoft.peaksoftlmsbb4.repository.TeacherRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.TeacherService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 @Transactional
 public class TeacherServiceImpl implements TeacherService {
@@ -24,7 +26,6 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
     private final PasswordEncoder passwordEncoder;
     private final TeacherMapper teacherMapper;
-    private final UserRepository userRepository;
 
     @Override
     public TeacherResponse saveTeacher(TeacherRequest teacherRequest) {
@@ -43,6 +44,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         Teacher teacher1 = teacherRepository.save(teacher);
 
+        log.info("save ok");
         return teacherMapper.deConvert(teacher1);
 
     }
@@ -69,6 +71,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (!passwordEncoder.matches(teacherRequest.getPassword(), teacher.getUser().getPassword())) {
             teacher.getUser().setPassword(passwordEncoder.encode(teacherRequest.getPassword()));
         }
+        log.info("update ok");
         return teacherMapper.deConvert(teacher);
 
     }
@@ -88,11 +91,13 @@ public class TeacherServiceImpl implements TeacherService {
         if(!exists){
             throw new BadRequestException(String.format("teacher with id = %s does not exists",id));
         }
+        log.info("delete ok");
         teacherRepository.deleteById(id);
     }
 
     @Override
     public List<TeacherResponse> findAllTeacher() {
+        log.info("findAll ok");
         return teacherRepository.findAll()
                 .stream()
                 .map(teacherMapper::deConvert)

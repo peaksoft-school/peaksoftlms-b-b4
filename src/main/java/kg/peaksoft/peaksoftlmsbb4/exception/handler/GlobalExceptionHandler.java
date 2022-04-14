@@ -23,7 +23,6 @@ public class GlobalExceptionHandler {
         return exceptionResponse;
     }
 
-
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ExceptionResponse handleAnyExceptions(Exception e) {
@@ -33,7 +32,6 @@ public class GlobalExceptionHandler {
         exceptionResponse.setMessage(e.getMessage());
         return exceptionResponse;
     }
-
 
     @ExceptionHandler(BadCredentialsException.class)
     public ExceptionResponse handleBadCredentialsException(BadCredentialsException badCredentialsException) {

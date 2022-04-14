@@ -28,11 +28,12 @@ public class TeacherRequest {
     @NotBlank(message = "specialization must have a value")
     private String specialization;
 
-    @Email(message = "email must follow the formatter :***@**")
+    @Email
     @NotEmpty(message = "email must have a value")
     private String email;
 
     @ValidPassword
+    @NotBlank
     private String password;
 
 

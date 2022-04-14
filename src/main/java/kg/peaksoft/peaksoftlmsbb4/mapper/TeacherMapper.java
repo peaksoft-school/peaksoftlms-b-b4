@@ -4,19 +4,14 @@ import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.enums.Role;
-import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.model.User;
-import kg.peaksoft.peaksoftlmsbb4.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
 public class TeacherMapper implements Converter<Teacher, TeacherRequest, TeacherResponse> {
-    private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
 
     @Override
     public Teacher convert(TeacherRequest request) {
@@ -27,11 +22,8 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
         teacher.setSpecialization(request.getSpecialization());
         User user = new User();
         user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.TEACHER);
-
-
-
+        user.setPassword(request.getPassword());
+        user.setRole(Role.ADMIN);
         teacher.setUser(user);
 
         return teacher;

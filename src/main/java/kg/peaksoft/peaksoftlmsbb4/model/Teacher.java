@@ -6,7 +6,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 import static javax.persistence.CascadeType.*;
-import static javax.persistence.CascadeType.PERSIST;
 
 @Entity
 @Table(name = "teachers")
@@ -34,9 +33,8 @@ public class Teacher {
 
     private String specialization;
 
-    @OneToOne(cascade = {MERGE, REFRESH,PERSIST}, orphanRemoval = true,
+    @OneToOne(cascade = {MERGE, REFRESH, PERSIST}, orphanRemoval = true,
             fetch = FetchType.EAGER)
-    @JoinColumn(name = "auth_info_id")
     private User user;
 
 }
