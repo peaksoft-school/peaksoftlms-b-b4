@@ -7,7 +7,6 @@ import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.TeacherMapper;
 import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.repository.TeacherRepository;
-import kg.peaksoft.peaksoftlmsbb4.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.TeacherService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,8 +52,8 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherResponse updateTeacher(Long id, TeacherRequest teacherRequest) {
         Teacher teacher = findById(id);
 
-        if (!teacher.getTeacherName().equals(teacherRequest.getTeacherName())) {
-            teacher.setTeacherName(teacherRequest.getTeacherName());
+        if (!teacher.getName().equals(teacherRequest.getTeacherName())) {
+            teacher.setName(teacherRequest.getTeacherName());
         }
         if (!teacher.getLastName().equals(teacherRequest.getLastName())) {
             teacher.setLastName(teacherRequest.getLastName());

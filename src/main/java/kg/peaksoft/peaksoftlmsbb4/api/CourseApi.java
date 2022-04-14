@@ -41,5 +41,6 @@ public class CourseApi {
     @DeleteMapping("/{id}")
     public void deleteCourse(@PathVariable Long id) {
         courseService.delete(id);
+
     }
 }

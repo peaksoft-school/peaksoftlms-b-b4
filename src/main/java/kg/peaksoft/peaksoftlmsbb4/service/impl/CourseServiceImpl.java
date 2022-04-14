@@ -6,6 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
+import kg.peaksoft.peaksoftlmsbb4.repository.TeacherRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
+    private final TeacherRepository teacherRepository;
 
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
@@ -56,5 +58,6 @@ public class CourseServiceImpl implements CourseService {
         }
         courseRepository.deleteById(id);
     }
-}
 
+
+}

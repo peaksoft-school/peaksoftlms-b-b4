@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
@@ -31,5 +32,8 @@ public class Student {
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.MERGE},mappedBy = "students",fetch = FetchType.LAZY)
+
+    private List<Course> courses;
 
 }

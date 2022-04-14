@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,12 +29,27 @@ public class Course {
     private String image;
     private String description;
     private LocalDate dateOfStart;
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REMOVE})
-    private Teacher teacher;
+
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinTable(name = "course_teacher",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
+    private List<Teacher> teachers;
+
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "course_student",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Student> students;
+
+    public void add(Teacher teacher){
+        if(teachers == null){
+            teachers = new ArrayList<>();
+        }
+        teachers.add(teacher);
+    }
 
 }
 
