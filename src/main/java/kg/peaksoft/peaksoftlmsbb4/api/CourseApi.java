@@ -12,7 +12,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("course/api")
+@RequestMapping("/api/courses")
+@CrossOrigin
 public class CourseApi {
     private final CourseService courseService;
 
@@ -27,7 +28,7 @@ public class CourseApi {
         return courseService.findById(id);
     }
 
-    @GetMapping("/findAll")
+    @GetMapping
     public List<CourseResponse> findAllCourse() {
         return courseService.findAll();
     }
