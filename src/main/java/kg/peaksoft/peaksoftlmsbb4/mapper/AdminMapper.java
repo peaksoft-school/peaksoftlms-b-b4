@@ -22,7 +22,7 @@ public class AdminMapper implements Converter<Admin, AdminRequest, AdminResponse
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.ADMIN);
+        user.setRole(Role.ROLE_ADMIN);
         admin.setUser(user);
         return admin;
     }

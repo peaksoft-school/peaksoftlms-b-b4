@@ -1,0 +1,31 @@
+package kg.peaksoft.peaksoftlmsbb4.mapper.group;
+
+import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.dto.group.GroupRequest;
+import kg.peaksoft.peaksoftlmsbb4.dto.group.GroupResponse;
+import kg.peaksoft.peaksoftlmsbb4.model.Group;
+import org.springframework.stereotype.Component;
+
+@Component
+public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse> {
+    @Override
+    public Group convert(GroupRequest groupRequest) {
+        Group group = new Group();
+        group.setGroupName(groupRequest.getGroupName());
+        group.setDescription(groupRequest.getDescription());
+        group.setImagine(groupRequest.getImagine());
+        group.setDateOfStart(groupRequest.getDateOfStart());
+        return group;
+    }
+
+    @Override
+    public GroupResponse deConvert(Group group) {
+        GroupResponse groupResponse = new GroupResponse();
+        groupResponse.setId(group.getId());
+        groupResponse.setGroupName(group.getGroupName());
+        groupResponse.setDescription(group.getDescription());
+        groupResponse.setDateOfStart(group.getDateOfStart());
+        groupResponse.setImage(group.getImagine());
+        return groupResponse;
+    }
+}

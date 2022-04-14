@@ -27,7 +27,7 @@ public class PeaksoftlmsBB4Application {
         admin.setFirstName("Rahim");
         admin.setLastName("Kurbanov");
         User user =new User();
-        user.setRole(Role.ADMIN);
+        user.setRole(Role.ROLE_ADMIN);
         user.setEmail("kurbanov@gmail.com");
         user.setPassword(passwordEncoder.encode("123123"));
         admin.setUser(user);

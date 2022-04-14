@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.mapper;
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.dto.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.model.User;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ public class StudentMapper implements Converter<Student, StudentRequest, Student
         User user=new User();
         user.setEmail(studentRequest.getEmail());
         user.setPassword(studentRequest.getPassword());
+        user.setRole(Role.STUDENT);
         return student;
     }
 

@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.security;
 
 import kg.peaksoft.peaksoftlmsbb4.config.JwtConfig;
+import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtUtils;
@@ -22,10 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableGlobalMethodSecurity(
-        prePostEnabled = true,
-        securedEnabled = true,
-        proxyTargetClass = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @AllArgsConstructor
 public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
@@ -56,7 +54,8 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/swagger-ui.html").permitAll()
+               .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/api/group/**").hasAuthority(Role.ROLE_ADMIN.name())
                 .anyRequest()
                 .permitAll();
 
@@ -67,7 +66,6 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
                         getUserDetailsService()),
                 UsernamePasswordAuthenticationFilter.class
         );
-
     }
 
     @Bean
