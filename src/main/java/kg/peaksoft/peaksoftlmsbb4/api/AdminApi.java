@@ -22,5 +22,4 @@ public class AdminApi {
     public AdminResponse save(@Valid @RequestBody AdminRequest adminRequest) {
         return adminService.register(adminRequest);
     }
-
 }
