@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +9,7 @@ import static javax.persistence.CascadeType.*;
 import static javax.persistence.CascadeType.PERSIST;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "admins")
 @Getter
 @Setter
 public class Admin {
