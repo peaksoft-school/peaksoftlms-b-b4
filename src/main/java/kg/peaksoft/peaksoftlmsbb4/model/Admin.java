@@ -8,7 +8,7 @@ import javax.persistence.*;
 import static javax.persistence.CascadeType.*;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "admins")
 @Getter
 @Setter
 public class Admin {
