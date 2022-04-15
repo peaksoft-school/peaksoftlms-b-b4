@@ -1,5 +1,4 @@
-create table student
-(
+create table student(
     id bigint not null
         constraint student_pkey
             primary key,
@@ -7,12 +6,12 @@ create table student
     phone_number varchar(255),
     student_name varchar(255),
     study_format varchar(255),
-
-
+    user_id      bigint
+        constraint fkk0thg920a3xk3v59yjbsatw1l
+            references users
 );
 
-create table teachers
-(
+create table teachers(
     id bigint not null
         constraint teachers_pkey
             primary key,
@@ -20,12 +19,12 @@ create table teachers
     phone_number   varchar(255),
     specialization varchar(255),
     teacher_name   varchar(255),
-
-
+    user_id        bigint
+        constraint fkb8dct7w2j1vl1r2bpstw5isc0
+            references users
 );
 
-create table users
-(
+create table users(
     id                         bigint  not null
         constraint users_pkey
             primary key,
@@ -39,8 +38,7 @@ create table users
 );
 
 
-create table groups
-(
+create table groups(
     id            bigint not null
         constraint groups_pkey
             primary key,
@@ -50,12 +48,19 @@ create table groups
     imagine       varchar(255)
 );
 
-create table admin
-(
+create table admin(
     id         bigint not null
         constraint admin_pkey
             primary key,
     first_name varchar(255),
     last_name  varchar(255),
-
+    user_id    bigint
+        constraint fkq7pdkck9je126wpd9ijw3uwml
+            references users
 );
+
+
+
+
+
+
