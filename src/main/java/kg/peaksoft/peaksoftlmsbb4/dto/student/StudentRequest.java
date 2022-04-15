@@ -36,5 +36,8 @@ public class StudentRequest {
     @NotEmpty(message = "email must have a value")
     private String email;
 
+    private String groupName;
+
+
 
 }

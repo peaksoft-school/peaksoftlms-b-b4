@@ -1,14 +1,12 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "groups")
@@ -30,4 +28,8 @@ public class Group {
     private String description;
     private String imagine;
     private LocalDate dateOfStart;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Student> students = new ArrayList<>();
+
 }

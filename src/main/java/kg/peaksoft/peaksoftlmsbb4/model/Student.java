@@ -32,4 +32,8 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;
 
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
+
 }
