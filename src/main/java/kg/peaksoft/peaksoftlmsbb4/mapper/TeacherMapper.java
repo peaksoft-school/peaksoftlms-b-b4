@@ -16,7 +16,7 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
     @Override
     public Teacher convert(TeacherRequest request) {
         Teacher teacher = new Teacher();
-        teacher.setTeacherName(request.getTeacherName());
+        teacher.setName(request.getTeacherName());
         teacher.setLastName(request.getLastName());
         teacher.setPhoneNumber(request.getPhoneNumber());
         teacher.setSpecialization(request.getSpecialization());
@@ -34,7 +34,7 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
     public TeacherResponse deConvert(Teacher teacher) {
         TeacherResponse teacherResponse = new TeacherResponse();
         teacherResponse.setId(teacher.getId());
-        teacherResponse.setTeacherName(teacher.getTeacherName());
+        teacherResponse.setTeacherName(teacher.getName());
         teacherResponse.setLastName(teacher.getLastName());
         teacherResponse.setPhoneNumber(teacher.getPhoneNumber());
         teacherResponse.setSpecialization(teacher.getSpecialization());
