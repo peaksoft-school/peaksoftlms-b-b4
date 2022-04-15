@@ -21,17 +21,4 @@ public class PeaksoftlmsBB4Application {
         System.out.println("Welcome colleagues, project name is Peaksoftlms-B");
 
     }
-    @PostConstruct
-    private void init(){
-        Admin admin=new Admin();
-        admin.setFirstName("Rahim");
-        admin.setLastName("Kurbanov");
-        User user =new User();
-        user.setRole(Role.ROLE_ADMIN);
-        user.setEmail("kurbanov@gmail.com");
-        user.setPassword(passwordEncoder.encode("123123"));
-        admin.setUser(user);
-        adminRepository.save(admin);
-    }
-
 }

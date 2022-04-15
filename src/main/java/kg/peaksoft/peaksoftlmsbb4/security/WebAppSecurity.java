@@ -23,7 +23,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true,
+securedEnabled = true)
 @AllArgsConstructor
 public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
