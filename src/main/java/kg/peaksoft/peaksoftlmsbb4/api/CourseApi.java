@@ -2,6 +2,8 @@ package kg.peaksoft.peaksoftlmsbb4.api;
 
 import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
 import lombok.AllArgsConstructor;
@@ -17,7 +19,7 @@ import java.util.List;
 public class CourseApi {
     private final CourseService courseService;
 
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping("/save")
     public CourseResponse saveCourse(@RequestBody CourseRequest courseRequest) {
         return courseService.saveCourse(courseRequest);
@@ -43,4 +45,16 @@ public class CourseApi {
         courseService.delete(id);
 
     }
+
+    @GetMapping("/students/{id}")
+    public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
+        return courseService.getAllStudentsByCourseId(id);
+    }
+
+    @GetMapping("/teachers/{id}")
+    public List<TeacherResponse> getAllTeacherByCourseId(@PathVariable Long id) {
+        return courseService.getAllTeacherByCourseId(id);
+
+    }
+
 }

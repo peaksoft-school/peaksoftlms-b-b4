@@ -4,7 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.mapper.TeacherMapper;
+import kg.peaksoft.peaksoftlmsbb4.mapper.teacher.TeacherMapper;
 import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.repository.TeacherRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.TeacherService;
@@ -27,7 +27,7 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherMapper teacherMapper;
 
     @Override
-    public TeacherResponse saveTeacher(TeacherRequest teacherRequest) {
+    public TeacherResponse saveTeacher(Long id,TeacherRequest teacherRequest) {
 
         String email = teacherRequest.getEmail();
 
@@ -39,7 +39,7 @@ public class TeacherServiceImpl implements TeacherService {
         String encodedPassword = passwordEncoder.encode(teacherRequest.getPassword());
         teacherRequest.setPassword(encodedPassword);
 
-        Teacher teacher = teacherMapper.convert(teacherRequest);
+        Teacher teacher = teacherMapper.convert(id,teacherRequest);
 
         Teacher teacher1 = teacherRepository.save(teacher);
 

@@ -2,9 +2,14 @@ package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.dto.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.group.GroupResponse;
+import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.group.GroupMapper;
+import kg.peaksoft.peaksoftlmsbb4.mapper.student.StudentMapper;
+import kg.peaksoft.peaksoftlmsbb4.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.model.Group;
+import kg.peaksoft.peaksoftlmsbb4.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.repository.GroupRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.GroupService;
 import lombok.AllArgsConstructor;
@@ -12,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,10 +26,18 @@ import java.util.List;
 public class GroupServiceImpl implements GroupService {
     private final GroupMapper groupMapper;
     private final GroupRepository groupRepository;
+    private final StudentMapper studentMapper;
 
     @Override
-    public GroupResponse saveGroup(GroupRequest groupRequest) {
-        Group group = groupMapper.convert(groupRequest);
+    public GroupResponse saveGroup(Long id,GroupRequest groupRequest) {
+
+        String name=groupRequest.getGroupName();
+        if (groupRepository.existsByGroupName((name))) {
+            throw new BadRequestException(
+                    String.format("There is such a = %s", name)
+            );
+        }
+        Group group = groupMapper.convert(id,groupRequest);
         Group save = groupRepository.save(group);
         log.info("successful save group:{}", group);
         return groupMapper.deConvert(save);
@@ -93,4 +106,13 @@ public class GroupServiceImpl implements GroupService {
                         String.format("client with id = %s does not exists", id)
                 ));
     }
+    @Override
+    public List<StudentResponse> getAllStudentByGroupId(Long id) {
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (Student t : findBy(id).getStudents()) {
+            studentResponses.add(studentMapper.deConvert(t));
+        }
+        return studentResponses;
+    }
 }
+

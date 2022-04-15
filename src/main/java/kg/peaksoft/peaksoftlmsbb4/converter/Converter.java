@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.converter;
 
-public interface Converter<MODEL,REQUEST,RESPONCE> {
+public interface Converter<MODEL,REQUEST, RESPONSE> {
     MODEL convert(REQUEST request);
-    RESPONCE deConvert(MODEL model);
+    RESPONSE deConvert(MODEL model);
 
 
 }

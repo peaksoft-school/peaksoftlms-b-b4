@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,7 +30,21 @@ public class Group {
     private String imagine;
     private LocalDate dateOfStart;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Student> students = new ArrayList<>();
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(name = "groups_courses",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "courses_id"))
+    private List<Course> courses = new ArrayList<>();
+
+    @JsonIgnore
+    public void setCourse(Course course) {
+        if (course == null) {
+            courses = new ArrayList<>();
+        }
+        courses.add(course);
+        course.setGroup(this);
+    }
 }

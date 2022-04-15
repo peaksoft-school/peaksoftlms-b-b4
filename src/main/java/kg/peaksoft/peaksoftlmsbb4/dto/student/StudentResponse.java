@@ -8,12 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StudentResponse {
-    private String id;
+    private Long id;
     private String studentName;
     private StudyFormat studyFormat;
     private String phoneNumber;
     private String lastName;
     private String email;
     private Role role;
+    private String groupName;
 
 }

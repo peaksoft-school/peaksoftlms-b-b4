@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.mapper;
+package kg.peaksoft.peaksoftlmsbb4.mapper.admin;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.dto.AdminRequest;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class AdminMapper implements Converter<Admin, AdminRequest, AdminResponse> {
-     private final PasswordEncoder passwordEncoder;
     @Override
     public Admin convert(AdminRequest request) {
         Admin admin = new Admin();

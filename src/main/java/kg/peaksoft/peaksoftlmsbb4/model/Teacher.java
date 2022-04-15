@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.CascadeType.*;
@@ -44,5 +45,13 @@ public class Teacher {
     @JsonIgnore
     @ManyToMany(cascade = {PERSIST,REFRESH,MERGE},mappedBy = "teachers",fetch = FetchType.LAZY)
     private List<Course>courses;
+
+    @JsonIgnore
+    public void setCourse(Course course) {
+        if (course == null) {
+            courses = new ArrayList<>();
+        }
+        courses.add(course);
+    }
 
 }
