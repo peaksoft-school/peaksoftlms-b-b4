@@ -55,7 +55,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-               .antMatchers("/swagger-ui.html").permitAll()
+               .antMatchers("/swagger-ui.html", "/").permitAll()
                 .anyRequest()
                 .permitAll();
 
