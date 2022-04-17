@@ -3,7 +3,6 @@ package kg.peaksoft.peaksoftlmsbb4.api;
 import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
-import kg.peaksoft.peaksoftlmsbb4.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,7 +43,7 @@ public class StudentApi {
     }
 
     @GetMapping("/format")
-    public List<StudentResponse> getStudyFormat(@RequestParam(required = false) StudyFormat studyFormat){
+    public List<StudentResponse> getStudyFormat(@RequestParam(required = false) StudyFormat studyFormat) {
         return studentService.findByStudyFormat(studyFormat);
     }
 
