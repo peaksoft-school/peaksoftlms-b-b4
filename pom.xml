@@ -169,6 +169,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>peaksoftlms-b-b4</finalName>
     </build>
 
 </project>
