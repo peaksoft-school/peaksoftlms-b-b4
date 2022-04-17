@@ -5,18 +5,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.CascadeType.*;
-
 @Entity
-@Table(name = "teachers")
+@Table(name = "groups")
 @Getter
 @Setter
-public class Teacher {
-
+public class Group {
     @Id
     @SequenceGenerator(
             name = "teacher_sequence",
@@ -28,23 +25,19 @@ public class Teacher {
             generator = "teacher_sequence"
     )
     private Long id;
+    private String groupName;
+    private String description;
+    private String imagine;
+    private LocalDate dateOfStart;
 
-    private String name;
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<Student> students = new ArrayList<>();
 
-    private String lastName;
-
-    private String phoneNumber;
-
-    private String specialization;
-
-    @OneToOne(cascade = {MERGE, REFRESH, PERSIST}, orphanRemoval = true,
-            fetch = FetchType.EAGER)
-
-    private User user;
-
-    @JsonIgnore
-    @ManyToMany(cascade = {PERSIST,REFRESH,MERGE},mappedBy = "teachers",fetch = FetchType.LAZY)
-    private List<Course>courses;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(name = "groups_courses",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "courses_id"))
+    private List<Course> courses = new ArrayList<>();
 
     @JsonIgnore
     public void setCourse(Course course) {
@@ -52,6 +45,6 @@ public class Teacher {
             courses = new ArrayList<>();
         }
         courses.add(course);
+        course.setGroup(this);
     }
-
 }

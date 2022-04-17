@@ -2,9 +2,12 @@ package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
-import kg.peaksoft.peaksoftlmsbb4.mapper.StudentMapper;
+import kg.peaksoft.peaksoftlmsbb4.mapper.student.StudentMapper;
+import kg.peaksoft.peaksoftlmsbb4.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.model.Student;
+import kg.peaksoft.peaksoftlmsbb4.repository.GroupRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.StudentService;
 import lombok.AllArgsConstructor;
@@ -12,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,13 +24,18 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
-
+        String email=studentRequest.getEmail();
+        if (studentRepository.existsByEmail((email))) {
+            throw new BadRequestException(
+                    String.format("There is such a = %s", email)
+            );
+        }
         Student  student= studentMapper.convert(studentRequest);
-
         Student student1 = studentRepository.save(student);
 
         log.info("save ok");
@@ -81,5 +90,14 @@ public class StudentServiceImpl implements StudentService {
                 .stream()
                 .map(studentMapper::deConvert)
                 .toList();
+    }
+
+    @Override
+    public List<StudentResponse> findByStudyFormat(StudyFormat studyFormat) {
+        List<StudentResponse> studentResponse = new ArrayList<>();
+        for (Student s:studentRepository.findByStudyFormat(studyFormat)) {
+            studentResponse.add(studentMapper.deConvert(s));
+        }
+        return studentResponse;
     }
 }

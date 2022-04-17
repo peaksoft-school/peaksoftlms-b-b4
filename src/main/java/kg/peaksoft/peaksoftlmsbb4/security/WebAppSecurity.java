@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.security;
 
 import kg.peaksoft.peaksoftlmsbb4.config.JwtConfig;
+import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtUtils;
@@ -8,7 +9,6 @@ import kg.peaksoft.peaksoftlmsbb4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -23,9 +23,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableGlobalMethodSecurity(
-        prePostEnabled = true,
-        securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true,
+securedEnabled = true)
 @AllArgsConstructor
 public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
@@ -48,9 +47,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService getUserDetailsService() {
         return (email) -> userRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("not found =%s", email)
-                ));
+                .orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -58,7 +55,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/swagger-ui.html").permitAll()
+               .antMatchers("/swagger-ui.html").permitAll()
                 .anyRequest()
                 .permitAll();
 
@@ -69,7 +66,6 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
                         getUserDetailsService()),
                 UsernamePasswordAuthenticationFilter.class
         );
-
     }
 
     @Bean

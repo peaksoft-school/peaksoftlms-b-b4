@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TeacherService {
 
-    TeacherResponse saveTeacher(TeacherRequest teacherRequest);
+    TeacherResponse saveTeacher(Long id,TeacherRequest teacherRequest);
 
     TeacherResponse updateTeacher(Long id,TeacherRequest teacherRequest);
 

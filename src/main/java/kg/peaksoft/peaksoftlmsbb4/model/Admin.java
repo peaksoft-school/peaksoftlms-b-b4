@@ -6,7 +6,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 import static javax.persistence.CascadeType.*;
-import static javax.persistence.CascadeType.PERSIST;
 
 @Entity
 @Table(name = "admins")

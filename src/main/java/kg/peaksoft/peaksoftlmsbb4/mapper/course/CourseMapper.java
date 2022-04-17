@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.mapper;
+package kg.peaksoft.peaksoftlmsbb4.mapper.course;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseRequest;

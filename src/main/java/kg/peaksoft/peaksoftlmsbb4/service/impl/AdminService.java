@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.dto.AdminRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.AdminResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
-import kg.peaksoft.peaksoftlmsbb4.mapper.AdminMapper;
+import kg.peaksoft.peaksoftlmsbb4.mapper.admin.AdminMapper;
 import kg.peaksoft.peaksoftlmsbb4.model.Admin;
 import kg.peaksoft.peaksoftlmsbb4.repository.AdminRepository;
 import lombok.AllArgsConstructor;

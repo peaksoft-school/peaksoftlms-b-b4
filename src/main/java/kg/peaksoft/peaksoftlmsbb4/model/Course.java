@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +7,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.CascadeType.*;
 
 @Entity
 @Table(name = "course")
@@ -30,25 +31,42 @@ public class Course {
     private String description;
     private LocalDate dateOfStart;
 
+    @ManyToMany(cascade =
+            {PERSIST, REFRESH, DETACH, MERGE, REMOVE})
+    @JoinTable(name = "courses_students",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private List<Student> students;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToMany(cascade =
+            {PERSIST, REFRESH, DETACH, MERGE, REMOVE})
     @JoinTable(name = "course_teacher",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private List<Teacher> teachers;
 
-    @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "course_student",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private List<Student> students;
+    @ManyToMany(mappedBy = "courses", cascade = ALL)
+    private List<Group> groups = new ArrayList<>();
 
-    public void add(Teacher teacher){
-        if(teachers == null){
+    public void addStudent(Teacher teacher) {
+        if (teacher == null) {
             teachers = new ArrayList<>();
         }
         teachers.add(teacher);
+    }
+
+    public void setGroup(Group group) {
+        if (group == null) {
+            groups = new ArrayList<>();
+        }
+        groups.add(group);
+    }
+
+    public void addStudent(Student student) {
+        if (student == null) {
+            students = new ArrayList<>();
+        }
+        students.add(student);
     }
 
 }
