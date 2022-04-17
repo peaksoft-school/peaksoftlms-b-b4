@@ -97,10 +97,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherResponse> findAllTeacher() {
         log.info("findAll ok");
-        return teacherRepository.findAll()
-                .stream()
-                .map(teacherMapper::deConvert)
-                .toList();
+//        return teacherRepository.findAll()
+//                .stream()
+//                .map(teacherMapper::deConvert)
+//                .toList();
+        return null;
     }
 
 }

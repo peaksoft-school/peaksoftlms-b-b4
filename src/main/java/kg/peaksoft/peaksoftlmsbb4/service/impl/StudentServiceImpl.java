@@ -86,10 +86,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentResponse> findAllStudent() {
         log.info("findAll ok");
-        return studentRepository.findAll()
-                .stream()
-                .map(studentMapper::deConvert)
-                .toList();
+//        return studentRepository.findAll()
+//                .stream()
+//                .map(studentMapper::deConvert)
+//                .toList();
+        return null;
     }
 
     @Override

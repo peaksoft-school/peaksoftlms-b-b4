@@ -46,8 +46,9 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupResponse> findAllGroup() {
         log.info("successful find all group:{}", groupRepository.findAll());
-        return groupRepository.findAll().stream()
-                .map(groupMapper::deConvert).toList();
+//        return groupRepository.findAll().stream()
+//                .map(groupMapper::deConvert).toList();
+        return null;
     }
 
     @Override
