@@ -1,7 +1,7 @@
+
 create table if not exists users
 (
-    id                         bigint  not null
-    primary key,
+    id serial primary key,
     email                      varchar(255),
     is_account_non_expired     boolean not null,
     is_account_non_locked      boolean not null,
@@ -13,7 +13,7 @@ create table if not exists users
 
 create table if not exists course
 (
-    id            bigint not null
+    id serial not null
         primary key,
     course_name   varchar(255),
     date_of_start date,
@@ -23,7 +23,7 @@ create table if not exists course
 
 create table if not exists groups
 (
-    id            bigint not null
+    id serial not null
     primary key,
     date_of_start date,
     description   varchar(255),
@@ -32,7 +32,7 @@ create table if not exists groups
     );
 create table if not exists teachers
 (
-    id             bigint not null
+    id  serial not null
     primary key,
     last_name      varchar(255),
     name           varchar(255),
@@ -45,7 +45,7 @@ create table if not exists teachers
 
 create table if not exists student
 (
-    id           bigint not null
+    id  serial not null
     primary key,
     email        varchar(255),
     last_name    varchar(255),
