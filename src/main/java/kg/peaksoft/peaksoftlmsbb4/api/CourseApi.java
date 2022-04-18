@@ -1,6 +1,12 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
+
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
@@ -36,6 +42,12 @@ public class CourseApi {
     }
 
     @Operation(summary = "Gets a list", description = "Returns all courses that are,if there are no courses,then an error")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Found the courses",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = CourseApi.class)))})})
     @GetMapping
     public List<CourseResponse> findAllCourse() {
         return courseService.findAll();

@@ -1,6 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.dto.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.group.GroupResponse;
@@ -22,7 +27,7 @@ public class GroupApi {
     private final GroupService groupService;
 
     @PostMapping("/save/{id}")
-    @Operation(summary = "Create new group",description = "This method save new groups")
+    @Operation(summary = "Create new group", description = "This method save new groups")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public GroupResponse saveGroup(@PathVariable Long id, @RequestBody GroupRequest groupRequest) {
         return groupService.saveGroup(id, groupRequest);
@@ -30,7 +35,13 @@ public class GroupApi {
 
     @PermitAll
     @GetMapping
-    @Operation(summary = "gets a list",description = "Returns all groups that are,if there are no groups,then an error")
+    @Operation(summary = "gets a list", description = "Returns all groups that are,if there are no groups,then an error")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Found the groups",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<GroupResponse> findAllGroup() {
         return groupService.findAllGroup();

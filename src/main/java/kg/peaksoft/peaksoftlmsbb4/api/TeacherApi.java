@@ -1,6 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
@@ -23,6 +28,12 @@ public class TeacherApi {
 
     @GetMapping
     @Operation(summary = "gets a list", description = "Returns all teachers that are,if there are no teachers,then an error")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Found the teachers",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = TeacherApi.class)))})})
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','TEACHER')")
     public List<TeacherResponse> findAll() {
         return teacherService.findAllTeacher();
