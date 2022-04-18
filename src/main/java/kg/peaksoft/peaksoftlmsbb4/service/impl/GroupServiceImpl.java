@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -46,9 +47,8 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupResponse> findAllGroup() {
         log.info("successful find all group:{}", groupRepository.findAll());
-//        return groupRepository.findAll().stream()
-//                .map(groupMapper::deConvert).toList();
-        return null;
+        return groupRepository.findAll().stream()
+                .map(groupMapper::deConvert).collect(Collectors.toList());
     }
 
     @Override

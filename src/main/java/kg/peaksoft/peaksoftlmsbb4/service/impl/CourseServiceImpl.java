@@ -46,7 +46,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseResponse> findAll() {
-        return courseRepository.findAll().stream().map(courseMapper::deConvert).collect(Collectors.toList());
+
+        return courseRepository.findAll().stream().map(
+                courseMapper::deConvert).collect(Collectors.toList());
     }
 
     @Override
