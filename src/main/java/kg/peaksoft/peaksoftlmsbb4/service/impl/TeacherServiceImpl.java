@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -27,7 +28,7 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherMapper teacherMapper;
 
     @Override
-    public TeacherResponse saveTeacher(Long id,TeacherRequest teacherRequest) {
+    public TeacherResponse saveTeacher(Long id, TeacherRequest teacherRequest) {
 
         String email = teacherRequest.getEmail();
 
@@ -39,7 +40,7 @@ public class TeacherServiceImpl implements TeacherService {
         String encodedPassword = passwordEncoder.encode(teacherRequest.getPassword());
         teacherRequest.setPassword(encodedPassword);
 
-        Teacher teacher = teacherMapper.convert(id,teacherRequest);
+        Teacher teacher = teacherMapper.convert(id, teacherRequest);
 
         Teacher teacher1 = teacherRepository.save(teacher);
 
@@ -85,10 +86,10 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void deleteTeacher(Long id) {
-        boolean exists =teacherRepository.existsById(id);
+        boolean exists = teacherRepository.existsById(id);
 
-        if(!exists){
-            throw new BadRequestException(String.format("teacher with id = %s does not exists",id));
+        if (!exists) {
+            throw new BadRequestException(String.format("teacher with id = %s does not exists", id));
         }
         log.info("delete ok");
         teacherRepository.deleteById(id);
@@ -97,11 +98,9 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherResponse> findAllTeacher() {
         log.info("findAll ok");
-//        return teacherRepository.findAll()
-//                .stream()
-//                .map(teacherMapper::deConvert)
-//                .toList();
-        return null;
+        return teacherRepository.findAll()
+                .stream()
+                .map(teacherMapper::deConvert).collect(Collectors.toList());
     }
 
 }
