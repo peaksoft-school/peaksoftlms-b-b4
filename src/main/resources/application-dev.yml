@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/peaksoftlms
+    username: postgres
+    password: hadicha
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+server:
+  port: 1234
+
+  error:
+    include-message: always
+
+application:
+  jwt:
+    secretKey: rahim123
+    tokenPrefix: Bearer
