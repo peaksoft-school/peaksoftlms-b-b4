@@ -16,13 +16,13 @@ import java.util.List;
 public class Group {
     @Id
     @SequenceGenerator(
-            name = "teacher_sequence",
-            sequenceName = "teacher_sequence",
+            name = "groups_id_seq",
+            sequenceName = "groups_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "teacher_sequence"
+            generator = "groups_id_seq"
     )
     private Long id;
     private String groupName;
@@ -33,7 +33,7 @@ public class Group {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Student> students = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "groups_courses",
             joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "courses_id"))
@@ -45,6 +45,7 @@ public class Group {
             courses = new ArrayList<>();
         }
         courses.add(course);
+        assert course != null;
         course.setGroup(this);
     }
 }

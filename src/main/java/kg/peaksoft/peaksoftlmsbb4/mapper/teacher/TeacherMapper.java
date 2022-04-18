@@ -1,28 +1,24 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper.teacher;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.converter.MyConverter;
 import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.model.User;
-import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class TeacherMapper implements MyConverter<Teacher, TeacherRequest, TeacherResponse> {
-    private final CourseRepository courseRepository;
+public class TeacherMapper implements Converter<Teacher, TeacherRequest, TeacherResponse> {
     @Override
-    public Teacher convert(Long id,TeacherRequest request) {
+    public Teacher convert(TeacherRequest request) {
         Teacher teacher = new Teacher();
         teacher.setName(request.getTeacherName());
         teacher.setLastName(request.getLastName());
         teacher.setPhoneNumber(request.getPhoneNumber());
         teacher.setSpecialization(request.getSpecialization());
-        teacher.setCourse(courseRepository.getById(id));
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());

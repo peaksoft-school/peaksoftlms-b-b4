@@ -26,7 +26,7 @@ public class TeacherApi {
     @PostMapping("/saveTeacher/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','TEACHER')")
     public TeacherResponse saveTeacher(@Valid @PathVariable Long id, @RequestBody TeacherRequest teacherRequest) {
-        return teacherService.saveTeacher(id, teacherRequest);
+        return teacherService.saveTeacher(teacherRequest);
     }
 
     @PutMapping("/updateTeacher/{teacherId}")

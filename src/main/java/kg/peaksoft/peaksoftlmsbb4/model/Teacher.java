@@ -19,13 +19,13 @@ public class Teacher {
 
     @Id
     @SequenceGenerator(
-            name = "teacher_sequence",
-            sequenceName = "teacher_sequence",
+            name = "teachers_id_seq",
+            sequenceName = "teachers_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "teacher_sequence"
+            generator = "teachers_id_seq"
     )
     private Long id;
 
@@ -43,7 +43,7 @@ public class Teacher {
     private User user;
 
     @JsonIgnore
-    @ManyToMany(cascade = {PERSIST,REFRESH,MERGE},mappedBy = "teachers",fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {REFRESH,MERGE},mappedBy = "teachers",fetch = FetchType.LAZY)
     private List<Course>courses;
 
     @JsonIgnore

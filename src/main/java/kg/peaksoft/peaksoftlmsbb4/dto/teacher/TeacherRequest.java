@@ -33,7 +33,5 @@ public class TeacherRequest {
     @NotBlank
     private String password;
 
-    private Course courseId;
-
 
 }

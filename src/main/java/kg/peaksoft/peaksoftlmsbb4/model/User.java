@@ -19,13 +19,13 @@ public class User implements UserDetails {
 
     @Id
     @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
+            name = "users_id_seq",
+            sequenceName = "users_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
+            generator = "users_id_seq"
     )
     private Long id;
     private String email;
