@@ -1,15 +1,32 @@
-
-create table if not exists users
-(
+drop table if exists users;
+drop table if exists admins;
+drop table if exists course;
+drop table if exists groups;
+drop table if exists teachers;
+drop table if exists student;
+drop table if exists courses_students;
+drop table if exists groups_courses;
+drop table if exists course_teacher;
+create table if not exists users(
     id serial primary key,
     email                      varchar(255),
     is_account_non_expired     boolean not null,
     is_account_non_locked      boolean not null,
     is_credentials_non_expired boolean not null,
     is_enabled                 boolean not null,
-    password                   varchar(255),
+    passwords                  varchar(255),
     role                       varchar(255)
     );
+create table admins
+(
+    id serial not null
+        primary key,
+    first_name varchar(255),
+    last_name  varchar(255),
+    user_id    bigint
+        constraint fkgc8dtql9mkq268detxiox7fpm
+            references users
+);
 
 create table if not exists course
 (
@@ -35,7 +52,7 @@ create table if not exists teachers
     id  serial not null
     primary key,
     last_name      varchar(255),
-    name           varchar(255),
+    teacher_name          varchar(255),
     phone_number   varchar(255),
     specialization varchar(255),
     user_id        bigint
@@ -90,6 +107,11 @@ create table if not exists course_teacher
     constraint fkjoytng93eni3erly1divd3xla
     references teachers
 );
+
+INSERT INTO users(id,email,is_account_non_expired,is_account_non_locked,
+                  is_credentials_non_expired, is_enabled,passwords,role) values(1,'admin@gmail.com',true ,true, true,true,'$2a$12$/pvR7m4P6MYuNbHnWFcVUuHddSfJ1wu5sKxYYiwTjWkk5yTkQZVWi','ADMIN');
+
+INSERT INTO admins(id,first_name,last_name,user_id) VALUES (1,'Nurisa','Mamiraimova',1);
 
 
 
