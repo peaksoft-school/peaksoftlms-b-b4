@@ -17,6 +17,7 @@ import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +25,6 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
-    private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;
 
     @Override
@@ -86,11 +86,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentResponse> findAllStudent() {
         log.info("findAll ok");
-//        return studentRepository.findAll()
-//                .stream()
-//                .map(studentMapper::deConvert)
-//                .toList();
-        return null;
+        return studentRepository.findAll()
+                .stream()
+                .map(studentMapper::deConvert).collect(Collectors.toList());
+
     }
 
     @Override
