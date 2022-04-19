@@ -40,21 +40,21 @@ public class StudentApi {
         return studentService.findAllStudent();
     }
 
-    @PostMapping("/saveStudent")
+    @PostMapping
     @Operation(summary = "Add new student", description = "This method save new student")
     @PreAuthorize("hasAuthority('ADMIN')")
     public StudentResponse saveStudent(@RequestBody @Valid StudentRequest studentRequest) {
         return studentService.saveStudent(studentRequest);
     }
 
-    @PutMapping("/updateStudent/{studentId}")
+    @PutMapping("/{studentId}")
     @Operation(summary = "update the students", description = "Updates the details of an endpoint with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     public StudentResponse updateStudent(@PathVariable("studentId") Long id, @RequestBody @Valid StudentRequest studentRequest) {
         return studentService.updateStudent(id, studentRequest);
     }
 
-    @DeleteMapping("deleteStudent/{studentId}")
+    @DeleteMapping("/{studentId}")
     @Operation(summary = "delete students with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteStudent(@PathVariable("studentId") Long id) {

@@ -26,7 +26,7 @@ import java.util.List;
 public class GroupApi {
     private final GroupService groupService;
 
-    @PostMapping("/save")
+    @PostMapping
     @Operation(summary = "Create new group", description = "This method save new groups")
     @PreAuthorize("hasAuthority('ADMIN')")
     public GroupResponse saveGroup(@RequestBody GroupRequest groupRequest) {
@@ -34,7 +34,6 @@ public class GroupApi {
     }
 
     @PermitAll
-    @GetMapping
     @Operation(summary = "gets a list", description = "Returns all groups that are,if there are no groups,then an error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
@@ -43,6 +42,7 @@ public class GroupApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
     @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping
     public List<GroupResponse> findAllGroup() {
         return groupService.findAllGroup();
     }
@@ -64,7 +64,7 @@ public class GroupApi {
     }
 
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     @Operation(summary = "update the groups", description = "Updates the details of an endpoint with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     public GroupResponse update(@PathVariable Long id, @RequestBody GroupRequest groupRequest) {

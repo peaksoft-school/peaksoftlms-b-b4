@@ -31,7 +31,7 @@ public class CourseApi {
 
     @Operation(summary = "Create new course", description = "This method saves new courses")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/save")
+    @PostMapping()
     public CourseResponse saveCourse(@RequestBody CourseRequest courseRequest) {
         return courseService.saveCourse(courseRequest);
     }

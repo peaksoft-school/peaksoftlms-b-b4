@@ -48,21 +48,21 @@ public class TeacherApi {
         return teacherService.findAllTeacher();
     }
 
-    @PostMapping("/saveTeacher")
+    @PostMapping
     @Operation(summary = "Add new teacher", description = "This method save new teacher")
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public TeacherResponse saveTeacher(@Valid @RequestBody TeacherRequest teacherRequest) {
         return teacherService.saveTeacher(teacherRequest);
     }
 
-    @PutMapping("/updateTeacher/{teacherId}")
+    @PutMapping("/{teacherId}")
     @Operation(summary = "update the teacher", description = "Updates the details of an endpoint with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     public TeacherResponse updateTeacher(@PathVariable("teacherId") Long id, @RequestBody @Valid TeacherRequest teacherRequest) {
         return teacherService.updateTeacher(id, teacherRequest);
     }
 
-    @DeleteMapping("deleteTeacher/{teacherId}")
+    @DeleteMapping("/{teacherId}")
     @Operation(summary = "delete teacher with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteTeacher(@PathVariable("teacherId") Long id) {
@@ -108,10 +108,5 @@ public class TeacherApi {
     public List<TeacherResponse> getAllTeacherByCourseId(@PathVariable Long id){
         return courseService.getAllTeacherByCourseId(id);
     }
-
-//    @GetMapping("teachersByCourseId/{id}")
-//    public List<StudentResponse> getAllStudentsByCourseId(@PathVariable Long id){
-//        return courseService.getAllStudentsByCourseId(id);
-//    }
 
 }
