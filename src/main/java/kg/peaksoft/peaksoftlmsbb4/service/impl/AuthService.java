@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.AuthRequestDto;
-import kg.peaksoft.peaksoftlmsbb4.dto.AuthResponseDto;
+import kg.peaksoft.peaksoftlmsbb4.dto.authentification.AuthRequestDto;
+import kg.peaksoft.peaksoftlmsbb4.dto.authentification.AuthResponseDto;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class AuthService {
                 authRequest.getPassword()
         ));
         String generatedToken = jwtUtils.generateToken(authentication);
-         log.info("ok");
+        log.info("successful generated token :{}",generatedToken);
         return AuthResponseDto.builder()
                 .email(authRequest.getEmail())
                 .token(generatedToken)

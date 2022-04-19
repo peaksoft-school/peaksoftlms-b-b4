@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class PeaksoftlmsBB4Application {
 
-    @GetMapping("/")
-    public String greetingPage(){
-        return "<h1>Welcome to Peaksoftlms-B application!!!<h1/>";
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(PeaksoftlmsBB4Application.class, args);
         System.out.println("Welcome colleagues, project name is Peaksoftlms-B");
+    }
+
+    @GetMapping("/")
+    public String greetingPage() {
+        return "<h1>Welcome to Peaksoftlms-B application!!!<h1/>";
     }
 }
 

@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.dto.teacher;
 
-import kg.peaksoft.peaksoftlmsbb4.model.Course;
 import lombok.Getter;
 import lombok.Setter;
 

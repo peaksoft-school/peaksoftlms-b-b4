@@ -10,6 +10,7 @@ import kg.peaksoft.peaksoftlmsbb4.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.model.Student;
+import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.GroupRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.GroupService;
 import lombok.AllArgsConstructor;
@@ -28,17 +29,18 @@ public class GroupServiceImpl implements GroupService {
     private final GroupMapper groupMapper;
     private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;
+    private final CourseRepository courseRepository;
 
     @Override
-    public GroupResponse saveGroup(Long id,GroupRequest groupRequest) {
+    public GroupResponse saveGroup(GroupRequest groupRequest) {
 
-        String name=groupRequest.getGroupName();
+        String name = groupRequest.getGroupName();
         if (groupRepository.existsByGroupName((name))) {
             throw new BadRequestException(
                     String.format("There is such a = %s", name)
             );
         }
-        Group group = groupMapper.convert(id,groupRequest);
+        Group group = groupMapper.convert(groupRequest);
         Group save = groupRepository.save(group);
         log.info("successful save group:{}", group);
         return groupMapper.deConvert(save);
@@ -107,13 +109,24 @@ public class GroupServiceImpl implements GroupService {
                         String.format("client with id = %s does not exists", id)
                 ));
     }
+
     @Override
     public List<StudentResponse> getAllStudentByGroupId(Long id) {
         List<StudentResponse> studentResponses = new ArrayList<>();
         for (Student t : findBy(id).getStudents()) {
             studentResponses.add(studentMapper.deConvert(t));
         }
+        log.info("successful get All Student By Group Id this id:{}", id);
         return studentResponses;
+    }
+    @Transactional
+    @Override
+    public void assignGroupToCourse(Long courseId, Long groupId) {
+        Course course1 = courseRepository.findById(courseId)
+                .orElseThrow(()-> new BadRequestException(
+                        String.format("Course with id %s not found",courseId)));
+        Group group = groupRepository.getById(groupId);
+        course1.setGroup(group);
     }
 }
 

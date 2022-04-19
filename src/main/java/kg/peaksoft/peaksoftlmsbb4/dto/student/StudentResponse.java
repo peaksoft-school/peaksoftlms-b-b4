@@ -14,7 +14,5 @@ public class StudentResponse {
     private String phoneNumber;
     private String lastName;
     private String email;
-    private Role role;
-    private String groupName;
 
 }

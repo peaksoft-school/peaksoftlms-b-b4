@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import java.util.List;
 
 @RestController
@@ -29,13 +30,14 @@ public class CourseApi {
     private final CourseService courseService;
 
     @Operation(summary = "Create new course", description = "This method saves new courses")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/save")
     public CourseResponse saveCourse(@RequestBody CourseRequest courseRequest) {
         return courseService.saveCourse(courseRequest);
     }
 
     @Operation(summary = "Gets a single courses by identifier", description = "For valid response try integer IDs with value >= 1 and...")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/{id}")
     public Course findById(@PathVariable Long id) {
         return courseService.findById(id);
@@ -49,17 +51,20 @@ public class CourseApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = CourseApi.class)))})})
     @GetMapping
+    @PermitAll
     public List<CourseResponse> findAllCourse() {
         return courseService.findAll();
     }
 
     @Operation(summary = "Updates the course:", description = "Updates the details of an endpoint with ID ")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     public CourseResponse update(@PathVariable Long id, @RequestBody CourseRequest courseRequest) {
         return courseService.update(id, courseRequest);
     }
 
     @Operation(summary = "delete the courses ", description = "Deletes courses with id ")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteCourse(@PathVariable Long id) {
         courseService.delete(id);
@@ -68,12 +73,14 @@ public class CourseApi {
 
     @Operation(summary = "Get students by course id", description = "Get all students in this course")
     @GetMapping("/students/{id}")
+    @PermitAll
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
         return courseService.getAllStudentsByCourseId(id);
     }
 
     @Operation(summary = "Get teachers with ID", description = "Get all teachers in this course")
     @GetMapping("/teachers/{id}")
+    @PermitAll
     public List<TeacherResponse> getAllTeacherByCourseId(@PathVariable Long id) {
         return courseService.getAllTeacherByCourseId(id);
 

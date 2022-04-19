@@ -26,11 +26,11 @@ import java.util.List;
 public class GroupApi {
     private final GroupService groupService;
 
-    @PostMapping("/save/{id}")
+    @PostMapping("/save")
     @Operation(summary = "Create new group", description = "This method save new groups")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public GroupResponse saveGroup(@PathVariable Long id, @RequestBody GroupRequest groupRequest) {
-        return groupService.saveGroup(id, groupRequest);
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public GroupResponse saveGroup(@RequestBody GroupRequest groupRequest) {
+        return groupService.saveGroup(groupRequest);
     }
 
     @PermitAll
@@ -42,7 +42,7 @@ public class GroupApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<GroupResponse> findAllGroup() {
         return groupService.findAllGroup();
     }
@@ -50,7 +50,7 @@ public class GroupApi {
 
     @GetMapping("/{id}")
     @Operation(summary = "gets a single groups by identifier")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public GroupResponse findById(@PathVariable Long id) {
         return groupService.findById(id);
     }
@@ -58,7 +58,7 @@ public class GroupApi {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "delete groups with ID")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteById(@PathVariable Long id) {
         groupService.deleteById(id);
     }
@@ -66,7 +66,7 @@ public class GroupApi {
 
     @PatchMapping("/{id}")
     @Operation(summary = "update the groups", description = "Updates the details of an endpoint with ID")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public GroupResponse update(@PathVariable Long id, @RequestBody GroupRequest groupRequest) {
         return groupService.update(id, groupRequest);
     }

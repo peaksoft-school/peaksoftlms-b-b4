@@ -2,7 +2,6 @@ package kg.peaksoft.peaksoftlmsbb4.service;
 
 import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.model.Student;
 
@@ -20,7 +19,8 @@ public interface StudentService {
 
     List<StudentResponse> findAllStudent();
 
-    List<StudentResponse>findByStudyFormat(StudyFormat studyFormat);
+    List<StudentResponse> findByStudyFormat(StudyFormat studyFormat);
 
+    void assignStudentToCourse(Long course, Long studentId);
 
 }

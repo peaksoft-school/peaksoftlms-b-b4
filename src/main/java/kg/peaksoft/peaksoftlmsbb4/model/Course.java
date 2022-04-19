@@ -45,10 +45,13 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private List<Teacher> teachers;
 
-    @ManyToMany(mappedBy = "courses", cascade = ALL)
+    @ManyToMany(cascade = ALL)
+    @JoinTable(name = "courses_groups",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "courses_id"))
     private List<Group> groups = new ArrayList<>();
 
-    public void addStudent(Teacher teacher) {
+    public void addTeacher(Teacher teacher) {
         if (teacher == null) {
             teachers = new ArrayList<>();
         }

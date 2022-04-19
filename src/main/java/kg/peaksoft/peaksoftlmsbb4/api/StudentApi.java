@@ -35,33 +35,34 @@ public class StudentApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = StudentApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public List<StudentResponse> findAll() {
         return studentService.findAllStudent();
     }
 
     @PostMapping("/saveStudent")
     @Operation(summary = "Add new student", description = "This method save new student")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public StudentResponse saveStudent(@RequestBody @Valid StudentRequest studentRequest) {
         return studentService.saveStudent(studentRequest);
     }
 
     @PutMapping("/updateStudent/{studentId}")
     @Operation(summary = "update the students", description = "Updates the details of an endpoint with ID")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public StudentResponse updateStudent(@PathVariable("studentId") Long id, @RequestBody @Valid StudentRequest studentRequest) {
         return studentService.updateStudent(id, studentRequest);
     }
 
     @DeleteMapping("deleteStudent/{studentId}")
     @Operation(summary = "delete students with ID")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteStudent(@PathVariable("studentId") Long id) {
         studentService.deleteStudent(id);
     }
 
     @GetMapping("/format")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "here you can choose the format of training")
     public List<StudentResponse> getStudyFormat(@RequestParam(required = false) StudyFormat studyFormat) {
         return studentService.findByStudyFormat(studyFormat);

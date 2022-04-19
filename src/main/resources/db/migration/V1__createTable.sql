@@ -81,7 +81,7 @@ create table courses_students
             references student(id)
 );
 
-create table groups_courses
+create table courses_groups
 (
     group_id   bigint not null
             references groups(id),
@@ -100,11 +100,11 @@ create table if not exists course_teacher
 
 insert into users(email, password, role, is_account_non_expired,
                   is_account_non_locked, is_credentials_non_expired, is_enabled) values
-    ('admin@gmail.com', '$2a$04$bgaWpBkJrajY/yO9sbjPe.dAZkMCGp.XZEJiwhFxOyLS6ENMe5Y7m',
-     'ROLE_ADMIN',true,true,true,true);
+    ('admin@gmail.com', '$2a$12$KPlLhc3LkkFZCxN89PNdLu3cM78dJf5PN0VzoW4P4eTn6Obcf38.O',
+     'ADMIN',true,true,true,true);
 
 insert into admins(first_name, last_name, user_id) values
-    ('Kairatbek', 'Shabotoev', (
+    ('Nurisa', 'Mamiraimova', (
         select id from users where email = 'admin@gmail.com'
     ));
 
