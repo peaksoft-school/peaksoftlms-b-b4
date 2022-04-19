@@ -1,13 +1,12 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper.admin;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.AdminRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.AdminResponse;
+import kg.peaksoft.peaksoftlmsbb4.dto.admin.AdminRequest;
+import kg.peaksoft.peaksoftlmsbb4.dto.admin.AdminResponse;
 import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.model.Admin;
 import kg.peaksoft.peaksoftlmsbb4.model.User;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,7 +20,7 @@ public class AdminMapper implements Converter<Admin, AdminRequest, AdminResponse
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
-        user.setRole(Role.ROLE_ADMIN);
+        user.setRole(Role.ADMIN);
         admin.setUser(user);
         return admin;
     }
@@ -34,7 +33,6 @@ public class AdminMapper implements Converter<Admin, AdminRequest, AdminResponse
         adminResponse.setLastName(admin.getLastName());
 
         adminResponse.setEmail(admin.getUser().getEmail());
-        adminResponse.setPassword(admin.getUser().getPassword());
         return adminResponse;
     }
 }

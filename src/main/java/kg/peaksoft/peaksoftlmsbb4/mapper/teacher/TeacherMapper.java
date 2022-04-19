@@ -24,7 +24,6 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
         user.setPassword(request.getPassword());
         user.setRole(Role.TEACHER);
         teacher.setUser(user);
-
         return teacher;
 
     }
@@ -38,8 +37,6 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
         teacherResponse.setPhoneNumber(teacher.getPhoneNumber());
         teacherResponse.setSpecialization(teacher.getSpecialization());
         teacherResponse.setEmail(teacher.getUser().getEmail());
-        teacherResponse.setPassword(teacher.getUser().getPassword());
-        teacherResponse.setRole(teacher.getUser().getRole());
         return teacherResponse;
 
     }

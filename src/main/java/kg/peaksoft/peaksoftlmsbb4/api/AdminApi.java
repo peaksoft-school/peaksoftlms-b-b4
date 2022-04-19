@@ -2,8 +2,8 @@ package kg.peaksoft.peaksoftlmsbb4.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.dto.AdminRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.AdminResponse;
+import kg.peaksoft.peaksoftlmsbb4.dto.admin.AdminRequest;
+import kg.peaksoft.peaksoftlmsbb4.dto.admin.AdminResponse;
 import kg.peaksoft.peaksoftlmsbb4.service.impl.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

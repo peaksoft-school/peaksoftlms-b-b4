@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    List<Student>findByStudyFormat(StudyFormat studyFormat);
+    List<Student> findByStudyFormat(StudyFormat studyFormat);
 
     boolean existsByEmail(String email);
 }

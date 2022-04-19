@@ -9,7 +9,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.REFRESH;
 
 @Entity
 @Table(name = "student")
@@ -42,7 +43,7 @@ public class Student {
     private Group group;
 
     @JsonIgnore
-    @ManyToMany(cascade = {REFRESH,MERGE},mappedBy = "students",fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {REFRESH, MERGE}, mappedBy = "students", fetch = FetchType.LAZY)
     private List<Course> courses;
 
 }

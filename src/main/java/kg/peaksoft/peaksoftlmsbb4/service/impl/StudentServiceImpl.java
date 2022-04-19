@@ -4,17 +4,18 @@ import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.student.StudentMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Group;
+import kg.peaksoft.peaksoftlmsbb4.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.model.Student;
-import kg.peaksoft.peaksoftlmsbb4.repository.GroupRepository;
+import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,26 +23,29 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final CourseRepository courseRepository;
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
-        String email=studentRequest.getEmail();
+        String email = studentRequest.getEmail();
         if (studentRepository.existsByEmail((email))) {
             throw new BadRequestException(
                     String.format("There is such a = %s", email)
             );
         }
-        Student  student= studentMapper.convert(studentRequest);
+        Student student = studentMapper.convert(studentRequest);
         Student student1 = studentRepository.save(student);
 
-        log.info("save ok");
+        log.info("successful save this student:{}", student1);
         return studentMapper.deConvert(student1);
 
     }
+
     @Override
     public StudentResponse updateStudent(Long id, StudentRequest studentRequest) {
         Student student = findById(id);
@@ -60,32 +64,31 @@ public class StudentServiceImpl implements StudentService {
         if (!student.getEmail().equals(studentRequest.getEmail())) {
             student.setEmail(studentRequest.getEmail());
         }
-        log.info("update ok");
+        log.info("successful update this id:{}", id);
         return studentMapper.deConvert(student);
     }
 
     @Override
     public Student findById(Long id) {
-        return studentRepository.findById(id).orElseThrow(()->new NotFoundException
-                (String.format("student with id = %s does not exists ",id)));
+        log.info("successful find by this id:{}", id);
+        return studentRepository.findById(id).orElseThrow(() -> new NotFoundException
+                (String.format("student with id = %s does not exists ", id)));
 
     }
 
     @Override
     public void deleteStudent(Long id) {
-
-        boolean exists =studentRepository.existsById(id);
-
-        if(!exists){
-            throw new BadRequestException(String.format("student with id = %s does not exists",id));
+        boolean exists = studentRepository.existsById(id);
+        if (!exists) {
+            throw new BadRequestException(String.format("student with id = %s does not exists", id));
         }
-        log.info("delete ok");
+        log.info("successful delete this id:{}", id);
         studentRepository.deleteById(id);
     }
 
     @Override
     public List<StudentResponse> findAllStudent() {
-        log.info("findAll ok");
+        log.info("successful find All");
         return studentRepository.findAll()
                 .stream()
                 .map(studentMapper::deConvert).collect(Collectors.toList());
@@ -95,9 +98,21 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentResponse> findByStudyFormat(StudyFormat studyFormat) {
         List<StudentResponse> studentResponse = new ArrayList<>();
-        for (Student s:studentRepository.findByStudyFormat(studyFormat)) {
+        for (Student s : studentRepository.findByStudyFormat(studyFormat)) {
             studentResponse.add(studentMapper.deConvert(s));
         }
+        log.info("successful find by Study format:{}", studyFormat);
         return studentResponse;
+    }
+
+    @Override
+    public void assignStudentToCourse(Long courseId, Long studentId) {
+        Course course1 = courseRepository.findById(courseId)
+                .orElseThrow(() ->
+                        new NotFoundException(
+                                String.format("Not found course with id=%s", courseId)));
+        Student student1 = studentRepository.getById(studentId);
+        course1.addStudent(student1);
+
     }
 }

@@ -1,7 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.security;
 
 import kg.peaksoft.peaksoftlmsbb4.config.JwtConfig;
-import kg.peaksoft.peaksoftlmsbb4.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtUtils;
@@ -24,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true,
-securedEnabled = true)
+        securedEnabled = true)
 @AllArgsConstructor
 public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
@@ -55,7 +54,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-               .antMatchers("/swagger-ui.html", "/").permitAll()
+                .antMatchers("/swagger-ui.html", "/").permitAll()
                 .anyRequest()
                 .permitAll();
 
