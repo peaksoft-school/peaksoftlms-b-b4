@@ -13,6 +13,7 @@ import kg.peaksoft.peaksoftlmsbb4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -87,9 +88,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponse> findAllStudent() {
+    public List<StudentResponse> findAllStudent(Pageable pageable) {
         log.info("successful find All");
-        return studentRepository.findAll()
+        return studentRepository.findAll(pageable).getContent()
                 .stream()
                 .map(studentMapper::deConvert).collect(Collectors.toList());
 

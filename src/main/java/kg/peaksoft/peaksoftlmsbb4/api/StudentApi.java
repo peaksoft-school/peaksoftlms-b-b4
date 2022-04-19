@@ -12,6 +12,7 @@ import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.service.StudentService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,8 +37,9 @@ public class StudentApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = StudentApi.class)))})})
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public List<StudentResponse> findAll() {
-        return studentService.findAllStudent();
+    public List<StudentResponse> findAll(@RequestParam int size,
+                                         @RequestParam int page) {
+        return studentService.findAllStudent(PageRequest.of(size,page));
     }
 
     @PostMapping
