@@ -1,6 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.dto.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.group.GroupResponse;
@@ -15,14 +20,14 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@Tag(name = "Groups Api ", description = "this group api")
+@Tag(name = "Group", description = "The Group API")
 @CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
 @RequestMapping("/api/groups")
 public class GroupApi {
     private final GroupService groupService;
 
     @PostMapping("/save/{id}")
-    @Operation(summary = "save group")
+    @Operation(summary = "Create new group", description = "This method save new groups")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public GroupResponse saveGroup(@PathVariable Long id, @RequestBody GroupRequest groupRequest) {
         return groupService.saveGroup(id, groupRequest);
@@ -30,7 +35,13 @@ public class GroupApi {
 
     @PermitAll
     @GetMapping
-    @Operation(summary = "find All group")
+    @Operation(summary = "gets a list", description = "Returns all groups that are,if there are no groups,then an error")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Found the groups",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<GroupResponse> findAllGroup() {
         return groupService.findAllGroup();
@@ -38,7 +49,7 @@ public class GroupApi {
 
 
     @GetMapping("/{id}")
-    @Operation(summary = "find by id group")
+    @Operation(summary = "gets a single groups by identifier")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','TEACHER')")
     public GroupResponse findById(@PathVariable Long id) {
         return groupService.findById(id);
@@ -46,7 +57,7 @@ public class GroupApi {
 
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "delete by id group")
+    @Operation(summary = "delete groups with ID")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public void deleteById(@PathVariable Long id) {
         groupService.deleteById(id);
@@ -54,14 +65,14 @@ public class GroupApi {
 
 
     @PatchMapping("/{id}")
-    @Operation(summary = "update group")
+    @Operation(summary = "update the groups", description = "Updates the details of an endpoint with ID")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public GroupResponse update(@PathVariable Long id, @RequestBody GroupRequest groupRequest) {
         return groupService.update(id, groupRequest);
     }
 
     @GetMapping("/group/{id}")
-    @Operation(summary = "Find the teacher of the group")
+    @Operation(summary = "Get teachers with ID", description = "Get all teachers in this groups")
     public List<StudentResponse> getAllTeacherByCourseId(@PathVariable Long id) {
         return groupService.getAllStudentByGroupId(id);
     }
