@@ -28,7 +28,7 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherMapper teacherMapper;
 
     @Override
-    public TeacherResponse saveTeacher(Long id, TeacherRequest teacherRequest) {
+    public TeacherResponse saveTeacher( TeacherRequest teacherRequest) {
 
         String email = teacherRequest.getEmail();
 
@@ -40,7 +40,7 @@ public class TeacherServiceImpl implements TeacherService {
         String encodedPassword = passwordEncoder.encode(teacherRequest.getPassword());
         teacherRequest.setPassword(encodedPassword);
 
-        Teacher teacher = teacherMapper.convert(id, teacherRequest);
+        Teacher teacher = teacherMapper.convert(teacherRequest);
 
         Teacher teacher1 = teacherRepository.save(teacher);
 

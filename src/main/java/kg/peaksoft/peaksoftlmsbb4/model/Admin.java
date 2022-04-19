@@ -14,13 +14,13 @@ import static javax.persistence.CascadeType.*;
 public class Admin {
     @Id
     @SequenceGenerator(
-            name = "admin_sequence",
-            sequenceName = "admin_sequence",
+            name = "admins_id_seq",
+            sequenceName = "admins_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "admin_sequence"
+            generator = "admins_id_seq"
     )
     private Long id;
 

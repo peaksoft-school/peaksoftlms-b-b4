@@ -20,12 +20,12 @@ public class Student {
 
     @Id
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
+            name = "student_id_seq",
+            sequenceName = "student_id_seq",
             allocationSize = 1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "student_id_seq"
     )
     private Long id;
     private String studentName;
@@ -42,7 +42,7 @@ public class Student {
     private Group group;
 
     @JsonIgnore
-    @ManyToMany(cascade = {PERSIST,REFRESH,MERGE},mappedBy = "students",fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {REFRESH,MERGE},mappedBy = "students",fetch = FetchType.LAZY)
     private List<Course> courses;
 
 }
