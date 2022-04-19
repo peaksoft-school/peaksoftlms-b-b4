@@ -54,10 +54,10 @@ public class StudentApi {
         return studentService.updateStudent(id, studentRequest);
     }
 
-    @DeleteMapping("/{studentId}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "delete students with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void deleteStudent(@PathVariable("studentId") Long id) {
+    public void deleteStudent(@PathVariable("id") Long id) {
         studentService.deleteStudent(id);
     }
 
