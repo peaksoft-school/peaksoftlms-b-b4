@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("api/links")
 @Tag(name = "Links", description = "The Links API")
 @CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
-public class LinkApi {
+public class        LinkApi {
     private final LinkService linkService;
 
     @PostMapping("/{id}")

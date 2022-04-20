@@ -41,9 +41,9 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public Lessons findById(Long id) {
+    public LessonResponse findById(Long id) {
         log.info("successfully find by id:{}", id);
-        return lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
+        return lessonMapper.deConvert(lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id))));
     }
 
     @Override
@@ -58,7 +58,7 @@ public class LessonServiceImpl implements LessonService {
         if (!exist) {
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
-        Lessons lessons = findById(id);
+        Lessons lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
         if (!lessons.getName().equals(lessonRequest.getName())) {
             lessons.setName(lessonRequest.getName());
         }

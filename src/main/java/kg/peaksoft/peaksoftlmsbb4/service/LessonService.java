@@ -10,7 +10,7 @@ import java.util.List;
 public interface LessonService {
     LessonResponse saveLessons(Long id,LessonRequest lessonRequest);
 
-    Lessons findById(Long id);
+    LessonResponse findById(Long id);
 
     List<LessonResponse> findAll();
 

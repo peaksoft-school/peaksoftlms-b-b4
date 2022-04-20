@@ -9,9 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
-import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
-import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
 import kg.peaksoft.peaksoftlmsbb4.service.LessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,7 +34,7 @@ public class LessonsApi {
     @GetMapping("/{id}")
     @Operation(summary = "gets a single lessons by identifier")
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public Lessons findById(@PathVariable Long id) {
+    public LessonResponse findById(@PathVariable Long id) {
         return lessonService.findById(id);
     }
 
