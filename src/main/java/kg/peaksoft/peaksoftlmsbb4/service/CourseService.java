@@ -23,4 +23,6 @@ public interface CourseService {
     List<StudentResponse> getAllStudentsByCourseId(Long id);
 
     List<TeacherResponse> getAllTeacherByCourseId(Long id);
+
+    Course getById(Long id);
 }

@@ -2,9 +2,12 @@ package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.lessons.LessonMapper;
+import kg.peaksoft.peaksoftlmsbb4.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
+import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.LessonService;
 import lombok.AllArgsConstructor;
@@ -22,11 +25,17 @@ import java.util.stream.Collectors;
 public class LessonServiceImpl implements LessonService {
     private final LessonRepository lessonRepository;
     private final LessonMapper lessonMapper;
+    private final CourseRepository courseRepository;
+
 
     @Override
-    public LessonResponse saveLessons(LessonRequest lessonRequest) {
+    public LessonResponse saveLessons(Long id,LessonRequest lessonRequest) {
+        Course course = courseRepository.findById(id).orElseThrow(()-> new BadRequestException(
+                String.format("Course with id %s does not exists",id)
+        ));
         Lessons lessons = lessonMapper.convert(lessonRequest);
         Lessons save = lessonRepository.save(lessons);
+        course.setLesson(save);
         log.info("successfully save lessons:{}", lessons);
         return lessonMapper.deConvert(save);
     }

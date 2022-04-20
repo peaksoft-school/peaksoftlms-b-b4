@@ -101,5 +101,10 @@ public class CourseServiceImpl implements CourseService {
         return teacherResponses;
     }
 
+    @Override
+    public Course getById(Long id) {
+        return courseRepository.getById(id);
+    }
+
 
 }

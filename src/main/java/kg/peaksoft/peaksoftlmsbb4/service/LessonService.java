@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public interface LessonService {
-    LessonResponse saveLessons(LessonRequest lessonRequest);
+    LessonResponse saveLessons(Long id,LessonRequest lessonRequest);
 
     Lessons findById(Long id);
 

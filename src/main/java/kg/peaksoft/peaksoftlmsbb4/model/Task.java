@@ -29,5 +29,9 @@ public class Task {
     private String link;
     private String code;
 
+    @ManyToOne
+    @JoinColumn(name = "lesson_id")
+    private Lessons lessons;
+
 
 }

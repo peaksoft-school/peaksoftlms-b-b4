@@ -24,4 +24,7 @@ public class Link {
     private String text;
     private String link;
 
+    @ManyToOne
+    @JoinColumn(name = "lesson_id")
+    private Lessons lessons;
 }

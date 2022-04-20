@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
+import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
+import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
 import kg.peaksoft.peaksoftlmsbb4.service.LessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,11 +27,11 @@ import java.util.List;
 public class LessonsApi {
     private final LessonService lessonService;
 
-    @PostMapping
+    @PostMapping("{id}")
     @Operation(summary = "Add new lesson", description = "This method save new lessons")
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public LessonResponse saveLesson(@RequestBody LessonRequest lessonRequest) {
-        return lessonService.saveLessons(lessonRequest);
+    public LessonResponse saveLesson(@PathVariable Long id,@RequestBody LessonRequest lessonRequest) {
+        return lessonService.saveLessons(id,lessonRequest);
     }
 
     @GetMapping("/{id}")

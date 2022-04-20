@@ -25,4 +25,8 @@ public class Presentation {
     private String description;
     private String file;
 
+    @ManyToOne
+    @JoinColumn(name = "lesson_id")
+    private Lessons lessons;
+
 }

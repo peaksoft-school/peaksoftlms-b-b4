@@ -25,4 +25,8 @@ public class VideoLesson {
     private String description;
     private String link;
 
+    @ManyToOne
+    @JoinColumn(name = "lesson_id")
+    private Lessons lessons;
+
 }
