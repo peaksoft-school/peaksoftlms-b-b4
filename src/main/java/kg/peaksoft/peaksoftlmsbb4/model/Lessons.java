@@ -26,17 +26,20 @@ public class Lessons {
     )
     private Long id;
     private String name;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lessons")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lessons")
     private List<Task> tasks;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lessons")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lessons")
     private List<Link> links;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lessons")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lessons")
     private List<VideoLesson> videoLessons;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lessons")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lessons")
     private List<Presentation> presentations;
-    @ManyToOne(cascade = {MERGE,REFRESH,DETACH,PERSIST})
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH, PERSIST})
     @JoinColumn(name = "course_id")
     private Course courses;
+
+    @OneToMany(mappedBy = "lessons", cascade = ALL, orphanRemoval = true)
+    private List<Test> tests = new ArrayList<>();
 
     public void setPresentation(Presentation presentation) {
         if (presentations == null) {

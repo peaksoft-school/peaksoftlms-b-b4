@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("api/lessons")
 @Tag(name = "Lessons", description = "The Lessons API")
 @CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
-public class LessonsApi {
+public class  LessonsApi {
     private final LessonService lessonService;
 
     @PostMapping("{id}")
