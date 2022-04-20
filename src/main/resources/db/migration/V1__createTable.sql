@@ -18,6 +18,7 @@
 --     password                 varchar(255),
 --     role                      varchar(255)
 --     );
+--
 -- create table admins
 -- (
 --     id serial not null
@@ -45,6 +46,7 @@
 --     group_name    varchar(255),
 --     imagine       varchar(255)
 --     );
+--
 -- create table if not exists teachers
 -- (
 --     id  serial not null
@@ -70,8 +72,6 @@
 --     group_id     bigint
 --     references groups(id)
 --     );
---
---
 --
 -- create table courses_students
 -- (
@@ -108,51 +108,16 @@
 --         select id from users where email = 'admin@gmail.com'
 --     ));
 --
--- create table if not exists lessons(
---                                       id serial not null primary key,
---                                       name varchar(255)
---     );
 --
--- create table if not exists presentation(
---                                             id serial not null primary key ,
---                                             name varchar(255),
---     descriptions varchar(255),
---     file varchar(255)
---     );
 --
--- create table if not exists links(
---                                     id serial not null primary key ,
---                                     text varchar(255),
---     link varchar(255)
---     );
 --
--- create table if not exists video_lessons(
---                                             id serial not null primary key ,
---                                             name varchar(255),
---     description varchar(255),
---     link varchar(255)
---     );
 --
--- create table if not exists tasks(
---                                     id serial not null primary key ,
---                                     name varchar(255),
---     text varchar(255),
---     link varchar(255),
---     file varchar(255),
---     image varchar(255),
---     code varchar(255)
---     );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--
+--
+--
+--
+--
+--
+--
+--
+--
