@@ -6,6 +6,9 @@ import kg.peaksoft.peaksoftlmsbb4.dto.link.LinkResponse;
 import kg.peaksoft.peaksoftlmsbb4.model.Link;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class LinkMapper implements Converter<Link, LinkRequest, LinkResponse> {
     @Override
@@ -23,5 +26,13 @@ public class LinkMapper implements Converter<Link, LinkRequest, LinkResponse> {
         linkResponse.setLink(link.getLink());
         linkResponse.setText(link.getText());
         return linkResponse;
+    }
+    
+    public List<LinkResponse> deConvert(List<Link> links){
+        List<LinkResponse> linkResponses = new ArrayList<>();
+        for (Link l:links) {
+            linkResponses.add(deConvert(l));
+        }
+        return linkResponses;
     }
 }

@@ -19,22 +19,23 @@ public class LessonMapper implements Converter<Lessons, LessonRequest, LessonRes
     private final VideoLessonMapper videoLessonMapper;
     private final PresentationMapper presentationMapper;
     private final TaskMapper taskMapper;
+
     @Override
     public Lessons convert(LessonRequest lessonRequest) {
-        Lessons lessons=new Lessons();
+        Lessons lessons = new Lessons();
         lessons.setName(lessonRequest.getName());
         return lessons;
     }
 
     @Override
     public LessonResponse deConvert(Lessons lessons) {
-        LessonResponse lessonResponse=new LessonResponse();
+        LessonResponse lessonResponse = new LessonResponse();
         lessonResponse.setId(lessons.getId());
         lessonResponse.setName(lessons.getName());
-//        lessonResponse.setLinkResponse(linkMapper.deConvert((Link) lessons.getLinks()));
-//        lessonResponse.setVideoLessonResponse(videoLessonMapper.deConvert((VideoLesson) lessons.getVideoLessons()));
-//        lessonResponse.setPresentationResponse(presentationMapper.deConvert((Presentation) lessons.getPresentations()));
-//        lessonResponse.setTaskResponse(taskMapper.deConvert((Task) lessons.getTasks()));
+        lessonResponse.setLinkResponse(linkMapper.deConvert(lessons.getLinks()));
+        lessonResponse.setVideoLessonResponse(videoLessonMapper.deConvert(lessons.getVideoLessons()));
+        lessonResponse.setPresentationResponse(presentationMapper.deConvert(lessons.getPresentations()));
+        lessonResponse.setTaskResponse(taskMapper.deConvert(lessons.getTasks()));
         return lessonResponse;
     }
 

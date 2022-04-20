@@ -1,16 +1,21 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper.task;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.dto.presentation.PresentationResponse;
 import kg.peaksoft.peaksoftlmsbb4.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.task.TaskResponse;
+import kg.peaksoft.peaksoftlmsbb4.model.Presentation;
 import kg.peaksoft.peaksoftlmsbb4.model.Task;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class TaskMapper implements Converter<Task, TaskRequest, TaskResponse> {
     @Override
     public Task convert(TaskRequest taskRequest) {
-        Task task=new Task();
+        Task task = new Task();
         task.setName(taskRequest.getName());
         task.setCode(taskRequest.getCode());
         task.setImage(taskRequest.getImage());
@@ -22,7 +27,7 @@ public class TaskMapper implements Converter<Task, TaskRequest, TaskResponse> {
 
     @Override
     public TaskResponse deConvert(Task task) {
-        TaskResponse taskResponse=new TaskResponse();
+        TaskResponse taskResponse = new TaskResponse();
         taskResponse.setId(task.getId());
         taskResponse.setImage(task.getImage());
         taskResponse.setText(task.getText());
@@ -31,5 +36,13 @@ public class TaskMapper implements Converter<Task, TaskRequest, TaskResponse> {
         taskResponse.setName(task.getName());
         taskResponse.setLink(task.getLink());
         return taskResponse;
+    }
+
+    public List<TaskResponse> deConvert(List<Task> tasks) {
+        List<TaskResponse> responses = new ArrayList<>();
+        for (Task task : tasks) {
+            responses.add(deConvert(task));
+        }
+        return responses;
     }
 }
