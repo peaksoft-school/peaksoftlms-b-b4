@@ -84,7 +84,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<StudentResponse> getAllStudentsByCourseId(Long id) {
         List<StudentResponse> studentResponses = new ArrayList<>();
-        for (Student s:findById(id).getStudents()) {
+        for (Student s : findById(id).getStudents()) {
             studentResponses.add(studentMapper.deConvert(s));
         }
         log.info("successful getAll Students by Course Id");
