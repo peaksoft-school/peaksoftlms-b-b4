@@ -51,6 +51,9 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "courses_id"))
     private List<Group> groups = new ArrayList<>();
 
+    @OneToMany(cascade = ALL,mappedBy = "courses")
+    private List<Lessons> lessons = new ArrayList<>();
+
     public void addTeacher(Teacher teacher) {
         if (teacher == null) {
             teachers = new ArrayList<>();
@@ -70,6 +73,14 @@ public class Course {
             students = new ArrayList<>();
         }
         students.add(student);
+    }
+
+    public void setLesson(Lessons lesson){
+        if(lessons == null){
+            lessons = new ArrayList<>();
+        }
+        lessons.add(lesson);
+        lesson.setCourses(this);
     }
 
 }

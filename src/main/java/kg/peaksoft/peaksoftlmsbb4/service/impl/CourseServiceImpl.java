@@ -84,7 +84,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<StudentResponse> getAllStudentsByCourseId(Long id) {
         List<StudentResponse> studentResponses = new ArrayList<>();
-        for (Student s:findById(id).getStudents()) {
+        for (Student s : findById(id).getStudents()) {
             studentResponses.add(studentMapper.deConvert(s));
         }
         log.info("successful getAll Students by Course Id");
@@ -99,6 +99,11 @@ public class CourseServiceImpl implements CourseService {
         }
         log.info("successful getAll teacher by Course Id");
         return teacherResponses;
+    }
+
+    @Override
+    public Course getById(Long id) {
+        return courseRepository.getById(id);
     }
 
 

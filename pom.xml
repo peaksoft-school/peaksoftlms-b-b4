@@ -16,9 +16,6 @@
 
     <properties>
         <java.version>11</java.version>
-        <flyway.user>databaseUser</flyway.user>
-        <flyway.password>databasePassword</flyway.password>
-        <flyway.schemas>schemaName</flyway.schemas>
     </properties>
 
     <dependencies>
