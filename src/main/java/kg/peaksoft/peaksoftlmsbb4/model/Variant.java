@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,15 +27,10 @@ public class Variant {
     private String variantName;
     private Boolean isTrue;
 
-
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToMany
-    @JoinTable(name = "variants_answers",
-            joinColumns = @JoinColumn(name = "variant_id"),
-            inverseJoinColumns = @JoinColumn(name = "answers_id"))
-    private List<Answer> answers = new ArrayList<>();
 
 }

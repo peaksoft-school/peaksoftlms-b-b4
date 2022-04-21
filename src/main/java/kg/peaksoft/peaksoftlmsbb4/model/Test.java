@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,11 +26,21 @@ public class Test {
     private Long id;
     private String testName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "lessons_id")
     private Lessons lessons;
+
+    public void setQuestions(Question question){
+        if(questions == null){
+            questions = new ArrayList<>();
+        }
+        questions.add(question);
+        question.setTest(this);
+    }
 
 }

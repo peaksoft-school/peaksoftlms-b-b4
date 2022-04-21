@@ -32,4 +32,12 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Variant> variants = new ArrayList<>();
 
+    public void setVariants(Variant variant){
+        if(variants == null){
+            variants = new ArrayList<>();
+        }
+        variants.add(variant);
+        variant.setQuestion(this);
+    }
+
 }
