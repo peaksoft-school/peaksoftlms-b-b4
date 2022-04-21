@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.dto.link.LinkRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.link.LinkResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Link;
 import kg.peaksoft.peaksoftlmsbb4.service.LinkService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,26 +20,29 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("api/links")
 @Tag(name = "Links", description = "The Links API")
-@CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
+@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
 public class LinkApi {
     private final LinkService linkService;
 
     @PostMapping("/{id}")
-    @Operation(summary = "Add new link", description = "This method save new links")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public LinkResponse saveLinks(@RequestBody LinkRequest linkRequest,@PathVariable Long id) {
-        return linkService.saveLinks(id,linkRequest);
+    @Operation(summary = "Add new link",
+            description = "This endpoint save new links to lesson. Only users with role teacher can add new link to lesson")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    public LinkResponse saveLink(@PathVariable Long id, @RequestBody LinkRequest linkRequest) {
+        return linkService.saveLinks(id, linkRequest);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "gets a single links by identifier")
+    @Operation(summary = "Gets a single links by identifier",
+            description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public Link findById(@PathVariable Long id) {
+    public LinkResponse findById(@PathVariable Long id) {
         return linkService.findById(id);
     }
 
     @GetMapping
-    @Operation(summary = "gets a list", description = "Returns all links that are,if there are no links,then an error")
+    @Operation(summary = "Gets a list",
+            description = "Returns all links that are,if there are no links,then an error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Found the links",
@@ -53,7 +55,8 @@ public class LinkApi {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "update the Links", description = "Updates the details of an endpoint with ID")
+    @Operation(summary = "Update the link",
+            description = "Updates the details of an endpoint with ID. Only users with role teacher can update the link")
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public LinkResponse update(@PathVariable Long id, @RequestBody LinkRequest linkRequest) {
         return linkService.update(id, linkRequest);
@@ -61,8 +64,9 @@ public class LinkApi {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    @Operation(summary = "delete links by id")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @Operation(summary = "Delete the link",
+            description = "Delete links with ID. Only users with role teacher can delete links")
     public void delete(@PathVariable Long id) {
         linkService.delete(id);
     }

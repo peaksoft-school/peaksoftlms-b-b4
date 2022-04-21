@@ -6,7 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.lessons.LessonMapper;
 import kg.peaksoft.peaksoftlmsbb4.model.Course;
-import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
+import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.LessonService;
@@ -33,17 +33,16 @@ public class LessonServiceImpl implements LessonService {
         Course course = courseRepository.findById(id).orElseThrow(()-> new BadRequestException(
                 String.format("Course with id %s does not exists",id)
         ));
-        Lessons lessons = lessonMapper.convert(lessonRequest);
-        Lessons save = lessonRepository.save(lessons);
+        Lesson lessons = lessonMapper.convert(lessonRequest);
+        Lesson save = lessonRepository.save(lessons);
         course.setLesson(save);
         log.info("successfully save lessons:{}", lessons);
         return lessonMapper.deConvert(save);
     }
 
     @Override
-    public Lessons findById(Long id) {
-        log.info("successfully find by id:{}", id);
-        return lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
+    public LessonResponse findById(Long id) {
+        return lessonMapper.deConvert(getLessonByI(id));
     }
 
     @Override
@@ -58,11 +57,11 @@ public class LessonServiceImpl implements LessonService {
         if (!exist) {
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
-        Lessons lessons = findById(id);
+        Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
         if (!lessons.getName().equals(lessonRequest.getName())) {
             lessons.setName(lessonRequest.getName());
         }
-        log.info("successfully update id:{}", id);
+        log.info("Lesson successfully update id:{}", id);
         return lessonMapper.deConvert(lessons);
     }
 
@@ -70,10 +69,14 @@ public class LessonServiceImpl implements LessonService {
     public void delete(Long id) {
         boolean exits = lessonRepository.existsById(id);
         if (!exits) {
-            throw new NotFoundException(String.format("Not found id=%s", id));
+            throw new NotFoundException(String.format("Lesson is not found id=%s", id));
         }
         log.info("successfully delete id:{}", id);
         lessonRepository.deleteById(id);
 
+    }
+
+    private Lesson getLessonByI(Long id){
+      return lessonRepository.findById(id).orElseThrow(()-> new BadRequestException(String.format("lesson with %s not found",id)));
     }
 }

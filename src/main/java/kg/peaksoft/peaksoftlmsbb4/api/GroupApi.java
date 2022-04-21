@@ -21,20 +21,22 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Tag(name = "Group", description = "The Group API")
-@CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
+@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
 @RequestMapping("/api/groups")
 public class GroupApi {
     private final GroupService groupService;
 
     @PostMapping
-    @Operation(summary = "Create new group", description = "This method save new groups")
+    @Operation(summary = "Create new group",
+            description = "This endpoint save new groups. Only users with role admin can add new groups")
     @PreAuthorize("hasAuthority('ADMIN')")
     public GroupResponse saveGroup(@RequestBody GroupRequest groupRequest) {
         return groupService.saveGroup(groupRequest);
     }
 
     @PermitAll
-    @Operation(summary = "gets a list", description = "Returns all groups that are,if there are no groups,then an error")
+    @Operation(summary = "Gets a list",
+            description = "Returns all groups that are,if there are no groups,then an error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Found the groups",
@@ -49,7 +51,8 @@ public class GroupApi {
 
 
     @GetMapping("/{id}")
-    @Operation(summary = "gets a single groups by identifier")
+    @Operation(summary = "Gets a single groups by identifier",
+            description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public GroupResponse findById(@PathVariable Long id) {
         return groupService.findById(id);
@@ -57,7 +60,8 @@ public class GroupApi {
 
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "delete groups with ID")
+    @Operation(summary = "Delete group with ID",
+            description = "Delete group with ID. Only users with role admin can delete courses")
     @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteById(@PathVariable Long id) {
         groupService.deleteById(id);
@@ -65,14 +69,16 @@ public class GroupApi {
 
 
     @PutMapping("/{id}")
-    @Operation(summary = "update the groups", description = "Updates the details of an endpoint with ID")
+    @Operation(summary = "Update the group",
+            description = "Updates the details of an endpoint with ID. Only users with role admin can update the course")
     @PreAuthorize("hasAuthority('ADMIN')")
     public GroupResponse update(@PathVariable Long id, @RequestBody GroupRequest groupRequest) {
         return groupService.update(id, groupRequest);
     }
 
     @GetMapping("/group/{id}")
-    @Operation(summary = "Get teachers with ID", description = "Get all teachers in this groups")
+    @Operation(summary = "Get teachers with ID",
+            description = "Get all teachers in this groups")
     public List<StudentResponse> getAllTeacherByCourseId(@PathVariable Long id) {
         return groupService.getAllStudentByGroupId(id);
     }
