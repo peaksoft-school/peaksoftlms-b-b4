@@ -27,7 +27,6 @@ public class Variant {
     private String variantName;
     private Boolean isTrue;
 
-    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "question_id")
     private Question question;

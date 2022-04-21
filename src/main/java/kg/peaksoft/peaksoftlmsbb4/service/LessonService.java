@@ -6,9 +6,10 @@ import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public interface LessonService {
-    LessonResponse saveLessons(Long id,LessonRequest lessonRequest);
+    LessonResponse saveLessons(Long id, LessonRequest lessonRequest);
 
     Lessons findById(Long id);
 

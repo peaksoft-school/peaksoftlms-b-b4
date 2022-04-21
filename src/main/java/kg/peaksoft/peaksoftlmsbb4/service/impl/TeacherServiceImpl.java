@@ -51,7 +51,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         Teacher teacher1 = teacherRepository.save(teacher);
 
-        log.info("successful save this teacher:{}",teacher1);
+        log.info("successful save this teacher:{}", teacher1);
         return teacherMapper.deConvert(teacher1);
 
     }
@@ -78,7 +78,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (!passwordEncoder.matches(teacherRequest.getPassword(), teacher.getUser().getPassword())) {
             teacher.getUser().setPassword(passwordEncoder.encode(teacherRequest.getPassword()));
         }
-        log.info("successful update teacher this id:{}",id);
+        log.info("successful update teacher this id:{}", id);
         return teacherMapper.deConvert(teacher);
 
     }
@@ -89,7 +89,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     private Teacher findBy(Long id) {
-        log.info("successful find by id :{}",id);
+        log.info("successful find by id :{}", id);
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
                         String.format("teacher with id = %s does not exists", id)
@@ -103,7 +103,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (!exists) {
             throw new BadRequestException(String.format("teacher with id = %s does not exists", id));
         }
-        log.info("successful delete this id:{}",id);
+        log.info("successful delete this id:{}", id);
         teacherRepository.deleteById(id);
     }
 
@@ -121,7 +121,7 @@ public class TeacherServiceImpl implements TeacherService {
         for (Course c : findBy(id).getCourses()) {
             courseResponses.add(courseMapper.deConvert(c));
         }
-        log.info("successful teacher findAll teacher courses this id:{}",id);
+        log.info("successful teacher findAll teacher courses this id:{}", id);
         return courseResponses;
     }
 
@@ -134,7 +134,6 @@ public class TeacherServiceImpl implements TeacherService {
         log.info("successful assign teacher with id=%s to course");
         course1.addTeacher(teacher);
     }
-
 
 
 }

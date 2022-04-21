@@ -6,9 +6,10 @@ import kg.peaksoft.peaksoftlmsbb4.model.Presentation;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public interface PresentationService {
-    PresentationResponse savePresentation(Long id,PresentationRequest presentationRequest);
+    PresentationResponse savePresentation(Long id, PresentationRequest presentationRequest);
 
     Presentation findById(Long id);
 

@@ -2,7 +2,6 @@ package kg.peaksoft.peaksoftlmsbb4.service;
 
 import kg.peaksoft.peaksoftlmsbb4.dto.test.TestRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.test.TestResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Test;
 
 import java.util.List;
 

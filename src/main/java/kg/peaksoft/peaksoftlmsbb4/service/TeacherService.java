@@ -3,7 +3,6 @@ package kg.peaksoft.peaksoftlmsbb4.service;
 import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
 
 import java.util.List;
 

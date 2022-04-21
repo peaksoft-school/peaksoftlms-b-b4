@@ -29,9 +29,9 @@ public class LessonServiceImpl implements LessonService {
 
 
     @Override
-    public LessonResponse saveLessons(Long id,LessonRequest lessonRequest) {
-        Course course = courseRepository.findById(id).orElseThrow(()-> new BadRequestException(
-                String.format("Course with id %s does not exists",id)
+    public LessonResponse saveLessons(Long id, LessonRequest lessonRequest) {
+        Course course = courseRepository.findById(id).orElseThrow(() -> new BadRequestException(
+                String.format("Course with id %s does not exists", id)
         ));
         Lessons lessons = lessonMapper.convert(lessonRequest);
         Lessons save = lessonRepository.save(lessons);

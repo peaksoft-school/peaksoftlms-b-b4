@@ -27,7 +27,7 @@ public class VideoLessonServiceImpl implements VideoLessonService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public VideoLessonResponse saveVideoLessons(Long id,VideoLessonRequest videoLessonRequest) {
+    public VideoLessonResponse saveVideoLessons(Long id, VideoLessonRequest videoLessonRequest) {
         Lessons lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", id)
         ));

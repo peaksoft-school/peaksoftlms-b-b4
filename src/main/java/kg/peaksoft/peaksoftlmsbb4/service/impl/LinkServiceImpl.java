@@ -27,8 +27,8 @@ public class LinkServiceImpl implements LinkService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public LinkResponse saveLinks(Long id,LinkRequest linkRequest) {
-        Lessons lessons = lessonRepository.findById(id).orElseThrow(()->new NotFoundException(
+    public LinkResponse saveLinks(Long id, LinkRequest linkRequest) {
+        Lessons lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", id)
         ));
         Link link = linkMapper.convert(linkRequest);

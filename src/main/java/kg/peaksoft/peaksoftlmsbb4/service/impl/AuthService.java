@@ -25,7 +25,7 @@ public class AuthService {
                 authRequest.getPassword()
         ));
         String generatedToken = jwtUtils.generateToken(authentication);
-        log.info("successful generated token :{}",generatedToken);
+        log.info("successful generated token :{}", generatedToken);
         return AuthResponseDto.builder()
                 .email(authRequest.getEmail())
                 .token(generatedToken)

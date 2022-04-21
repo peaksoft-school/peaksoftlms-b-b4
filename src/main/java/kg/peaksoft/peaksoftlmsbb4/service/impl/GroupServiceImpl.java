@@ -119,12 +119,13 @@ public class GroupServiceImpl implements GroupService {
         log.info("successful get All Student By Group Id this id:{}", id);
         return studentResponses;
     }
+
     @Transactional
     @Override
     public void assignGroupToCourse(Long courseId, Long groupId) {
         Course course1 = courseRepository.findById(courseId)
-                .orElseThrow(()-> new BadRequestException(
-                        String.format("Course with id %s not found",courseId)));
+                .orElseThrow(() -> new BadRequestException(
+                        String.format("Course with id %s not found", courseId)));
         Group group = groupRepository.getById(groupId);
         course1.setGroup(group);
     }

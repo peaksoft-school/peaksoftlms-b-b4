@@ -10,7 +10,6 @@ import kg.peaksoft.peaksoftlmsbb4.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.mapper.teacher.TeacherMapper;
 import kg.peaksoft.peaksoftlmsbb4.model.Course;
-import kg.peaksoft.peaksoftlmsbb4.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;

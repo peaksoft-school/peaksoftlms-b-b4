@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface VideoLessonService {
 
-    VideoLessonResponse saveVideoLessons(Long id,VideoLessonRequest videoLessonRequest);
+    VideoLessonResponse saveVideoLessons(Long id, VideoLessonRequest videoLessonRequest);
 
     VideoLesson findById(Long id);
 

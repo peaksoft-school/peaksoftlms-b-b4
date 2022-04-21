@@ -6,9 +6,10 @@ import kg.peaksoft.peaksoftlmsbb4.model.Link;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public interface LinkService {
-    LinkResponse saveLinks(Long id,LinkRequest linkRequest);
+    LinkResponse saveLinks(Long id, LinkRequest linkRequest);
 
     Link findById(Long id);
 

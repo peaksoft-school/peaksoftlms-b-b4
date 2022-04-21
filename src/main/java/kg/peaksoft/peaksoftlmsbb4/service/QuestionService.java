@@ -2,7 +2,6 @@ package kg.peaksoft.peaksoftlmsbb4.service;
 
 import kg.peaksoft.peaksoftlmsbb4.dto.question.QuestionRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.question.QuestionResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Question;
 
 import java.util.List;
 
