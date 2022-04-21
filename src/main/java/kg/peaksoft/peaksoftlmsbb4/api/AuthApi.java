@@ -13,7 +13,7 @@ import javax.annotation.security.PermitAll;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/authentication")
-@CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
+@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
 @Tag(name = "AuthApi", description = "The AuthApi (for authentication) ")
 public class AuthApi {
 

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class LessonMapper implements Converter<Lessons, LessonRequest, LessonResponse> {
+public class LessonMapper implements Converter<Lesson, LessonRequest, LessonResponse> {
 
     private final LinkMapper linkMapper;
     private final VideoLessonMapper videoLessonMapper;
@@ -21,21 +21,29 @@ public class LessonMapper implements Converter<Lessons, LessonRequest, LessonRes
     private final TaskMapper taskMapper;
 
     @Override
-    public Lessons convert(LessonRequest lessonRequest) {
-        Lessons lessons = new Lessons();
+    public Lesson convert(LessonRequest lessonRequest) {
+        Lesson lessons = new Lesson();
         lessons.setName(lessonRequest.getName());
         return lessons;
     }
 
     @Override
-    public LessonResponse deConvert(Lessons lessons) {
+    public LessonResponse deConvert(Lesson lessons) {
         LessonResponse lessonResponse = new LessonResponse();
         lessonResponse.setId(lessons.getId());
         lessonResponse.setName(lessons.getName());
-        lessonResponse.setLinkResponse(linkMapper.deConvert(lessons.getLinks()));
-        lessonResponse.setVideoLessonResponse(videoLessonMapper.deConvert(lessons.getVideoLessons()));
-        lessonResponse.setPresentationResponse(presentationMapper.deConvert(lessons.getPresentations()));
-        lessonResponse.setTaskResponse(taskMapper.deConvert(lessons.getTasks()));
+        if (lessons.getLinks() != null) {
+            lessonResponse.setLinkResponse(linkMapper.deConvert(lessons.getLinks()));
+        }
+        if (lessons.getVideoLessons() != null) {
+            lessonResponse.setVideoLessonResponse(videoLessonMapper.deConvert(lessons.getVideoLessons()));
+        }
+        if (lessons.getPresentations() != null) {
+            lessonResponse.setPresentationResponse(presentationMapper.deConvert(lessons.getPresentations()));
+        }
+        if(lessons.getTasks() != null) {
+            lessonResponse.setTaskResponse(taskMapper.deConvert(lessons.getTasks()));
+        }
         return lessonResponse;
     }
 

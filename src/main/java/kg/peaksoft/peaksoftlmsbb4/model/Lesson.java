@@ -13,7 +13,7 @@ import static javax.persistence.CascadeType.*;
 @Table(name = "lessons")
 @Getter
 @Setter
-public class Lessons {
+public class Lesson {
     @Id
     @SequenceGenerator(
             name = "lessons_id_seq",
@@ -43,6 +43,7 @@ public class Lessons {
             presentations = new ArrayList<>();
         }
         presentations.add(presentation);
+        presentation.setLessons(this);
     }
 
     public void setLink(Link link) {

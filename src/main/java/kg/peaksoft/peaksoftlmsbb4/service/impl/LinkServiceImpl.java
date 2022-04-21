@@ -4,7 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.dto.link.LinkRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.link.LinkResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.link.LinkMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
+import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.model.Link;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.LinkRepository;
@@ -27,21 +27,24 @@ public class LinkServiceImpl implements LinkService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public LinkResponse saveLinks(Long id,LinkRequest linkRequest) {
-        Lessons lessons = lessonRepository.findById(id).orElseThrow(()->new NotFoundException(
+    public LinkResponse saveLinks(Long id, LinkRequest linkRequest) {
+        System.out.println("This method works exactly");
+        Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", id)
         ));
+        log.info("found lesson:{}", lessons);
         Link link = linkMapper.convert(linkRequest);
+        log.info("found link:{}", lessons);
         Link save = linkRepository.save(link);
+        log.info("saved lesson:{}", lessons);
         lessons.setLink(save);
         log.info("successfully save links:{}", link);
         return linkMapper.deConvert(save);
     }
 
     @Override
-    public Link findById(Long id) {
-        log.info("successfully find by id:{}", id);
-        return linkRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
+    public LinkResponse findById(Long id) {
+        return linkMapper.deConvert(getLinkById(id));
     }
 
     @Override
@@ -54,9 +57,9 @@ public class LinkServiceImpl implements LinkService {
     public LinkResponse update(Long id, LinkRequest linkRequest) {
         boolean exist = linkRepository.existsById(id);
         if (!exist) {
-            throw new NotFoundException(String.format("Not found id=%s", id));
+            throw new NotFoundException(String.format("Link is not found with  id=%s", id));
         }
-        Link link = findById(id);
+        Link link = getLinkById(id);
         if (!link.getLink().equals(linkRequest.getLink())) {
             link.setLink(linkRequest.getLink());
         }
@@ -71,9 +74,14 @@ public class LinkServiceImpl implements LinkService {
     public void delete(Long id) {
         boolean exits = linkRepository.existsById(id);
         if (!exits) {
-            throw new NotFoundException(String.format("Not found id=%s", id));
+            throw new NotFoundException(String.format("link is does not exists id=%s", id));
         }
         log.info("successfully delete by id:{}", id);
         linkRepository.deleteById(id);
+    }
+
+    private Link getLinkById(Long id) {
+        log.info("successfully find by id:{}", id);
+        return linkRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Link is not found id=%s", id)));
     }
 }

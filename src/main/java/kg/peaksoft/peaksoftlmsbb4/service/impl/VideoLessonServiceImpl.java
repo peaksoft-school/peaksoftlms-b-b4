@@ -4,7 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.dto.videoleson.VideoLessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.videoleson.VideoLessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.videolesson.VideoLessonMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
+import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.model.VideoLesson;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.VideoLessonRepository;
@@ -28,7 +28,7 @@ public class VideoLessonServiceImpl implements VideoLessonService {
 
     @Override
     public VideoLessonResponse saveVideoLessons(Long id,VideoLessonRequest videoLessonRequest) {
-        Lessons lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
+        Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", id)
         ));
         VideoLesson videoLesson = videoLessonMapper.convert(videoLessonRequest);
@@ -39,7 +39,12 @@ public class VideoLessonServiceImpl implements VideoLessonService {
     }
 
     @Override
-    public VideoLesson findById(Long id) {
+    public VideoLessonResponse findById(Long id) {
+        return videoLessonMapper.deConvert(findBy(id));
+    }
+
+
+    private VideoLesson findBy(Long id) {
         log.info("successfully find by id:{}", id);
         return videoLessonRepository.findById(id).orElseThrow(() -> {
             throw new NotFoundException(String.format("Not found id=%s", id));
@@ -58,7 +63,7 @@ public class VideoLessonServiceImpl implements VideoLessonService {
         if (!exist) {
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
-        VideoLesson videoLesson = findById(id);
+        VideoLesson videoLesson = findBy(id);
         if (!videoLesson.getName().equals(videoLessonRequest.getName())) {
             videoLesson.setName(videoLessonRequest.getName());
         }

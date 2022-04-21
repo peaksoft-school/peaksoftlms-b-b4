@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/students")
 @AllArgsConstructor
-@CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
+@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
 @Tag(name = "Student", description = "The Student API")
 public class StudentApi {
 
@@ -39,25 +39,28 @@ public class StudentApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public List<StudentResponse> findAll(@RequestParam int size,
                                          @RequestParam int page) {
-        return studentService.findAllStudent(PageRequest.of(size,page));
+        return studentService.findAllStudent(PageRequest.of(size, page));
     }
 
     @PostMapping
-    @Operation(summary = "Add new student", description = "This method save new student")
+    @Operation(summary = "Add new student",
+            description = "This endpoint save new student. Only users with role admin can add new students")
     @PreAuthorize("hasAuthority('ADMIN')")
     public StudentResponse saveStudent(@RequestBody @Valid StudentRequest studentRequest) {
         return studentService.saveStudent(studentRequest);
     }
 
     @PutMapping("/{studentId}")
-    @Operation(summary = "update the students", description = "Updates the details of an endpoint with ID")
+    @Operation(summary = "Update the students",
+            description = "Updates the details of an endpoint with ID.  Only users with role admin can update students")
     @PreAuthorize("hasAuthority('ADMIN')")
     public StudentResponse updateStudent(@PathVariable("studentId") Long id, @RequestBody @Valid StudentRequest studentRequest) {
         return studentService.updateStudent(id, studentRequest);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "delete students with ID")
+    @Operation(summary = "Delete the student",
+            description = "Delete student with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteStudent(@PathVariable("id") Long id) {
         studentService.deleteStudent(id);
@@ -65,10 +68,13 @@ public class StudentApi {
 
     @GetMapping("/format")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "here you can choose the format of training")
+    @Operation(summary = "Get student by study format",
+            description = "Here you can choose the format of training")
     public List<StudentResponse> getStudyFormat(@RequestParam(required = false) StudyFormat studyFormat) {
         return studentService.findByStudyFormat(studyFormat);
     }
+
+    // find Student By ID !!!!
 
 
 }
