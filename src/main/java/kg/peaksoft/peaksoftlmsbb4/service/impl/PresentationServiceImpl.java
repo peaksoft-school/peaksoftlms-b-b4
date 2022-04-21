@@ -4,7 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.dto.presentation.PresentationRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.presentation.PresentationResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.presentation.PresentationMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
+import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.model.Presentation;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.PresentationRepository;
@@ -28,7 +28,7 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public PresentationResponse savePresentation(Long id,PresentationRequest presentationRequest) {
-         Lessons lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
+         Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", id)
         ));
         Presentation presentation = presentationMapper.convert(presentationRequest);
@@ -39,9 +39,10 @@ public class PresentationServiceImpl implements PresentationService {
     }
 
     @Override
-    public Presentation findById(Long id) {
+    public PresentationResponse findById(Long id) {
         log.info("successfully find by id:{}", id);
-        return presentationRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
+        Presentation presentation = presentationRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
+        return presentationMapper.deConvert(presentation);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class PresentationServiceImpl implements PresentationService {
         if (!exist) {
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
-        Presentation presentation = findById(id);
+        Presentation presentation = getById(id);
         if (!presentation.getName().equals(presentationRequest.getName())) {
             presentation.setName(presentationRequest.getName());
         }
@@ -78,5 +79,9 @@ public class PresentationServiceImpl implements PresentationService {
         }
         log.info("successfully delete by id:{}", id);
         presentationRepository.deleteById(id);
+    }
+
+    private Presentation getById(Long id){
+        return presentationRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
     }
 }

@@ -7,14 +7,16 @@ import kg.peaksoft.peaksoftlmsbb4.dto.videoleson.VideoLessonResponse;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class LessonResponse {
     private Long id;
     private String name;
-    private TaskResponse taskResponse;
-    private LinkResponse linkResponse;
-    private VideoLessonResponse videoLessonResponse;
-    private PresentationResponse presentationResponse;
+    private List<TaskResponse> taskResponse;
+    private List<LinkResponse> linkResponse;
+    private List<VideoLessonResponse> videoLessonResponse;
+    private List<PresentationResponse> presentationResponse;
 
 }

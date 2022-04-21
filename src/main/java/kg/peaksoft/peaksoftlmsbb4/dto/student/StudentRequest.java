@@ -25,6 +25,7 @@ public class StudentRequest {
     @ValidPhoneNumber
     private String phoneNumber;
 
+    @NotBlank
     private StudyFormat studyFormat;
 
     @Email(message = "email must follow the formatter :***@**")

@@ -14,7 +14,7 @@ public interface CourseService {
 
     List<CourseResponse> findAll();
 
-    Course findById(Long id);
+    CourseResponse findById(Long id);
 
     CourseResponse update(Long id, CourseRequest courseRequest);
 

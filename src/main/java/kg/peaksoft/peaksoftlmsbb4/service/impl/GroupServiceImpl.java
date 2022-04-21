@@ -94,7 +94,7 @@ public class GroupServiceImpl implements GroupService {
             group.setDescription(newDescription);
         }
         String currentImagine = group.getImagine();
-        String newImagine = groupRequest.getImagine();
+        String newImagine = groupRequest.getImage();
         if (!currentImagine.equals(newImagine)) {
             group.setImagine(newImagine);
         }

@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/admin")
 @AllArgsConstructor
-@CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
+@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
 @Tag(name = "Admin", description = "The Admin API (register admin)")
 public class AdminApi {
 

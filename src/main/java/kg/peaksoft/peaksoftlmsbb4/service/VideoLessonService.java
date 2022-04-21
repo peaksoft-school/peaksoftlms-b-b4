@@ -12,7 +12,7 @@ public interface VideoLessonService {
 
     VideoLessonResponse saveVideoLessons(Long id, VideoLessonRequest videoLessonRequest);
 
-    VideoLesson findById(Long id);
+    VideoLessonResponse findById(Long id);
 
     List<VideoLessonResponse> findAll();
 

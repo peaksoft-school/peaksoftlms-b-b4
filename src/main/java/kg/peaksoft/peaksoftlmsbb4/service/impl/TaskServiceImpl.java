@@ -4,7 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.task.TaskResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.task.TaskMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
+import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.TaskRepository;
@@ -27,8 +27,8 @@ public class TaskServiceImpl implements TaskService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public TaskResponse saveTasks(Long id, TaskRequest taskRequest) {
-        Lessons lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
+    public TaskResponse saveTasks(Long id,TaskRequest taskRequest) {
+        Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", id)
         ));
         Task task = taskMapper.convert(taskRequest);
@@ -54,7 +54,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponse update(Long id, TaskRequest taskRequest) {
         boolean exist = taskRepository.existsById(id);
         if (!exist) {
-            throw new NotFoundException(String.format("Not found id=%s", id));
+            throw new NotFoundException(String.format("Task is not found id=%s", id));
         }
         Task task = findById(id);
         if (!task.getName().equals(taskRequest.getName())) {
@@ -83,7 +83,7 @@ public class TaskServiceImpl implements TaskService {
     public void delete(Long id) {
         boolean exits = taskRepository.existsById(id);
         if (!exits) {
-            throw new NotFoundException(String.format("Not found id=%s", id));
+            throw new NotFoundException(String.format("Task is not found id=%s", id));
 
         }
         log.info("successfully delet by id :{}", id);

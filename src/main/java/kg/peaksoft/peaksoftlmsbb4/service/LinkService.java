@@ -11,7 +11,7 @@ import java.util.List;
 public interface LinkService {
     LinkResponse saveLinks(Long id, LinkRequest linkRequest);
 
-    Link findById(Long id);
+    LinkResponse findById(Long id);
 
     List<LinkResponse> findAll();
 

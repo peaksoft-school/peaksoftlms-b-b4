@@ -53,9 +53,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course findById(Long id) {
+    public CourseResponse findById(Long id) {
         log.info("successful find by this id:{}", id);
-        return courseRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found course with id=%s", id)));
+        return courseMapper.deConvert(getById(id));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CourseServiceImpl implements CourseService {
         if (!exists) {
             throw new NotFoundException(String.format("Not found with id=%s", id));
         }
-        Course course = findById(id);
+        Course course = getById(id);
         courseMapper.update(course, courseRequest);
         log.info("successful update this course:{}", course);
         return courseMapper.deConvert(course);
@@ -83,7 +83,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<StudentResponse> getAllStudentsByCourseId(Long id) {
         List<StudentResponse> studentResponses = new ArrayList<>();
-        for (Student s : findById(id).getStudents()) {
+        for (Student s : getById(id).getStudents()) {
             studentResponses.add(studentMapper.deConvert(s));
         }
         log.info("successful getAll Students by Course Id");
@@ -93,7 +93,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<TeacherResponse> getAllTeacherByCourseId(Long id) {
         List<TeacherResponse> teacherResponses = new ArrayList<>();
-        for (Teacher t : findById(id).getTeachers()) {
+        for (Teacher t : getById(id).getTeachers()) {
             teacherResponses.add(teacherMapper.deConvert(t));
         }
         log.info("successful getAll teacher by Course Id");

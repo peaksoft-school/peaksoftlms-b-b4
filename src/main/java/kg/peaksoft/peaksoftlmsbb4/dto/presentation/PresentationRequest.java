@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 public class PresentationRequest {
     @NotBlank
     private String name;
-    @NotBlank
     private String description;
     @NotBlank
     private String file;

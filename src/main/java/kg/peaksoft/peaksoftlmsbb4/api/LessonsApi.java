@@ -9,9 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
-import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
-import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
 import kg.peaksoft.peaksoftlmsbb4.service.LessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,49 +19,54 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/lessons")
-@Tag(name = "Lessons", description = "The Lessons API")
-@CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
-public class  LessonsApi {
+@Tag(name = "Lesson", description = "The Lesson API")
+@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
+public class LessonsApi {
     private final LessonService lessonService;
 
     @PostMapping("{id}")
-    @Operation(summary = "Add new lesson", description = "This method save new lessons")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public LessonResponse saveLesson(@PathVariable Long id,@RequestBody LessonRequest lessonRequest) {
-        return lessonService.saveLessons(id,lessonRequest);
+    @Operation(summary = "Add new lesson to course",
+            description = "This endpoint save new lesson to course by ID. Only users with role teacher can add new lessons")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    public LessonResponse saveLesson(@PathVariable Long id, @RequestBody LessonRequest lessonRequest) {
+        return lessonService.saveLessons(id, lessonRequest);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "gets a single lessons by identifier")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public Lessons findById(@PathVariable Long id) {
+    @Operation(summary = "Gets a single lessons by identifier",
+            description = "For valid response try integer IDs with value >= 1 and...")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    public LessonResponse findById(@PathVariable Long id) {
         return lessonService.findById(id);
     }
 
     @GetMapping
-    @Operation(summary = "gets a list", description = "Returns all lessons that are,if there are no lessons,then an error")
+    @Operation(summary = "Gets a list",
+            description = "Returns all course's lessons that are,if there are no lessons,then an error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Found the lessons",
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = LessonsApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     public List<LessonResponse> findAll() {
         return lessonService.findAll();
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "update the LESSONS", description = "Updates the details of an endpoint with ID")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @Operation(summary = "Update the lessons",
+            description = "Updates the details of an endpoint with ID. Only users with role teacher can update the lesson")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     public LessonResponse update(@PathVariable Long id, @RequestBody LessonRequest lessonRequest) {
         return lessonService.update(id, lessonRequest);
 
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    @Operation(summary = "delete lessons by id")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @Operation(summary = "Delete the lesson",
+            description = "Delete lesson with ID. Only users with role teacher can delete lesson")
     public void delete(@PathVariable Long id) {
         lessonService.delete(id);
     }

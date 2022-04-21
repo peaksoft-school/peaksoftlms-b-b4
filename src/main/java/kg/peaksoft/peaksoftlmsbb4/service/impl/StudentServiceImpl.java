@@ -70,7 +70,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findById(Long id) {
+    public StudentResponse getById(Long id) {
+        return studentMapper.deConvert(findById(id));
+    }
+
+    private Student findById(Long id) {
         log.info("successful find by this id:{}", id);
         return studentRepository.findById(id).orElseThrow(() -> new NotFoundException
                 (String.format("student with id = %s does not exists ", id)));

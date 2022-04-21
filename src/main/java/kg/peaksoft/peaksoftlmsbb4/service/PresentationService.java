@@ -11,7 +11,7 @@ import java.util.List;
 public interface PresentationService {
     PresentationResponse savePresentation(Long id, PresentationRequest presentationRequest);
 
-    Presentation findById(Long id);
+    PresentationResponse findById(Long id);
 
     PresentationResponse update(Long id, PresentationRequest presentationRequest);
 
