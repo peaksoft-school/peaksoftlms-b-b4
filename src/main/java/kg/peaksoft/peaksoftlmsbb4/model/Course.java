@@ -2,7 +2,6 @@ package kg.peaksoft.peaksoftlmsbb4.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -32,13 +31,6 @@ public class Course {
     private String description;
     private LocalDate dateOfStart;
 
-    public Course(String courseName, String image, String description, LocalDate dateOfStart) {
-        this.courseName = courseName;
-        this.image = image;
-        this.description = description;
-        this.dateOfStart = dateOfStart;
-    }
-
     @ManyToMany(cascade =
             {PERSIST, REFRESH, DETACH, MERGE, REMOVE})
     @JoinTable(name = "courses_students",
@@ -59,9 +51,8 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "courses_id"))
     private List<Group> groups = new ArrayList<>();
 
-    public Course() {
-
-    }
+    @OneToMany(cascade = ALL,mappedBy = "courses")
+    private List<Lesson> lessons = new ArrayList<>();
 
     public void addTeacher(Teacher teacher) {
         if (teacher == null) {
@@ -82,6 +73,14 @@ public class Course {
             students = new ArrayList<>();
         }
         students.add(student);
+    }
+
+    public void setLesson(Lesson lesson){
+        if(lessons == null){
+            lessons = new ArrayList<>();
+        }
+        lessons.add(lesson);
+        lesson.setCourses(this);
     }
 
 }

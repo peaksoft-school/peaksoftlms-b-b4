@@ -12,7 +12,6 @@ import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,26 +23,29 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/courses")
-@CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
+@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
 @Tag(name = "Course", description = "The  Course API")
 public class CourseApi {
     private final CourseService courseService;
 
-    @Operation(summary = "Create new course", description = "This method saves new courses")
+    @Operation(summary = "Create new course",
+            description = "This endpoint saves new courses. Only users with role admin can add new courses")
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping()
     public CourseResponse saveCourse(@RequestBody CourseRequest courseRequest) {
         return courseService.saveCourse(courseRequest);
     }
 
-    @Operation(summary = "Gets a single courses by identifier", description = "For valid response try integer IDs with value >= 1 and...")
+    @Operation(summary = "Gets a single courses by identifier",
+            description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping("/{id}")
-    public Course findById(@PathVariable Long id) {
+    public CourseResponse findById(@PathVariable Long id) {
         return courseService.findById(id);
     }
 
-    @Operation(summary = "Gets a list", description = "Returns all courses that are,if there are no courses,then an error")
+    @Operation(summary = "Gets a list",
+            description = "Returns all courses that are,if there are no courses,then an error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Found the courses",
@@ -56,14 +58,17 @@ public class CourseApi {
         return courseService.findAll();
     }
 
-    @Operation(summary = "Updates the course:", description = "Updates the details of an endpoint with ID ")
+    @Operation(summary = "Updates the course",
+            description = "Updates the details of an endpoint with ID. Only users with role admin can update the course")
     @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
-    public CourseResponse update(@PathVariable Long id, @RequestBody CourseRequest courseRequest) {
+    public CourseResponse update(@PathVariable Long id,
+                                 @RequestBody CourseRequest courseRequest) {
         return courseService.update(id, courseRequest);
     }
 
-    @Operation(summary = "delete the courses ", description = "Deletes courses with id ")
+    @Operation(summary = "Delete the course ",
+            description = "Delete course with id. Only users with role admin can delete courses")
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public void deleteCourse(@PathVariable Long id) {
@@ -71,14 +76,16 @@ public class CourseApi {
 
     }
 
-    @Operation(summary = "Get students by course id", description = "Get all students in this course")
+    @Operation(summary = "Get students by course id",
+            description = "Get all students in this course")
     @GetMapping("/students/{id}")
     @PermitAll
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
         return courseService.getAllStudentsByCourseId(id);
     }
 
-    @Operation(summary = "Get teachers with ID", description = "Get all teachers in this course")
+    @Operation(summary = "Get teachers with ID",
+            description = "Get all teachers in this course")
     @GetMapping("/teachers/{id}")
     @PermitAll
     public List<TeacherResponse> getAllTeacherByCourseId(@PathVariable Long id) {
