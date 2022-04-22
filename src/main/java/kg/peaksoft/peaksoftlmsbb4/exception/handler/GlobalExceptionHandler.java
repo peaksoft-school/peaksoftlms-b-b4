@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.exception.handler;
 
 import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
+import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.exception.model.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             MethodArgumentNotValidException.class,
-            BadRequestException.class})
+            BadRequestException.class, NotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionResponse handleMethodArgumentNotValidException(RuntimeException e) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();

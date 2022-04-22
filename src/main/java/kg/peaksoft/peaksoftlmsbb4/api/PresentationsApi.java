@@ -33,7 +33,7 @@ public class PresentationsApi {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Gets a single presentations by identifier",
+    @Operation(summary = "Gets a single presentation by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     public PresentationResponse findById(@PathVariable Long id) {

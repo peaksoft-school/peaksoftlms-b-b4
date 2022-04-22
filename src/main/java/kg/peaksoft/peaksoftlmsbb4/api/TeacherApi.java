@@ -89,7 +89,8 @@ public class TeacherApi {
         return teacherService.teacherCourses(id);
     }
 
-    @PermitAll
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @Operation(summary = "Gets a single teacher by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @GetMapping("/{id}")
