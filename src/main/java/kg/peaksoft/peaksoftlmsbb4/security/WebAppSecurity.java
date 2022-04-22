@@ -6,6 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsbb4.jwt.JwtUtils;
 import kg.peaksoft.peaksoftlmsbb4.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -76,5 +77,10 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
+    }
+
+    @Bean
+    public ModelMapper mapper(){
+        return new ModelMapper();
     }
 }
