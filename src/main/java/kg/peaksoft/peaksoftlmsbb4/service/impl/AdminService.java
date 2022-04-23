@@ -1,10 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.admin.AdminRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.admin.AdminResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.admin.AdminRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.admin.AdminResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.admin.AdminMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Admin;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Admin;
 import kg.peaksoft.peaksoftlmsbb4.repository.AdminRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

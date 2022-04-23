@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.presentation.PresentationRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.presentation.PresentationResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.presentation.PresentationMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
-import kg.peaksoft.peaksoftlmsbb4.model.Presentation;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Presentation;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.PresentationRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.PresentationService;

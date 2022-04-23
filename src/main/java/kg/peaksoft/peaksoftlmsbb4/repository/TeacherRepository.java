@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.repository;
 
-import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,18 +1,17 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.mapper.teacher.TeacherMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Course;
-import kg.peaksoft.peaksoftlmsbb4.model.Group;
-import kg.peaksoft.peaksoftlmsbb4.model.Student;
-import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
 import kg.peaksoft.peaksoftlmsbb4.service.TeacherService;

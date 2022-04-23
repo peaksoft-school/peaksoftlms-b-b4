@@ -1,9 +1,9 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper.course;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Course;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

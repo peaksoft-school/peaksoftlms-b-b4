@@ -1,9 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.service;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
-import kg.peaksoft.peaksoftlmsbb4.model.Student;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

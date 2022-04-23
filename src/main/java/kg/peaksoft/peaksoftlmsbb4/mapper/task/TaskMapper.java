@@ -1,11 +1,9 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper.task;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.presentation.PresentationResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.task.TaskRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.task.TaskResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Presentation;
-import kg.peaksoft.peaksoftlmsbb4.model.Task;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

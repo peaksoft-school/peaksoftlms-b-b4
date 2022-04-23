@@ -7,11 +7,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.User;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
 import kg.peaksoft.peaksoftlmsbb4.service.GroupService;
 import kg.peaksoft.peaksoftlmsbb4.service.StudentService;
@@ -21,7 +20,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -80,9 +78,8 @@ public class TeacherApi {
     @GetMapping("/teacherCourses")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     public List<CourseResponse> teacherCourses(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        Long id = user.getId();
-        return teacherService.teacherCourses(id);
+        Teacher teacher = (Teacher) authentication.getPrincipal();
+        return teacherService.teacherCourses(teacher.getCourses());
     }
 
 

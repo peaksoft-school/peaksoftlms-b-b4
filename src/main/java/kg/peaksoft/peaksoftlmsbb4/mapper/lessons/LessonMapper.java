@@ -1,12 +1,9 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper.lessons;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonResponse;
-import kg.peaksoft.peaksoftlmsbb4.mapper.link.LinkMapper;
-import kg.peaksoft.peaksoftlmsbb4.mapper.presentation.PresentationMapper;
-import kg.peaksoft.peaksoftlmsbb4.mapper.task.TaskMapper;
-import kg.peaksoft.peaksoftlmsbb4.mapper.videolesson.VideoLessonMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.model.*;
 import kg.peaksoft.peaksoftlmsbb4.model.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -63,6 +60,14 @@ public class LessonMapper implements Converter<Lesson, LessonRequest, LessonResp
             lessonResponse.setTaskId(taskId);
         }
         return lessonResponse;
+    }
+
+    public List<LessonResponse> deConvert(List<Lesson>lessons){
+        List<LessonResponse> lessonResponses = new ArrayList<>();
+        for (Lesson l:lessons) {
+            lessonResponses.add(deConvert(l));
+        }
+        return lessonResponses;
     }
 
 

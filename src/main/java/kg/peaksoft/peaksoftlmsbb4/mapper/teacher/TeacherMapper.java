@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper.teacher;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.enums.Role;
-import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
-import kg.peaksoft.peaksoftlmsbb4.model.User;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
+import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

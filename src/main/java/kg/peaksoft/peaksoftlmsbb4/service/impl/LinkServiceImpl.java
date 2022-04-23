@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.link.LinkRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.link.LinkResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.link.LinkRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.link.LinkResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.link.LinkMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
-import kg.peaksoft.peaksoftlmsbb4.model.Link;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Link;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.LinkRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.LinkService;

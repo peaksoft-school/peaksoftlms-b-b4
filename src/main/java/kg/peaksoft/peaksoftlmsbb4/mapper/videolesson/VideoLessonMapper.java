@@ -1,13 +1,9 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper.videolesson;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.presentation.PresentationResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.task.TaskResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.videoleson.VideoLessonRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.videoleson.VideoLessonResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Presentation;
-import kg.peaksoft.peaksoftlmsbb4.model.Task;
-import kg.peaksoft.peaksoftlmsbb4.model.VideoLesson;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.model.VideoLesson;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

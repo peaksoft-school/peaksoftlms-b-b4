@@ -1,9 +1,9 @@
 package kg.peaksoft.peaksoftlmsbb4.service;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.group.GroupRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.group.GroupResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Group;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

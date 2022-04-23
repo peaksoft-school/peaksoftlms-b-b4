@@ -1,0 +1,40 @@
+package kg.peaksoft.peaksoftlmsbb4.db.dto.teacher;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+@Setter
+@Getter
+public class TeacherRequest {
+
+    @NotBlank
+    @Size(min = 2, max = 20, message = "first name should be between 2 and 20 characters")
+    @JsonProperty("teacher_name")
+    private String teacherName;
+
+    @NotBlank
+    @Size(min = 2, max = 20, message = "last name should be between 2 and 20 characters")
+    @JsonProperty("last_name")
+    private String lastName;
+
+    @JsonProperty("phone_number")
+    private String phoneNumber;
+
+    @NotBlank(message = "specialization must have a value")
+    private String specialization;
+
+    @Email
+    @NotEmpty(message = "email must have a value")
+    private String email;
+
+    @NotBlank
+    private String password;
+
+
+}

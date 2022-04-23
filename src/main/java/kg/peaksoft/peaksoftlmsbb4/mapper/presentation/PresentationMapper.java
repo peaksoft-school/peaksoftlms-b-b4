@@ -1,11 +1,9 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper.presentation;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.link.LinkResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.presentation.PresentationRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.presentation.PresentationResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Link;
-import kg.peaksoft.peaksoftlmsbb4.model.Presentation;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Presentation;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

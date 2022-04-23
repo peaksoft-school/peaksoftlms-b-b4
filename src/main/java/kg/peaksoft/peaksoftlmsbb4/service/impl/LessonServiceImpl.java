@@ -1,12 +1,12 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.lessons.LessonMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Course;
-import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.LessonService;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -29,9 +28,9 @@ public class LessonServiceImpl implements LessonService {
 
 
     @Override
-    public LessonResponse saveLessons(Long id,LessonRequest lessonRequest) {
-        Course course = courseRepository.findById(id).orElseThrow(()-> new BadRequestException(
-                String.format("Course with id %s does not exists",id)
+    public LessonResponse saveLessons(Long id, LessonRequest lessonRequest) {
+        Course course = courseRepository.findById(id).orElseThrow(() -> new BadRequestException(
+                String.format("Course with id %s does not exists", id)
         ));
         Lesson lessons = lessonMapper.convert(lessonRequest);
         Lesson save = lessonRepository.save(lessons);
@@ -47,8 +46,9 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public List<LessonResponse> findAll(Long id) {
-        return lessonRepository.findAll().stream().map(lessonMapper::deConvert).collect(Collectors.toList());
-
+        Course course = courseRepository.findById(id).orElseThrow(() ->
+                new BadRequestException(String.format("course with id %s does not exists", id)));
+        return lessonMapper.deConvert(course.getLessons());
     }
 
     @Override
@@ -76,7 +76,7 @@ public class LessonServiceImpl implements LessonService {
 
     }
 
-    private Lesson getLessonByI(Long id){
-      return lessonRepository.findById(id).orElseThrow(()-> new BadRequestException(String.format("lesson with %s not found",id)));
+    private Lesson getLessonByI(Long id) {
+        return lessonRepository.findById(id).orElseThrow(() -> new BadRequestException(String.format("lesson with %s not found", id)));
     }
 }

@@ -1,13 +1,13 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.student.StudentMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Course;
-import kg.peaksoft.peaksoftlmsbb4.model.Student;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.StudentService;

@@ -1,9 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.service;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface TeacherService {
 
     List<TeacherResponse> findAllTeacher();
 
-    List<CourseResponse> teacherCourses(Long id);
+    List<CourseResponse> teacherCourses(List<Course>courses);
 
 
 

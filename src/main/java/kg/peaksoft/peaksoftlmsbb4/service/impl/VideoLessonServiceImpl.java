@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.videoleson.VideoLessonRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.videoleson.VideoLessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.videolesson.VideoLessonMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
-import kg.peaksoft.peaksoftlmsbb4.model.VideoLesson;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
+import kg.peaksoft.peaksoftlmsbb4.db.model.VideoLesson;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.VideoLessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.VideoLessonService;

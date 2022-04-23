@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.task.TaskRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.task.TaskResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.task.TaskMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
-import kg.peaksoft.peaksoftlmsbb4.model.Task;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.TaskRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.TaskService;

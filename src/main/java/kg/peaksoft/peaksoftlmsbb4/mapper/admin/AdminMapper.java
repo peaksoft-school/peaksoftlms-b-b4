@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.mapper.admin;
 
 import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.admin.AdminRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.admin.AdminResponse;
-import kg.peaksoft.peaksoftlmsbb4.enums.Role;
-import kg.peaksoft.peaksoftlmsbb4.model.Admin;
-import kg.peaksoft.peaksoftlmsbb4.model.User;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.admin.AdminRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.admin.AdminResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Admin;
+import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

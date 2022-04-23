@@ -1,15 +1,14 @@
 package kg.peaksoft.peaksoftlmsbb4.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.mapper.teacher.TeacherMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Course;
-import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
-import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.repository.TeacherRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.TeacherService;
 import lombok.AllArgsConstructor;
@@ -116,12 +115,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<CourseResponse> teacherCourses(Long id) {
+    public List<CourseResponse> teacherCourses(List<Course> courses) {
         List<CourseResponse> courseResponses = new ArrayList<>();
-        for (Course c : findBy(id).getCourses()) {
+        for (Course c : courses) {
             courseResponses.add(courseMapper.deConvert(c));
         }
-        log.info("successful teacher findAll teacher courses this id:{}",id);
         return courseResponses;
     }
 
