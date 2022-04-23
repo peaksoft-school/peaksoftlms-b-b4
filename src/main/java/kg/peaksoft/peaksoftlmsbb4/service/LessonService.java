@@ -11,7 +11,7 @@ public interface LessonService {
 
     LessonResponse findById(Long id);
 
-    List<LessonResponse> findAll();
+    List<LessonResponse> findAll(Long id);
 
     LessonResponse update(Long id, LessonRequest lessonRequest);
 

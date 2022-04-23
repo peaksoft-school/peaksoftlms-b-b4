@@ -46,7 +46,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<LessonResponse> findAll() {
+    public List<LessonResponse> findAll(Long id) {
         return lessonRepository.findAll().stream().map(lessonMapper::deConvert).collect(Collectors.toList());
 
     }
