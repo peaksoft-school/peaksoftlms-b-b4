@@ -16,7 +16,7 @@ public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse
         Group group = new Group();
         group.setGroupName(groupRequest.getGroupName());
         group.setDescription(groupRequest.getDescription());
-        group.setImagine(groupRequest.getImage());
+        group.setImage(groupRequest.getImage());
         group.setDateOfStart(groupRequest.getDateOfStart());
         return group;
     }
@@ -28,7 +28,7 @@ public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse
         groupResponse.setGroupName(group.getGroupName());
         groupResponse.setDescription(group.getDescription());
         groupResponse.setDateOfStart(group.getDateOfStart());
-        groupResponse.setImage(group.getImagine());
+        groupResponse.setImage(group.getImage());
         return groupResponse;
     }
 }

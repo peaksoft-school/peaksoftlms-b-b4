@@ -14,7 +14,7 @@ public interface StudentService {
 
     StudentResponse updateStudent(Long id, StudentRequest studentRequest);
 
-    StudentResponse getById(Long id);
+    StudentResponse findById(Long id);
 
     void deleteStudent(Long id);
 

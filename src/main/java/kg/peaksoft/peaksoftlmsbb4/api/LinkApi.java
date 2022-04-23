@@ -40,19 +40,19 @@ public class LinkApi {
         return linkService.findById(id);
     }
 
-    @GetMapping
-    @Operation(summary = "Gets a list",
-            description = "Returns all links that are,if there are no links,then an error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Found the links",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = LinkApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public List<LinkResponse> findAll() {
-        return linkService.findAll();
-    }
+//    @GetMapping
+//    @Operation(summary = "Gets a list",
+//            description = "Returns all links that are,if there are no links,then an error")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200",
+//                    description = "Found the links",
+//                    content = {
+//                            @Content(mediaType = "application/json",
+//                                    array = @ArraySchema(schema = @Schema(implementation = LinkApi.class)))})})
+//    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+//    public List<LinkResponse> findAll() {
+//        return linkService.findAll();
+//    }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update the link",

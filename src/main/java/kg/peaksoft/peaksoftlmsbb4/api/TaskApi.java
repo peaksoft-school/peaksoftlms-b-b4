@@ -37,29 +37,29 @@ public class TaskApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single tasks by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     public Task findById(@PathVariable Long id) {
         return taskService.findById(id);
     }
 
-    @GetMapping
-    @Operation(summary = "Gets a list",
-            description = "Returns all tasks that are,if there are no tasks,then an error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Found the tasks",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = TaskApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public List<TaskResponse> findAll() {
-        return taskService.findAll();
-    }
+//    @GetMapping
+//    @Operation(summary = "Gets a list",
+//            description = "Returns all tasks that are,if there are no tasks,then an error")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200",
+//                    description = "Found the tasks",
+//                    content = {
+//                            @Content(mediaType = "application/json",
+//                                    array = @ArraySchema(schema = @Schema(implementation = TaskApi.class)))})})
+//    @PreAuthorize("hasAnyAuthority('TEACHER')")
+//    public List<TaskResponse> findAll() {
+//        return taskService.findAll();
+//    }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update the tasks",
             description = "Updates the details of an endpoint with ID")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('TEACHER')")
     public TaskResponse update(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
         return taskService.update(id, taskRequest);
     }

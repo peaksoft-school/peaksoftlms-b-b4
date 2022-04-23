@@ -27,7 +27,7 @@ public class Group {
     private Long id;
     private String groupName;
     private String description;
-    private String imagine;
+    private String image;
     private LocalDate dateOfStart;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)

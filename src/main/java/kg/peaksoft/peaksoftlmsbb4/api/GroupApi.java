@@ -76,10 +76,10 @@ public class GroupApi {
         return groupService.update(id, groupRequest);
     }
 
-    @GetMapping("/group/{id}")
+    @GetMapping("/students/{id}")
     @Operation(summary = "Get teachers with ID",
-            description = "Get all teachers in this groups")
-    public List<StudentResponse> getAllTeacherByCourseId(@PathVariable Long id) {
+            description = "Get all students in this groups")
+    public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
         return groupService.getAllStudentByGroupId(id);
     }
 }

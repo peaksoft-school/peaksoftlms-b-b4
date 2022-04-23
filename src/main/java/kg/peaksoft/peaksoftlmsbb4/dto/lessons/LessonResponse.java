@@ -14,13 +14,9 @@ import java.util.List;
 public class LessonResponse {
     private Long id;
     private String name;
-//    private List<TaskResponse> taskResponse;
     private List<Long> taskId;
-//    private List<LinkResponse> linkResponse;
     private List<Long> linkId;
-//    private List<VideoLessonResponse> videoLessonResponse;
     private List<Long> videoLessonId;
-//    private List<PresentationResponse> presentationResponse;
     private List<Long> presentationId;
 
 }

@@ -49,7 +49,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponse updateStudent(Long id, StudentRequest studentRequest) {
-        Student student = findById(id);
+        Student student = getById(id);
         if (!student.getStudentName().equals(studentRequest.getStudentName())) {
             student.setStudentName(studentRequest.getStudentName());
         }
@@ -70,11 +70,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse getById(Long id) {
-        return studentMapper.deConvert(findById(id));
+    public StudentResponse findById(Long id) {
+        return studentMapper.deConvert(getById(id));
     }
 
-    private Student findById(Long id) {
+    private Student getById(Long id) {
         log.info("successful find by this id:{}", id);
         return studentRepository.findById(id).orElseThrow(() -> new NotFoundException
                 (String.format("student with id = %s does not exists ", id)));

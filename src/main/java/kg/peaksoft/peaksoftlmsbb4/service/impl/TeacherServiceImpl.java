@@ -32,7 +32,6 @@ public class TeacherServiceImpl implements TeacherService {
     private final PasswordEncoder passwordEncoder;
     private final TeacherMapper teacherMapper;
     private final CourseMapper courseMapper;
-    private final CourseRepository courseRepository;
 
     @Override
     public TeacherResponse saveTeacher(TeacherRequest teacherRequest) {
@@ -88,7 +87,8 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.deConvert(findBy(id));
     }
 
-    private Teacher findBy(Long id) {
+    @Override
+    public Teacher findBy(Long id) {
         log.info("successful find by id :{}",id);
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
@@ -109,7 +109,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<TeacherResponse> findAllTeacher() {
-        log.info("successful find all");
+        log.info("successful find all teacher");
         return teacherRepository.findAll()
                 .stream()
                 .map(teacherMapper::deConvert).collect(Collectors.toList());
@@ -123,16 +123,6 @@ public class TeacherServiceImpl implements TeacherService {
         }
         log.info("successful teacher findAll teacher courses this id:{}",id);
         return courseResponses;
-    }
-
-    @Override
-    public void assignTeacherToCourse(Long courseId, Long teacherId) {
-        Course course1 = courseRepository.findById(courseId).orElseThrow(() ->
-                new NotFoundException(
-                        String.format("Not found course with id=%s", courseId)));
-        Teacher teacher = teacherRepository.getById(teacherId);
-        log.info("successful assign teacher with id=%s to course");
-        course1.addTeacher(teacher);
     }
 
 

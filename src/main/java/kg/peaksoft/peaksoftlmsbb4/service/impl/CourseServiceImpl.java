@@ -15,6 +15,7 @@ import kg.peaksoft.peaksoftlmsbb4.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
+import kg.peaksoft.peaksoftlmsbb4.service.TeacherService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseMapper courseMapper;
     private final StudentMapper studentMapper;
     private final TeacherMapper teacherMapper;
+    private final TeacherService teacherService;
 
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
@@ -104,6 +106,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getById(Long id) {
         return courseRepository.getById(id);
+    }
+
+    @Override
+    public void assignTeachersToCourse(Long courseId, List<Long> teacherId) {
+        Course course1 = getById(courseId);
+        for (Long id:teacherId) {
+            course1.addTeacher(teacherService.findBy(id));
+        }
+        log.info("successful assign teacher with id=%s to course");
     }
 
 

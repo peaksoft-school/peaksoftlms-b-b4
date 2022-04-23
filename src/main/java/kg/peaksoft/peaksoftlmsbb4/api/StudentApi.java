@@ -29,7 +29,7 @@ public class StudentApi {
     private final StudentService studentService;
 
     @GetMapping
-    @Operation(summary = "gets a list", description = "Returns all students that are,if there are no students,then an error")
+    @Operation(summary = "Gets a list", description = "Returns all students that are,if there are no students,then an error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Found the students",
@@ -50,11 +50,11 @@ public class StudentApi {
         return studentService.saveStudent(studentRequest);
     }
 
-    @PutMapping("/{studentId}")
+    @PutMapping("/{id}")
     @Operation(summary = "Update the students",
             description = "Updates the details of an endpoint with ID.  Only users with role admin can update students")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public StudentResponse updateStudent(@PathVariable("studentId") Long id, @RequestBody @Valid StudentRequest studentRequest) {
+    public StudentResponse updateStudent(@PathVariable("id") Long id, @RequestBody @Valid StudentRequest studentRequest) {
         return studentService.updateStudent(id, studentRequest);
     }
 
@@ -74,7 +74,10 @@ public class StudentApi {
         return studentService.findByStudyFormat(studyFormat);
     }
 
-    // find Student By ID !!!!
+    @GetMapping("/{id}")
+    public StudentResponse findById(@PathVariable Long id){
+        return studentService.findById(id);
+    }
 
 
 }

@@ -24,7 +24,7 @@ import java.util.List;
 public class LessonsApi {
     private final LessonService lessonService;
 
-    @PostMapping("{id}")
+    @PostMapping("/{id}")
     @Operation(summary = "Add new lesson to course",
             description = "This endpoint save new lesson to course by ID. Only users with role teacher can add new lessons")
     @PreAuthorize("hasAnyAuthority('TEACHER')")

@@ -15,12 +15,14 @@ public interface TeacherService {
 
     TeacherResponse findById(Long id);
 
+    Teacher findBy(Long id);
+
     void deleteTeacher(Long id);
 
     List<TeacherResponse> findAllTeacher();
 
     List<CourseResponse> teacherCourses(Long id);
 
-    void assignTeacherToCourse(Long course, Long teacherId);
+
 
 }
