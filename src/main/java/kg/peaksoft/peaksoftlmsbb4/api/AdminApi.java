@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.admin.AdminRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.admin.AdminResponse;
-import kg.peaksoft.peaksoftlmsbb4.service.impl.AdminService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.impl.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

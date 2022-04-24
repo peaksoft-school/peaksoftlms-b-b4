@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
-import kg.peaksoft.peaksoftlmsbb4.service.TaskService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.TaskService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

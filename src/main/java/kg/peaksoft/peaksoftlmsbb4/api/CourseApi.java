@@ -12,7 +12,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

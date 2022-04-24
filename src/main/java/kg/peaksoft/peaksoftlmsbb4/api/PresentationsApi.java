@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationResponse;
-import kg.peaksoft.peaksoftlmsbb4.service.PresentationService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.PresentationService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

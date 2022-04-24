@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.service.GroupService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
