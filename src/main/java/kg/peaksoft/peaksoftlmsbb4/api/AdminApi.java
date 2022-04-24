@@ -19,10 +19,10 @@ public class AdminApi {
 
     private final AdminService adminService;
 
-    @Operation(summary =
-            "save registered admin", description = "this method save registered admin - postMethod")
+    @Operation(summary = "save registered admin", description = "this method save registered admin - postMethod")
     @PostMapping("/saveAdmin")
     public AdminResponse save(@Valid @RequestBody AdminRequest adminRequest) {
         return adminService.register(adminRequest);
     }
+
 }

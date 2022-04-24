@@ -32,9 +32,9 @@ public class VariantServiceImpl implements VariantService {
         Question question = questionRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("not found this id=%s", id)
         ));
-        variantRequest.setQuestion(question);
         Variant map = modelMapper.map(variantRequest, Variant.class);
         Variant save = variantRepository.save(map);
+        question.setVariants(save);
         log.info("successful variant save:{}", save);
         return variantMapper.deConvert(save);
     }

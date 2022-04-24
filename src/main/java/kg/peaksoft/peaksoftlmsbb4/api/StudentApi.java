@@ -39,6 +39,7 @@ public class StudentApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public List<StudentResponse> findAll(@RequestParam int size,
                                          @RequestParam int page) {
+
         return studentService.findAllStudent(PageRequest.of(size, page));
     }
 

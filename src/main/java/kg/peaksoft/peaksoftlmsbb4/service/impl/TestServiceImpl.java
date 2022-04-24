@@ -4,7 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.dto.test.TestRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.test.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.mapper.test.TestMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Lessons;
+import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.model.Test;
 import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.repository.TestRepository;
@@ -29,7 +29,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public TestResponse saveTest(Long id, TestRequest testRequest) {
-        Lessons byId = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
+        Lesson byId = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("this id not found =%s ", id)
         ));
         Test test = testRepository.save(modelMapper.map(testRequest, Test.class));

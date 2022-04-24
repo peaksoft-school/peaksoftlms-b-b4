@@ -33,7 +33,7 @@ public class Test {
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "lessons_id")
-    private Lessons lessons;
+    private Lesson lessons;
 
     public void setQuestions(Question question){
         if(questions == null){

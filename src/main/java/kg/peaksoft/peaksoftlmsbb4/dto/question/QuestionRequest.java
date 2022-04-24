@@ -1,7 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.dto.question;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import kg.peaksoft.peaksoftlmsbb4.model.Test;
+import kg.peaksoft.peaksoftlmsbb4.enums.QuestionType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,4 +9,5 @@ import lombok.Setter;
 public class QuestionRequest {
 
     private String question;
+    private QuestionType questionType;
 }

@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.model;
 
+import kg.peaksoft.peaksoftlmsbb4.enums.QuestionType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,8 @@ public class Question {
     )
     private Long id;
     private String question;
+    @Enumerated(EnumType.STRING)
+    private QuestionType questionType;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "test_id")
@@ -32,8 +35,8 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Variant> variants = new ArrayList<>();
 
-    public void setVariants(Variant variant){
-        if(variants == null){
+    public void setVariants(Variant variant) {
+        if (variants == null) {
             variants = new ArrayList<>();
         }
         variants.add(variant);

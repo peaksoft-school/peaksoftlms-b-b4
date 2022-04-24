@@ -73,9 +73,9 @@ public class Lesson {
         videoLesson.setLessons(this);
     }
 
-    public void setTests(Test test){
-        if (tests==null){
-            tests=new ArrayList<>();
+    public void setTests(Test test) {
+        if (tests == null) {
+            tests = new ArrayList<>();
         }
         tests.add(test);
         test.setLessons(this);

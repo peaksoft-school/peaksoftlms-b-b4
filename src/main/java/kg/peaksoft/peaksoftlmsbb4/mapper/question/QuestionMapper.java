@@ -20,6 +20,7 @@ public class QuestionMapper implements Converter<Question, QuestionRequest, Ques
     public Question convert(QuestionRequest questionRequest) {
         Question question = new Question();
         question.setQuestion(questionRequest.getQuestion());
+        question.setQuestionType(questionRequest.getQuestionType());
         return question;
     }
 
@@ -28,6 +29,7 @@ public class QuestionMapper implements Converter<Question, QuestionRequest, Ques
         QuestionResponse questionResponse = new QuestionResponse();
         questionResponse.setId(question.getId());
         questionResponse.setQuestion(question.getQuestion());
+        questionResponse.setQuestionType(question.getQuestionType());
         questionResponse.setVariantResponses(variantMapper.deConvert(question.getVariants()));
         return questionResponse;
     }

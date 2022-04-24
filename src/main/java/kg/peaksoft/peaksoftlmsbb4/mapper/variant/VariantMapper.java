@@ -14,7 +14,6 @@ public class VariantMapper implements Converter<Variant, VariantRequest, Variant
     @Override
     public Variant convert(VariantRequest variantRequest) {
         Variant variant=new Variant();
-        variant.setQuestion(variantRequest.getQuestion());
         variant.setIsTrue(variantRequest.getIsTrue());
         return variant;
     }
