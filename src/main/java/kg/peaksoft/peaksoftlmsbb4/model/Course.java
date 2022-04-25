@@ -54,6 +54,17 @@ public class Course {
     @OneToMany(cascade = ALL,mappedBy = "courses")
     private List<Lesson> lessons = new ArrayList<>();
 
+    public Course(String courseName, String image, String description, LocalDate dateOfStart) {
+        this.courseName = courseName;
+        this.image = image;
+        this.description = description;
+        this.dateOfStart = dateOfStart;
+    }
+
+    public Course() {
+
+    }
+
     public void addTeacher(Teacher teacher) {
         if (teacher == null) {
             teachers = new ArrayList<>();
