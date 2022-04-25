@@ -7,9 +7,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.lessons.LessonResponse;
-import kg.peaksoft.peaksoftlmsbb4.service.LessonService;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.service.LessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ import java.util.List;
 public class LessonsApi {
     private final LessonService lessonService;
 
-    @PostMapping("{id}")
+    @PostMapping("/{id}")
     @Operation(summary = "Add new lesson to course",
             description = "This endpoint save new lesson to course by ID. Only users with role teacher can add new lessons")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
@@ -40,7 +40,7 @@ public class LessonsApi {
         return lessonService.findById(id);
     }
 
-    @GetMapping
+    @GetMapping("teacherCourses/{id}")
     @Operation(summary = "Gets a list",
             description = "Returns all course's lessons that are,if there are no lessons,then an error")
     @ApiResponses(value = {
@@ -50,8 +50,8 @@ public class LessonsApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = LessonsApi.class)))})})
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public List<LessonResponse> findAll() {
-        return lessonService.findAll();
+    public List<LessonResponse> findAll(@PathVariable Long id) {
+        return lessonService.findAll(id);
     }
 
     @PutMapping("/{id}")

@@ -7,10 +7,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.enums.StudyFormat;
-import kg.peaksoft.peaksoftlmsbb4.service.StudentService;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
+import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,7 +29,7 @@ public class StudentApi {
     private final StudentService studentService;
 
     @GetMapping
-    @Operation(summary = "gets a list", description = "Returns all students that are,if there are no students,then an error")
+    @Operation(summary = "Gets a list", description = "Returns all students that are,if there are no students,then an error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Found the students",
@@ -50,11 +50,11 @@ public class StudentApi {
         return studentService.saveStudent(studentRequest);
     }
 
-    @PutMapping("/{studentId}")
+    @PutMapping("/{id}")
     @Operation(summary = "Update the students",
             description = "Updates the details of an endpoint with ID.  Only users with role admin can update students")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public StudentResponse updateStudent(@PathVariable("studentId") Long id, @RequestBody @Valid StudentRequest studentRequest) {
+    public StudentResponse updateStudent(@PathVariable("id") Long id, @RequestBody @Valid StudentRequest studentRequest) {
         return studentService.updateStudent(id, studentRequest);
     }
 
@@ -74,7 +74,10 @@ public class StudentApi {
         return studentService.findByStudyFormat(studyFormat);
     }
 
-    // find Student By ID !!!!
+    @GetMapping("/{id}")
+    public StudentResponse findById(@PathVariable Long id){
+        return studentService.findById(id);
+    }
 
 
 }

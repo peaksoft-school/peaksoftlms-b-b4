@@ -1,10 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.security;
 
-import kg.peaksoft.peaksoftlmsbb4.config.JwtConfig;
-import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.jwt.JwtTokenVerifier;
-import kg.peaksoft.peaksoftlmsbb4.jwt.JwtUtils;
-import kg.peaksoft.peaksoftlmsbb4.repository.UserRepository;
+import kg.peaksoft.peaksoftlmsbb4.security.config.JwtConfig;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
+import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtTokenVerifier;
+import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtUtils;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

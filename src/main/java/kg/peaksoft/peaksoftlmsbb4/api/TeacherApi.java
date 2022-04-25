@@ -7,19 +7,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.service.CourseService;
-import kg.peaksoft.peaksoftlmsbb4.service.GroupService;
-import kg.peaksoft.peaksoftlmsbb4.service.StudentService;
-import kg.peaksoft.peaksoftlmsbb4.service.TeacherService;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
+import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -57,39 +57,33 @@ public class TeacherApi {
         return teacherService.saveTeacher(teacherRequest);
     }
 
-    @PutMapping("/{teacherId}")
+    @PutMapping("/{id}")
     @Operation(summary = "Update the teacher",
             description = "Updates the details of an endpoint with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public TeacherResponse updateTeacher(@PathVariable("teacherId") Long id, @RequestBody @Valid TeacherRequest teacherRequest) {
+    public TeacherResponse updateTeacher(@PathVariable("id") Long id, @RequestBody @Valid TeacherRequest teacherRequest) {
         return teacherService.updateTeacher(id, teacherRequest);
     }
 
-    @DeleteMapping("/{teacherId}")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Delete the teacher",
             description = "Delete the teacher with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void deleteTeacher(@PathVariable("teacherId") Long id) {
+    public void deleteTeacher(@PathVariable("id") Long id) {
         teacherService.deleteTeacher(id);
-    }
-
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Assign teacher to course",
-            description = "This endpoint for adding a teacher to a course. Only user with role admin can add teacher to course")
-    @PostMapping("assignTeacher/{courseId}")
-    public void assignTeacherToCourse(@PathVariable Long courseId, @RequestParam(required = false) Long teacherId) {
-        teacherService.assignTeacherToCourse(courseId, teacherId);
     }
 
     @Operation(summary = "Teacher's courses",
             description = "This endpoint for get all teacher's courses")
-    @GetMapping("teacherCourses/{id}")
+    @GetMapping("/teacherCourses")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public List<CourseResponse> teacherCourses(@PathVariable Long id) {
-        return teacherService.teacherCourses(id);
+    public List<CourseResponse> teacherCourses(Authentication authentication) {
+        Teacher teacher = (Teacher) authentication.getPrincipal();
+        return teacherService.teacherCourses(teacher.getCourses());
     }
 
-    @PermitAll
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @Operation(summary = "Gets a single teacher by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @GetMapping("/{id}")

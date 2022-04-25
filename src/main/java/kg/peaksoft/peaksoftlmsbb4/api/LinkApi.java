@@ -1,20 +1,13 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.dto.link.LinkRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.link.LinkResponse;
-import kg.peaksoft.peaksoftlmsbb4.service.LinkService;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.link.LinkRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.link.LinkResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.service.LinkService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -40,19 +33,19 @@ public class LinkApi {
         return linkService.findById(id);
     }
 
-    @GetMapping
-    @Operation(summary = "Gets a list",
-            description = "Returns all links that are,if there are no links,then an error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Found the links",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = LinkApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public List<LinkResponse> findAll() {
-        return linkService.findAll();
-    }
+//    @GetMapping
+//    @Operation(summary = "Gets a list",
+//            description = "Returns all links that are,if there are no links,then an error")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200",
+//                    description = "Found the links",
+//                    content = {
+//                            @Content(mediaType = "application/json",
+//                                    array = @ArraySchema(schema = @Schema(implementation = LinkApi.class)))})})
+//    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+//    public List<LinkResponse> findAll() {
+//        return linkService.findAll();
+//    }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update the link",
