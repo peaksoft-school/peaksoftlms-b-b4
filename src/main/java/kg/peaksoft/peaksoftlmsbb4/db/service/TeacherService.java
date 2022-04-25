@@ -22,8 +22,7 @@ public interface TeacherService {
 
     List<TeacherResponse> findAllTeacher();
 
-    List<CourseResponse> teacherCourses(List<Course>courses);
-
+    List<CourseResponse> teacherCourses(List<Course> courses);
 
 
 }

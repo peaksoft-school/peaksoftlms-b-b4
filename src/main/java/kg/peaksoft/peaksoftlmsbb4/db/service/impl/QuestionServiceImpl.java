@@ -1,16 +1,16 @@
-package kg.peaksoft.peaksoftlmsbb4.service.impl;
+package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.question.QuestionRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.question.QuestionResponse;
-import kg.peaksoft.peaksoftlmsbb4.enums.QuestionType;
-import kg.peaksoft.peaksoftlmsbb4.exception.BadRequestException;
-import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.mapper.question.QuestionMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Question;
-import kg.peaksoft.peaksoftlmsbb4.model.Test;
-import kg.peaksoft.peaksoftlmsbb4.repository.QuestionRepository;
-import kg.peaksoft.peaksoftlmsbb4.repository.TestRepository;
-import kg.peaksoft.peaksoftlmsbb4.service.QuestionService;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.TestRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.QuestionService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -41,7 +41,7 @@ public class QuestionServiceImpl implements QuestionService {
                 String.format("this id not found=%s", id)
         ));
         Question question1 = modelMapper.map(question, Question.class);
-        if (question1.getQuestionType().equals(QuestionType.MANY)){
+        if (question1.getQuestionType().equals(QuestionType.MANY)) {
 
         }
         questionRepository.save(question1);

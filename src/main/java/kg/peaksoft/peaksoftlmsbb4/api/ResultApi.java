@@ -1,15 +1,13 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.dto.result.ResultRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.result.ResultResponse;
-import kg.peaksoft.peaksoftlmsbb4.service.ResultService;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 @RestController
 @AllArgsConstructor
@@ -46,7 +44,7 @@ public class ResultApi {
     }
 
     @GetMapping("/result")
-    public List<Long> results(){
+    public List<Long> results() {
         return resultService.findAllByResultFalseOrderByResult();
     }
 }

@@ -1,15 +1,16 @@
-package kg.peaksoft.peaksoftlmsbb4.mapper.question;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper.question;
 
-import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.question.QuestionRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.question.QuestionResponse;
-import kg.peaksoft.peaksoftlmsbb4.mapper.variant.VariantMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Question;
+import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.variant.VariantMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @AllArgsConstructor
 @Component
 public class QuestionMapper implements Converter<Question, QuestionRequest, QuestionResponse> {

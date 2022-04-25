@@ -1,10 +1,9 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.dto.variant.VariantRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.variant.VariantResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Variant;
-import kg.peaksoft.peaksoftlmsbb4.service.VariantService;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.service.VariantService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

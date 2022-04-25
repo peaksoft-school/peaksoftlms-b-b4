@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.model;
+package kg.peaksoft.peaksoftlmsbb4.db.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -29,8 +29,5 @@ public class Result {
     @OneToMany(mappedBy = "result", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     private List<Variant> variants = new ArrayList<>();
 
-//    @ManyToMany(mappedBy = "results", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-//    @OrderBy("answer")
-//    private List<Option> options = new ArrayList<>();
 
 }

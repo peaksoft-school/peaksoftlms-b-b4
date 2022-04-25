@@ -1,14 +1,14 @@
-package kg.peaksoft.peaksoftlmsbb4.service.impl;
+package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.result.ResultRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.result.ResultResponse;
-import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.mapper.result.ResultMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Result;
-import kg.peaksoft.peaksoftlmsbb4.model.Variant;
-import kg.peaksoft.peaksoftlmsbb4.repository.ResultRepository;
-import kg.peaksoft.peaksoftlmsbb4.repository.VariantRepository;
-import kg.peaksoft.peaksoftlmsbb4.service.ResultService;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.result.ResultMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Result;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.ResultRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -25,7 +25,6 @@ public class ResultServiceImpl implements ResultService {
     private final ResultRepository resultRepository;
     private final ModelMapper modelMapper;
     private final ResultMapper resultMapper;
-    //private final OptionRepository;
     private final VariantRepository variantRepository;
 
     @Override
@@ -33,7 +32,7 @@ public class ResultServiceImpl implements ResultService {
         Variant byId = variantRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("this id not found =%s ", id)
         ));
-        if (byId.getIsTrue().equals(true)||byId.getIsTrue().equals(false)) {
+        if (byId.getIsTrue().equals(true) || byId.getIsTrue().equals(false)) {
             Result result = resultRepository.save(modelMapper.map(resultRequest, Result.class));
             result.setCorrect(byId.getIsTrue());
             byId.setResult(result);

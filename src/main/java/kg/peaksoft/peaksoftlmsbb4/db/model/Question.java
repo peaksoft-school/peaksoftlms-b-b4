@@ -1,6 +1,6 @@
-package kg.peaksoft.peaksoftlmsbb4.model;
+package kg.peaksoft.peaksoftlmsbb4.db.model;
 
-import kg.peaksoft.peaksoftlmsbb4.enums.QuestionType;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,7 +31,6 @@ public class Question {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "test_id")
     private Test test;
-
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Variant> variants = new ArrayList<>();
 

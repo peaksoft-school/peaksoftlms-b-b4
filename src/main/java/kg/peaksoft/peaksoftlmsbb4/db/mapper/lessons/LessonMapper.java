@@ -61,14 +61,13 @@ public class LessonMapper implements Converter<Lesson, LessonRequest, LessonResp
         return lessonResponse;
     }
 
-    public List<LessonResponse> deConvert(List<Lesson>lessons){
+    public List<LessonResponse> deConvert(List<Lesson> lessons) {
         List<LessonResponse> lessonResponses = new ArrayList<>();
-        for (Lesson l:lessons) {
+        for (Lesson l : lessons) {
             lessonResponses.add(deConvert(l));
         }
         return lessonResponses;
     }
-
 
 
 }

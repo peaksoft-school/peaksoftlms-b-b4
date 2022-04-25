@@ -1,8 +1,7 @@
-package kg.peaksoft.peaksoftlmsbb4.dto.test;
+package kg.peaksoft.peaksoftlmsbb4.db.dto.test;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import kg.peaksoft.peaksoftlmsbb4.dto.question.QuestionResponse;
-import kg.peaksoft.peaksoftlmsbb4.model.Question;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +13,6 @@ public class TestResponse {
     private Long id;
     @JsonProperty("test_name")
     private String testName;
-    private List<QuestionResponse>questionResponses;
+    private List<QuestionResponse> questionResponses;
 
 }

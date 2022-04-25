@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.dto.result;
+package kg.peaksoft.peaksoftlmsbb4.db.dto.result;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,5 +8,4 @@ import lombok.Setter;
 public class ResultResponse {
     private Long id;
     private Boolean correct;
-    private Boolean error;
 }

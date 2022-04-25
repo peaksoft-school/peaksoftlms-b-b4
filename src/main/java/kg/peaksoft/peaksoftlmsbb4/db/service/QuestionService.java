@@ -1,7 +1,7 @@
-package kg.peaksoft.peaksoftlmsbb4.service;
+package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.question.QuestionRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.question.QuestionResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
 
 import java.util.List;
 

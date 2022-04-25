@@ -1,11 +1,9 @@
-package kg.peaksoft.peaksoftlmsbb4.model;
+package kg.peaksoft.peaksoftlmsbb4.db.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "variants")
@@ -24,7 +22,7 @@ public class Variant {
     )
     private Long id;
     private String variantName;
-    private Boolean isTrue=false;
+    private Boolean isTrue = false;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "question_id")
@@ -33,20 +31,6 @@ public class Variant {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "result_id")
     private Result result;
-
-//    @ManyToMany
-//    @JoinTable(name = "variants_options",
-//            joinColumns = @JoinColumn(name = "variant_id"),
-//            inverseJoinColumns = @JoinColumn(name = "options_id"))
-//    private List<Option> options = new ArrayList<>();
-//
-//    public void setOptions(Option option) {
-//        if (options == null) {
-//            options = new ArrayList<>();
-//        }
-//        options.add(option);
-//
-//}
 
 
 }

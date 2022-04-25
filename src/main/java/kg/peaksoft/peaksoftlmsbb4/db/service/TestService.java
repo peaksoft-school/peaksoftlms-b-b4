@@ -1,7 +1,7 @@
-package kg.peaksoft.peaksoftlmsbb4.service;
+package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.test.TestRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.test.TestResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
 
 import java.util.List;
 

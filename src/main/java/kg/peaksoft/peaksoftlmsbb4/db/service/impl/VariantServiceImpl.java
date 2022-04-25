@@ -1,14 +1,14 @@
-package kg.peaksoft.peaksoftlmsbb4.service.impl;
+package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.variant.VariantRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.variant.VariantResponse;
-import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.mapper.variant.VariantMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Question;
-import kg.peaksoft.peaksoftlmsbb4.model.Variant;
-import kg.peaksoft.peaksoftlmsbb4.repository.QuestionRepository;
-import kg.peaksoft.peaksoftlmsbb4.repository.VariantRepository;
-import kg.peaksoft.peaksoftlmsbb4.service.VariantService;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.variant.VariantMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.VariantService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

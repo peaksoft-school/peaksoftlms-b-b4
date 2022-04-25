@@ -76,7 +76,7 @@ public class StudentApi {
     }
 
     @GetMapping("/{id}")
-    public StudentResponse findById(@PathVariable Long id){
+    public StudentResponse findById(@PathVariable Long id) {
         return studentService.findById(id);
     }
 

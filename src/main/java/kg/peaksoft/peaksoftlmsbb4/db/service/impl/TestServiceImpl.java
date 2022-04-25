@@ -1,14 +1,14 @@
-package kg.peaksoft.peaksoftlmsbb4.service.impl;
+package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.test.TestRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.test.TestResponse;
-import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.mapper.test.TestMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Lesson;
-import kg.peaksoft.peaksoftlmsbb4.model.Test;
-import kg.peaksoft.peaksoftlmsbb4.repository.LessonRepository;
-import kg.peaksoft.peaksoftlmsbb4.repository.TestRepository;
-import kg.peaksoft.peaksoftlmsbb4.service.TestService;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.test.TestMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.TestRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.TestService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

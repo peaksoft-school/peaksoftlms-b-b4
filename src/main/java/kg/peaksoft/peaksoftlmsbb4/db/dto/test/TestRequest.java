@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.dto.test;
+package kg.peaksoft.peaksoftlmsbb4.db.dto.test;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

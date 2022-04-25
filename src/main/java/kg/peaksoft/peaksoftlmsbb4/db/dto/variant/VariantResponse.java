@@ -1,5 +1,6 @@
-package kg.peaksoft.peaksoftlmsbb4.dto.variant;
+package kg.peaksoft.peaksoftlmsbb4.db.dto.variant;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class VariantResponse {
     private Long id;
+    @JsonProperty("variant_name")
     private String variantName;
 
 }

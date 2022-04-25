@@ -1,7 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
-@NoArgsConstructor
 @Entity
 @Table(name = "course")
 @Getter
@@ -67,6 +65,17 @@ public class Course {
 
     }
 
+    public Course(String courseName, String image, String description, LocalDate dateOfStart, List<Student> students, List<Teacher> teachers, List<Group> groups, List<Lesson> lessons) {
+        this.courseName = courseName;
+        this.image = image;
+        this.description = description;
+        this.dateOfStart = dateOfStart;
+        this.students = students;
+        this.teachers = teachers;
+        this.groups = groups;
+        this.lessons = lessons;
+    }
+
     public void addTeacher(Teacher teacher) {
         if (teacher == null) {
             teachers = new ArrayList<>();
@@ -94,17 +103,6 @@ public class Course {
         }
         lessons.add(lesson);
         lesson.setCourses(this);
-    }
-
-    public Course(String courseName, String image, String description, LocalDate dateOfStart, List<Student> students, List<Teacher> teachers, List<Group> groups, List<Lesson> lessons) {
-        this.courseName = courseName;
-        this.image = image;
-        this.description = description;
-        this.dateOfStart = dateOfStart;
-        this.students = students;
-        this.teachers = teachers;
-        this.groups = groups;
-        this.lessons = lessons;
     }
 }
 

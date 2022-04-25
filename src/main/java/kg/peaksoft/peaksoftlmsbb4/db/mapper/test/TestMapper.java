@@ -1,10 +1,10 @@
-package kg.peaksoft.peaksoftlmsbb4.mapper.test;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper.test;
 
-import kg.peaksoft.peaksoftlmsbb4.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.dto.test.TestRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.test.TestResponse;
-import kg.peaksoft.peaksoftlmsbb4.mapper.question.QuestionMapper;
-import kg.peaksoft.peaksoftlmsbb4.model.Test;
+import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

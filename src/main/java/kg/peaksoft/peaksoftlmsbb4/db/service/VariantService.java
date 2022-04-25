@@ -1,7 +1,7 @@
-package kg.peaksoft.peaksoftlmsbb4.service;
+package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.variant.VariantRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.variant.VariantResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantResponse;
 
 import java.util.List;
 

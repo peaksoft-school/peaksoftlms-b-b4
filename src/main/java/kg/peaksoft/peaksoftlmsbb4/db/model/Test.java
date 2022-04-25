@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.model;
+package kg.peaksoft.peaksoftlmsbb4.db.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -35,8 +35,8 @@ public class Test {
     @JoinColumn(name = "lessons_id")
     private Lesson lessons;
 
-    public void setQuestions(Question question){
-        if(questions == null){
+    public void setQuestions(Question question) {
+        if (questions == null) {
             questions = new ArrayList<>();
         }
         questions.add(question);

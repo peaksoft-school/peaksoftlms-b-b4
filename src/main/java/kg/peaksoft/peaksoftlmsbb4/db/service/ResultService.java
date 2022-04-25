@@ -1,7 +1,7 @@
-package kg.peaksoft.peaksoftlmsbb4.service;
+package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.dto.result.ResultRequest;
-import kg.peaksoft.peaksoftlmsbb4.dto.result.ResultResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface ResultService {
 
     void delete(Long id);
 
-     List<Long> findAllByResultFalseOrderByResult();
+    List<Long> findAllByResultFalseOrderByResult();
 }

@@ -15,9 +15,7 @@ public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumbe
                 phoneNumber = phoneNumber.substring(1, phoneNumber.length() - 1);
             }
 
-            if (phoneNumber.matches("[0-9]*") && phoneNumber.length() == 12) {
-                return true;
-            }
+            return phoneNumber.matches("[0-9]*") && phoneNumber.length() == 12;
         }
 
         return false;

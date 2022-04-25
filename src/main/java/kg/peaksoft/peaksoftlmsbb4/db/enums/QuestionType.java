@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.enums;
+package kg.peaksoft.peaksoftlmsbb4.db.enums;
 
 public enum QuestionType {
     LITTLE,
