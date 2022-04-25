@@ -28,9 +28,5 @@ public class Variant {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "result_id")
-    private Result result;
-
 
 }
