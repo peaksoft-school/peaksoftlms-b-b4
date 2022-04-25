@@ -1,6 +1,8 @@
-package kg.peaksoft.peaksoftlmsbb4.dto.course;
+package kg.peaksoft.peaksoftlmsbb4.db.dto.course;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
