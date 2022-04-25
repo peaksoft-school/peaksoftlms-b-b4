@@ -3,11 +3,13 @@ package kg.peaksoft.peaksoftlmsbb4.db.dto.course;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@ToString
 public class CourseResponse {
     private Long id;
     @JsonProperty("course_name")
