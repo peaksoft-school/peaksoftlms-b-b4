@@ -78,14 +78,14 @@ public class StudentApi {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Gets a single  student by identifier",description = "For valid response try integer IDs with value >= 1 and...")
-    public StudentResponse findById(@PathVariable Long id){
+    @Operation(summary = "Gets a single  student by identifier", description = "For valid response try integer IDs with value >= 1 and...")
+    public StudentResponse findById(@PathVariable Long id) {
         return studentService.findById(id);
     }
 
     @GetMapping("/getByName")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Get by name",description = "Get student by name")
+    @Operation(summary = "Get by name", description = "Get student by name")
     public List<Student> getByStudentName(@RequestParam String name) {
         return studentService.findByStudentName(name);
 
