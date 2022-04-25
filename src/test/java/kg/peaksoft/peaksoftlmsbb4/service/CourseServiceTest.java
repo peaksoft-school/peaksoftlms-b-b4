@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.service;
 
 import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.mapper.course.CourseMapper;
+import kg.peaksoft.peaksoftlmsbb4.exception.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.repository.CourseRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -10,10 +10,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -50,7 +48,7 @@ public class CourseServiceTest {
                 LocalDate.now()
         );
 
-        CourseResponse courseResponse = underTest.saveCourse(courseRequest);
+        underTest.saveCourse(courseRequest);
         // when
         int result = courseRepository.getQuantityOfAllCourses();
         // then
@@ -67,9 +65,10 @@ public class CourseServiceTest {
                 LocalDate.now()
         );
 
-        underTest.saveCourse(courseRequest);
+        CourseResponse courseResponse = underTest.saveCourse(courseRequest);
+        System.out.println(courseResponse);
         // when
-        Course course = underTest.findById(1L);
+        Course course = courseRepository.findById(1L).orElseThrow(() -> new NotFoundException("not found"));
         // then
         assertThat(course.getId()).isEqualTo(1L);
     }
@@ -84,6 +83,8 @@ public class CourseServiceTest {
         );
         courseRepository.save(course);
         underTest.delete(4L);
+
+
 
         boolean expected = courseRepository.existsByCourseName("Java 5");
 
@@ -115,7 +116,8 @@ public class CourseServiceTest {
         );
         courseRepository.save(course);
 
-        Course course1 = underTest.findById(5L);
+        Course course1 = courseRepository.findById(5L).orElseThrow(()->new NotFoundException(String.format("" +
+                "course with id not founded ")));
         course1.setCourseName("Java 6");
         course1.setImage("image changed");
         course1.setDescription("description changed");
