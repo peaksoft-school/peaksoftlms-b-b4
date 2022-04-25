@@ -3,6 +3,8 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
@@ -13,10 +15,15 @@ import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +37,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final CourseRepository courseRepository;
+    private final GroupRepository groupRepository;
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
@@ -120,4 +128,47 @@ public class StudentServiceImpl implements StudentService {
         course1.addStudent(student1);
 
     }
+
+    @Override
+    public List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException {
+        Group group = groupRepository.findById(id).orElseThrow(() -> new NotFoundException(
+                String.format("Group with id = %s not found", id)
+        ));
+        List<StudentResponse> student1 = new ArrayList<>();
+
+        XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
+        XSSFSheet worksheet = workbook.getSheetAt(0);
+
+        for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
+            if (index > 0) {
+
+                StudentRequest student = new StudentRequest();
+                XSSFRow row = worksheet.getRow(index);
+                student.setStudentName(row.getCell(0).getStringCellValue());
+                student.setLastName(row.getCell(1).getStringCellValue());
+                student.setEmail(row.getCell(2).getStringCellValue());
+                student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
+                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+                student.setGroupId(group.getId());
+                Student s = studentMapper.convert(student);
+                String email = s.getEmail();
+                if (studentRepository.existsByEmail((email))) {
+                    throw new BadRequestException(
+                            String.format("There is such a = %s", email)
+                    );
+                }
+                Student students = studentRepository.save(s);
+                group.setStudent(students);
+
+                log.info("successful import excel students:{}", student.getStudentName());
+
+                student1.add(studentMapper.deConvert(students));
+            }
+
+        }
+
+        return student1;
+
+    }
 }
+

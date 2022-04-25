@@ -15,8 +15,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -75,9 +77,18 @@ public class StudentApi {
     }
 
     @GetMapping("/{id}")
-    public StudentResponse findById(@PathVariable Long id){
+    public StudentResponse findById(@PathVariable Long id) {
         return studentService.findById(id);
     }
 
+
+    @Operation(summary = "import EXCEL",
+            description = "This endpoint for import students list from excel to group")
+    @PostMapping("/import")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public List<StudentResponse> importExcelFile
+            (@RequestParam("groupId") Long id, @RequestParam(name = "file") MultipartFile files) throws IOException {
+        return studentService.importExcelFile(files, id);
+    }
 
 }

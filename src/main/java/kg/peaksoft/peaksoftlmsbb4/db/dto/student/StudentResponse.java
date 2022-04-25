@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.student;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +19,6 @@ public class StudentResponse {
     @JsonProperty("phone_number")
     private String phoneNumber;
     private String email;
+    private Role role;
 
 }
