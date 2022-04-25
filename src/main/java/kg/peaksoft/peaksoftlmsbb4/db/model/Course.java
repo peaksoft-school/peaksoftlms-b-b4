@@ -11,7 +11,6 @@ import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
-@NoArgsConstructor
 @Entity
 @Table(name = "course")
 @Getter
