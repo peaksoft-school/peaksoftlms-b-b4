@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("api/videoLessons")
 @Tag(name = "VideoLessons", description = "The Video_Lessons API")
-@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class VideoLessonApi {
     private final VideoLessonService videoLessonService;
 

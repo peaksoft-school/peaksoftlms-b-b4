@@ -120,4 +120,10 @@ public class StudentServiceImpl implements StudentService {
         course1.addStudent(student1);
 
     }
+
+    @Override
+    public List<Student> findByStudentName(String name) {
+        return studentRepository.findByStudentName(name);
+    }
+
 }

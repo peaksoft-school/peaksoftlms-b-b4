@@ -5,7 +5,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TeacherRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
@@ -17,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,12 +113,9 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<CourseResponse> teacherCourses(List<Course> courses) {
-        List<CourseResponse> courseResponses = new ArrayList<>();
-        for (Course c : courses) {
-            courseResponses.add(courseMapper.deConvert(c));
-        }
-        return courseResponses;
+    public List<CourseResponse> teacherCourses(String email) {
+        Teacher teacher = teacherRepository.findTeacherByUserEmail(email);
+        return courseMapper.deConvert(teacher.getCourses());
     }
 
 
