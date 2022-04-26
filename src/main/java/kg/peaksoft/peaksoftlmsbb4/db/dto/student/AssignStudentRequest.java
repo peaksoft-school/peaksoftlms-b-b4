@@ -1,17 +1,12 @@
-package kg.peaksoft.peaksoftlmsbb4.db.dto.lessons;
+package kg.peaksoft.peaksoftlmsbb4.db.dto.student;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-
 @Getter
 @Setter
-public class LessonRequest {
-    @NotBlank
-    private String name;
-
+public class AssignStudentRequest {
     @JsonProperty("course_id")
     private Long courseId;
 }

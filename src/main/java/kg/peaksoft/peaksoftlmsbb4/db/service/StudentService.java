@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
@@ -24,7 +25,7 @@ public interface StudentService {
 
     List<StudentResponse> findByStudyFormat(StudyFormat studyFormat);
 
-    void assignStudentToCourse(Long course, Long studentId);
+    void assignStudentToCourse(AssignStudentRequest assignStudentRequest, Long studentId);
 
     List<Student> findByStudentName(String name);
 

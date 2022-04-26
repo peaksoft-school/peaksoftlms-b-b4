@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
@@ -119,11 +120,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void assignStudentToCourse(Long courseId, Long studentId) {
-        Course course1 = courseRepository.findById(courseId)
+    public void assignStudentToCourse(AssignStudentRequest assignStudentRequest, Long studentId) {
+        Course course1 = courseRepository.findById(assignStudentRequest.getCourseId())
                 .orElseThrow(() ->
                         new NotFoundException(
-                                String.format("Not found course with id=%s", courseId)));
+                                String.format("Not found course with id=%s", assignStudentRequest.getCourseId())));
         Student student1 = studentRepository.getById(studentId);
         course1.addStudent(student1);
 

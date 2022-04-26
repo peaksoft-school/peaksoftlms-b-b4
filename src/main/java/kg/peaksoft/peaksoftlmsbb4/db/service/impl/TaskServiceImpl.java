@@ -27,9 +27,9 @@ public class TaskServiceImpl implements TaskService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public TaskResponse saveTasks(Long id,TaskRequest taskRequest) {
-        Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("Lesson with id %s not found", id)
+    public TaskResponse saveTasks(TaskRequest taskRequest) {
+        Lesson lessons = lessonRepository.findById(taskRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
+                String.format("Lesson with id %s not found", taskRequest.getLessonId())
         ));
         Task task = taskMapper.convert(taskRequest);
         Task save = taskRepository.save(task);

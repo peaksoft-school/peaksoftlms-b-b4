@@ -27,9 +27,9 @@ public class PresentationServiceImpl implements PresentationService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public PresentationResponse savePresentation(Long id,PresentationRequest presentationRequest) {
-         Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("Lesson with id %s not found", id)
+    public PresentationResponse savePresentation(PresentationRequest presentationRequest) {
+         Lesson lessons = lessonRepository.findById(presentationRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
+                String.format("Lesson with id %s not found",presentationRequest.getLessonId())
         ));
         Presentation presentation = presentationMapper.convert(presentationRequest);
         Presentation save = presentationRepository.save(presentation);

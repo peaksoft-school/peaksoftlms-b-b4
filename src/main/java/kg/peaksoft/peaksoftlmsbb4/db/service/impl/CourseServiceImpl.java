@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
@@ -108,10 +109,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void assignTeachersToCourse(Long courseId, List<Long> teacherId) {
-        Course course1 = getById(courseId);
-        for (Long id:teacherId) {
-            course1.addTeacher(teacherService.findBy(id));
+    public void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest, List<Long> teacherId) {
+        Course course = courseRepository.findById(assignTeacherRequest.getCourseId())
+                .orElseThrow(() ->
+                        new NotFoundException(String.format("Course with id = %s not found",assignTeacherRequest.getCourseId())));
+        for (Long id : teacherId) {
+            course.addTeacher(teacherService.findBy(id));
         }
         log.info("successful assign teacher with id=%s to course");
     }
