@@ -13,6 +13,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,6 @@ public class StudentApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public List<StudentResponse> findAll(@RequestParam int size,
                                          @RequestParam int page) {
-
         return studentService.findAllStudent(PageRequest.of(size, page));
     }
 

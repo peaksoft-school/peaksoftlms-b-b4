@@ -10,5 +10,5 @@ public class VariantRequest {
     @JsonProperty("variant_name")
     private String variantName;
     @JsonProperty("is_true")
-    private Boolean isTrue = false;
+    private Boolean isTrue;
 }

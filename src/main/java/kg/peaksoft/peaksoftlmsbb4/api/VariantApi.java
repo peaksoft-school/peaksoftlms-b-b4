@@ -8,6 +8,8 @@ import kg.peaksoft.peaksoftlmsbb4.db.service.VariantService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/variants")
@@ -43,5 +45,15 @@ public class VariantApi {
     public String deleteById(@PathVariable Long id) {
         variantService.delete(id);
         return String.format("successful variant delete by id=%s", id);
+    }
+
+    @GetMapping
+    public List<VariantResponse> findAll() {
+        return variantService.findAll();
+    }
+
+    @GetMapping("/result")
+    public List<Long> results() {
+        return variantService.countAllByIsTrueTrue();
     }
 }

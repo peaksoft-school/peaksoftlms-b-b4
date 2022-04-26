@@ -2,7 +2,6 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
@@ -40,10 +39,7 @@ public class QuestionServiceImpl implements QuestionService {
         Test test = testRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("this id not found=%s", id)
         ));
-        Question question1 = modelMapper.map(question, Question.class);
-        if (question1.getQuestionType().equals(QuestionType.MANY)) {
-
-        }
+        Question question1 = modelMapper.map(questionRequest, Question.class);
         questionRepository.save(question1);
         test.setQuestions(question1);
         log.info("successful save question:{}", question);
