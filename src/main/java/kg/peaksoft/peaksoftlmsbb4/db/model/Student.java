@@ -39,6 +39,7 @@ public class Student {
     private StudyFormat studyFormat;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "group_id")
     private Group group;
 
