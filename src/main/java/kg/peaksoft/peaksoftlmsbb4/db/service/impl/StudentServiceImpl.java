@@ -37,6 +37,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final CourseRepository courseRepository;
+    private final GroupRepository groupRepository;
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
