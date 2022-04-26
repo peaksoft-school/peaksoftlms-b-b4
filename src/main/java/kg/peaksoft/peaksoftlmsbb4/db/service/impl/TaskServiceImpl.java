@@ -2,13 +2,13 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.service.TaskService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.task.TaskMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TaskRepository;
-import kg.peaksoft.peaksoftlmsbb4.db.service.TaskService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,9 @@ public class TaskServiceImpl implements TaskService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public TaskResponse saveTasks(Long id, TaskRequest taskRequest) {
-        Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("Lesson with id %s not found", id)
+    public TaskResponse saveTasks(TaskRequest taskRequest) {
+        Lesson lessons = lessonRepository.findById(taskRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
+                String.format("Lesson with id %s not found", taskRequest.getLessonId())
         ));
         Task task = taskMapper.convert(taskRequest);
         Task save = taskRepository.save(task);

@@ -2,13 +2,13 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.service.PresentationService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.presentation.PresentationMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Presentation;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.PresentationRepository;
-import kg.peaksoft.peaksoftlmsbb4.db.service.PresentationService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,9 @@ public class PresentationServiceImpl implements PresentationService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public PresentationResponse savePresentation(Long id, PresentationRequest presentationRequest) {
-        Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("Lesson with id %s not found", id)
+    public PresentationResponse savePresentation(PresentationRequest presentationRequest) {
+         Lesson lessons = lessonRepository.findById(presentationRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
+                String.format("Lesson with id %s not found",presentationRequest.getLessonId())
         ));
         Presentation presentation = presentationMapper.convert(presentationRequest);
         Presentation save = presentationRepository.save(presentation);
@@ -81,7 +81,7 @@ public class PresentationServiceImpl implements PresentationService {
         presentationRepository.deleteById(id);
     }
 
-    private Presentation getById(Long id) {
+    private Presentation getById(Long id){
         return presentationRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
     }
 }

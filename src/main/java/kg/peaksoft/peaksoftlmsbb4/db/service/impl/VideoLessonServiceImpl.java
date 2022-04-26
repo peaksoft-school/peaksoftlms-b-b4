@@ -2,13 +2,13 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.service.VideoLessonService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.videolesson.VideoLessonMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.VideoLesson;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VideoLessonRepository;
-import kg.peaksoft.peaksoftlmsbb4.db.service.VideoLessonService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,9 @@ public class VideoLessonServiceImpl implements VideoLessonService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public VideoLessonResponse saveVideoLessons(Long id, VideoLessonRequest videoLessonRequest) {
-        Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("Lesson with id %s not found", id)
+    public VideoLessonResponse saveVideoLessons(VideoLessonRequest videoLessonRequest) {
+        Lesson lessons = lessonRepository.findById(videoLessonRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
+                String.format("Lesson with id %s not found", videoLessonRequest.getLessonId())
         ));
         VideoLesson videoLesson = videoLessonMapper.convert(videoLessonRequest);
         VideoLesson save = videoLessonRepository.save(videoLesson);

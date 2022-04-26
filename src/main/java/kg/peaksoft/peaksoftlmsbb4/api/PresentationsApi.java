@@ -15,15 +15,16 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Presentations", description = "The Presentations API")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class PresentationsApi {
+
     private final PresentationService presentationService;
 
-    @PostMapping("/{id}")
+    @PostMapping
     @Operation(summary = "Add new presentation",
             description = "This endpoint save new presentations. Only users with role teacher can add new presentation to lesson")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public PresentationResponse savePresentations(@PathVariable Long id,
-                                                  @RequestBody PresentationRequest presentationRequest) {
-        return presentationService.savePresentation(id, presentationRequest);
+    public PresentationResponse savePresentations(
+            @RequestBody PresentationRequest presentationRequest) {
+        return presentationService.savePresentation(presentationRequest);
     }
 
     @GetMapping("/{id}")
@@ -34,19 +35,6 @@ public class PresentationsApi {
         return presentationService.findById(id);
 
     }
-
-//    @GetMapping
-//    @Operation(summary = "Gets a list", description = "Returns all presentations that are,if there are no presentations,then an error")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200",
-//                    description = "Found the presentations",
-//                    content = {
-//                            @Content(mediaType = "application/json",
-//                                    array = @ArraySchema(schema = @Schema(implementation = PresentationsApi.class)))})})
-//    @PreAuthorize("hasAnyAuthority('TEACHER')")
-//    public List<PresentationResponse> findAll() {
-//        return presentationService.findAll();
-//    }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update the presentations",

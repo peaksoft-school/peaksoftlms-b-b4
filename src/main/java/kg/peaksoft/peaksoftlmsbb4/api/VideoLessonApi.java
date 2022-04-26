@@ -22,14 +22,15 @@ import java.util.List;
 @Tag(name = "VideoLessons", description = "The Video_Lessons API")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class VideoLessonApi {
+
     private final VideoLessonService videoLessonService;
 
-    @PostMapping("/{id}")
+    @PostMapping
     @Operation(summary = "Add new video lessons",
             description = "This method save new video lessons.Only users with role teacher can add new video to lesson")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public VideoLessonResponse saveVideo(@PathVariable Long id, @RequestBody VideoLessonRequest videoLessonRequest) {
-        return videoLessonService.saveVideoLessons(id, videoLessonRequest);
+    public VideoLessonResponse saveVideo(@RequestBody VideoLessonRequest videoLessonRequest) {
+        return videoLessonService.saveVideoLessons(videoLessonRequest);
     }
 
     @GetMapping("/{id}")

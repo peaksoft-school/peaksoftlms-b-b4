@@ -10,12 +10,14 @@ public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumbe
     public boolean isValid(String phoneNumber,
                            ConstraintValidatorContext constraintValidatorContext) {
 
-        if (phoneNumber.length() == 12 || phoneNumber.length() == 13) {
+        if (phoneNumber.length() == 10 || phoneNumber.length() == 13) {
             if (phoneNumber.charAt(0) == '+') {
                 phoneNumber = phoneNumber.substring(1, phoneNumber.length() - 1);
             }
 
-            return phoneNumber.matches("[0-9]*") && phoneNumber.length() == 12;
+            if (phoneNumber.matches("[0-9]*") && phoneNumber.length() == 10) {
+                return true;
+            }
         }
 
         return false;

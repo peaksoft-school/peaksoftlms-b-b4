@@ -27,10 +27,10 @@ public class LinkServiceImpl implements LinkService {
     private final LessonRepository lessonRepository;
 
     @Override
-    public LinkResponse saveLinks(Long id, LinkRequest linkRequest) {
+    public LinkResponse saveLinks(LinkRequest linkRequest) {
         System.out.println("This method works exactly");
-        Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("Link with id %s not found", id)
+        Lesson lessons = lessonRepository.findById(linkRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
+                String.format("Link with id %s not found",linkRequest.getLessonId())
         ));
         log.info("found lesson:{}", lessons);
         Link link = linkMapper.convert(linkRequest);

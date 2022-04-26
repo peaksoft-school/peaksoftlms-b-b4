@@ -22,14 +22,15 @@ import java.util.List;
 @Tag(name = "Lesson", description = "The Lesson API")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class LessonsApi {
+
     private final LessonService lessonService;
 
-    @PostMapping("/{id}")
+    @PostMapping
     @Operation(summary = "Add new lesson to course",
             description = "This endpoint save new lesson to course by ID. Only users with role teacher can add new lessons")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public LessonResponse saveLesson(@PathVariable Long id, @RequestBody LessonRequest lessonRequest) {
-        return lessonService.saveLessons(id, lessonRequest);
+    public LessonResponse saveLesson(@RequestBody LessonRequest lessonRequest) {
+        return lessonService.saveLessons(lessonRequest);
     }
 
     @GetMapping("/{id}")

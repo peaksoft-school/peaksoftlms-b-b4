@@ -1,8 +1,12 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.group.AssignGroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.group.GroupMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
@@ -10,9 +14,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
-import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -119,13 +120,12 @@ public class GroupServiceImpl implements GroupService {
         log.info("successful get sll student By Group Id this id:{}", id);
         return studentResponses;
     }
-
     @Transactional
     @Override
-    public void assignGroupToCourse(Long courseId, Long groupId) {
-        Course course1 = courseRepository.findById(courseId)
+    public void assignGroupToCourse(AssignGroupRequest assignGroupRequest, Long groupId) {
+        Course course1 = courseRepository.findById(assignGroupRequest.getCourseId())
                 .orElseThrow(() -> new BadRequestException(
-                        String.format("Course with id %s not found", courseId)));
+                        String.format("Course with id %s not found", assignGroupRequest.getCourseId())));
         Group group = groupRepository.getById(groupId);
         course1.setGroup(group);
     }

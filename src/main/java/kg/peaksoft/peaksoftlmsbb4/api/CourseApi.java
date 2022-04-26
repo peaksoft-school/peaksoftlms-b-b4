@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
 import lombok.AllArgsConstructor;
@@ -94,10 +95,11 @@ public class CourseApi {
 
     @Operation(summary = "Assign teacher to course",
             description = "This endpoint for adding a teacher to a course. Only user with role admin can add teacher to course")
-    @PostMapping("assignTeacher/{courseId}")
+    @PostMapping("/assignTeacher")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void assignTeacherToCourse(@PathVariable Long courseId, @RequestParam(required = false) List<Long> teacherId) {
-        courseService.assignTeachersToCourse(courseId, teacherId);
+    public void assignTeacherToCourse(@RequestBody AssignTeacherRequest assignTeacherRequest,
+                                      @RequestParam(value = "teachersId",required = false) List<Long> teacherId) {
+        courseService.assignTeachersToCourse(assignTeacherRequest, teacherId);
     }
 
 }

@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.presentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +14,7 @@ public class PresentationRequest {
     private String description;
     @NotBlank
     private String file;
+    @JsonProperty("lesson_id")
+    private Long lessonId;
 
 }

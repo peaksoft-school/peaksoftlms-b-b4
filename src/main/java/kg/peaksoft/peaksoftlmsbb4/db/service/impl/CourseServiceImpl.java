@@ -3,7 +3,12 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
@@ -11,10 +16,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
-import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
-import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -108,10 +109,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void assignTeachersToCourse(Long courseId, List<Long> teacherId) {
-        Course course1 = getById(courseId);
+    public void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest, List<Long> teacherId) {
+        Course course = courseRepository.findById(assignTeacherRequest.getCourseId())
+                .orElseThrow(() ->
+                        new NotFoundException(String.format("Course with id = %s not found",assignTeacherRequest.getCourseId())));
         for (Long id : teacherId) {
-            course1.addTeacher(teacherService.findBy(id));
+            course.addTeacher(teacherService.findBy(id));
         }
         log.info("successful assign teacher with id=%s to course");
     }

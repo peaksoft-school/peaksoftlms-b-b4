@@ -6,10 +6,9 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public interface TaskService {
-    TaskResponse saveTasks(Long id, TaskRequest taskRequest);
+    TaskResponse saveTasks(TaskRequest taskRequest);
 
     Task findById(Long id);
 

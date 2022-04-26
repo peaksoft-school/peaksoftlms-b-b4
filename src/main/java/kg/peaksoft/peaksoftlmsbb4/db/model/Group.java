@@ -45,4 +45,11 @@ public class Group {
         assert course != null;
         course.setGroup(this);
     }
+
+    public void setStudent(Student student){
+        if(student==null){
+            students=new ArrayList<>();
+        }
+        students.add(student);
+    }
 }
