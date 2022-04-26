@@ -15,14 +15,15 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Links", description = "The Links API")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class LinkApi {
+
     private final LinkService linkService;
 
-    @PostMapping("/{id}")
+    @PostMapping
     @Operation(summary = "Add new link",
             description = "This endpoint save new links to lesson. Only users with role teacher can add new link to lesson")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public LinkResponse saveLink(@PathVariable Long id, @RequestBody LinkRequest linkRequest) {
-        return linkService.saveLinks(id, linkRequest);
+    public LinkResponse saveLink(@RequestBody LinkRequest linkRequest) {
+        return linkService.saveLinks(linkRequest);
     }
 
     @GetMapping("/{id}")
@@ -32,20 +33,6 @@ public class LinkApi {
     public LinkResponse findById(@PathVariable Long id) {
         return linkService.findById(id);
     }
-
-//    @GetMapping
-//    @Operation(summary = "Gets a list",
-//            description = "Returns all links that are,if there are no links,then an error")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200",
-//                    description = "Found the links",
-//                    content = {
-//                            @Content(mediaType = "application/json",
-//                                    array = @ArraySchema(schema = @Schema(implementation = LinkApi.class)))})})
-//    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-//    public List<LinkResponse> findAll() {
-//        return linkService.findAll();
-//    }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update the link",

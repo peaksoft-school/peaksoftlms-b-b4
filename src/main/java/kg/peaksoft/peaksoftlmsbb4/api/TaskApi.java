@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Task", description = "The Tasks API")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class TaskApi {
+
     private final TaskService taskService;
 
-    @PostMapping("/{id}")
+    @PostMapping
     @Operation(summary = "Add new tasks",
             description = "This endpoint save new task. Only users with role teacher can add new task to lesson")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public TaskResponse saveTasks(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
-        return taskService.saveTasks(id, taskRequest);
+    public TaskResponse saveTasks(@RequestBody TaskRequest taskRequest) {
+        return taskService.saveTasks(taskRequest);
 
     }
 
@@ -34,20 +35,6 @@ public class TaskApi {
     public Task findById(@PathVariable Long id) {
         return taskService.findById(id);
     }
-
-//    @GetMapping
-//    @Operation(summary = "Gets a list",
-//            description = "Returns all tasks that are,if there are no tasks,then an error")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200",
-//                    description = "Found the tasks",
-//                    content = {
-//                            @Content(mediaType = "application/json",
-//                                    array = @ArraySchema(schema = @Schema(implementation = TaskApi.class)))})})
-//    @PreAuthorize("hasAnyAuthority('TEACHER')")
-//    public List<TaskResponse> findAll() {
-//        return taskService.findAll();
-//    }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update the tasks",

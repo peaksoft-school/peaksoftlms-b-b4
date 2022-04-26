@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.group.AssignGroupRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
@@ -35,7 +37,7 @@ public class TeacherApi {
     private final GroupService groupService;
     private final CourseService courseService;
 
-    @GetMapping
+    @GetMapping("/All")
     @Operation(summary = "Gets a list",
             description = "Returns all teachers that are,if there are no teachers,then an error")
     @ApiResponses(value = {
@@ -93,20 +95,20 @@ public class TeacherApi {
 
     @Operation(summary = "Assign student to course",
             description = "This endpoint for adding a student to a course. Only user with role teacher can add student to course")
-    @PostMapping("assignStudent/{courseId}")
+    @PostMapping("/assignStudent")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public void assignStudentToCourse(@PathVariable Long courseId,
-                                      @RequestParam(required = false) Long studentId) {
-        studentService.assignStudentToCourse(courseId, studentId);
+    public void assignStudentToCourse(@RequestBody AssignStudentRequest assignStudentRequest,
+                                      @RequestParam(value = "studentId",required = false) Long studentId) {
+        studentService.assignStudentToCourse(assignStudentRequest, studentId);
     }
 
     @Operation(summary = "Assign group to course",
             description = "This endpoint for adding a group to course")
-    @PostMapping("assignGroup/{courseId}")
+    @PostMapping("/assignGroup")
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public void assignGroupToCourse(@PathVariable Long courseId,
-                                    @RequestParam(required = false) Long groupId) {
-        groupService.assignGroupToCourse(courseId, groupId);
+    public void assignGroupToCourse(@RequestBody AssignGroupRequest assignGroupRequest,
+                                    @RequestParam(value = "groupId",required = false) Long groupId) {
+        groupService.assignGroupToCourse(assignGroupRequest, groupId);
     }
 
     @Operation(summary = "Course's teachers",
