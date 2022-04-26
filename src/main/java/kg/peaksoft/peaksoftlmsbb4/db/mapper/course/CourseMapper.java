@@ -7,6 +7,9 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class CourseMapper implements Converter<Course, CourseRequest, CourseResponse> {
@@ -42,5 +45,13 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         if (!course.getImage().equals(courseRequest.getImage())) {
             course.setImage(courseRequest.getImage());
         }
+    }
+
+    public List<CourseResponse> deConvert(List<Course> courses) {
+        List<CourseResponse> courseResponses = new ArrayList<>();
+        for (Course c : courses) {
+            courseResponses.add(deConvert(c));
+        }
+        return courseResponses;
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("api/presentations")
 @Tag(name = "Presentations", description = "The Presentations API")
-@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class PresentationsApi {
     private final PresentationService presentationService;
 

@@ -37,7 +37,6 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final CourseRepository courseRepository;
-    private final GroupRepository groupRepository;
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
@@ -170,5 +169,10 @@ public class StudentServiceImpl implements StudentService {
         return student1;
 
     }
-}
 
+    @Override
+    public List<Student> findByStudentName(String name) {
+        return studentRepository.findByStudentName(name);
+    }
+
+}

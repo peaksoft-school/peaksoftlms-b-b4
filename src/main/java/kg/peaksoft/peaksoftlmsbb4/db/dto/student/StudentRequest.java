@@ -6,10 +6,9 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -29,8 +28,8 @@ public class StudentRequest {
     @JsonProperty("phone_number")
     private String phoneNumber;
 
-    @NotBlank
     @JsonProperty("study_format")
+    @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;
 
     @Email(message = "email must follow the formatter :***@**")

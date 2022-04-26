@@ -3,21 +3,19 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.TeacherRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
-import kg.peaksoft.peaksoftlmsbb4.db.repository.TeacherRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +47,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         Teacher teacher1 = teacherRepository.save(teacher);
 
-        log.info("successful save this teacher:{}",teacher1);
+        log.info("successful save this teacher:{}", teacher1);
         return teacherMapper.deConvert(teacher1);
 
     }
@@ -76,7 +74,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (!passwordEncoder.matches(teacherRequest.getPassword(), teacher.getUser().getPassword())) {
             teacher.getUser().setPassword(passwordEncoder.encode(teacherRequest.getPassword()));
         }
-        log.info("successful update teacher this id:{}",id);
+        log.info("successful update teacher this id:{}", id);
         return teacherMapper.deConvert(teacher);
 
     }
@@ -88,7 +86,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher findBy(Long id) {
-        log.info("successful find by id :{}",id);
+        log.info("successful find by id :{}", id);
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
                         String.format("teacher with id = %s does not exists", id)
@@ -102,7 +100,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (!exists) {
             throw new BadRequestException(String.format("teacher with id = %s does not exists", id));
         }
-        log.info("successful delete this id:{}",id);
+        log.info("successful delete this id:{}", id);
         teacherRepository.deleteById(id);
     }
 
@@ -115,14 +113,10 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<CourseResponse> teacherCourses(List<Course> courses) {
-        List<CourseResponse> courseResponses = new ArrayList<>();
-        for (Course c : courses) {
-            courseResponses.add(courseMapper.deConvert(c));
-        }
-        return courseResponses;
+    public List<CourseResponse> teacherCourses(String email) {
+        Teacher teacher = teacherRepository.findTeacherByUserEmail(email);
+        return courseMapper.deConvert(teacher.getCourses());
     }
-
 
 
 }

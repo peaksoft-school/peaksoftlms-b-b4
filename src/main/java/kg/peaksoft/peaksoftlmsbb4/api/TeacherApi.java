@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
+import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
 import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/teachers")
-@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Teacher", description = "The Teacher API")
 public class TeacherApi {
 
@@ -78,8 +78,8 @@ public class TeacherApi {
     @GetMapping("/teacherCourses")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     public List<CourseResponse> teacherCourses(Authentication authentication) {
-        Teacher teacher = (Teacher) authentication.getPrincipal();
-        return teacherService.teacherCourses(teacher.getCourses());
+        User user = (User) authentication.getPrincipal();
+        return teacherService.teacherCourses(user.getEmail());
     }
 
 

@@ -10,21 +10,21 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
 @AllArgsConstructor
-@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Student", description = "The Student API")
 public class StudentApi {
 
@@ -41,7 +41,7 @@ public class StudentApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public List<StudentResponse> findAll(@RequestParam int size,
                                          @RequestParam int page) {
-        return studentService.findAllStudent(PageRequest.of(size, page));
+        return studentService.findAllStudent(PageRequest.of(size, page, Sort.by("studentName")));
     }
 
     @PostMapping
@@ -77,10 +77,17 @@ public class StudentApi {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @Operation(summary = "Gets a single  student by identifier", description = "For valid response try integer IDs with value >= 1 and...")
     public StudentResponse findById(@PathVariable Long id) {
         return studentService.findById(id);
     }
 
+    @GetMapping("/getByName")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @Operation(summary = "Get by name", description = "Get student by name")
+    public List<Student> getByStudentName(@RequestParam String name) {
+        return studentService.findByStudentName(name);
 
     @Operation(summary = "import EXCEL",
             description = "This endpoint for import students list from excel to group")
@@ -91,4 +98,5 @@ public class StudentApi {
         return studentService.importExcelFile(files, id);
     }
 
+    }
 }
