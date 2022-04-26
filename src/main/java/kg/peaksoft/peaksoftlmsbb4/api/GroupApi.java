@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Tag(name = "Group", description = "The Group API")
-@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/groups")
 public class GroupApi {
     private final GroupService groupService;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("api/links")
 @Tag(name = "Links", description = "The Links API")
-@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class LinkApi {
     private final LinkService linkService;
 

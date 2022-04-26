@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("api/lessons")
 @Tag(name = "Lesson", description = "The Lesson API")
-@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class LessonsApi {
     private final LessonService lessonService;
 

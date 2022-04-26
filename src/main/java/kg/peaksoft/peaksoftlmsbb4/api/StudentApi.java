@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/students")
 @AllArgsConstructor
-@CrossOrigin(origins = "http//localhost:5000", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Student", description = "The Student API")
 public class StudentApi {
 
