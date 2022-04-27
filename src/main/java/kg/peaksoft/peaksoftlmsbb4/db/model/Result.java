@@ -6,27 +6,29 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "variants")
+@Table(name = "results")
 @Getter
 @Setter
-public class Variant {
+public class Result {
     @Id
     @SequenceGenerator(
-            name = "variant_id_seq",
-            sequenceName = "variant_id_seq",
+            name = "result_id_seq",
+            sequenceName = "result_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "variant_id_seq"
+            generator = "result_id_seq"
     )
     private Long id;
-    private String option;
-    private Boolean answer = false;
+    private String studentAnswers;
+    private Boolean isTrue;
+
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "question_id")
-    private Question question;
+    @JoinColumn(name = "student_id")
+    private Student student;
+
 
 
 }

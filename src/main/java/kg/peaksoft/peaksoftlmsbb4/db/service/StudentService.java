@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
@@ -31,4 +32,5 @@ public interface StudentService {
 
     List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException;
 
+    List<CourseResponse> studentCourses(String email);
 }

@@ -6,7 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantResponse;
 import java.util.List;
 
 public interface VariantService {
-    VariantResponse saveVariant(Long id, VariantRequest variantRequest);
+    VariantResponse saveVariant( VariantRequest variantRequest);
 
     VariantResponse findById(Long id);
 

@@ -6,7 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
 import java.util.List;
 
 public interface QuestionService {
-    QuestionResponse saveQuestion(Long id, QuestionRequest questionRequest);
+    QuestionResponse saveQuestion(QuestionRequest questionRequest);
 
     QuestionResponse findById(Long id);
 

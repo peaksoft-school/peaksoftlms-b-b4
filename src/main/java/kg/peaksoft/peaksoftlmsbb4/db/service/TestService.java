@@ -6,7 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
 import java.util.List;
 
 public interface TestService {
-    TestResponse saveTest(Long id, TestRequest testRequest);
+    TestResponse saveTest(TestRequest testRequest);
 
     TestResponse findById(Long id);
 

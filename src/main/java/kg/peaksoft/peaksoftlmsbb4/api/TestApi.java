@@ -22,9 +22,9 @@ public class TestApi {
     @Operation(summary = "Add new test",
             description = "This endpoint create new test. Only users with role teacher can add new task to lesson")
     @PreAuthorize("hasAuthority('TEACHER')")
-    @PostMapping("/{id}")
-    public TestResponse saveTest(@PathVariable Long id, @RequestBody TestRequest testRequest) {
-        return testService.saveTest(id, testRequest);
+    @PostMapping()
+    public TestResponse saveTest( @RequestBody TestRequest testRequest) {
+        return testService.saveTest(testRequest);
     }
 
     @Operation(summary = "Gets a single tasks by identifier",

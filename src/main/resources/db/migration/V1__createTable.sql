@@ -7,6 +7,11 @@
 -- drop table if exists courses_students;
 -- drop table if exists groups_courses;
 -- drop table if exists course_teacher;
+-- my tables
+--drop table id exists tests;
+--drop table if exists questions;
+--drop table if exists variants;
+--drop table if exists results
 --
 -- create table if not exists users(
 --     id serial primary key,

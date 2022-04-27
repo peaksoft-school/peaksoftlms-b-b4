@@ -20,9 +20,9 @@ public class VariantApi {
 
     @Operation(summary = "Add new variant",
             description = "This endpoint save new variant. Only users with role teacher can add new variant to question")
-    @PostMapping("/{id}")
-    public VariantResponse saveVariant(@PathVariable Long id, @RequestBody VariantRequest variantRequest) {
-        return variantService.saveVariant(id, variantRequest);
+    @PostMapping()
+    public VariantResponse saveVariant(@RequestBody VariantRequest variantRequest) {
+        return variantService.saveVariant(variantRequest);
     }
 
     @Operation(summary = "Gets a single variant by identifier",

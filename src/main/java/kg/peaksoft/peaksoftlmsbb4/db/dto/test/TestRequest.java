@@ -9,4 +9,6 @@ import lombok.Setter;
 public class TestRequest {
     @JsonProperty(namespace = "test_name")
     private String testName;
+    @JsonProperty("course_id")
+    private Long lessonsId;
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface VariantRepository extends JpaRepository<Variant, Long> {
-    boolean existsByVariantName(String variantName);
+    boolean existsByOption(String variantName);
 
-    List<Long> countAllByIsTrueTrue();
+    List<Long> countAllByAnswerTrue();
 }

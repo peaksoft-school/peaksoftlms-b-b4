@@ -4,6 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.variant.VariantMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
@@ -30,19 +31,19 @@ public class VariantServiceImpl implements VariantService {
     private final VariantMapper variantMapper;
 
     @Override
-    public VariantResponse saveVariant(Long id, VariantRequest variantRequest) {
-        Question question = questionRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("not found this id=%s", id)
+    public VariantResponse saveVariant( VariantRequest variantRequest) {
+        Question question = questionRepository.findById(variantRequest.getQuestionId()).orElseThrow(() -> new BadRequestException(
+                String.format("Course with id %s does not exists", variantRequest.getQuestionId())
         ));
         int counter = 0;
         Variant map = modelMapper.map(variantRequest, Variant.class);
         if (question.getQuestionType() == QuestionType.ONE) {
             for (Variant v : question.getVariants()) {
-                if (v.getIsTrue()) {
+                if (v.getAnswer()) {
                     counter++;
                 }
             }
-            if(map.getIsTrue()) {
+            if(map.getAnswer()) {
                 if (counter > 0) {
                     throw new BadRequestException("You can't choose multiple variants");
                 } else {
@@ -62,7 +63,6 @@ public class VariantServiceImpl implements VariantService {
         question.setVariants(save);
         log.info("successful variant save:{}", save);
         return variantMapper.deConvert(save);
-
     }
 
     @Override
@@ -91,10 +91,10 @@ public class VariantServiceImpl implements VariantService {
         Variant variant = variantRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("not found this question id=%s", id)
         ));
-        String currentVariantName = variant.getVariantName();
-        String newVariantName = variantRequest.getVariantName();
+        String currentVariantName = variant.getOption();
+        String newVariantName = variantRequest.getOption();
         if (!currentVariantName.equals(newVariantName)) {
-            variant.setVariantName(newVariantName);
+            variant.setOption(newVariantName);
         }
         log.info("successful update this id:{}", id);
         return variantMapper.deConvert(variant);
@@ -108,7 +108,7 @@ public class VariantServiceImpl implements VariantService {
 
     @Override
     public List<Long> countAllByIsTrueTrue() {
-        return variantRepository.countAllByIsTrueTrue();
+        return variantRepository.countAllByAnswerTrue();
     }
 
 

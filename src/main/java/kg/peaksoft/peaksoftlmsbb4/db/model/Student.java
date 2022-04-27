@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.CascadeType.MERGE;
@@ -18,7 +19,6 @@ import static javax.persistence.CascadeType.REFRESH;
 @Setter
 
 public class Student {
-
     @Id
     @SequenceGenerator(
             name = "student_id_seq",
@@ -31,8 +31,8 @@ public class Student {
     private Long id;
     private String studentName;
     private String lastName;
-    private String email;
-    private Role role;
+   // private String email;
+//    private Role role;
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
@@ -46,5 +46,32 @@ public class Student {
     @JsonIgnore
     @ManyToMany(cascade = {REFRESH, MERGE}, mappedBy = "students", fetch = FetchType.LAZY)
     private List<Course> courses;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Result> results = new ArrayList<>();
+
+    @JsonIgnore
+    public void setCourse(Course course) {
+        if (course == null) {
+            courses = new ArrayList<>();
+        }
+        courses.add(course);
+    }
+
+    @JsonIgnore
+    public void setResult(Result result) {
+        if (result == null) {
+            results = new ArrayList<>();
+        }
+        results.add(result);
+    }
+
+
+
+
 
 }

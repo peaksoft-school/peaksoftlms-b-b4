@@ -24,7 +24,7 @@ public class StudentRequest {
     @JsonProperty("last_name")
     private String lastName;
 
-    @ValidPhoneNumber
+   // @ValidPhoneNumber
     @JsonProperty("phone_number")
     private String phoneNumber;
 
@@ -35,6 +35,8 @@ public class StudentRequest {
     @Email(message = "email must follow the formatter :***@**")
     @NotEmpty(message = "email must have a value")
     private String email;
+
+    private String password;
 
     private Long groupId;
 

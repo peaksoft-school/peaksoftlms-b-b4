@@ -38,7 +38,6 @@ public class Teacher {
 
     @OneToOne(cascade = {MERGE, REFRESH, PERSIST}, orphanRemoval = true,
             fetch = FetchType.EAGER)
-
     private User user;
 
     @JsonIgnore
@@ -50,7 +49,6 @@ public class Teacher {
         if (course == null) {
             courses = new ArrayList<>();
         }
-        courses.add(course);
-    }
+     }
 
 }

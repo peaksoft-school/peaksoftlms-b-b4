@@ -54,6 +54,10 @@ public class Course {
     @OneToMany(cascade = ALL, mappedBy = "courses")
     private List<Lesson> lessons = new ArrayList<>();
 
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH})
+    @JoinColumn(name = "student_id")
+    private Student student;
+
     public Course(String courseName, String image, String description, LocalDate dateOfStart) {
         this.courseName = courseName;
         this.image = image;

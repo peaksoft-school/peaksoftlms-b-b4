@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
@@ -98,8 +99,16 @@ public class CourseApi {
     @PostMapping("/assignTeacher")
     @PreAuthorize("hasAuthority('ADMIN')")
     public void assignTeacherToCourse(@RequestBody AssignTeacherRequest assignTeacherRequest,
-                                      @RequestParam(value = "teachersId",required = false) List<Long> teacherId) {
+                                      @RequestParam(value = "teachersId", required = false) List<Long> teacherId) {
         courseService.assignTeachersToCourse(assignTeacherRequest, teacherId);
     }
 
+    @PostMapping("/assignStudent")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void assignStudentToCourse(
+            @RequestBody AssignStudentRequest assignStudentRequest,
+            @RequestParam(value = "studentsId", required = false) List<Long> studentId
+    ) {
+        courseService.assignStudentsToCourse(assignStudentRequest, studentId);
+    }
 }

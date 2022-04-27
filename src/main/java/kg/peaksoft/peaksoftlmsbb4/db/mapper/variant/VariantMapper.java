@@ -14,7 +14,7 @@ public class VariantMapper implements Converter<Variant, VariantRequest, Variant
     @Override
     public Variant convert(VariantRequest variantRequest) {
         Variant variant = new Variant();
-        variant.setIsTrue(variantRequest.getIsTrue());
+        variant.setAnswer(variantRequest.getAnswer());
         return variant;
     }
 
@@ -22,7 +22,7 @@ public class VariantMapper implements Converter<Variant, VariantRequest, Variant
     public VariantResponse deConvert(Variant variant) {
         VariantResponse variantResponse = new VariantResponse();
         variantResponse.setId(variant.getId());
-        variantResponse.setVariantName(variant.getVariantName());
+        variantResponse.setOption(variant.getOption());
         return variantResponse;
     }
 

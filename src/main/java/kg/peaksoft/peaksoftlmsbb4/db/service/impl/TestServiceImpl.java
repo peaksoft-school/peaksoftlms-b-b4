@@ -8,6 +8,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TestRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TestService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +29,12 @@ public class TestServiceImpl implements TestService {
     private final TestMapper testMapper;
 
     @Override
-    public TestResponse saveTest(Long id, TestRequest testRequest) {
-        Lesson byId = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("this id not found =%s ", id)
+    public TestResponse saveTest( TestRequest testRequest) {
+        Lesson lesson = lessonRepository.findById(testRequest.getLessonsId()).orElseThrow(() -> new BadRequestException(
+                String.format("Course with id %s does not exists", testRequest.getLessonsId())
         ));
         Test test = testRepository.save(modelMapper.map(testRequest, Test.class));
-        byId.setTests(test);
+        lesson.setTests(test);
         log.info("successful test save :{}", test);
         return testMapper.deConvert(test);
     }

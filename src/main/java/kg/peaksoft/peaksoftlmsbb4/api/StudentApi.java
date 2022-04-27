@@ -7,15 +7,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
+import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,7 +53,7 @@ public class StudentApi {
     @Operation(summary = "Add new student",
             description = "This endpoint save new student. Only users with role admin can add new students")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public StudentResponse saveStudent(@RequestBody @Valid StudentRequest studentRequest) {
+    public StudentResponse saveStudent(@Valid @RequestBody StudentRequest studentRequest) {
         return studentService.saveStudent(studentRequest);
     }
 
@@ -101,5 +104,13 @@ public class StudentApi {
         return studentService.importExcelFile(files, id);
     }
 
+    @GetMapping("/studentCourses")
+    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    public List<CourseResponse> studentCourses(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return studentService.studentCourses(user.getEmail());
     }
+
+
+}
 

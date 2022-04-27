@@ -18,9 +18,9 @@ public class QuestionApi {
 
     @Operation(summary = "Add new question",
             description = "This endpoint save new question. Only users with role teacher can add new question to test")
-    @PostMapping("/{id}")
-    public QuestionResponse saveQuestion(@PathVariable Long id, @RequestBody QuestionRequest questionRequest) {
-        return questionService.saveQuestion(id, questionRequest);
+    @PostMapping()
+    public QuestionResponse saveQuestion(@RequestBody QuestionRequest questionRequest) {
+        return questionService.saveQuestion(questionRequest);
     }
 
 

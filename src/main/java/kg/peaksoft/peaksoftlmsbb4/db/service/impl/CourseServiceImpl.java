@@ -2,10 +2,13 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
@@ -20,6 +23,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +31,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
@@ -34,6 +39,7 @@ public class CourseServiceImpl implements CourseService {
     private final StudentMapper studentMapper;
     private final TeacherMapper teacherMapper;
     private final TeacherService teacherService;
+    private final StudentRepository studentRepository;
 
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
@@ -47,7 +53,6 @@ public class CourseServiceImpl implements CourseService {
         log.info("successful save this course:{}", save);
         return courseMapper.deConvert(save);
     }
-
     @Override
     public List<CourseResponse> findAll() {
         log.info("successful find all");
@@ -117,6 +122,19 @@ public class CourseServiceImpl implements CourseService {
             course.addTeacher(teacherService.findBy(id));
         }
         log.info("successful assign teacher with id=%s to course");
+    }
+
+    @Override
+    public void assignStudentsToCourse(AssignStudentRequest assignStudentRequest, List<Long> studentId) {
+        Course course=courseRepository.findById(assignStudentRequest.getCourseId())
+                .orElseThrow(()->new NotFoundException(
+                        String.format("CourseWith id=%s not found",assignStudentRequest.getCourseId())));
+        for (Long id:studentId){
+            course.addStudent(studentRepository.findById(id).
+                    orElseThrow(()->new NotFoundException(
+                            String.format("CourseWith id=%s not found",assignStudentRequest.getCourseId()))));
+        }
+        log.info("successful assign student with id=%s to course");
     }
 
 

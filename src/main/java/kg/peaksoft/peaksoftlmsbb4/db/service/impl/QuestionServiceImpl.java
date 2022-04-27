@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
@@ -29,19 +30,19 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionMapper questionMapper;
 
     @Override
-    public QuestionResponse saveQuestion(Long id, QuestionRequest questionRequest) {
+    public QuestionResponse saveQuestion( QuestionRequest questionRequest) {
         String question = questionRequest.getQuestion();
         if (questionRepository.existsByQuestion(question)) {
             throw new BadRequestException(
                     String.format("Sorry, please try another question=%s", question)
             );
         }
-        Test test = testRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("this id not found=%s", id)
+        Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(() -> new BadRequestException(
+                String.format("Course with id %s does not exists", questionRequest.getTestId())
         ));
         Question question1 = modelMapper.map(questionRequest, Question.class);
         questionRepository.save(question1);
-        test.setQuestions(question1);
+        question1.setTest(test);
         log.info("successful save question:{}", question);
         return questionMapper.deConvert(question1);
     }
