@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class GroupServiceImpl implements GroupService {
     private final GroupMapper groupMapper;
     private final GroupRepository groupRepository;
@@ -37,6 +38,7 @@ public class GroupServiceImpl implements GroupService {
 
         String name = groupRequest.getGroupName();
         if (groupRepository.existsByGroupName((name))) {
+            log.error("there is such a name:{}", name);
             throw new BadRequestException(
                     String.format("There is such a = %s", name)
             );
@@ -61,8 +63,9 @@ public class GroupServiceImpl implements GroupService {
             log.info("successful find by id:{}", id);
             return groupMapper.deConvert(group);
         } else {
+            log.error("not found group with id:{}", id);
             throw new NotFoundException(
-                    String.format("not found=%s id", id)
+                    String.format("not found group =%s id", id)
             );
         }
     }
@@ -71,8 +74,9 @@ public class GroupServiceImpl implements GroupService {
     public String deleteById(Long id) {
         boolean exists = groupRepository.existsById(id);
         if (!exists) {
+            log.error("not found group with id:{}", id);
             throw new NotFoundException(
-                    String.format("student with id = %s does not exists", id)
+                    String.format("group with id = %s does not exists", id)
             );
         }
         groupRepository.deleteById(id);
@@ -83,6 +87,11 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public GroupResponse update(Long id, GroupRequest groupRequest) {
+        boolean exists = groupRepository.existsById(id);
+        if (!exists) {
+            log.error("not found id:{}", id);
+            throw new NotFoundException(String.format("Not found id with=%s", id));
+        }
         Group group = findBy(id);
         String currentGroupName = group.getGroupName();
         String newGroupName = groupRequest.getGroupName();
@@ -105,10 +114,12 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group findBy(Long id) {
+        log.info("successful find by id:{}", id);
         return groupRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("client with id = %s does not exists", id)
-                ));
+                .orElseThrow(() ->
+                        new NotFoundException(
+                                String.format("client with id = %s does not exists", id)
+                        ));
     }
 
     @Override
@@ -117,11 +128,11 @@ public class GroupServiceImpl implements GroupService {
         for (Student t : findBy(id).getStudents()) {
             studentResponses.add(studentMapper.deConvert(t));
         }
-        log.info("successful get sll student By Group Id this id:{}", id);
+        log.info("successful get all student By Group Id this id:{}", id);
         return studentResponses;
     }
 
-    @Transactional
+
     @Override
     public void assignGroupToCourse(AssignGroupRequest assignGroupRequest, Long groupId) {
         Course course1 = courseRepository.findById(assignGroupRequest.getCourseId())
@@ -129,6 +140,7 @@ public class GroupServiceImpl implements GroupService {
                         String.format("Course with id %s not found", assignGroupRequest.getCourseId())));
         Group group = groupRepository.getById(groupId);
         course1.setGroup(group);
+        log.info("successfully assign group to course by group id:{}", groupId);
     }
 }
 

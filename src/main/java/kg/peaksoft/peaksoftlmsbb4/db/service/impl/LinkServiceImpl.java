@@ -44,6 +44,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public LinkResponse findById(Long id) {
+        log.info("successfully find by id:{}",id);
         return linkMapper.deConvert(getLinkById(id));
     }
 
@@ -57,6 +58,7 @@ public class LinkServiceImpl implements LinkService {
     public LinkResponse update(Long id, LinkRequest linkRequest) {
         boolean exist = linkRepository.existsById(id);
         if (!exist) {
+            log.error("not found id:{}",id);
             throw new NotFoundException(String.format("Link is not found with  id=%s", id));
         }
         Link link = getLinkById(id);
@@ -74,6 +76,7 @@ public class LinkServiceImpl implements LinkService {
     public void delete(Long id) {
         boolean exits = linkRepository.existsById(id);
         if (!exits) {
+            log.error("not found link id:{}",id);
             throw new NotFoundException(String.format("link is does not exists id=%s", id));
         }
         log.info("successfully delete by id:{}", id);
@@ -81,7 +84,7 @@ public class LinkServiceImpl implements LinkService {
     }
 
     private Link getLinkById(Long id) {
-        log.info("successfully find by id:{}", id);
+        log.info("successfully find link by id:{}", id);
         return linkRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Link is not found id=%s", id)));
     }
 }

@@ -28,8 +28,8 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public PresentationResponse savePresentation(PresentationRequest presentationRequest) {
-         Lesson lessons = lessonRepository.findById(presentationRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
-                String.format("Lesson with id %s not found",presentationRequest.getLessonId())
+        Lesson lessons = lessonRepository.findById(presentationRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
+                String.format("Lesson with id %s not found", presentationRequest.getLessonId())
         ));
         Presentation presentation = presentationMapper.convert(presentationRequest);
         Presentation save = presentationRepository.save(presentation);
@@ -49,6 +49,7 @@ public class PresentationServiceImpl implements PresentationService {
     public PresentationResponse update(Long id, PresentationRequest presentationRequest) {
         boolean exist = presentationRepository.existsById(id);
         if (!exist) {
+            log.error("not found presentation id:{}", id);
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
         Presentation presentation = getById(id);
@@ -75,13 +76,15 @@ public class PresentationServiceImpl implements PresentationService {
     public void delete(Long id) {
         boolean exits = presentationRepository.existsById(id);
         if (!exits) {
+            log.error("not found presentation id:{}", id);
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
         log.info("successfully delete by id:{}", id);
         presentationRepository.deleteById(id);
     }
 
-    private Presentation getById(Long id){
+    private Presentation getById(Long id) {
+        log.info("successfully get by id:{}", id);
         return presentationRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
     }
 }

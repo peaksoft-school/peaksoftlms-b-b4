@@ -41,6 +41,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public LessonResponse findById(Long id) {
+        log.info("successfully find by id:{}", id);
         return lessonMapper.deConvert(getLessonById(id));
     }
 
@@ -48,6 +49,7 @@ public class LessonServiceImpl implements LessonService {
     public List<LessonResponse> findAll(Long id) {
         Course course = courseRepository.findById(id).orElseThrow(() ->
                 new BadRequestException(String.format("course with id %s does not exists", id)));
+        log.info("successfully find all lessons by id:{}", id);
         return lessonMapper.deConvert(course.getLessons());
     }
 
@@ -55,13 +57,14 @@ public class LessonServiceImpl implements LessonService {
     public LessonResponse update(Long id, LessonRequest lessonRequest) {
         boolean exist = lessonRepository.existsById(id);
         if (!exist) {
-            throw new NotFoundException(String.format("Not found id=%s", id));
+            log.error("not found  lesson id:{}", id);
+            throw new NotFoundException(String.format("Not found lesson  id=%s", id));
         }
         Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
         if (!lessons.getName().equals(lessonRequest.getName())) {
             lessons.setName(lessonRequest.getName());
         }
-        log.info("Lesson successfully update id:{}", id);
+        log.info("lesson successfully update id:{}", id);
         return lessonMapper.deConvert(lessons);
     }
 
@@ -69,14 +72,16 @@ public class LessonServiceImpl implements LessonService {
     public void delete(Long id) {
         boolean exits = lessonRepository.existsById(id);
         if (!exits) {
+            log.error("not found lesson id:{}", id);
             throw new NotFoundException(String.format("Lesson is not found id=%s", id));
         }
-        log.info("Lesson successfully delete id:{}", id);
+        log.info("lesson successfully delete id:{}", id);
         lessonRepository.deleteById(id);
 
     }
 
     private Lesson getLessonById(Long id) {
+        log.info("successfully get lesson by id:{}", id);
         return lessonRepository.findById(id).orElseThrow(() -> new BadRequestException(String.format("lesson with %s not found", id)));
     }
 }

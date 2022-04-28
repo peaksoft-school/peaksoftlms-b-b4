@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
@@ -39,6 +41,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse saveCourse(CourseRequest courseRequest) {
         String name = courseRequest.getCourseName();
         if (courseRepository.existsByCourseName((name))) {
+            log.error("there is such a name:{}", name);
             throw new BadRequestException(
                     String.format("There is such a = %s ", name)
             );
@@ -57,7 +60,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseResponse findById(Long id) {
-        log.info("successful find by this id:{}", id);
+        log.info("successful get by id:{}", id);
         return courseMapper.deConvert(getById(id));
     }
 
@@ -65,6 +68,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse update(Long id, CourseRequest courseRequest) {
         boolean exists = courseRepository.existsById(id);
         if (!exists) {
+            log.error("not found course id:{}", id);
             throw new NotFoundException(String.format("Course with id=%s not found ", id));
         }
         Course course = getById(id);
@@ -77,9 +81,10 @@ public class CourseServiceImpl implements CourseService {
     public void delete(Long id) {
         boolean existsById = courseRepository.existsById(id);
         if (!existsById) {
+            log.error("not found course  id:{}", id);
             throw new NotFoundException(String.format(" course with id=%s does not exists", id));
         }
-        log.info("successful delete by this id:{}", id);
+        log.info("successful delete by id:{}", id);
         courseRepository.deleteById(id);
     }
 
@@ -89,7 +94,7 @@ public class CourseServiceImpl implements CourseService {
         for (Student s : getById(id).getStudents()) {
             studentResponses.add(studentMapper.deConvert(s));
         }
-        log.info("successful getAll Students by Course Id");
+        log.info("successful getAll Students by Course Id:{}", id);
         return studentResponses;
     }
 
@@ -99,12 +104,13 @@ public class CourseServiceImpl implements CourseService {
         for (Teacher t : getById(id).getTeachers()) {
             teacherResponses.add(teacherMapper.deConvert(t));
         }
-        log.info("successful getAll teacher by Course Id");
+        log.info("successful getAll teacher by Course Id:{}", id);
         return teacherResponses;
     }
 
     @Override
     public Course getById(Long id) {
+        log.info("successfully get by id:{}", id);
         return courseRepository.getById(id);
     }
 
@@ -112,7 +118,7 @@ public class CourseServiceImpl implements CourseService {
     public void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest, List<Long> teacherId) {
         Course course = courseRepository.findById(assignTeacherRequest.getCourseId())
                 .orElseThrow(() ->
-                        new NotFoundException(String.format("Course with id = %s not found",assignTeacherRequest.getCourseId())));
+                        new NotFoundException(String.format("Course with id = %s not found", assignTeacherRequest.getCourseId())));
         for (Long id : teacherId) {
             course.addTeacher(teacherService.findBy(id));
         }

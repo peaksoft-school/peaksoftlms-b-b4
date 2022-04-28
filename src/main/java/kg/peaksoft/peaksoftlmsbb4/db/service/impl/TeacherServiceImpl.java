@@ -36,6 +36,7 @@ public class TeacherServiceImpl implements TeacherService {
         String email = teacherRequest.getEmail();
 
         if (teacherRepository.existsByUserEmail((email))) {
+            log.error("does not exits teacher with email:{}", email);
             throw new BadRequestException(
                     String.format("teacher with email = %s does not exists", email)
             );
@@ -47,15 +48,19 @@ public class TeacherServiceImpl implements TeacherService {
 
         Teacher teacher1 = teacherRepository.save(teacher);
 
-        log.info("successful save this teacher:{}", teacher1);
+        log.info("successful save  teacher:{}", teacher1);
         return teacherMapper.deConvert(teacher1);
 
     }
 
     @Override
     public TeacherResponse updateTeacher(Long id, TeacherRequest teacherRequest) {
+        boolean exists = teacherRepository.existsById(id);
+        if (!exists) {
+            log.error("not found teacher with id:{}", id);
+            throw new NotFoundException(String.format("Not found teacher with id=%s", id));
+        }
         Teacher teacher = findBy(id);
-
         if (!teacher.getName().equals(teacherRequest.getTeacherName())) {
             teacher.setName(teacherRequest.getTeacherName());
         }
@@ -74,19 +79,20 @@ public class TeacherServiceImpl implements TeacherService {
         if (!passwordEncoder.matches(teacherRequest.getPassword(), teacher.getUser().getPassword())) {
             teacher.getUser().setPassword(passwordEncoder.encode(teacherRequest.getPassword()));
         }
-        log.info("successful update teacher this id:{}", id);
+        log.info("successful update teacher by id:{}", id);
         return teacherMapper.deConvert(teacher);
 
     }
 
     @Override
     public TeacherResponse findById(Long id) {
+        log.info("successfully find by id:{}", id);
         return teacherMapper.deConvert(findBy(id));
     }
 
     @Override
     public Teacher findBy(Long id) {
-        log.info("successful find by id :{}", id);
+        log.info("successful find teacher by id :{}", id);
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
                         String.format("teacher with id = %s does not exists", id)
@@ -98,9 +104,10 @@ public class TeacherServiceImpl implements TeacherService {
         boolean exists = teacherRepository.existsById(id);
 
         if (!exists) {
+            log.error("not found teacher with id:{}", id);
             throw new BadRequestException(String.format("teacher with id = %s does not exists", id));
         }
-        log.info("successful delete this id:{}", id);
+        log.info("successful delete by id:{}", id);
         teacherRepository.deleteById(id);
     }
 
@@ -115,6 +122,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<CourseResponse> teacherCourses(String email) {
         Teacher teacher = teacherRepository.findTeacherByUserEmail(email);
+        log.info("find teacher by user email:{}", email);
         return courseMapper.deConvert(teacher.getCourses());
     }
 

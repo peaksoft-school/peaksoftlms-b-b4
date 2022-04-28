@@ -40,14 +40,17 @@ public class VideoLessonServiceImpl implements VideoLessonService {
 
     @Override
     public VideoLessonResponse findById(Long id) {
+        log.info("successfully find by id:{}", id);
         return videoLessonMapper.deConvert(findBy(id));
     }
 
 
     private VideoLesson findBy(Long id) {
-        log.info("successfully find by id:{}", id);
+        log.info("successfully find by :{}", id);
         return videoLessonRepository.findById(id).orElseThrow(() -> {
+            log.error("not found id:{}", id);
             throw new NotFoundException(String.format("Not found id=%s", id));
+
         });
     }
 
@@ -61,6 +64,7 @@ public class VideoLessonServiceImpl implements VideoLessonService {
     public VideoLessonResponse update(Long id, VideoLessonRequest videoLessonRequest) {
         boolean exist = videoLessonRepository.existsById(id);
         if (!exist) {
+            log.error("not found id:{}", id);
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
         VideoLesson videoLesson = findBy(id);
@@ -73,7 +77,7 @@ public class VideoLessonServiceImpl implements VideoLessonService {
         if (!videoLesson.getDescription().equals(videoLessonRequest.getDescription())) {
             videoLesson.setDescription(videoLessonRequest.getDescription());
         }
-        log.info("successfully update id:{}", id);
+        log.info("successfully update by id:{}", id);
         return videoLessonMapper.deConvert(videoLesson);
     }
 
@@ -81,6 +85,7 @@ public class VideoLessonServiceImpl implements VideoLessonService {
     public void delete(Long id) {
         boolean exist = videoLessonRepository.existsById(id);
         if (!exist) {
+            log.error("not found id:{}", id);
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
         log.info("successfully delete by id:{}", id);

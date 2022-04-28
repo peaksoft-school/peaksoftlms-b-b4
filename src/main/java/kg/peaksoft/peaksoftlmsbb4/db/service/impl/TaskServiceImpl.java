@@ -54,6 +54,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponse update(Long id, TaskRequest taskRequest) {
         boolean exist = taskRepository.existsById(id);
         if (!exist) {
+            log.error("not found task with id:{}", id);
             throw new NotFoundException(String.format("Task is not found id=%s", id));
         }
         Task task = findById(id);
@@ -83,10 +84,11 @@ public class TaskServiceImpl implements TaskService {
     public void delete(Long id) {
         boolean exits = taskRepository.existsById(id);
         if (!exits) {
+            log.error("not found task with  id:{}", id);
             throw new NotFoundException(String.format("Task is not found id=%s", id));
 
         }
-        log.info("successfully delet by id :{}", id);
+        log.info("successfully delete by id :{}", id);
         taskRepository.deleteById(id);
     }
 }
