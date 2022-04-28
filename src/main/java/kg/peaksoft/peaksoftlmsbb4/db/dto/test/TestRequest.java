@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TestRequest {
-    @JsonProperty(namespace = "test_name")
+    @JsonProperty("test_name")
     private String testName;
-    @JsonProperty("course_id")
+    @JsonProperty("lesson_id")
     private Long lessonsId;
 }

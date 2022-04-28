@@ -20,7 +20,7 @@ public class Test {
             allocationSize = 1
     )
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
+            strategy = GenerationType.AUTO,
             generator = "tests_id_seq"
     )
     private Long id;

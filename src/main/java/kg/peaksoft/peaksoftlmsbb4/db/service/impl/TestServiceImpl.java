@@ -21,11 +21,9 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Slf4j
-@Transactional
 public class TestServiceImpl implements TestService {
     private final TestRepository testRepository;
     private final LessonRepository lessonRepository;
-    private final ModelMapper modelMapper;
     private final TestMapper testMapper;
 
     @Override
@@ -33,9 +31,16 @@ public class TestServiceImpl implements TestService {
         Lesson lesson = lessonRepository.findById(testRequest.getLessonsId()).orElseThrow(() -> new BadRequestException(
                 String.format("Course with id %s does not exists", testRequest.getLessonsId())
         ));
-        Test test = testRepository.save(modelMapper.map(testRequest, Test.class));
-        lesson.setTests(test);
+        String name = testRequest.getTestName();
+        if (testRepository.existsByTestName((name))) {
+            throw new BadRequestException(
+                    String.format("There is such a = %s ", name)
+            );
+        }
+        Test test = testMapper.convert(testRequest);
+        test.setLessons(lesson);
         log.info("successful test save :{}", test);
+        Test test1 = testRepository.save(test);
         return testMapper.deConvert(test);
     }
 
@@ -56,6 +61,7 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    @Transactional
     public TestResponse update(Long id, TestRequest testRequest) {
         boolean exists = testRepository.existsById(id);
         if (!exists) {

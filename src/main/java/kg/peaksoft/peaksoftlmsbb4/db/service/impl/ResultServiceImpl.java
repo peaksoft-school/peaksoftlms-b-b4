@@ -64,4 +64,13 @@ public class ResultServiceImpl implements ResultService {
     public List<Long> countAllByIsTrueTrue() {
         return resultRepository.countAllByIsTrueTrue();
     }
+
+    @Override
+    public long results() {
+        List<Result> all = resultRepository.findAll();
+        Long count = all.stream().filter(result -> result.getIsTrue().equals(true)).count();
+        Long count1 = all.stream().filter(result -> result.getIsTrue().equals(false)).count();
+
+        return count+count1;
+    }
 }

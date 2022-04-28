@@ -45,4 +45,9 @@ public class ResultApi {
     public List<Long> results() {
         return resultService.countAllByIsTrueTrue();
     }
+
+    @GetMapping("/results2")
+    public long results2(){
+        return resultService.results();
+    }
 }

@@ -16,5 +16,7 @@ public interface ResultService {
 
     void delete(Long id);
 
-    public List<Long>countAllByIsTrueTrue();
+    List<Long>countAllByIsTrueTrue();
+
+    long results();
 }

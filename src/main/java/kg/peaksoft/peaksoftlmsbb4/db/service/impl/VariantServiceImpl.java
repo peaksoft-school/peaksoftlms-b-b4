@@ -27,7 +27,6 @@ import java.util.List;
 public class VariantServiceImpl implements VariantService {
     private final VariantRepository variantRepository;
     private final QuestionRepository questionRepository;
-    private final ModelMapper modelMapper;
     private final VariantMapper variantMapper;
 
     @Override
@@ -36,7 +35,7 @@ public class VariantServiceImpl implements VariantService {
                 String.format("Course with id %s does not exists", variantRequest.getQuestionId())
         ));
         int counter = 0;
-        Variant map = modelMapper.map(variantRequest, Variant.class);
+        Variant map = variantMapper.convert(variantRequest);
         if (question.getQuestionType() == QuestionType.ONE) {
             for (Variant v : question.getVariants()) {
                 if (v.getAnswer()) {

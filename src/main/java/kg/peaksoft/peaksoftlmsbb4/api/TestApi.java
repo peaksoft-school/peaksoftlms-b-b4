@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
@@ -21,9 +22,9 @@ public class TestApi {
 
     @Operation(summary = "Add new test",
             description = "This endpoint create new test. Only users with role teacher can add new task to lesson")
-    @PreAuthorize("hasAuthority('TEACHER')")
+//    @PreAuthorize("hasAuthority('TEACHER')")
     @PostMapping()
-    public TestResponse saveTest( @RequestBody TestRequest testRequest) {
+    public TestResponse saveTest(@Valid @RequestBody TestRequest testRequest) {
         return testService.saveTest(testRequest);
     }
 
