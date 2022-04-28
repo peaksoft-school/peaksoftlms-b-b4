@@ -60,7 +60,7 @@ public class GroupServiceImpl implements GroupService {
     public GroupResponse findById(Long id) {
         if (id != null) {
             Group group = findBy(id);
-            log.info("successful find by id:{}", id);
+            log.info("group successful find by id:{}", id);
             return groupMapper.deConvert(group);
         } else {
             log.error("not found group with id:{}", id);
@@ -90,7 +90,7 @@ public class GroupServiceImpl implements GroupService {
         boolean exists = groupRepository.existsById(id);
         if (!exists) {
             log.error("not found id:{}", id);
-            throw new NotFoundException(String.format("Not found id with=%s", id));
+            throw new NotFoundException(String.format("Not found group with id=%s", id));
         }
         Group group = findBy(id);
         String currentGroupName = group.getGroupName();
@@ -108,7 +108,7 @@ public class GroupServiceImpl implements GroupService {
         if (!currentImagine.equals(newImagine)) {
             group.setImage(newImagine);
         }
-        log.info("successful update courseId:{}", id);
+        log.info("successful update groupId:{}", id);
         return groupMapper.deConvert(group);
     }
 

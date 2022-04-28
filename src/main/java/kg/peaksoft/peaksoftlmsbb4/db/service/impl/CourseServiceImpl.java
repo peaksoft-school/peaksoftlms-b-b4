@@ -53,7 +53,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseResponse> findAll() {
-        log.info("successful find all");
+        log.info("successful find all course");
         return courseRepository.findAll().stream().map(
                 courseMapper::deConvert).collect(Collectors.toList());
     }
@@ -68,7 +68,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse update(Long id, CourseRequest courseRequest) {
         boolean exists = courseRepository.existsById(id);
         if (!exists) {
-            log.error("not found course id:{}", id);
+            log.error("not found course with id:{}", id);
             throw new NotFoundException(String.format("Course with id=%s not found ", id));
         }
         Course course = getById(id);
