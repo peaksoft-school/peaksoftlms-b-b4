@@ -11,7 +11,6 @@ public interface ResultRepository extends JpaRepository<Result, Long> {
     @Query("select count (id) from Result")
     Long countAllById();
     Long countAllByIsTrueFalse();
-
     Long countAllByIsTrueTrue();
 
 }

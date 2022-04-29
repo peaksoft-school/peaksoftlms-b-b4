@@ -1,11 +1,13 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.result.ResultMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
@@ -45,6 +47,7 @@ public class StudentServiceImpl implements StudentService {
     private final GroupRepository groupRepository;
     private final PasswordEncoder passwordEncoder;
     private final CourseMapper courseMapper;
+    private final ResultMapper resultMapper;
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
@@ -177,7 +180,6 @@ public class StudentServiceImpl implements StudentService {
         }
 
         return student1;
-
     }
 
     @Override
@@ -185,6 +187,13 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findStudentByUserEmail(email);
         return courseMapper.deConvert(student.getCourses());
     }
+
+    @Override
+    public List<ResultResponse> studentResult(String email) {
+        Student studentByUserEmail = studentRepository.findStudentByUserEmail(email);
+        return resultMapper.deConvert(studentByUserEmail.getResults());
+    }
+
 
     @Override
     public List<Student> findByStudentName(String name) {
