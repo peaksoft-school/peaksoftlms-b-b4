@@ -9,6 +9,8 @@ import lombok.Setter;
 public class TestRequest {
     @JsonProperty("test_name")
     private String testName;
+    @JsonProperty("is_enabled")
+    private Boolean isEnabled=false;
     @JsonProperty("lesson_id")
     private Long lessonsId;
 }

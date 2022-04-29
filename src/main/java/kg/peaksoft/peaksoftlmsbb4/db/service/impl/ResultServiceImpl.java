@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.GetResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.result.ResultMapper;
@@ -60,17 +61,16 @@ public class ResultServiceImpl implements ResultService {
         resultRepository.deleteById(id);
     }
 
-    @Override
-    public List<Long> countAllByIsTrueTrue() {
-        return resultRepository.countAllByIsTrueTrue();
-    }
 
     @Override
-    public long results() {
-        List<Result> all = resultRepository.findAll();
-        Long count = all.stream().filter(result -> result.getIsTrue().equals(true)).count();
-        Long count1 = all.stream().filter(result -> result.getIsTrue().equals(false)).count();
-
-        return count+count1;
+    public GetResultResponse getResults() {
+        GetResultResponse getResultResponse = new GetResultResponse();
+        getResultResponse.setStudentName("Nurmuhammed Babaeiv");
+        getResultResponse.setCorrect(resultRepository.countAllByIsTrueTrue());
+        getResultResponse.setError(resultRepository.countAllByIsTrueFalse());
+        Long results = (getResultResponse.getCorrect() * 100 / (resultRepository.countAllById()));
+        getResultResponse.setProcess(results);
+        return getResultResponse;
     }
+
 }

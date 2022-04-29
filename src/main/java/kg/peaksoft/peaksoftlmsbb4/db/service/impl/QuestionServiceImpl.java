@@ -26,7 +26,6 @@ import java.util.List;
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final TestRepository testRepository;
-    private final ModelMapper modelMapper;
     private final QuestionMapper questionMapper;
 
     @Override
@@ -40,7 +39,7 @@ public class QuestionServiceImpl implements QuestionService {
         Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(() -> new BadRequestException(
                 String.format("Course with id %s does not exists", questionRequest.getTestId())
         ));
-        Question question1 = modelMapper.map(questionRequest, Question.class);
+        Question question1 = questionMapper.convert(questionRequest);
         questionRepository.save(question1);
         question1.setTest(test);
         log.info("successful save question:{}", question);

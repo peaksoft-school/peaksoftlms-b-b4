@@ -25,6 +25,7 @@ public class Test {
     )
     private Long id;
     private String testName;
+    private Boolean isEnabled;
 
     @JsonIgnore
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)

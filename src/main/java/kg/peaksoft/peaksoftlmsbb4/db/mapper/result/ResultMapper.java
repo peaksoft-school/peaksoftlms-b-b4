@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.mapper.result;
 
 import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.GetResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
@@ -36,4 +37,5 @@ public class ResultMapper implements Converter<Result, ResultRequest, ResultResp
         }
         return resultResponses;
     }
+
 }

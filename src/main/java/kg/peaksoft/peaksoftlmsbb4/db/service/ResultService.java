@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.GetResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 
@@ -16,7 +17,7 @@ public interface ResultService {
 
     void delete(Long id);
 
-    List<Long>countAllByIsTrueTrue();
+   GetResultResponse getResults();
 
-    long results();
+
 }

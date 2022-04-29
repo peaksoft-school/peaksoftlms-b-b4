@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.GetResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
@@ -41,13 +42,9 @@ public class ResultApi {
         return String.format("successful delete this %s", id);
     }
 
-    @GetMapping("/results")
-    public List<Long> results() {
-        return resultService.countAllByIsTrueTrue();
+    @GetMapping("/results12")
+    public GetResultResponse resultsResponse() {
+        return resultService.getResults();
     }
 
-    @GetMapping("/results2")
-    public long results2(){
-        return resultService.results();
-    }
 }

@@ -21,6 +21,7 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
     public Test convert(TestRequest testRequest) {
         Test test = new Test();
         test.setTestName(testRequest.getTestName());
+        test.setIsEnabled(testRequest.getIsEnabled());
         return test;
     }
 
