@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.AssignGroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponsePagination;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
@@ -16,6 +17,8 @@ import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +55,16 @@ public class GroupServiceImpl implements GroupService {
         log.info("successful find all group:{}", groupRepository.findAll());
         return groupRepository.findAll().stream()
                 .map(groupMapper::deConvert).collect(Collectors.toList());
+    }
+
+    @Override
+    public GroupResponsePagination getAllForPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        GroupResponsePagination groupResponsePagination = new GroupResponsePagination();
+        groupResponsePagination.setGroups(groupRepository.findAll(pageable).getContent());
+        groupResponsePagination.setPages(groupRepository.findAll(pageable).getTotalPages());
+        groupResponsePagination.setCurrentPage(pageable.getPageNumber());
+        return groupResponsePagination;
     }
 
     @Override

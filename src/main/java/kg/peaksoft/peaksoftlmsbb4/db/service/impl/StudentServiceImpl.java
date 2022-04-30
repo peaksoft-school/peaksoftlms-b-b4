@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
@@ -19,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -101,12 +104,22 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponse> findAllStudent(Pageable pageable) {
+    public List<StudentResponse> findAllStudent() {
         log.info("successful find All");
-        return studentRepository.findAll(pageable).getContent()
+        return studentRepository.findAll()
                 .stream()
                 .map(studentMapper::deConvert).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public StudentPaginationResponse getAll(int page,int size){
+        Pageable pageable = PageRequest.of(page,size);
+        StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
+        studentPaginationResponse.setPages((studentRepository.findAll(pageable).getTotalPages()));
+        studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
+        studentPaginationResponse.setStudents(studentRepository.findAll(pageable).getContent());
+        return studentPaginationResponse;
     }
 
     @Override

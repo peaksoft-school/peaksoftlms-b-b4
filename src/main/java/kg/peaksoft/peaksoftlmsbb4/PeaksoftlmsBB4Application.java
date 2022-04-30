@@ -29,16 +29,16 @@ public class PeaksoftlmsBB4Application {
         return "<h1>Welcome to Peaksoftlms-B application!!!<h1/>";
     }
 
-    @Bean
-    public CommandLineRunner CommandLineRunnerBean() {
-        return (args) -> {
-            User user = new User();
-            user.setEmail("admin@gmail.com");
-            user.setPassword(encoder.encode("1234567"));
-            user.setRole(Role.ADMIN);
-            userRepository.save(user);
-        };
-    }
+//    @Bean
+//    public CommandLineRunner CommandLineRunnerBean() {
+//        return (args) -> {
+//            User user = new User();
+//            user.setEmail("admin@gmail.com");
+//            user.setPassword(encoder.encode("1234567"));
+//            user.setRole(Role.ADMIN);
+//            userRepository.save(user);
+//        };
+//    }
 }
 
 

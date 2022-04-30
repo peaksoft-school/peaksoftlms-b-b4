@@ -21,7 +21,6 @@ public class AuthApi {
 
     @Operation(summary = "Retrieve Authentication Token",
             description = "This entrypoint returns a JWT auth_token for authenticating further requests to the API")
-
     @PostMapping("/login")
     @PermitAll
     private AuthResponseDto authentication(@RequestBody AuthRequestDto authRequestDto) {

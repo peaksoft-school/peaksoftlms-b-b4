@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -21,7 +21,9 @@ public interface StudentService {
 
     void deleteStudent(Long id);
 
-    List<StudentResponse> findAllStudent(Pageable pageable);
+    List<StudentResponse> findAllStudent();
+
+    StudentPaginationResponse getAll(int size,int page);
 
     List<StudentResponse> findByStudyFormat(StudyFormat studyFormat);
 
