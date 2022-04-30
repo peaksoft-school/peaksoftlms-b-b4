@@ -3,11 +3,9 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.GetResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.result.ResultMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Result;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.ResultRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
@@ -29,18 +27,18 @@ public class ResultServiceImpl implements ResultService {
     private final VariantRepository variantRepository;
     private final ResultMapper resultMapper;
     private final StudentRepository studentRepository;
-    private final StudentMapper studentMapper;
-
 
     @Override
-    public ResultResponse saveResult(ResultRequest resultRequest) {
+    public ResultResponse saveResult(String email, ResultRequest resultRequest) {
         Variant variant = variantRepository.findById(resultRequest.getVariantId()).orElseThrow(() -> new BadRequestException(
                 String.format("Course with id %s does not exists", resultRequest.getVariantId())
         ));
+        Student student = studentRepository.findStudentByUserEmail(email);
         resultRequest.setStudentAnswer(variant.getOption());
         resultRequest.setIsTrue(variant.getAnswer());
 
         Result convert = resultMapper.convert(resultRequest);
+        convert.setStudent(student);
         Result save = resultRepository.save(convert);
         return resultMapper.deConvert(save);
     }
@@ -71,40 +69,23 @@ public class ResultServiceImpl implements ResultService {
 
 
     @Override
-    public GetResultResponse getResults() {
+    public GetResultResponse getResults(String email) {
         GetResultResponse getResultResponse = new GetResultResponse();
-        getResultResponse.setStudentName("Rahim Bubnov");
-        getResultResponse.setCorrect(resultRepository.countAllByIsTrueTrue());
-        getResultResponse.setError(resultRepository.countAllByIsTrueFalse());
-        Long results = (getResultResponse.getCorrect() * 100 / (resultRepository.countAllById()));
-        getResultResponse.setProcess(results);
+        Student studentByUserEmail = studentRepository.findStudentByUserEmail(email);
+        getResultResponse.setStudentName(studentByUserEmail.getStudentName());
+        long wrongAnswerCounter = 0;
+        long correctAnswerCounter = 0;
+        for (Result r : resultRepository.getResultsByStudentId(studentByUserEmail.getId())) {
+            if (r.getIsTrue()) {
+                correctAnswerCounter++;
+            } else {
+                wrongAnswerCounter++;
+            }
+        }
+        getResultResponse.setWrongAnswer(wrongAnswerCounter);
+        getResultResponse.setCorrect(correctAnswerCounter);
+        Long process = (getResultResponse.getCorrect() * 100) / 10;
+        getResultResponse.setProcess(process);
         return getResultResponse;
     }
-
-//    @Override
-//    public List<ResultResponse> saveResultList(List<ResultRequest> resultRequest) {
-//        Variant variant = variantRepository.findById(resultRequest.getVariantId()).orElseThrow(() -> new BadRequestException(
-//                String.format("Course with id %s does not exists", resultRequest.getVariantId())
-//        ));
-//        resultRequest.setStudentAnswer(variant.getOption());
-//        resultRequest.setIsTrue(variant.getAnswer());
-//
-//        Result convert = resultMapper.convert(resultRequest);
-//        Result save = resultRepository.save(convert);
-//        return null;
-//    }
-
-    @Override
-    public void assignStudentsToResults(AssignStudentRequest assignStudentRequest, List<Long> studentId) {
-        Result result=resultRepository.findById(assignStudentRequest.getCourseId())
-                .orElseThrow(()->new NotFoundException(
-                        String.format("CourseWith id=%s not found",assignStudentRequest.getCourseId())));
-        for (Long id:studentId){
-            result.setStudent(studentRepository.findById(id).
-                    orElseThrow(()->new NotFoundException(
-                            String.format("CourseWith id=%s not found",assignStudentRequest.getCourseId()))));
-        }
-        log.info("successful assign student with id=%s to course");
-    }
-
 }

@@ -8,7 +8,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import java.util.List;
 
 public interface ResultService {
-    ResultResponse saveResult(ResultRequest resultRequest);
+    ResultResponse saveResult(String email,ResultRequest resultRequest);
 
     ResultResponse findById(Long id);
 
@@ -18,9 +18,7 @@ public interface ResultService {
 
     void delete(Long id);
 
-    void assignStudentsToResults(AssignStudentRequest assignStudentRequest, List<Long> studentId);
-
-    GetResultResponse getResults();
+    GetResultResponse getResults(String email);
 
 
 }

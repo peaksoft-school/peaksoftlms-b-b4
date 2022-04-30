@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 public class GetResultResponse {
     private String studentName;
-    private Long error;
+    private Long wrongAnswer;
     private Long correct;
     private Long process;
 }

@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,9 +27,11 @@ public class ResultApi {
     private final ResultService resultService;
 
     @PostMapping()
-    public ResultResponse save(
+    @PreAuthorize("hasAuthority('STUDENT')")
+    public ResultResponse save(Authentication authentication,
             @RequestBody ResultRequest resultRequest) {
-        return resultService.saveResult(resultRequest);
+        User user = (User) authentication.getPrincipal();
+        return resultService.saveResult(user.getUsername(),resultRequest);
     }
 
     @GetMapping
@@ -48,16 +51,12 @@ public class ResultApi {
     }
 
     @GetMapping("/results12")
-    public GetResultResponse resultsResponse() {
-        return resultService.getResults();
+    @PreAuthorize("hasAuthority('STUDENT')")
+    public GetResultResponse resultsResponse(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return resultService.getResults(user.getUsername());
     }
 
-    @PutMapping("/assignStudent")
-    public void assignStudentToResults(
-            @RequestBody AssignStudentRequest assignStudentRequest,
-            @RequestParam List<Long> studentId
-    ) {
-        resultService.assignStudentsToResults(assignStudentRequest, studentId);
-    }
+
 
 }

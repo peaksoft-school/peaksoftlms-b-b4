@@ -7,18 +7,26 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Result;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
+import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 @Component
 public class ResultMapper implements Converter<Result, ResultRequest, ResultResponse> {
+    private final QuestionRepository questionRepository;
     @Override
     public Result convert(ResultRequest resultRequest) {
         Result result = new Result();
         result.setStudentAnswers(resultRequest.getStudentAnswer());
         result.setIsTrue(resultRequest.getIsTrue());
+        result.setQuestion(questionRepository.findById(resultRequest.getQuestionId())
+                .orElseThrow(()-> new NotFoundException("Question with this id not found found")));
         return result;
     }
 

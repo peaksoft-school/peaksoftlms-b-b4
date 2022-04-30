@@ -20,4 +20,5 @@ public interface StudentRepository extends JpaRepository<Student, Long>, PagingA
     List<Student> findByStudentName(@Param("studentName") String studentName);
 
     Student findStudentByUserEmail(String email);
+
 }

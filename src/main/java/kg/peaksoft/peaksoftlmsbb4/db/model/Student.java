@@ -1,7 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,8 +30,6 @@ public class Student {
     private Long id;
     private String studentName;
     private String lastName;
-   // private String email;
-//    private Role role;
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
@@ -69,9 +66,6 @@ public class Student {
         }
         results.add(result);
     }
-
-
-
 
 
 }
