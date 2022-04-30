@@ -3,11 +3,12 @@ package kg.peaksoft.peaksoftlmsbb4.db.service;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.GetResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 
 import java.util.List;
 
 public interface ResultService {
-    ResultResponse saveResult( ResultRequest resultRequest);
+    ResultResponse saveResult(ResultRequest resultRequest);
 
     ResultResponse findById(Long id);
 
@@ -17,7 +18,9 @@ public interface ResultService {
 
     void delete(Long id);
 
-   GetResultResponse getResults();
+    void assignStudentsToResults(AssignStudentRequest assignStudentRequest, List<Long> studentId);
+
+    GetResultResponse getResults();
 
 
 }
