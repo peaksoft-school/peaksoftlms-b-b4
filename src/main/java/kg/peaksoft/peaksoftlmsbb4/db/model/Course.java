@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ public class Course {
     )
     private Long id;
     private String courseName;
+    @URL
     private String image;
     private String description;
     private LocalDate dateOfStart;

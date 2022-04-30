@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.authentification;
 
+import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,4 +11,5 @@ import lombok.Setter;
 public class AuthResponseDto {
     private String email;
     private String token;
+    private Role role;
 }

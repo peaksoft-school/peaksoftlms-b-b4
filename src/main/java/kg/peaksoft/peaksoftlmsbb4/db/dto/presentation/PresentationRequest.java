@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.dto.presentation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 
@@ -13,7 +14,7 @@ public class PresentationRequest {
     private String name;
     private String description;
     @NotBlank
-    private String file;
+    private MultipartFile file;
     @JsonProperty("lesson_id")
     private Long lessonId;
 

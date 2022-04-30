@@ -31,7 +31,7 @@ public class GroupApi {
     @Operation(summary = "Create new group",
             description = "This endpoint save new groups. Only users with role admin can add new groups")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public GroupResponse saveGroup(@RequestBody GroupRequest groupRequest) {
+    public GroupResponse saveGroup(@ModelAttribute GroupRequest groupRequest) {
         return groupService.saveGroup(groupRequest);
     }
 

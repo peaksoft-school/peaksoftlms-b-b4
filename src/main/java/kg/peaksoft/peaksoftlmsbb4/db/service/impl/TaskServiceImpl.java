@@ -60,14 +60,8 @@ public class TaskServiceImpl implements TaskService {
         if (!task.getName().equals(taskRequest.getName())) {
             task.setName(taskRequest.getName());
         }
-        if (!task.getImage().equals(taskRequest.getImage())) {
-            task.setImage(taskRequest.getImage());
-        }
         if (!task.getCode().equals(taskRequest.getCode())) {
             task.setCode(taskRequest.getCode());
-        }
-        if (!task.getFile().equals(taskRequest.getFile())) {
-            task.setFile(taskRequest.getFile());
         }
         if (!task.getLink().equals(taskRequest.getLink())) {
             task.setLink(taskRequest.getLink());

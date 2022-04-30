@@ -33,8 +33,8 @@ public class CourseApi {
     @Operation(summary = "Create new course",
             description = "This endpoint saves new courses. Only users with role admin can add new courses")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping()
-    public CourseResponse saveCourse(@RequestBody CourseRequest courseRequest) {
+    @PostMapping(consumes = { "multipart/form-data" })
+    public CourseResponse saveCourse(@ModelAttribute CourseRequest courseRequest) {
         return courseService.saveCourse(courseRequest);
     }
 

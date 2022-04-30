@@ -58,9 +58,6 @@ public class PresentationServiceImpl implements PresentationService {
         if (!presentation.getDescription().equals(presentationRequest.getDescription())) {
             presentation.setDescription(presentationRequest.getDescription());
         }
-        if (!presentation.getFile().equals(presentationRequest.getFile())) {
-            presentation.setFile(presentationRequest.getFile());
-        }
         log.info("successfully update id:{}", id);
         return presentationMapper.deConvert(presentation);
     }

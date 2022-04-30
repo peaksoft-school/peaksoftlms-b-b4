@@ -107,11 +107,6 @@ public class GroupServiceImpl implements GroupService {
         if (!currentDescription.equals(newDescription)) {
             group.setDescription(newDescription);
         }
-        String currentImagine = group.getImage();
-        String newImagine = groupRequest.getImage();
-        if (!currentImagine.equals(newImagine)) {
-            group.setImage(newImagine);
-        }
         log.info("successful update courseId:{}", id);
         return groupMapper.deConvert(group);
     }
