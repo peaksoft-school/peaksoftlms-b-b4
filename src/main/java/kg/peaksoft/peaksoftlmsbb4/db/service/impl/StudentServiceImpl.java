@@ -23,6 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -114,7 +115,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentPaginationResponse getAll(int page,int size){
-        Pageable pageable = PageRequest.of(page,size);
+        Pageable pageable = PageRequest.of(page,size, Sort.by("studentName"));
         StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
         studentPaginationResponse.setPages((studentRepository.findAll(pageable).getTotalPages()));
         studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
