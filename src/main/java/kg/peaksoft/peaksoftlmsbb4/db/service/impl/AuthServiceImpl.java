@@ -4,6 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.authentification.AuthRequestDto;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.authentification.AuthResponseDto;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.AuthService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtUtils;
 import lombok.AllArgsConstructor;
@@ -16,11 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class AuthService {
+public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
 
+
+    @Override
     public AuthResponseDto authenticate(AuthRequestDto authRequest) {
         Authentication authentication;
 
