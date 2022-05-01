@@ -20,7 +20,7 @@ public class PresentationMapper implements Converter<Presentation, PresentationR
     public Presentation convert(PresentationRequest presentationRequest) {
         Presentation presentation = new Presentation();
         presentation.setDescription(presentationRequest.getDescription());
-        presentation.setFile(awss3Service.getUrl(presentationRequest.getFile()));
+        presentation.setFile(awss3Service.uploadFile(presentationRequest.getFile()));
         presentation.setName(presentationRequest.getName());
         return presentation;
     }

@@ -19,7 +19,7 @@ public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse
         Group group = new Group();
         group.setGroupName(groupRequest.getGroupName());
         group.setDescription(groupRequest.getDescription());
-        group.setImage(awss3Service.getUrl(groupRequest.getImage()));
+        group.setImage(awss3Service.uploadFile(groupRequest.getImage()));
         group.setDateOfStart(groupRequest.getDateOfStart());
         return group;
     }

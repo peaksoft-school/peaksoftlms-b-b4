@@ -12,8 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -44,9 +42,7 @@ public class AWSS3Service implements FileService {
         return awsS3Client.getResourceUrl("peaksoft-lms-b", key);
     }
 
-    @Override
-    public String getUrl(MultipartFile file) {
-        String publicURL = uploadFile(file);
-        return publicURL;
+    public String getFileByURL(){
+        return null;
     }
 }

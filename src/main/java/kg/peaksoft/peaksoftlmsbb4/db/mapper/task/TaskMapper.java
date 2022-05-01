@@ -21,8 +21,8 @@ public class TaskMapper implements Converter<Task, TaskRequest, TaskResponse> {
         Task task = new Task();
         task.setName(taskRequest.getName());
         task.setCode(taskRequest.getCode());
-        task.setImage(awss3Service.getUrl(taskRequest.getImage()));
-        task.setFile(awss3Service.getUrl(taskRequest.getFile()));
+        task.setImage(awss3Service.uploadFile(taskRequest.getImage()));
+        task.setFile(awss3Service.uploadFile(taskRequest.getFile()));
         task.setLink(taskRequest.getLink());
         task.setText(taskRequest.getText());
         return task;

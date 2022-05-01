@@ -21,7 +21,7 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         Course course = new Course();
         course.setCourseName(courseRequest.getCourseName());
         course.setDescription(courseRequest.getDescription());
-        course.setImage(awss3Service.getUrl(courseRequest.getMultipartFile()));
+        course.setImage(awss3Service.uploadFile(courseRequest.getMultipartFile()));
         course.setDateOfStart(courseRequest.getDateOfStart());
         return course;
     }
