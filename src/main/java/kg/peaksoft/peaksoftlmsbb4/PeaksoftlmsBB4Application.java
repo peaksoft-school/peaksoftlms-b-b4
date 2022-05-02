@@ -34,7 +34,7 @@ public class PeaksoftlmsBB4Application {
         return (args) -> {
             User user = new User();
             user.setEmail("admin@gmail.com");
-            user.setPassword(encoder.encode("1234567"));
+            user.setPassword(encoder.encode("admin"));
             user.setRole(Role.ADMIN);
             userRepository.save(user);
         };
