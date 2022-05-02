@@ -128,6 +128,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private Course getById(Long id) {
-        return courseRepository.getById(id);
+        return courseRepository.findById(id).orElseThrow(()->new NotFoundException(
+                String.format("Course with id=%s does not exists",id)
+        ));
     }
 }

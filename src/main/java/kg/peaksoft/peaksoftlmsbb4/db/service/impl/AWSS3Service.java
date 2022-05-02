@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import kg.peaksoft.peaksoftlmsbb4.db.service.FileService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class AWSS3Service implements FileService {
 
     private AmazonS3Client awsS3Client;
@@ -40,9 +42,5 @@ public class AWSS3Service implements FileService {
         awsS3Client.setObjectAcl("peaksoft-lms-b", key, CannedAccessControlList.PublicRead);
 
         return awsS3Client.getResourceUrl("peaksoft-lms-b", key);
-    }
-
-    public String getFileByURL(){
-        return null;
     }
 }
