@@ -84,9 +84,9 @@ public class TaskServiceImpl implements TaskService {
             throw new NotFoundException(String.format("Task is not found id=%s", id));
 
         }
+        log.info("successfully delete task by id :{}", id);
         awss3Service.deleteFile(taskRepository.getById(id).getFile());
         awss3Service.deleteFile(taskRepository.getById(id).getImage());
-        log.info("successfully delete task by id :{}", id);
         taskRepository.deleteById(id);
     }
 }
