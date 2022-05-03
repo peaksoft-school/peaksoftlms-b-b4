@@ -8,6 +8,8 @@ import kg.peaksoft.peaksoftlmsbb4.db.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/questions")
@@ -19,34 +21,29 @@ public class QuestionApi {
     @Operation(summary = "Add new question",
             description = "This endpoint save new question. Only users with role teacher can add new question to test")
     @PostMapping()
-    public QuestionResponse saveQuestion(@RequestBody QuestionRequest questionRequest) {
+    public QuestionResponse saveQuestion(@Valid @RequestBody QuestionRequest questionRequest) {
         return questionService.saveQuestion(questionRequest);
     }
-
-
-//    @GetMapping
-//    public List<QuestionResponse> findAllQuestion() {
-//        return questionService.findAll();
-//    }
 
     @Operation(summary = "Gets a single question by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @GetMapping("/{id}")
-    public QuestionResponse findById(@PathVariable Long id) {
+    public QuestionResponse findById(@Valid @PathVariable Long id) {
         return questionService.findById(id);
     }
 
     @Operation(summary = "Update the question",
             description = "Updates the details of an endpoint with ID")
     @PutMapping("/{id}")
-    public QuestionResponse updateQuestion(@PathVariable Long id, @RequestBody QuestionRequest questionRequest) {
+    public QuestionResponse updateQuestion(
+            @Valid @PathVariable Long id, @RequestBody QuestionRequest questionRequest) {
         return questionService.update(id, questionRequest);
     }
 
     @Operation(summary = "Delete question",
             description = "Delete the question with ID")
     @DeleteMapping("/{id}")
-    public String deleteById(@PathVariable Long id) {
+    public String deleteById(@Valid @PathVariable Long id) {
         questionService.delete(id);
         return String.format("successfully delete this id=%s", id);
     }

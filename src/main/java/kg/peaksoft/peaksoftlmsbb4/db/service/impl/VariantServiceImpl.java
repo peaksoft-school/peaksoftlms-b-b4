@@ -4,7 +4,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.variant.VariantMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
@@ -14,7 +13,6 @@ import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,9 +29,7 @@ public class VariantServiceImpl implements VariantService {
 
     @Override
     public VariantResponse saveVariant( VariantRequest variantRequest) {
-        Question question = questionRepository.findById(variantRequest.getQuestionId()).orElseThrow(() -> new BadRequestException(
-                String.format("Course with id %s does not exists", variantRequest.getQuestionId())
-        ));
+        Question question =new Question();
         int counter = 0;
         Variant map = variantMapper.convert(variantRequest);
         if (question.getQuestionType() == QuestionType.ONE) {
@@ -47,19 +43,19 @@ public class VariantServiceImpl implements VariantService {
                     throw new BadRequestException("You can't choose multiple variants");
                 } else {
                     Variant save = variantRepository.save(map);
-                    question.setVariants(save);
+                    question.setVariant(save);
                     log.info("successful variant save:{}", save);
                     return variantMapper.deConvert(save);
                 }
             }else {
                 Variant save = variantRepository.save(map);
-                question.setVariants(save);
+                question.setVariant(save);
                 log.info("successful variant save:{}", save);
                 return variantMapper.deConvert(save);
             }
         }
         Variant save = variantRepository.save(map);
-        question.setVariants(save);
+        question.setVariant(save);
         log.info("successful variant save:{}", save);
         return variantMapper.deConvert(save);
     }

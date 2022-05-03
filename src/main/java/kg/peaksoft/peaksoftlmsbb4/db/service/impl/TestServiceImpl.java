@@ -41,7 +41,7 @@ public class TestServiceImpl implements TestService {
         test.setLessons(lesson);
         log.info("successful test save :{}", test);
         Test test1 = testRepository.save(test);
-        return testMapper.deConvert(test);
+        return testMapper.deConvert(test1);
     }
 
     @Override
@@ -87,4 +87,5 @@ public class TestServiceImpl implements TestService {
         testRepository.deleteById(id);
         log.info("successful delete this id:{}", id);
     }
+
 }

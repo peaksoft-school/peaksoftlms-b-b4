@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,8 @@ public class ResultApi {
 
     @PostMapping()
     @PreAuthorize("hasAuthority('STUDENT')")
-    public ResultResponse save(Authentication authentication,
+    public ResultResponse save(
+            @Valid Authentication authentication,
             @RequestBody ResultRequest resultRequest) {
         User user = (User) authentication.getPrincipal();
         return resultService.saveResult(user.getUsername(),resultRequest);
@@ -40,19 +42,19 @@ public class ResultApi {
     }
 
     @GetMapping("{id}")
-    public ResultResponse findById(@PathVariable Long id) {
+    public ResultResponse findById(@Valid @PathVariable Long id) {
         return resultService.findById(id);
     }
 
     @DeleteMapping("{id}")
-    public String deleteById(@PathVariable Long id) {
+    public String deleteById(@Valid @PathVariable Long id) {
         resultService.delete(id);
         return String.format("successful delete this %s", id);
     }
 
     @GetMapping("/results12")
     @PreAuthorize("hasAuthority('STUDENT')")
-    public GetResultResponse resultsResponse(Authentication authentication) {
+    public GetResultResponse resultsResponse(@Valid  Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return resultService.getResults(user.getUsername());
     }

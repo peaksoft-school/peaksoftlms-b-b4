@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,21 +28,21 @@ public class Test {
     private String testName;
     private Boolean isEnabled;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Question> questions = new ArrayList<>();
+    private List<Question> questions;
 
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "lessons_id")
     private Lesson lessons;
 
-    public void setQuestions(Question question) {
+    public void setQuestions1(List<Question> question) {
         if (questions == null) {
-            questions = new ArrayList<>();
+            questions = question;
         }
-        questions.add(question);
-        question.setTest(this);
+        for (Question q:question) {
+            q.setTest(this);
+        }
     }
 
 }

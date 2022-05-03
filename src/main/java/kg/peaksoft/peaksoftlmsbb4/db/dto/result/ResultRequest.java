@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.cfg.QuerySecondPass;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class ResultRequest {

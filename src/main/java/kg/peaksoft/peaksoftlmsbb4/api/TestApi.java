@@ -22,7 +22,7 @@ public class TestApi {
 
     @Operation(summary = "Add new test",
             description = "This endpoint create new test. Only users with role teacher can add new task to lesson")
-//    @PreAuthorize("hasAuthority('TEACHER')")
+    @PreAuthorize("hasAuthority('TEACHER')")
     @PostMapping()
     public TestResponse saveTest(@Valid @RequestBody TestRequest testRequest) {
         return testService.saveTest(testRequest);
@@ -32,7 +32,7 @@ public class TestApi {
             description = "For valid response try integer IDs with value >= 1 and...")
     @PermitAll
     @GetMapping("/{id}")
-    public TestResponse findById(@PathVariable Long id) {
+    public TestResponse findById(@Valid @PathVariable Long id) {
         return testService.findById(id);
     }
 
@@ -40,7 +40,8 @@ public class TestApi {
             description = "Updates the details of an endpoint with ID")
     @PutMapping("{id}")
     @PreAuthorize("hasAuthority('TEACHER')")
-    public TestResponse updateTest(@PathVariable Long id, @RequestBody TestRequest testRequest) {
+    public TestResponse updateTest(
+            @Valid @PathVariable Long id, @RequestBody TestRequest testRequest) {
         return testService.update(id, testRequest);
     }
 
@@ -48,7 +49,7 @@ public class TestApi {
             description = "Delete the test with id")
     @PreAuthorize("hasAuthority('TEACHER')")
     @DeleteMapping("/{id}")
-    public String deleteTest(@PathVariable Long id) {
+    public String deleteTest(@Valid @PathVariable Long id) {
         testService.delete(id);
         return String.format("successfully delete this id=%s", id);
     }

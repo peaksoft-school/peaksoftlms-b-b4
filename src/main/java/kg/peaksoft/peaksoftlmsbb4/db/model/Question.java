@@ -32,14 +32,24 @@ public class Question {
     @JoinColumn(name = "test_id")
     private Test test;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Variant> variants = new ArrayList<>();
+    private List<Variant> variants;
 
-    public void setVariants(Variant variant) {
+    public void setVariant(Variant variant) {
         if (variants == null) {
             variants = new ArrayList<>();
         }
         variants.add(variant);
         variant.setQuestion(this);
     }
+
+    public void setVariants(List<Variant> variant) {
+        if (variants == null) {
+            variants = variant;
+        }
+        for (Variant q:variant) {
+            q.setQuestion(this);
+        }
+    }
+
 
 }

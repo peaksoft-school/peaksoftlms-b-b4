@@ -84,7 +84,8 @@ public class ResultServiceImpl implements ResultService {
         }
         getResultResponse.setWrongAnswer(wrongAnswerCounter);
         getResultResponse.setCorrect(correctAnswerCounter);
-        Long process = (getResultResponse.getCorrect() * 100) / 10;
+        long results = wrongAnswerCounter + correctAnswerCounter;
+        Long process = (getResultResponse.getCorrect() * 100) / results;
         getResultResponse.setProcess(process);
         return getResultResponse;
     }

@@ -11,7 +11,4 @@ public class VariantRequest {
     private String option;
     @JsonProperty("answer")
     private Boolean answer;
-
-    @JsonProperty("question_id")
-    private Long questionId;
 }

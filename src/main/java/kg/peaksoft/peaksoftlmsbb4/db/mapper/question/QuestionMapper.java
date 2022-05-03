@@ -3,8 +3,10 @@ package kg.peaksoft.peaksoftlmsbb4.db.mapper.question;
 import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.variant.VariantMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +21,14 @@ public class QuestionMapper implements Converter<Question, QuestionRequest, Ques
 
     @Override
     public Question convert(QuestionRequest questionRequest) {
+        List<Variant>variant=new ArrayList<>();
         Question question = new Question();
         question.setQuestion(questionRequest.getQuestion());
         question.setQuestionType(questionRequest.getQuestionType());
+        for (VariantRequest q:questionRequest.getVariantRequests()) {
+            variant.add(variantMapper.convert(q));
+        }
+        question.setVariants(variant);
         return question;
     }
 
@@ -42,4 +49,5 @@ public class QuestionMapper implements Converter<Question, QuestionRequest, Ques
         }
         return questionResponses;
     }
+
 }
