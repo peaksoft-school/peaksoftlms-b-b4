@@ -36,7 +36,8 @@ public class AWSS3Service implements FileService {
         metaData.setContentType(file.getContentType());
 
         try {
-            awsS3Client.putObject("peaksoft-lms-b", key, file.getInputStream(), metaData);
+            awsS3Client.putObject("peaksoft-lms-b",
+                    key, file.getInputStream(), metaData);
             log.info("upload the file");
         } catch (IOException e) {
             log.error("an exception occured while uploading the file");
