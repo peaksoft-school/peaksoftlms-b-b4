@@ -25,6 +25,7 @@ public class PresentationServiceImpl implements PresentationService {
     private final PresentationRepository presentationRepository;
     private final PresentationMapper presentationMapper;
     private final LessonRepository lessonRepository;
+    private final AWSS3Service awss3Service;
 
     @Override
     public PresentationResponse savePresentation(PresentationRequest presentationRequest) {
@@ -75,6 +76,7 @@ public class PresentationServiceImpl implements PresentationService {
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
         log.info("successfully delete by id:{}", id);
+        awss3Service.deleteFile(presentationRepository.getById(id).getFile());
         presentationRepository.deleteById(id);
     }
 

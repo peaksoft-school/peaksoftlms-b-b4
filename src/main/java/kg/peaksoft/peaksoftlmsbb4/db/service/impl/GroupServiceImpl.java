@@ -34,6 +34,7 @@ public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;
     private final CourseRepository courseRepository;
+    private final AWSS3Service awss3Service;
 
     @Override
     public GroupResponse saveGroup(GroupRequest groupRequest) {
@@ -88,6 +89,7 @@ public class GroupServiceImpl implements GroupService {
                     String.format("student with id = %s does not exists", id)
             );
         }
+        awss3Service.deleteFile(groupRepository.getById(id).getImage());
         groupRepository.deleteById(id);
         log.info("successful delete group by id:{}", id);
         return String.format("successful delete by id=%s", id);

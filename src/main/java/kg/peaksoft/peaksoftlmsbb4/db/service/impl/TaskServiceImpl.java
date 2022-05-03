@@ -25,6 +25,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final LessonRepository lessonRepository;
+    private final AWSS3Service awss3Service;
 
     @Override
     public TaskResponse saveTasks(TaskRequest taskRequest) {
@@ -80,7 +81,9 @@ public class TaskServiceImpl implements TaskService {
             throw new NotFoundException(String.format("Task is not found id=%s", id));
 
         }
-        log.info("successfully delet by id :{}", id);
+        awss3Service.deleteFile(taskRepository.getById(id).getFile());
+        awss3Service.deleteFile(taskRepository.getById(id).getImage());
+        log.info("successfully delete by id :{}", id);
         taskRepository.deleteById(id);
     }
 }

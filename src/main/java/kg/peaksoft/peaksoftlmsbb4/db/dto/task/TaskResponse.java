@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.dto.task;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter

@@ -15,7 +15,7 @@ public class CourseResponse {
     private Long id;
     @JsonProperty("course_name")
     private String courseName;
-    private MultipartFile image;
+    private String image;
     private String description;
     @JsonProperty("date_of_start")
     private LocalDate dateOfStart;

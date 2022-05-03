@@ -37,6 +37,7 @@ public class CourseServiceImpl implements CourseService {
     private final StudentMapper studentMapper;
     private final TeacherMapper teacherMapper;
     private final TeacherService teacherService;
+    private final AWSS3Service awss3Service;
 
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
@@ -92,8 +93,9 @@ public class CourseServiceImpl implements CourseService {
         if (!existsById) {
             throw new NotFoundException(String.format(" course with id=%s does not exists", id));
         }
-        log.info("successful delete by this id:{}", id);
+        awss3Service.deleteFile(courseRepository.getById(id).getImage());
         courseRepository.deleteById(id);
+        log.info("successful delete by this id:{}", id);
     }
 
     @Override

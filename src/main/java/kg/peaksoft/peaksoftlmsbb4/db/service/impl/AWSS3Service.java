@@ -2,7 +2,9 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3Object;
 import kg.peaksoft.peaksoftlmsbb4.db.service.FileService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,12 +37,27 @@ public class AWSS3Service implements FileService {
 
         try {
             awsS3Client.putObject("peaksoft-lms-b", key, file.getInputStream(), metaData);
+            log.info("upload the file");
         } catch (IOException e) {
+            log.error("an exception occured while uploading the file");
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An exception occured while uploading the file");
         }
 
         awsS3Client.setObjectAcl("peaksoft-lms-b", key, CannedAccessControlList.PublicRead);
 
         return awsS3Client.getResourceUrl("peaksoft-lms-b", key);
+    }
+
+    @Override
+    public S3Object downloadFile(String fileName){
+        log.info("file opened");
+        return awsS3Client.getObject(new GetObjectRequest("peaksoft-lms-b",fileName));
+    }
+
+    @Override
+    public String deleteFile(String file) {
+        awsS3Client.deleteObject("peaksoft-lms-b", file);
+        log.info("File deleted");
+        return "Deleted File: " + file;
     }
 }
