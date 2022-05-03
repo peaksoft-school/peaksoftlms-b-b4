@@ -65,7 +65,7 @@ public class PresentationServiceImpl implements PresentationService {
 
     @Override
     public List<PresentationResponse> findAll() {
-        log.info("successfully find all");
+        log.info("successfully find all presentations");
         return presentationRepository.findAll().stream().map(presentationMapper::deConvert).collect(Collectors.toList());
     }
 
@@ -73,14 +73,15 @@ public class PresentationServiceImpl implements PresentationService {
     public void delete(Long id) {
         boolean exits = presentationRepository.existsById(id);
         if (!exits) {
-            throw new NotFoundException(String.format("Not found id=%s", id));
+            log.error("not found presentation with id:{}", id);
+            throw new NotFoundException(String.format("Not found presentation with id=%s", id));
         }
-        log.info("successfully delete by id:{}", id);
-        awss3Service.deleteFile(presentationRepository.getById(id).getFile());
+        log.info("successfully delete presentation by id:{}", id);
         presentationRepository.deleteById(id);
     }
 
-    private Presentation getById(Long id){
+    private Presentation getById(Long id) {
+        log.info("successfully get presentation by id:{}", id);
         return presentationRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
     }
 }
