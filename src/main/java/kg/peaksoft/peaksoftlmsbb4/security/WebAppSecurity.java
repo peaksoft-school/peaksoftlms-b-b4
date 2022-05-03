@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.security;
 
+import com.amazonaws.services.s3.AmazonS3Client;
 import kg.peaksoft.peaksoftlmsbb4.security.config.JwtConfig;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtTokenVerifier;
@@ -83,4 +84,5 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     public ModelMapper mapper(){
         return new ModelMapper();
     }
+
 }

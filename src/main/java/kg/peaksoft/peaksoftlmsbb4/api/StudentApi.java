@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
@@ -33,7 +34,8 @@ public class StudentApi {
     private final StudentService studentService;
 
     @GetMapping
-    @Operation(summary = "Gets a list", description = "Returns all students that are,if there are no students,then an error")
+    @Operation(summary = "Gets a list",
+            description = "Returns all students that are,if there are no students,then an error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Found the students",
@@ -41,9 +43,23 @@ public class StudentApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = StudentApi.class)))})})
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public List<StudentResponse> findAll(@RequestParam int size,
-                                         @RequestParam int page) {
-        return studentService.findAllStudent(PageRequest.of(size, page, Sort.by("studentName")));
+    public List<StudentResponse> findAll() {
+        return studentService.findAllStudent();
+    }
+
+    @GetMapping("/pagination")
+    @Operation(summary = "Pagination",
+            description = "Returns all students that are,if there are no students,then an error")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "All students with pagination",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = StudentApi.class)))})})
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    public StudentPaginationResponse getAll(@RequestParam int page,
+                                            @RequestParam int size) {
+        return studentService.getAll(page,size);
     }
 
     @PostMapping
@@ -58,7 +74,8 @@ public class StudentApi {
     @Operation(summary = "Update the students",
             description = "Updates the details of an endpoint with ID.  Only users with role admin can update students")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public StudentResponse updateStudent(@PathVariable("id") Long id, @RequestBody @Valid StudentRequest studentRequest) {
+    public StudentResponse updateStudent(@PathVariable("id") Long id,
+                                         @RequestBody @Valid StudentRequest studentRequest) {
         return studentService.updateStudent(id, studentRequest);
     }
 
@@ -80,19 +97,21 @@ public class StudentApi {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Gets a single  student by identifier", description = "For valid response try integer IDs with value >= 1 and...")
+    @Operation(summary = "Gets a single  student by identifier",
+            description = "For valid response try integer IDs with value >= 1 and...")
     public StudentResponse findById(@PathVariable Long id) {
         return studentService.findById(id);
     }
 
     @GetMapping("/getByName")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Get by name", description = "Get student by name")
+    @Operation(summary = "Get by name",
+            description = "Get student by name")
     public List<Student> getByStudentName(@RequestParam String name) {
         return studentService.findByStudentName(name);
     }
 
-    @Operation(summary = "import EXCEL",
+    @Operation(summary = "Import EXCEL",
             description = "This endpoint for import students list from excel to group")
     @PostMapping("/import")
     @PreAuthorize("hasAnyAuthority('ADMIN')")

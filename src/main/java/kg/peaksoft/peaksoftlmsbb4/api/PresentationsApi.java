@@ -22,8 +22,7 @@ public class PresentationsApi {
     @Operation(summary = "Add new presentation",
             description = "This endpoint save new presentations. Only users with role teacher can add new presentation to lesson")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public PresentationResponse savePresentations(
-            @RequestBody PresentationRequest presentationRequest) {
+    public PresentationResponse savePresentations(@ModelAttribute PresentationRequest presentationRequest) {
         return presentationService.savePresentation(presentationRequest);
     }
 

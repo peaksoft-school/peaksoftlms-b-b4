@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CoursePaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
@@ -18,9 +19,10 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +30,6 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
-@Transactional
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
@@ -36,6 +37,7 @@ public class CourseServiceImpl implements CourseService {
     private final StudentMapper studentMapper;
     private final TeacherMapper teacherMapper;
     private final TeacherService teacherService;
+    private final AWSS3Service awss3Service;
 
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
@@ -56,6 +58,16 @@ public class CourseServiceImpl implements CourseService {
         log.info("successful find all courses");
         return courseRepository.findAll().stream().map(
                 courseMapper::deConvert).collect(Collectors.toList());
+    }
+
+    @Override
+    public CoursePaginationResponse coursesForPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        CoursePaginationResponse coursePaginationResponse = new CoursePaginationResponse();
+        coursePaginationResponse.setCourses(courseRepository.findAll(pageable).getContent());
+        coursePaginationResponse.setPages(courseRepository.findAll(pageable).getTotalPages());
+        coursePaginationResponse.setCurrentPage(pageable.getPageNumber());
+        return coursePaginationResponse;
     }
 
     @Override
@@ -85,7 +97,9 @@ public class CourseServiceImpl implements CourseService {
             throw new NotFoundException(String.format(" course with id=%s does not exists", id));
         }
         log.info("successful delete course with id:{}", id);
+        awss3Service.deleteFile(courseRepository.getById(id).getImage());
         courseRepository.deleteById(id);
+        log.info("successful delete by this id:{}", id);
     }
 
     @Override
@@ -109,12 +123,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getById(Long id) {
-        log.info("successfully get course by id:{}", id);
-        return courseRepository.getById(id);
-    }
-
-    @Override
     public void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest, List<Long> teacherId) {
         Course course = courseRepository.findById(assignTeacherRequest.getCourseId())
                 .orElseThrow(() ->
@@ -125,5 +133,9 @@ public class CourseServiceImpl implements CourseService {
         log.info("successful assign teacher with id=%s to course");
     }
 
-
+    private Course getById(Long id) {
+        return courseRepository.findById(id).orElseThrow(()->new NotFoundException(
+                String.format("Course with id=%s does not exists",id)
+        ));
+    }
 }
