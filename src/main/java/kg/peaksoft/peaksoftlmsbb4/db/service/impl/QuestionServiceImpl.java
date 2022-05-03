@@ -3,17 +3,13 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
-import kg.peaksoft.peaksoftlmsbb4.db.repository.TestRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.QuestionService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,7 +24,7 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionMapper questionMapper;
 
     @Override
-    public QuestionResponse saveQuestion( QuestionRequest questionRequest) {
+    public QuestionResponse saveQuestion(QuestionRequest questionRequest) {
         String question = questionRequest.getQuestion();
         if (questionRepository.existsByQuestion(question)) {
             throw new BadRequestException(

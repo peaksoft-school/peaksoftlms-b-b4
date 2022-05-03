@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class PeaksoftlmsBB4Application {
         return "<h1>Welcome to Peaksoftlms-B application!!!<h1/>";
     }
 
-    // @Bean
+   //  @Bean
     public CommandLineRunner CommandLineRunnerBean() {
         return (args) -> {
             User user = new User();
@@ -46,7 +47,7 @@ public class PeaksoftlmsBB4Application {
         };
     }
 
-    // @Bean
+  //  @Bean
     CommandLineRunner commandLineRunnerStudent() {
         return args -> {
             Student student = new Student();

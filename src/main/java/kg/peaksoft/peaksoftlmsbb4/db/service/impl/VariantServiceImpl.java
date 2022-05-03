@@ -24,7 +24,6 @@ import java.util.List;
 @Slf4j
 public class VariantServiceImpl implements VariantService {
     private final VariantRepository variantRepository;
-    private final QuestionRepository questionRepository;
     private final VariantMapper variantMapper;
 
     @Override
@@ -38,7 +37,7 @@ public class VariantServiceImpl implements VariantService {
                     counter++;
                 }
             }
-            if(map.getAnswer()) {
+            if (map.getAnswer()) {
                 if (counter > 0) {
                     throw new BadRequestException("You can't choose multiple variants");
                 } else {

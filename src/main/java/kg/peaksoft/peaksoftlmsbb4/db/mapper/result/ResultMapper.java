@@ -25,8 +25,6 @@ public class ResultMapper implements Converter<Result, ResultRequest, ResultResp
         Result result = new Result();
         result.setStudentAnswers(resultRequest.getStudentAnswer());
         result.setIsTrue(resultRequest.getIsTrue());
-        result.setQuestion(questionRepository.findById(resultRequest.getQuestionId())
-                .orElseThrow(()-> new NotFoundException("Question with this id not found found")));
         return result;
     }
 
