@@ -3,6 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.AssignGroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponsePagination;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
@@ -16,6 +17,8 @@ import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +35,7 @@ public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;
     private final CourseRepository courseRepository;
+    private final AWSS3Service awss3Service;
 
     @Override
     public GroupResponse saveGroup(GroupRequest groupRequest) {
@@ -57,6 +61,16 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public GroupResponsePagination getAllForPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        GroupResponsePagination groupResponsePagination = new GroupResponsePagination();
+        groupResponsePagination.setGroups(groupRepository.findAll(pageable).getContent());
+        groupResponsePagination.setPages(groupRepository.findAll(pageable).getTotalPages());
+        groupResponsePagination.setCurrentPage(pageable.getPageNumber());
+        return groupResponsePagination;
+    }
+
+    @Override
     public GroupResponse findById(Long id) {
         if (id != null) {
             Group group = findBy(id);
@@ -79,6 +93,7 @@ public class GroupServiceImpl implements GroupService {
                     String.format("group with id = %s does not exists", id)
             );
         }
+        awss3Service.deleteFile(groupRepository.getById(id).getImage());
         groupRepository.deleteById(id);
         log.info("successful delete group by id:{}", id);
         return String.format("successful delete group  by id=%s", id);
@@ -87,11 +102,6 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public GroupResponse update(Long id, GroupRequest groupRequest) {
-        boolean exists = groupRepository.existsById(id);
-        if (!exists) {
-            log.error("not found group with id:{}", id);
-            throw new NotFoundException(String.format("Not found group with id=%s", id));
-        }
         Group group = findBy(id);
         String currentGroupName = group.getGroupName();
         String newGroupName = groupRequest.getGroupName();
@@ -102,11 +112,6 @@ public class GroupServiceImpl implements GroupService {
         String newDescription = groupRequest.getDescription();
         if (!currentDescription.equals(newDescription)) {
             group.setDescription(newDescription);
-        }
-        String currentImagine = group.getImage();
-        String newImagine = groupRequest.getImage();
-        if (!currentImagine.equals(newImagine)) {
-            group.setImage(newImagine);
         }
         log.info("successful update group by Id:{}", id);
         return groupMapper.deConvert(group);

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -44,7 +45,6 @@ public class CourseServiceTest {
         // given
         CourseRequest courseRequest = new CourseRequest(
                 "Java 5",
-                "this is image",
                 " this is description",
                 LocalDate.now()
         );
@@ -61,7 +61,6 @@ public class CourseServiceTest {
         // give
         CourseRequest courseRequest = new CourseRequest(
                 "Java 5",
-                "this is image",
                 " this is description",
                 LocalDate.now()
         );

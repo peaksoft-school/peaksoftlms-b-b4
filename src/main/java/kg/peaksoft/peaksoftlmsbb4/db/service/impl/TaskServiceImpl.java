@@ -2,13 +2,13 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.service.TaskService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.task.TaskMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TaskRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.TaskService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final LessonRepository lessonRepository;
+    private final AWSS3Service awss3Service;
 
     @Override
     public TaskResponse saveTasks(TaskRequest taskRequest) {
@@ -62,14 +63,8 @@ public class TaskServiceImpl implements TaskService {
         if (!task.getName().equals(taskRequest.getName())) {
             task.setName(taskRequest.getName());
         }
-        if (!task.getImage().equals(taskRequest.getImage())) {
-            task.setImage(taskRequest.getImage());
-        }
         if (!task.getCode().equals(taskRequest.getCode())) {
             task.setCode(taskRequest.getCode());
-        }
-        if (!task.getFile().equals(taskRequest.getFile())) {
-            task.setFile(taskRequest.getFile());
         }
         if (!task.getLink().equals(taskRequest.getLink())) {
             task.setLink(taskRequest.getLink());
@@ -90,6 +85,8 @@ public class TaskServiceImpl implements TaskService {
 
         }
         log.info("successfully delete task by id :{}", id);
+        awss3Service.deleteFile(taskRepository.getById(id).getFile());
+        awss3Service.deleteFile(taskRepository.getById(id).getImage());
         taskRepository.deleteById(id);
     }
 }

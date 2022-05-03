@@ -97,7 +97,10 @@
 --     teacher_id bigint not null
 --     references teachers(id)
 -- );
---
+--create table lessons(
+-- id serial not null,
+-- name varchar(250)
+--);
 -- insert into users(email, password, role, is_account_non_expired,
 --                   is_account_non_locked, is_credentials_non_expired, is_enabled) values
 --     ('admin@gmail.com', '$2a$12$KPlLhc3LkkFZCxN89PNdLu3cM78dJf5PN0VzoW4P4eTn6Obcf38.O',

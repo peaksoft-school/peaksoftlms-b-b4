@@ -4,9 +4,15 @@ import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
+import kg.peaksoft.peaksoftlmsbb4.db.service.impl.AWSS3Service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +20,13 @@ import java.util.List;
 @AllArgsConstructor
 public class CourseMapper implements Converter<Course, CourseRequest, CourseResponse> {
 
+    private final AWSS3Service awss3Service;
     @Override
     public Course convert(CourseRequest courseRequest) {
         Course course = new Course();
         course.setCourseName(courseRequest.getCourseName());
         course.setDescription(courseRequest.getDescription());
-        course.setImage(courseRequest.getImage());
+        course.setImage(awss3Service.uploadFile(courseRequest.getMultipartFile()));
         course.setDateOfStart(courseRequest.getDateOfStart());
         return course;
     }
@@ -42,9 +49,7 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         if (!course.getDescription().equals(courseRequest.getCourseName())) {
             course.setDescription(courseRequest.getDescription());
         }
-        if (!course.getImage().equals(courseRequest.getImage())) {
-            course.setImage(courseRequest.getImage());
-        }
+
     }
 
     public List<CourseResponse> deConvert(List<Course> courses) {
