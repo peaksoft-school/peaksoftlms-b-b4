@@ -44,20 +44,26 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
         if (studentRepository.existsByEmail((email))) {
+            log.error("there is such a student with email :{}", email);
             throw new BadRequestException(
-                    String.format("There is such a = %s", email)
+                    String.format("There is such a student with email = %s", email)
             );
         }
         Student student = studentMapper.convert(studentRequest);
         Student student1 = studentRepository.save(student);
 
-        log.info("successful save this student:{}", student1);
+        log.info("successful save  student:{}", student1);
         return studentMapper.deConvert(student1);
 
     }
 
     @Override
     public StudentResponse updateStudent(Long id, StudentRequest studentRequest) {
+        boolean exits = studentRepository.existsById(id);
+        if (!exits) {
+            log.error("not found student with id:{}", id);
+            throw new NotFoundException(String.format("Not found student with id=%s", id));
+        }
         Student student = getById(id);
         if (!student.getStudentName().equals(studentRequest.getStudentName())) {
             student.setStudentName(studentRequest.getStudentName());
@@ -74,17 +80,18 @@ public class StudentServiceImpl implements StudentService {
         if (!student.getEmail().equals(studentRequest.getEmail())) {
             student.setEmail(studentRequest.getEmail());
         }
-        log.info("successful update this id:{}", id);
+        log.info("successful update student with id:{}", id);
         return studentMapper.deConvert(student);
     }
 
     @Override
     public StudentResponse findById(Long id) {
+        log.info("successfully find student by id:{}", id);
         return studentMapper.deConvert(getById(id));
     }
 
     private Student getById(Long id) {
-        log.info("successful find by this id:{}", id);
+        log.info("successful get student by id:{}", id);
         return studentRepository.findById(id).orElseThrow(() -> new NotFoundException
                 (String.format("student with id = %s does not exists ", id)));
 
@@ -94,15 +101,16 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudent(Long id) {
         boolean exists = studentRepository.existsById(id);
         if (!exists) {
+            log.error(" student not found with id:{}", id);
             throw new BadRequestException(String.format("Student with id = %s does not exists", id));
         }
-        log.info("successful delete this id:{}", id);
+        log.info("successful delete student by id:{}", id);
         studentRepository.deleteById(id);
     }
 
     @Override
     public List<StudentResponse> findAllStudent(Pageable pageable) {
-        log.info("successful find All");
+        log.info("successful find all students");
         return studentRepository.findAll(pageable).getContent()
                 .stream()
                 .map(studentMapper::deConvert).collect(Collectors.toList());
@@ -127,6 +135,7 @@ public class StudentServiceImpl implements StudentService {
                                 String.format("Not found course with id=%s", assignStudentRequest.getCourseId())));
         Student student1 = studentRepository.getById(studentId);
         course1.addStudent(student1);
+        log.info("successfully assign student to course by student id:{}", studentId);
 
     }
 
@@ -154,15 +163,14 @@ public class StudentServiceImpl implements StudentService {
                 Student s = studentMapper.convert(student);
                 String email = s.getEmail();
                 if (studentRepository.existsByEmail((email))) {
+                    log.error("there is such a student with email:{}", email);
                     throw new BadRequestException(
-                            String.format("There is such a = %s", email)
+                            String.format("There is such a student with email= %s", email)
                     );
                 }
                 Student students = studentRepository.save(s);
                 group.setStudent(students);
-
                 log.info("successful import excel students:{}", student.getStudentName());
-
                 student1.add(studentMapper.deConvert(students));
             }
 
@@ -174,6 +182,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> findByStudentName(String name) {
+        log.info("successfully filter students by name:{}", name);
         return studentRepository.findByStudentName(name);
     }
 

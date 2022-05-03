@@ -30,6 +30,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponse saveTasks(TaskRequest taskRequest) {
         Lesson lessons = lessonRepository.findById(taskRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", taskRequest.getLessonId())
+
         ));
         Task task = taskMapper.convert(taskRequest);
         Task save = taskRepository.save(task);
@@ -40,7 +41,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task findById(Long id) {
-        log.info("successfully find by id:{}", id);
+        log.info("successfully find task by id:{}", id);
         return taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
     }
 
@@ -54,6 +55,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponse update(Long id, TaskRequest taskRequest) {
         boolean exist = taskRepository.existsById(id);
         if (!exist) {
+            log.error("not found task with id:{}", id);
             throw new NotFoundException(String.format("Task is not found id=%s", id));
         }
         Task task = findById(id);
@@ -75,7 +77,7 @@ public class TaskServiceImpl implements TaskService {
         if (!task.getText().equals(taskRequest.getText())) {
             task.setText(taskRequest.getText());
         }
-        log.info("successfully update id:{}", id);
+        log.info("successfully update task with id:{}", id);
         return taskMapper.deConvert(task);
     }
 
@@ -83,10 +85,11 @@ public class TaskServiceImpl implements TaskService {
     public void delete(Long id) {
         boolean exits = taskRepository.existsById(id);
         if (!exits) {
+            log.error("not found task with  id:{}", id);
             throw new NotFoundException(String.format("Task is not found id=%s", id));
 
         }
-        log.info("successfully delet by id :{}", id);
+        log.info("successfully delete task by id :{}", id);
         taskRepository.deleteById(id);
     }
 }

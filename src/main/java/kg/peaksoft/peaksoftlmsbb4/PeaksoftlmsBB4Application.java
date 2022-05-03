@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4;
 
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,16 @@ public class PeaksoftlmsBB4Application {
             user.setPassword(encoder.encode("admin"));
             user.setRole(Role.ADMIN);
             userRepository.save(user);
+            User teacher1 = new User();
+            teacher1.setEmail("instructor@gmail.com");
+            teacher1.setPassword(encoder.encode("1234567"));
+            teacher1.setRole(Role.TEACHER);
+            Teacher teacher = new Teacher();
+            teacher.setName("Chyngyz");
+            teacher.setLastName("Sharshekeev");
+            teacher.setPhoneNumber("0777777777");
+            teacher.setSpecialization("Instructor");
+            teacher.setUser(teacher1);
         };
     }
 }
