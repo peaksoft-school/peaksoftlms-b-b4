@@ -44,9 +44,9 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
         if (studentRepository.existsByEmail((email))) {
-            log.error("there is such a email:{}", email);
+            log.error("there is such a student with email :{}", email);
             throw new BadRequestException(
-                    String.format("There is such a = %s", email)
+                    String.format("There is such a student with email = %s", email)
             );
         }
         Student student = studentMapper.convert(studentRequest);
@@ -80,18 +80,18 @@ public class StudentServiceImpl implements StudentService {
         if (!student.getEmail().equals(studentRequest.getEmail())) {
             student.setEmail(studentRequest.getEmail());
         }
-        log.info("successful update  id:{}", id);
+        log.info("successful update student with id:{}", id);
         return studentMapper.deConvert(student);
     }
 
     @Override
     public StudentResponse findById(Long id) {
-        log.info("successfully find by id:{}", id);
+        log.info("successfully find student by id:{}", id);
         return studentMapper.deConvert(getById(id));
     }
 
     private Student getById(Long id) {
-        log.info("successful get by id:{}", id);
+        log.info("successful get student by id:{}", id);
         return studentRepository.findById(id).orElseThrow(() -> new NotFoundException
                 (String.format("student with id = %s does not exists ", id)));
 
@@ -104,13 +104,13 @@ public class StudentServiceImpl implements StudentService {
             log.error(" student not found with id:{}", id);
             throw new BadRequestException(String.format("Student with id = %s does not exists", id));
         }
-        log.info("successful delete by id:{}", id);
+        log.info("successful delete student by id:{}", id);
         studentRepository.deleteById(id);
     }
 
     @Override
     public List<StudentResponse> findAllStudent(Pageable pageable) {
-        log.info("successful find All");
+        log.info("successful find all students");
         return studentRepository.findAll(pageable).getContent()
                 .stream()
                 .map(studentMapper::deConvert).collect(Collectors.toList());
@@ -163,9 +163,9 @@ public class StudentServiceImpl implements StudentService {
                 Student s = studentMapper.convert(student);
                 String email = s.getEmail();
                 if (studentRepository.existsByEmail((email))) {
-                    log.error("there is such a email:{}", email);
+                    log.error("there is such a student with email:{}", email);
                     throw new BadRequestException(
-                            String.format("There is such a = %s", email)
+                            String.format("There is such a student with email= %s", email)
                     );
                 }
                 Student students = studentRepository.save(s);

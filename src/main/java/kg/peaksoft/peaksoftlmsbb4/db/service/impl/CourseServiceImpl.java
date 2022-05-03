@@ -41,9 +41,9 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse saveCourse(CourseRequest courseRequest) {
         String name = courseRequest.getCourseName();
         if (courseRepository.existsByCourseName((name))) {
-            log.error("there is such a name:{}", name);
+            log.error("there is such a course name:{}", name);
             throw new BadRequestException(
-                    String.format("There is such a = %s ", name)
+                    String.format("There is such a course name = %s ", name)
             );
         }
         Course save = courseRepository.save(courseMapper.convert(courseRequest));
@@ -53,14 +53,14 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseResponse> findAll() {
-        log.info("successful find all course");
+        log.info("successful find all courses");
         return courseRepository.findAll().stream().map(
                 courseMapper::deConvert).collect(Collectors.toList());
     }
 
     @Override
     public CourseResponse findById(Long id) {
-        log.info("successful get by id:{}", id);
+        log.info("successful get by id course :{}", id);
         return courseMapper.deConvert(getById(id));
     }
 
@@ -81,10 +81,10 @@ public class CourseServiceImpl implements CourseService {
     public void delete(Long id) {
         boolean existsById = courseRepository.existsById(id);
         if (!existsById) {
-            log.error("not found course  id:{}", id);
+            log.error("not found course with id:{}", id);
             throw new NotFoundException(String.format(" course with id=%s does not exists", id));
         }
-        log.info("successful delete by id:{}", id);
+        log.info("successful delete course with id:{}", id);
         courseRepository.deleteById(id);
     }
 
@@ -94,7 +94,7 @@ public class CourseServiceImpl implements CourseService {
         for (Student s : getById(id).getStudents()) {
             studentResponses.add(studentMapper.deConvert(s));
         }
-        log.info("successful getAll Students by Course Id:{}", id);
+        log.info("successful getAll students by Course Id:{}", id);
         return studentResponses;
     }
 
@@ -104,13 +104,13 @@ public class CourseServiceImpl implements CourseService {
         for (Teacher t : getById(id).getTeachers()) {
             teacherResponses.add(teacherMapper.deConvert(t));
         }
-        log.info("successful getAll teacher by Course Id:{}", id);
+        log.info("successful getAll teachers by Course Id:{}", id);
         return teacherResponses;
     }
 
     @Override
     public Course getById(Long id) {
-        log.info("successfully get by id:{}", id);
+        log.info("successfully get course by id:{}", id);
         return courseRepository.getById(id);
     }
 

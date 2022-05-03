@@ -86,7 +86,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherResponse findById(Long id) {
-        log.info("successfully find by id:{}", id);
+        log.info("successfully find teacher by id:{}", id);
         return teacherMapper.deConvert(findBy(id));
     }
 
@@ -107,13 +107,13 @@ public class TeacherServiceImpl implements TeacherService {
             log.error("not found teacher with id:{}", id);
             throw new BadRequestException(String.format("teacher with id = %s does not exists", id));
         }
-        log.info("successful delete by id:{}", id);
+        log.info("successful delete teacher by id:{}", id);
         teacherRepository.deleteById(id);
     }
 
     @Override
     public List<TeacherResponse> findAllTeacher() {
-        log.info("successful find all teacher");
+        log.info("successful find all teachers");
         return teacherRepository.findAll()
                 .stream()
                 .map(teacherMapper::deConvert).collect(Collectors.toList());

@@ -38,9 +38,9 @@ public class GroupServiceImpl implements GroupService {
 
         String name = groupRequest.getGroupName();
         if (groupRepository.existsByGroupName((name))) {
-            log.error("there is such a name:{}", name);
+            log.error("there is such a group name:{}", name);
             throw new BadRequestException(
-                    String.format("There is such a = %s", name)
+                    String.format("There is such a group name = %s", name)
             );
         }
         Group group = groupMapper.convert(groupRequest);
@@ -51,7 +51,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<GroupResponse> findAllGroup() {
-        log.info("successful find all group:{}", groupRepository.findAll());
+        log.info("successful find all groups:{}", groupRepository.findAll());
         return groupRepository.findAll().stream()
                 .map(groupMapper::deConvert).collect(Collectors.toList());
     }
@@ -81,7 +81,7 @@ public class GroupServiceImpl implements GroupService {
         }
         groupRepository.deleteById(id);
         log.info("successful delete group by id:{}", id);
-        return String.format("successful delete by id=%s", id);
+        return String.format("successful delete group  by id=%s", id);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class GroupServiceImpl implements GroupService {
     public GroupResponse update(Long id, GroupRequest groupRequest) {
         boolean exists = groupRepository.existsById(id);
         if (!exists) {
-            log.error("not found id:{}", id);
+            log.error("not found group with id:{}", id);
             throw new NotFoundException(String.format("Not found group with id=%s", id));
         }
         Group group = findBy(id);
@@ -108,17 +108,17 @@ public class GroupServiceImpl implements GroupService {
         if (!currentImagine.equals(newImagine)) {
             group.setImage(newImagine);
         }
-        log.info("successful update groupId:{}", id);
+        log.info("successful update group by Id:{}", id);
         return groupMapper.deConvert(group);
     }
 
     @Override
     public Group findBy(Long id) {
-        log.info("successful find by id:{}", id);
+        log.info("successful find group by id:{}", id);
         return groupRepository.findById(id)
                 .orElseThrow(() ->
                         new NotFoundException(
-                                String.format("client with id = %s does not exists", id)
+                                String.format("group with id = %s does not exists", id)
                         ));
     }
 
