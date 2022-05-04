@@ -122,7 +122,7 @@ public class StudentServiceImpl implements StudentService {
         StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
         studentPaginationResponse.setPages((studentRepository.findAll(pageable).getTotalPages()));
         studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
-        studentPaginationResponse.setStudents(studentRepository.findAll(pageable).getContent());
+        studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findAll(pageable).getContent()));
         return studentPaginationResponse;
     }
 

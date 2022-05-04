@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse> {
@@ -34,5 +37,13 @@ public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse
         groupResponse.setDateOfStart(group.getDateOfStart());
         groupResponse.setImage(group.getImage());
         return groupResponse;
+    }
+
+    public List<GroupResponse> deConvert(List<Group> groups){
+        List<GroupResponse> groupResponses = new ArrayList<>();
+        for (Group g:groups) {
+            groupResponses.add(deConvert(g));
+        }
+        return groupResponses;
     }
 }
