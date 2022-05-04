@@ -16,7 +16,7 @@ public interface TaskService {
 
     TaskResponse update(Long id, TaskRequest taskRequest);
 
-    void delete(Long id);
+    String delete(Long id);
 
     TaskResponse findTaskByLessonId(Long id);
 

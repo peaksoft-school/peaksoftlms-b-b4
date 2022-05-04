@@ -70,8 +70,8 @@ public class CourseApi {
     @GetMapping("/pagination")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public CoursePaginationResponse getAllCoursesForPagination(@RequestParam int page,
-                                                               @RequestParam int size){
-       return courseService.coursesForPagination(page, size);
+                                                               @RequestParam int size) {
+        return courseService.coursesForPagination(page, size);
     }
 
     @Operation(summary = "Updates the course",
@@ -87,9 +87,8 @@ public class CourseApi {
             description = "Delete course with id. Only users with role admin can delete courses")
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
-    public void deleteCourse(@PathVariable Long id) {
-        courseService.delete(id);
-
+    public String deleteCourse(@PathVariable Long id) {
+        return courseService.delete(id);
     }
 
     @Operation(summary = "Get students by course id",
@@ -112,8 +111,8 @@ public class CourseApi {
             description = "This endpoint for adding a teacher to a course. Only user with role admin can add teacher to course")
     @PostMapping("/assignTeacher")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void assignTeacherToCourse(@RequestBody AssignTeacherRequest assignTeacherRequest) {
-        courseService.assignTeachersToCourse(assignTeacherRequest);
+    public String assignTeacherToCourse(@RequestBody AssignTeacherRequest assignTeacherRequest) {
+        return courseService.assignTeachersToCourse(assignTeacherRequest);
     }
 
 }

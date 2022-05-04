@@ -27,6 +27,6 @@ public interface GroupService {
 
     List<StudentResponse> getAllStudentByGroupId(Long id);
 
-    void assignGroupToCourse(AssignGroupRequest assignGroupRequest);
+    String assignGroupToCourse(AssignGroupRequest assignGroupRequest);
 
 }

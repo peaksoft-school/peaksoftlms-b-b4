@@ -100,7 +100,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void deleteTeacher(Long id) {
+    public String deleteTeacher(Long id) {
         boolean exists = teacherRepository.existsById(id);
 
         if (!exists) {
@@ -109,6 +109,7 @@ public class TeacherServiceImpl implements TeacherService {
         }
         log.info("successful delete teacher by id:{}", id);
         teacherRepository.deleteById(id);
+        return "Teacher deleted";
     }
 
     @Override

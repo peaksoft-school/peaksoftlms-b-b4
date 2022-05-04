@@ -15,7 +15,7 @@ public interface LinkService {
 
     LinkResponse update(Long id, LinkRequest linkRequest);
 
-    void delete(Long id);
+    String delete(Long id);
 
     LinkResponse findLinkByLessonId(Long id);
 }

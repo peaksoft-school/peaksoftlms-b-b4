@@ -81,8 +81,8 @@ public class StudentApi {
     @Operation(summary = "Delete the student",
             description = "Delete student with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void deleteStudent(@PathVariable("id") Long id) {
-        studentService.deleteStudent(id);
+    public String deleteStudent(@PathVariable("id") Long id) {
+      return studentService.deleteStudent(id);
     }
 
     @GetMapping("/format")

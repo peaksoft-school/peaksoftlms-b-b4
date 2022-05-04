@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -90,7 +91,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void delete(Long id) {
+    public String delete(Long id) {
         boolean existsById = courseRepository.existsById(id);
         if (!existsById) {
             log.error("not found course with id:{}", id);
@@ -100,6 +101,7 @@ public class CourseServiceImpl implements CourseService {
         awss3Service.deleteFile(courseRepository.getById(id).getImage());
         courseRepository.deleteById(id);
         log.info("successful delete by this id:{}", id);
+        return "Course deleted";
     }
 
     @Override
@@ -122,8 +124,9 @@ public class CourseServiceImpl implements CourseService {
         return teacherResponses;
     }
 
+    @Transactional
     @Override
-    public void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest) {
+    public String assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest) {
         Course course = courseRepository.findById(assignTeacherRequest.getCourseId())
                 .orElseThrow(() ->
                         new NotFoundException(String.format("Course with id = %s not found", assignTeacherRequest.getCourseId())));
@@ -133,6 +136,7 @@ public class CourseServiceImpl implements CourseService {
         }
         courseRepository.save(course);
         log.info("successful assign teacher with id=%s to course");
+        return String.format("Teachers added to %s course", course.getCourseName());
     }
 
     private Course getById(Long id) {

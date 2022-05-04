@@ -141,13 +141,14 @@ public class GroupServiceImpl implements GroupService {
 
 
     @Override
-    public void assignGroupToCourse(AssignGroupRequest assignGroupRequest) {
-        Course course1 = courseRepository.findById(assignGroupRequest.getCourseId())
+    public String assignGroupToCourse(AssignGroupRequest assignGroupRequest) {
+        Course course = courseRepository.findById(assignGroupRequest.getCourseId())
                 .orElseThrow(() -> new BadRequestException(
                         String.format("Course with id %s not found", assignGroupRequest.getCourseId())));
         Group group = groupRepository.getById(assignGroupRequest.getGroupId());
-        course1.setGroup(group);
+        course.setGroup(group);
         log.info("successfully assign group to course by group id:{}", assignGroupRequest.getGroupId());
+        return String.format("Group %s added to %s course", group.getGroupName(), course.getCourseName());
     }
 }
 

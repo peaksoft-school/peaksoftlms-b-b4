@@ -78,7 +78,7 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
-    public void delete(Long id) {
+    public String delete(Long id) {
         boolean exits = taskRepository.existsById(id);
         if (!exits) {
             log.error("not found task with  id:{}", id);
@@ -89,6 +89,7 @@ public class TaskServiceImpl implements TaskService {
         awss3Service.deleteFile(taskRepository.getById(id).getFile());
         awss3Service.deleteFile(taskRepository.getById(id).getImage());
         taskRepository.deleteById(id);
+        return "Task deleted";
     }
 
     @Override

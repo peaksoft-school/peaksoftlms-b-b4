@@ -48,7 +48,7 @@ public class TaskApi {
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     @Operation(summary = "Delete the task",
             description = "Delete task with ID")
-    public void delete(@PathVariable Long id) {
-        taskService.delete(id);
+    public String delete(@PathVariable Long id) {
+       return taskService.delete(id);
     }
 }

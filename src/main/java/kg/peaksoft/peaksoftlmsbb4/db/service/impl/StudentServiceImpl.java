@@ -96,7 +96,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteStudent(Long id) {
+    public String deleteStudent(Long id) {
         boolean exists = studentRepository.existsById(id);
         if (!exists) {
             log.error(" student not found with id:{}", id);
@@ -104,6 +104,7 @@ public class StudentServiceImpl implements StudentService {
         }
         log.info("successful delete student by id:{}", id);
         studentRepository.deleteById(id);
+        return "Student deleted";
     }
 
     @Override
@@ -136,15 +137,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void assignStudentToCourse(AssignStudentRequest assignStudentRequest) {
-        Course course1 = courseRepository.findById(assignStudentRequest.getCourseId())
+    public String assignStudentToCourse(AssignStudentRequest assignStudentRequest) {
+        Course course = courseRepository.findById(assignStudentRequest.getCourseId())
                 .orElseThrow(() ->
                         new NotFoundException(
                                 String.format("Not found course with id=%s", assignStudentRequest.getCourseId())));
-        Student student1 = studentRepository.getById(assignStudentRequest.getStudentId());
-        course1.addStudent(student1);
+        Student student = studentRepository.getById(assignStudentRequest.getStudentId());
+        course.addStudent(student);
         log.info("successfully assign student to course by student id:{}", assignStudentRequest.getStudentId());
-
+        return String.format("%s added to %s course", student.getStudentName(), course.getCourseName());
     }
 
     @Override

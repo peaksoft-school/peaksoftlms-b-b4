@@ -78,8 +78,8 @@ public class GroupApi {
     @Operation(summary = "Delete group with ID",
             description = "Delete group with ID. Only users with role admin can delete courses")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void deleteById(@PathVariable Long id) {
-        groupService.deleteById(id);
+    public String deleteById(@PathVariable Long id) {
+        return groupService.deleteById(id);
     }
 
 

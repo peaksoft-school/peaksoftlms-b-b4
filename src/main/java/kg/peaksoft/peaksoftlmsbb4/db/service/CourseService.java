@@ -20,11 +20,11 @@ public interface CourseService {
 
     CourseResponse update(Long id, CourseRequest courseRequest);
 
-    void delete(Long id);
+    String delete(Long id);
 
     List<StudentResponse> getAllStudentsByCourseId(Long id);
 
     List<TeacherResponse> getAllTeacherByCourseId(Long id);
 
-    void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest);
+    String assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest);
 }

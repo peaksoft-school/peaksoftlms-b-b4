@@ -48,7 +48,7 @@ public class PresentationsApi {
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     @Operation(summary = "Delete the presentation",
             description = "Delete links with ID. Only users with role teacher can delete links")
-    public void delete(@PathVariable Long id) {
-        presentationService.delete(id);
+    public String delete(@PathVariable Long id) {
+        return presentationService.delete(id);
     }
 }

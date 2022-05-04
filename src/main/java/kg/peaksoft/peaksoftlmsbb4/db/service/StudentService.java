@@ -19,7 +19,7 @@ public interface StudentService {
 
     StudentResponse findById(Long id);
 
-    void deleteStudent(Long id);
+    String deleteStudent(Long id);
 
     List<StudentResponse> findAllStudent();
 
@@ -27,7 +27,7 @@ public interface StudentService {
 
     List<StudentResponse> findByStudyFormat(StudyFormat studyFormat);
 
-    void assignStudentToCourse(AssignStudentRequest assignStudentRequest);
+    String assignStudentToCourse(AssignStudentRequest assignStudentRequest);
 
     List<Student> findByStudentName(String name);
 
