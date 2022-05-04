@@ -29,7 +29,7 @@ public class AWSS3Service implements FileService {
 
         String filenameExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
 
-        String key = UUID.randomUUID().toString() + "." + filenameExtension;
+        String key = UUID.randomUUID().toString() + "." +filenameExtension;
 
         ObjectMetadata metaData = new ObjectMetadata();
         metaData.setContentLength(file.getSize());

@@ -64,7 +64,7 @@ public class GroupServiceImpl implements GroupService {
     public GroupResponsePagination getAllForPagination(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         GroupResponsePagination groupResponsePagination = new GroupResponsePagination();
-        groupResponsePagination.setGroups(groupRepository.findAll(pageable).getContent());
+        groupResponsePagination.setGroups(groupMapper.deConvert(groupRepository.findAll(pageable).getContent()));
         groupResponsePagination.setPages(groupRepository.findAll(pageable).getTotalPages());
         groupResponsePagination.setCurrentPage(pageable.getPageNumber());
         return groupResponsePagination;
