@@ -21,7 +21,7 @@ public class AWSS3ClientApi {
         String publicURL = awsS3Service.uploadFile(file);
         Map<String, String> response = new HashMap<>();
         response.put("publicURL", publicURL);
-        return new ResponseEntity<Map<String, String>>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @DeleteMapping

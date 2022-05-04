@@ -27,7 +27,7 @@ public class VideoLesson {
     private String description;
     private String link;
 
-    @OneToOne(cascade = {DETACH,MERGE,REFRESH},mappedBy = "videoLesson")
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH}, mappedBy = "videoLesson")
     private Lesson lessons;
 
 }

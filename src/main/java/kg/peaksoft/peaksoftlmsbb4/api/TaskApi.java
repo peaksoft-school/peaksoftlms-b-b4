@@ -23,7 +23,7 @@ public class TaskApi {
     @Operation(summary = "Add new tasks",
             description = "This endpoint save new task. Only users with role teacher can add new task to lesson")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public TaskResponse saveTasks(@ModelAttribute TaskRequest taskRequest) {
+    public TaskResponse saveTasks(@RequestBody TaskRequest taskRequest) {
         return taskService.saveTasks(taskRequest);
 
     }

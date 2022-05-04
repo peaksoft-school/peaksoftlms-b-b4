@@ -4,10 +4,8 @@ import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
-import kg.peaksoft.peaksoftlmsbb4.db.service.impl.AWSS3Service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,6 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class TaskMapper implements Converter<Task, TaskRequest, TaskResponse> {
-    private AWSS3Service awss3Service;
 
     @Override
     public Task convert(TaskRequest taskRequest) {

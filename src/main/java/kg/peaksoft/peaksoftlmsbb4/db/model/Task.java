@@ -31,7 +31,7 @@ public class Task {
     private String link;
     private String code;
 
-    @OneToOne(cascade = {DETACH,REFRESH,MERGE},mappedBy = "task")
+    @OneToOne(cascade = {DETACH, REFRESH, MERGE}, mappedBy = "task")
     private Lesson lessons;
 
 

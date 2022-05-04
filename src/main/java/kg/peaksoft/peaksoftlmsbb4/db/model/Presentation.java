@@ -27,7 +27,7 @@ public class Presentation {
     private String description;
     private String file;
 
-    @OneToOne(cascade = {DETACH,MERGE,REFRESH},mappedBy = "presentation")
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH}, mappedBy = "presentation")
     private Lesson lessons;
 
 }

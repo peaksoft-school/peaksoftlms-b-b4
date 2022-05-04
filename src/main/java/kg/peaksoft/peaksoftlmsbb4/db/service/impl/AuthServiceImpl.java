@@ -31,11 +31,11 @@ public class AuthServiceImpl implements AuthService {
                 authRequest.getEmail(),
                 authRequest.getPassword()
         ));
-        User user = userRepository.findByEmail(authRequest.getEmail()).orElseThrow(()->new NotFoundException(
+        User user = userRepository.findByEmail(authRequest.getEmail()).orElseThrow(() -> new NotFoundException(
                 "user with this email does not exists"
         ));
         String generatedToken = jwtUtils.generateToken(authentication);
-        log.info("successful generated token :{}",generatedToken);
+        log.info("successful generated token :{}", generatedToken);
         return AuthResponseDto.builder()
                 .email(authRequest.getEmail())
                 .token(generatedToken)

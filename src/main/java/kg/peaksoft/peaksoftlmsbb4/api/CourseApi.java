@@ -19,7 +19,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import java.util.List;
 
 @RestController
@@ -33,8 +32,8 @@ public class CourseApi {
     @Operation(summary = "Create new course",
             description = "This endpoint saves new courses. Only users with role admin can add new courses")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping(consumes = { "multipart/form-data" })
-    public CourseResponse saveCourse(@ModelAttribute CourseRequest courseRequest) {
+    @PostMapping()
+    public CourseResponse saveCourse(@RequestBody CourseRequest courseRequest) {
         return courseService.saveCourse(courseRequest);
     }
 

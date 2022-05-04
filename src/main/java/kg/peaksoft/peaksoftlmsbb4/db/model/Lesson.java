@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
@@ -39,7 +37,7 @@ public class Lesson {
     @OneToOne(cascade = ALL)
     @JoinColumn(name = "presentation_id")
     private Presentation presentation;
-    @ManyToOne(cascade = {MERGE,REFRESH,DETACH,PERSIST})
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH, PERSIST})
     @JoinColumn(name = "course_id")
     private Course courses;
 }

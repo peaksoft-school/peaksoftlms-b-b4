@@ -6,10 +6,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
-import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
@@ -17,6 +13,10 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +38,7 @@ public class CourseServiceImpl implements CourseService {
     private final TeacherMapper teacherMapper;
     private final TeacherService teacherService;
     private final AWSS3Service awss3Service;
+
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
         String name = courseRequest.getCourseName();
@@ -61,7 +62,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CoursePaginationResponse coursesForPagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page,size);
+        Pageable pageable = PageRequest.of(page, size);
         CoursePaginationResponse coursePaginationResponse = new CoursePaginationResponse();
         coursePaginationResponse.setCourses(courseRepository.findAll(pageable).getContent());
         coursePaginationResponse.setPages(courseRepository.findAll(pageable).getTotalPages());
@@ -127,7 +128,7 @@ public class CourseServiceImpl implements CourseService {
                 .orElseThrow(() ->
                         new NotFoundException(String.format("Course with id = %s not found", assignTeacherRequest.getCourseId())));
 
-        for (Long id:assignTeacherRequest.getTeacherId()) {
+        for (Long id : assignTeacherRequest.getTeacherId()) {
             course.addTeacher(teacherService.findBy(id));
         }
         courseRepository.save(course);
@@ -135,8 +136,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private Course getById(Long id) {
-        return courseRepository.findById(id).orElseThrow(()->new NotFoundException(
-                String.format("Course with id=%s does not exists",id)
+        return courseRepository.findById(id).orElseThrow(() -> new NotFoundException(
+                String.format("Course with id=%s does not exists", id)
         ));
     }
 }

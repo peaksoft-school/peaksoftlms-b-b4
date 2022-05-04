@@ -5,22 +5,21 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
-import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
-import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -117,8 +116,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentPaginationResponse getAll(int page,int size){
-        Pageable pageable = PageRequest.of(page,size, Sort.by("studentName"));
+    public StudentPaginationResponse getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("studentName"));
         StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
         studentPaginationResponse.setPages((studentRepository.findAll(pageable).getTotalPages()));
         studentPaginationResponse.setCurrentPage(pageable.getPageNumber());

@@ -4,10 +4,8 @@ import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Presentation;
-import kg.peaksoft.peaksoftlmsbb4.db.service.impl.AWSS3Service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,6 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class PresentationMapper implements Converter<Presentation, PresentationRequest, PresentationResponse> {
-    private AWSS3Service awss3Service;
 
     @Override
     public Presentation convert(PresentationRequest presentationRequest) {

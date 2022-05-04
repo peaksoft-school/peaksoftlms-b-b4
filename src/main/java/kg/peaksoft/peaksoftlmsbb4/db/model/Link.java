@@ -26,6 +26,6 @@ public class Link {
     private String text;
     private String link;
 
-    @OneToOne(cascade = {DETACH,MERGE,REFRESH},mappedBy = "link")
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH}, mappedBy = "link")
     private Lesson lessons;
 }
