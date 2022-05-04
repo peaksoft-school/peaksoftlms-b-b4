@@ -39,15 +39,18 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
                         counter++;
                     }
                     if (v.getAnswer()) {
-                        if (counter > 0) {
+                        if (counter >= 0) {
                             throw new BadRequestException("You can't choose multiple variants");
                         }
                     }
                 }
+
+            }else {
+                test.setQuestions1(questions);
+                return test;
             }
         }
-        test.setQuestions1(questions);
-        return test;
+  return null;
     }
 
     @Override

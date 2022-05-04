@@ -17,6 +17,4 @@ public class ResultRequest {
     private Boolean isTrue;
     @JsonProperty("variant_id")
     private Long variantId;
-    @JsonProperty("question_id")
-    private Long questionId;
 }

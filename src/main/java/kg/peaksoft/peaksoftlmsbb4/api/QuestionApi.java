@@ -47,5 +47,4 @@ public class QuestionApi {
         questionService.delete(id);
         return String.format("successfully delete this id=%s", id);
     }
-
 }

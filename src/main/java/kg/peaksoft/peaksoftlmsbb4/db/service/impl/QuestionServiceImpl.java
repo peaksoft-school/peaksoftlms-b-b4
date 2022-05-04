@@ -31,6 +31,7 @@ public class QuestionServiceImpl implements QuestionService {
                     String.format("Sorry, please try another question=%s", question)
             );
         }
+
         Question question1 = questionMapper.convert(questionRequest);
         questionRepository.save(question1);
         log.info("successful save question:{}", question);

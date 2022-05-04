@@ -8,17 +8,16 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.result.ResultMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
-import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
-import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -57,8 +56,8 @@ public class StudentServiceImpl implements StudentService {
                     String.format("There is such a = %s", email)
             );
         }
-        String password=studentRequest.getPassword();
-        studentRequest.setPassword(passwordEncoder.encode(password));
+        String encodedPassword = passwordEncoder.encode(studentRequest.getPassword());
+        studentRequest.setPassword(encodedPassword);
         Student student = studentMapper.convert(studentRequest);
         Student student1 = studentRepository.save(student);
 

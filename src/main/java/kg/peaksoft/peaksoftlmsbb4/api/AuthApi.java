@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class AuthApi {
 
     @PostMapping("/login")
     @PermitAll
-    private AuthResponseDto authentication(@RequestBody AuthRequestDto authRequestDto) {
+    private AuthResponseDto authentication(@Valid  @RequestBody AuthRequestDto authRequestDto) {
         return authService.authenticate(authRequestDto);
     }
 }
