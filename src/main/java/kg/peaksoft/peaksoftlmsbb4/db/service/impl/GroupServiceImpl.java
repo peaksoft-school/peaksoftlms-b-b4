@@ -103,15 +103,17 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     public GroupResponse update(Long id, GroupRequest groupRequest) {
         Group group = findBy(id);
-        String currentGroupName = group.getGroupName();
-        String newGroupName = groupRequest.getGroupName();
-        if (!currentGroupName.equals(newGroupName)) {
-            group.setGroupName(newGroupName);
+        if (!group.getGroupName().equals(groupRequest.getGroupName())) {
+            group.setGroupName(groupRequest.getGroupName());
         }
-        String currentDescription = group.getDescription();
-        String newDescription = groupRequest.getDescription();
-        if (!currentDescription.equals(newDescription)) {
-            group.setDescription(newDescription);
+        if (!group.getDescription().equals(groupRequest.getDescription())) {
+            group.setDescription(groupRequest.getDescription());
+        }
+        if (!group.getImage().equals(groupRequest.getImage())){
+            group.setImage(groupRequest.getImage());
+        }
+        if (!group.getDateOfStart().isEqual(groupRequest.getDateOfStart())){
+            group.setImage(groupRequest.getImage());
         }
         log.info("successful update group by Id:{}", id);
         return groupMapper.deConvert(group);
