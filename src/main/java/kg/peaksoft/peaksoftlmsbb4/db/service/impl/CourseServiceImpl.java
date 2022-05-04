@@ -64,7 +64,7 @@ public class CourseServiceImpl implements CourseService {
     public CoursePaginationResponse coursesForPagination(int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
         CoursePaginationResponse coursePaginationResponse = new CoursePaginationResponse();
-        coursePaginationResponse.setCourses(courseRepository.findAll(pageable).getContent());
+        coursePaginationResponse.setCourses(courseMapper.deConvert(courseRepository.findAll(pageable).getContent()));
         coursePaginationResponse.setPages(courseRepository.findAll(pageable).getTotalPages());
         coursePaginationResponse.setCurrentPage(pageable.getPageNumber());
         return coursePaginationResponse;
