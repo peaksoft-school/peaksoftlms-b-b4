@@ -36,7 +36,7 @@ public class PeaksoftlmsBB4Application {
         return "<h1>Welcome to Peaksoftlms-B application!!!<h1/>";
     }
 
-   //  @Bean
+    //@Bean
     public CommandLineRunner CommandLineRunnerBean() {
         return (args) -> {
             User user = new User();
@@ -47,7 +47,7 @@ public class PeaksoftlmsBB4Application {
         };
     }
 
-    //@Bean
+   // @Bean
     CommandLineRunner commandLineRunnerStudent() {
         return args -> {
             Student student = new Student();
@@ -64,7 +64,7 @@ public class PeaksoftlmsBB4Application {
         };
     }
 
-  //  @Bean
+   // @Bean
     CommandLineRunner commandLineRunnerTeacher() {
         return args -> {
             Teacher teacher = new Teacher();

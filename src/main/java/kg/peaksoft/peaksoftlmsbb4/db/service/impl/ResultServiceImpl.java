@@ -11,10 +11,10 @@ import kg.peaksoft.peaksoftlmsbb4.db.repository.ResultRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.iterators.IteratorChain;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,14 +30,17 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public ResultResponse saveResult(String email, ResultRequest resultRequest) {
-        Variant variant = variantRepository.getById(resultRequest.getVariantId());
+        List<Variant> variants = variantRepository.findAllById(resultRequest.getVariantId());
         Student student = studentRepository.findStudentByUserEmail(email);
+        for (Variant variant:variants) {
             resultRequest.setStudentAnswer(variant.getOption());
             resultRequest.setIsTrue(variant.getAnswer());
             Result convert = resultMapper.convert(resultRequest);
             convert.setStudent(student);
             Result save = resultRepository.save(convert);
             return resultMapper.deConvert(save);
+        }
+        return null;
     }
     @Override
     public ResultResponse findById(Long id) {
@@ -74,12 +77,32 @@ public class ResultServiceImpl implements ResultService {
                 wrongAnswerCounter++;
             }
         }
+        long results = wrongAnswerCounter + correctAnswerCounter;
+        long points=correctAnswerCounter*2;
         getResultResponse.setWrongAnswer(wrongAnswerCounter);
         getResultResponse.setCorrect(correctAnswerCounter);
-        long results = wrongAnswerCounter + correctAnswerCounter;
         Long process = (getResultResponse.getCorrect() * 100) / results;
         getResultResponse.setProcess(process);
+        getResultResponse.setPoints(points);
         log.info("successful results this student:{}", studentByUserEmail);
         return getResultResponse;
+    }
+
+    public List<ResultResponse> saveResult1(String email, List<ResultRequest> resultRequest) {
+        Student student = studentRepository.findStudentByUserEmail(email);
+        for (ResultRequest f:resultRequest) {
+            List<Variant> variants = variantRepository.findAllById(f.getVariantId());
+            for (Variant variant:variants) {
+                f.setStudentAnswer(variant.getOption());
+                f.setIsTrue(variant.getAnswer());
+        }
+            List<Result> results = resultMapper.convert1(resultRequest);
+            for (Result r:results) {
+                r.setStudent(student);
+            }
+            List<Result> results1 = resultRepository.saveAll(results);
+            return resultMapper.deConvert(results1);
+        }
+        return null;
     }
 }

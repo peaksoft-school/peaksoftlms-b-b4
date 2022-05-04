@@ -12,4 +12,5 @@ public class GetResultResponse {
     private Long wrongAnswer;
     private Long correct;
     private Long process;
+    private Long points;
 }

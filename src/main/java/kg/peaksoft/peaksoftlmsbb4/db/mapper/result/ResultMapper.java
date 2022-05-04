@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.result;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.GetResultResponse;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Component
+
 public class ResultMapper implements Converter<Result, ResultRequest, ResultResponse> {
     @Override
     public Result convert(ResultRequest resultRequest) {
@@ -41,6 +43,15 @@ public class ResultMapper implements Converter<Result, ResultRequest, ResultResp
             resultResponses.add(deConvert(q));
         }
         return resultResponses;
+    }
+
+    public List<Result> convert1(List<ResultRequest>resultRequests) {
+      List<Result>results=new ArrayList<>();
+        for (Result q : results) {
+            q.setStudentAnswers(q.getStudentAnswers());
+            q.setIsTrue(q.getIsTrue());
+        }
+        return results;
     }
 
 }

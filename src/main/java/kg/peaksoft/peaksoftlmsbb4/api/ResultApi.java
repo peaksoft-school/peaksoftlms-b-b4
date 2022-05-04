@@ -63,4 +63,17 @@ public class ResultApi {
     }
 
 
+    @PostMapping("/save")
+    @PreAuthorize("hasAuthority('STUDENT')")
+    @Operation(summary = "Add new results",
+            description = "This endpoint create new result. Only users with role student can add new task to variant")
+    public List<ResultResponse> save1(
+            @Valid Authentication authentication,
+            @RequestBody List<ResultRequest> resultRequest) {
+        User user = (User) authentication.getPrincipal();
+        return  resultService.saveResult1(user.getUsername(), resultRequest);
+
+    }
+
+
 }

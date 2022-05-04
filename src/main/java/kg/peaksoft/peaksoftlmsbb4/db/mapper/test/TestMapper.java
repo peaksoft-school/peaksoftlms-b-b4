@@ -10,7 +10,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -39,18 +38,18 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
                         counter++;
                     }
                     if (v.getAnswer()) {
-                        if (counter >= 0) {
+                        if (counter > 0) {
                             throw new BadRequestException("You can't choose multiple variants");
                         }
                     }
                 }
 
-            }else {
+            } else {
                 test.setQuestions1(questions);
                 return test;
             }
         }
-  return null;
+        return null;
     }
 
     @Override
@@ -63,7 +62,7 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
             testResponse.setQuestionResponses(questionMapper.deConvert(test.getQuestions()));
         }
         assert test.getQuestions() != null;
-        for (Question q: test.getQuestions()) {
+        for (Question q : test.getQuestions()) {
             questionResponses.add(questionMapper.deConvert(q));
         }
         testResponse.setQuestionResponses(questionResponses);
@@ -77,7 +76,6 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
         }
         return testResponses;
     }
-
 
 
 }

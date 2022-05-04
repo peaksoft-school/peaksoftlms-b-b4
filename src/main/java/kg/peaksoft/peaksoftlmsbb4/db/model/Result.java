@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,8 @@ public class Result {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "student_id")
     private Student student;
+
+
 
 
 
