@@ -6,7 +6,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.variant.VariantMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
-import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.VariantService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
@@ -27,32 +26,9 @@ public class VariantServiceImpl implements VariantService {
     private final VariantMapper variantMapper;
 
     @Override
-    public VariantResponse saveVariant( VariantRequest variantRequest) {
-        Question question =new Question();
-        int counter = 0;
+    public VariantResponse saveVariant(VariantRequest variantRequest) {
+        Question question = new Question();
         Variant map = variantMapper.convert(variantRequest);
-        if (question.getQuestionType() == QuestionType.ONE) {
-            for (Variant v : question.getVariants()) {
-                if (v.getAnswer()) {
-                    counter++;
-                }
-            }
-            if (map.getAnswer()) {
-                if (counter > 0) {
-                    throw new BadRequestException("You can't choose multiple variants");
-                } else {
-                    Variant save = variantRepository.save(map);
-                    question.setVariant(save);
-                    log.info("successful variant save:{}", save);
-                    return variantMapper.deConvert(save);
-                }
-            }else {
-                Variant save = variantRepository.save(map);
-                question.setVariant(save);
-                log.info("successful variant save:{}", save);
-                return variantMapper.deConvert(save);
-            }
-        }
         Variant save = variantRepository.save(map);
         question.setVariant(save);
         log.info("successful variant save:{}", save);
@@ -99,11 +75,4 @@ public class VariantServiceImpl implements VariantService {
         variantRepository.deleteById(id);
         log.info("successful delete this id:{}", id);
     }
-
-    @Override
-    public List<Long> countAllByIsTrueTrue() {
-        return variantRepository.countAllByAnswerTrue();
-    }
-
-
 }

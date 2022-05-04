@@ -14,8 +14,6 @@ public interface ResultService {
 
     List<ResultResponse> findAll();
 
-    ResultResponse update(Long id, ResultRequest resultRequest);
-
     void delete(Long id);
 
     GetResultResponse getResults(String email);

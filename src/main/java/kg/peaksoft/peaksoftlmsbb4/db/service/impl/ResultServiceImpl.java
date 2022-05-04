@@ -11,6 +11,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.repository.ResultRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,44 +32,34 @@ public class ResultServiceImpl implements ResultService {
     public ResultResponse saveResult(String email, ResultRequest resultRequest) {
         Variant variant = variantRepository.getById(resultRequest.getVariantId());
         Student student = studentRepository.findStudentByUserEmail(email);
-
-        resultRequest.setStudentAnswer(variant.getOption());
-        resultRequest.setIsTrue(variant.getAnswer());
-        Result convert = resultMapper.convert(resultRequest);
-        convert.setStudent(student);
-        Result save = resultRepository.save(convert);
-        log.info("successful save results:{}",save);
-        return resultMapper.deConvert(save);
+            resultRequest.setStudentAnswer(variant.getOption());
+            resultRequest.setIsTrue(variant.getAnswer());
+            Result convert = resultMapper.convert(resultRequest);
+            convert.setStudent(student);
+            Result save = resultRepository.save(convert);
+            return resultMapper.deConvert(save);
     }
-
     @Override
     public ResultResponse findById(Long id) {
         Result byId = resultRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(
                         "this id =%s not found"));
-        log.info("successful find by id:{}",byId);
+        log.info("successful find by id:{}", byId);
         return resultMapper.deConvert(byId);
     }
 
     @Override
     public List<ResultResponse> findAll() {
         List<Result> all = resultRepository.findAll();
-        log.info("successful find all Results:{}",all);
+        log.info("successful find all Results:{}", all);
         return resultMapper.deConvert(all);
-    }
-
-    @Override
-    public ResultResponse update(Long id, ResultRequest resultRequest) {
-        return null;
     }
 
     @Override
     public void delete(Long id) {
         resultRepository.deleteById(id);
-        log.info("successful delete this id:{}",id);
+        log.info("successful delete this id:{}", id);
     }
-
-
     @Override
     public GetResultResponse getResults(String email) {
         GetResultResponse getResultResponse = new GetResultResponse();
@@ -88,7 +79,7 @@ public class ResultServiceImpl implements ResultService {
         long results = wrongAnswerCounter + correctAnswerCounter;
         Long process = (getResultResponse.getCorrect() * 100) / results;
         getResultResponse.setProcess(process);
-        log.info("successful results this student:{}",studentByUserEmail);
+        log.info("successful results this student:{}", studentByUserEmail);
         return getResultResponse;
     }
 }

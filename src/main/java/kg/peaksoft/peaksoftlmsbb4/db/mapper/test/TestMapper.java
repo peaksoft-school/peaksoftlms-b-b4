@@ -5,9 +5,13 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,8 +30,21 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
         Test test = new Test();
         test.setTestName(testRequest.getTestName());
         test.setIsEnabled(testRequest.getIsEnabled());
-        for (QuestionRequest q:testRequest.getQuestionRequestList()) {
+        int counter = 0;
+        for (QuestionRequest q : testRequest.getQuestionRequestList()) {
             questions.add(questionMapper.convert(q));
+            if (q.getQuestionType() == QuestionType.ONE) {
+                for (VariantRequest v : q.getVariantRequests()) {
+                    if (v.getAnswer()) {
+                        counter++;
+                    }
+                    if (v.getAnswer()) {
+                        if (counter > 0) {
+                            throw new BadRequestException("You can't choose multiple variants");
+                        }
+                    }
+                }
+            }
         }
         test.setQuestions1(questions);
         return test;

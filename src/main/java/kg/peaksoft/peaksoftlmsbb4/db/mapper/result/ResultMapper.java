@@ -19,7 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 @Component
 public class ResultMapper implements Converter<Result, ResultRequest, ResultResponse> {
-    private final QuestionRepository questionRepository;
     @Override
     public Result convert(ResultRequest resultRequest) {
         Result result = new Result();
