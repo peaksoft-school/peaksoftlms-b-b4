@@ -80,6 +80,14 @@ public class PresentationServiceImpl implements PresentationService {
         presentationRepository.deleteById(id);
     }
 
+    @Override
+    public PresentationResponse findPresentationByLessonId(Long id) {
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(
+                        String.format("Lesson with id = %s not found", id)));
+        return presentationMapper.deConvert(lesson.getPresentation());
+    }
+
     private Presentation getById(Long id) {
         log.info("successfully get presentation by id:{}", id);
         return presentationRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));

@@ -14,7 +14,7 @@ public class PresentationRequest {
     private String name;
     private String description;
     @NotBlank
-    private MultipartFile file;
+    private String file;
     @JsonProperty("lesson_id")
     private Long lessonId;
 

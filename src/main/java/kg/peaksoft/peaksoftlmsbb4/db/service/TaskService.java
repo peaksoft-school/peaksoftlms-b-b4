@@ -18,4 +18,6 @@ public interface TaskService {
 
     void delete(Long id);
 
+    TaskResponse findTaskByLessonId(Long id);
+
 }

@@ -97,18 +97,16 @@ public class TeacherApi {
             description = "This endpoint for adding a student to a course. Only user with role teacher can add student to course")
     @PostMapping("/assignStudent")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public void assignStudentToCourse(@RequestBody AssignStudentRequest assignStudentRequest,
-                                      @RequestParam(value = "studentId",required = false) Long studentId) {
-        studentService.assignStudentToCourse(assignStudentRequest, studentId);
+    public void assignStudentToCourse(@RequestBody AssignStudentRequest assignStudentRequest){
+        studentService.assignStudentToCourse(assignStudentRequest);
     }
 
     @Operation(summary = "Assign group to course",
             description = "This endpoint for adding a group to course")
     @PostMapping("/assignGroup")
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public void assignGroupToCourse(@RequestBody AssignGroupRequest assignGroupRequest,
-                                    @RequestParam(value = "groupId",required = false) Long groupId) {
-        groupService.assignGroupToCourse(assignGroupRequest, groupId);
+    public void assignGroupToCourse(@RequestBody AssignGroupRequest assignGroupRequest){
+        groupService.assignGroupToCourse(assignGroupRequest);
     }
 
     @Operation(summary = "Course's teachers",

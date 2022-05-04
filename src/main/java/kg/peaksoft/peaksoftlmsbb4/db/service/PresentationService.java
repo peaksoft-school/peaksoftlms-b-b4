@@ -16,4 +16,6 @@ public interface PresentationService {
     List<PresentationResponse> findAll();
 
     void delete(Long id);
+
+    PresentationResponse findPresentationByLessonId(Long id);
 }

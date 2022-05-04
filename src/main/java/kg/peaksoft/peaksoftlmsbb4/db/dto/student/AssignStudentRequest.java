@@ -9,4 +9,6 @@ import lombok.Setter;
 public class AssignStudentRequest {
     @JsonProperty("course_id")
     private Long courseId;
+    @JsonProperty("student_id")
+    private Long studentId;
 }

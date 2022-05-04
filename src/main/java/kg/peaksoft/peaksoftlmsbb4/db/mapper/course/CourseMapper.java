@@ -20,13 +20,12 @@ import java.util.List;
 @AllArgsConstructor
 public class CourseMapper implements Converter<Course, CourseRequest, CourseResponse> {
 
-    private final AWSS3Service awss3Service;
     @Override
     public Course convert(CourseRequest courseRequest) {
         Course course = new Course();
         course.setCourseName(courseRequest.getCourseName());
         course.setDescription(courseRequest.getDescription());
-        course.setImage(awss3Service.uploadFile(courseRequest.getMultipartFile()));
+        course.setImage(courseRequest.getImage());
         course.setDateOfStart(courseRequest.getDateOfStart());
         return course;
     }

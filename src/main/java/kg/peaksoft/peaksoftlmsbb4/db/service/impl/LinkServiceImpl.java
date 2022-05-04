@@ -54,6 +54,7 @@ public class LinkServiceImpl implements LinkService {
         return linkRepository.findAll().stream().map(linkMapper::deConvert).collect(Collectors.toList());
     }
 
+
     @Override
     public LinkResponse update(Long id, LinkRequest linkRequest) {
         boolean exist = linkRepository.existsById(id);
@@ -81,6 +82,14 @@ public class LinkServiceImpl implements LinkService {
         }
         log.info("successfully delete link by id:{}", id);
         linkRepository.deleteById(id);
+    }
+
+    @Override
+    public LinkResponse findLinkByLessonId(Long id) {
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(
+                        String.format("Lesson with id = %s not found", id)));
+        return linkMapper.deConvert(lesson.getLink());
     }
 
     private Link getLinkById(Long id) {

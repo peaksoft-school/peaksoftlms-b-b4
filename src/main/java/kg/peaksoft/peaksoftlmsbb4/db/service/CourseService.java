@@ -26,5 +26,5 @@ public interface CourseService {
 
     List<TeacherResponse> getAllTeacherByCourseId(Long id);
 
-    void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest, List<Long> teacherId);
+    void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest);
 }

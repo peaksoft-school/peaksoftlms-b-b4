@@ -27,7 +27,7 @@ public interface StudentService {
 
     List<StudentResponse> findByStudyFormat(StudyFormat studyFormat);
 
-    void assignStudentToCourse(AssignStudentRequest assignStudentRequest, Long studentId);
+    void assignStudentToCourse(AssignStudentRequest assignStudentRequest);
 
     List<Student> findByStudentName(String name);
 

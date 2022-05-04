@@ -76,6 +76,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.deConvert(task);
     }
 
+
     @Override
     public void delete(Long id) {
         boolean exits = taskRepository.existsById(id);
@@ -88,5 +89,13 @@ public class TaskServiceImpl implements TaskService {
         awss3Service.deleteFile(taskRepository.getById(id).getFile());
         awss3Service.deleteFile(taskRepository.getById(id).getImage());
         taskRepository.deleteById(id);
+    }
+
+    @Override
+    public TaskResponse findTaskByLessonId(Long id) {
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(
+                        String.format("Lesson with id = %s not found", id)));
+        return taskMapper.deConvert(lesson.getTask());
     }
 }

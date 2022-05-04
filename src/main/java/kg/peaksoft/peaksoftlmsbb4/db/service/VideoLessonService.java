@@ -19,4 +19,6 @@ public interface VideoLessonService {
 
     void delete(Long id);
 
+    VideoLessonResponse findLessonByLessonId(Long id);
+
 }

@@ -46,11 +46,12 @@ public class Teacher {
     private List<Course> courses;
 
     @JsonIgnore
-    public void setCourse(Course course) {
-        if (course == null) {
-            courses = new ArrayList<>();
+    public void addCourse(Course course) {
+        if (this.courses == null) {
+            this.courses = new ArrayList<>();
         }
-        courses.add(course);
+        this.courses.add(course);
     }
+
 
 }

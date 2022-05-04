@@ -38,7 +38,6 @@ public class CourseServiceImpl implements CourseService {
     private final TeacherMapper teacherMapper;
     private final TeacherService teacherService;
     private final AWSS3Service awss3Service;
-
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
         String name = courseRequest.getCourseName();
@@ -123,13 +122,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest, List<Long> teacherId) {
+    public void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest) {
         Course course = courseRepository.findById(assignTeacherRequest.getCourseId())
                 .orElseThrow(() ->
                         new NotFoundException(String.format("Course with id = %s not found", assignTeacherRequest.getCourseId())));
-        for (Long id : teacherId) {
+
+        for (Long id:assignTeacherRequest.getTeacherId()) {
             course.addTeacher(teacherService.findBy(id));
         }
+        courseRepository.save(course);
         log.info("successful assign teacher with id=%s to course");
     }
 

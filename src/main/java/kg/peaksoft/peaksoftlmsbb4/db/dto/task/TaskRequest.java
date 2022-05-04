@@ -11,10 +11,10 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class TaskRequest {
     private String text;
-    private MultipartFile file;
+    private String file;
     @NotBlank
     private String name;
-    private MultipartFile image;
+    private String image;
     private String link;
     private String code;
     @JsonProperty("lesson_id")

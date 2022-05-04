@@ -137,14 +137,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void assignStudentToCourse(AssignStudentRequest assignStudentRequest, Long studentId) {
+    public void assignStudentToCourse(AssignStudentRequest assignStudentRequest) {
         Course course1 = courseRepository.findById(assignStudentRequest.getCourseId())
                 .orElseThrow(() ->
                         new NotFoundException(
                                 String.format("Not found course with id=%s", assignStudentRequest.getCourseId())));
-        Student student1 = studentRepository.getById(studentId);
+        Student student1 = studentRepository.getById(assignStudentRequest.getStudentId());
         course1.addStudent(student1);
-        log.info("successfully assign student to course by student id:{}", studentId);
+        log.info("successfully assign student to course by student id:{}", assignStudentRequest.getStudentId());
 
     }
 

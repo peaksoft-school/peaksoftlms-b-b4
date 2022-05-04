@@ -91,4 +91,12 @@ public class VideoLessonServiceImpl implements VideoLessonService {
         log.info("successfully delete video lesson by id:{}", id);
         videoLessonRepository.deleteById(id);
     }
+
+    @Override
+    public VideoLessonResponse findLessonByLessonId(Long id) {
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(
+                        String.format("Lesson with id = %s not found", id)));
+        return videoLessonMapper.deConvert(lesson.getVideoLesson());
+    }
 }

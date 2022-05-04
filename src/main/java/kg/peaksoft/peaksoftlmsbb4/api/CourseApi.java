@@ -113,9 +113,8 @@ public class CourseApi {
             description = "This endpoint for adding a teacher to a course. Only user with role admin can add teacher to course")
     @PostMapping("/assignTeacher")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void assignTeacherToCourse(@RequestBody AssignTeacherRequest assignTeacherRequest,
-                                      @RequestParam(value = "teachersId",required = false) List<Long> teacherId) {
-        courseService.assignTeachersToCourse(assignTeacherRequest, teacherId);
+    public void assignTeacherToCourse(@RequestBody AssignTeacherRequest assignTeacherRequest) {
+        courseService.assignTeachersToCourse(assignTeacherRequest);
     }
 
 }
