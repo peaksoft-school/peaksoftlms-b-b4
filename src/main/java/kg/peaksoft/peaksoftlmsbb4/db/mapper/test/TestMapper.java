@@ -34,7 +34,7 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
             questions.add(questionMapper.convert(q));
             if (q.getQuestionType() == QuestionType.ONE) {
                 for (VariantRequest v : q.getVariantRequests()) {
-                    if (v.getAnswer()) {
+                    if (v.getAnswer().equals(true)) {
                         counter++;
                     }
                     if (v.getAnswer()) {

@@ -38,8 +38,8 @@ public class Lesson {
     @JoinColumn(name = "course_id")
     private Course courses;
 
-    @OneToMany(mappedBy = "lessons", cascade = ALL, orphanRemoval = true)
-    private List<Test> tests = new ArrayList<>();
+    @OneToOne(mappedBy = "lessons", cascade = ALL, orphanRemoval = true)
+    private Test test;
 
     public void setPresentation(Presentation presentation) {
         if (presentations == null) {
@@ -71,14 +71,6 @@ public class Lesson {
         }
         videoLessons.add(videoLesson);
         videoLesson.setLessons(this);
-    }
-
-    public void setTests(Test test) {
-        if (tests == null) {
-            tests = new ArrayList<>();
-        }
-        tests.add(test);
-        test.setLessons(this);
     }
 
 

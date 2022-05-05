@@ -46,7 +46,7 @@ public class Question {
         if (variants == null) {
             variants = variant;
         }
-        for (Variant q:variant) {
+        for (Variant q : variant) {
             q.setQuestion(this);
         }
     }

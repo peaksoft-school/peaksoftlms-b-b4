@@ -20,4 +20,5 @@ public interface ResultService {
     List<ResultResponse> saveResult1(String email, List<ResultRequest> resultRequest);
 
 
+
 }

@@ -11,10 +11,10 @@ import kg.peaksoft.peaksoftlmsbb4.db.repository.ResultRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.iterators.IteratorChain;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,11 +30,21 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public ResultResponse saveResult(String email, ResultRequest resultRequest) {
-        List<Variant> variants = variantRepository.findAllById(resultRequest.getVariantId());
         Student student = studentRepository.findStudentByUserEmail(email);
-        for (Variant variant:variants) {
+        List<Variant> variants = variantRepository.findAllById(resultRequest.getVariantId());
+        int counter=0;
+        for (Variant variant : variants) {
             resultRequest.setStudentAnswer(variant.getOption());
-            resultRequest.setIsTrue(variant.getAnswer());
+            System.err.println("hello error");
+            if (variant.getAnswer()){
+                counter++;
+                System.err.println("hello error2");
+                resultRequest.setIsTrue(variant.getAnswer());
+            }else if (counter>4){
+                throw new BadRequestException("error");
+            }
+
+
             Result convert = resultMapper.convert(resultRequest);
             convert.setStudent(student);
             Result save = resultRepository.save(convert);
@@ -42,6 +52,7 @@ public class ResultServiceImpl implements ResultService {
         }
         return null;
     }
+
     @Override
     public ResultResponse findById(Long id) {
         Result byId = resultRepository.findById(id).orElseThrow(
@@ -53,9 +64,14 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public List<ResultResponse> findAll() {
+        List<Variant> all1 = variantRepository.findAll();
         List<Result> all = resultRepository.findAll();
-        log.info("successful find all Results:{}", all);
-        return resultMapper.deConvert(all);
+        for (Result result:all) {
+            result.setVariants(all1);
+            log.info("successful find all Results:{}", all);
+            return resultMapper.deConvert(all);
+        }
+        return null;
     }
 
     @Override
@@ -63,6 +79,7 @@ public class ResultServiceImpl implements ResultService {
         resultRepository.deleteById(id);
         log.info("successful delete this id:{}", id);
     }
+
     @Override
     public GetResultResponse getResults(String email) {
         GetResultResponse getResultResponse = new GetResultResponse();
@@ -78,7 +95,7 @@ public class ResultServiceImpl implements ResultService {
             }
         }
         long results = wrongAnswerCounter + correctAnswerCounter;
-        long points=correctAnswerCounter*2;
+        long points = correctAnswerCounter * 2;
         getResultResponse.setWrongAnswer(wrongAnswerCounter);
         getResultResponse.setCorrect(correctAnswerCounter);
         Long process = (getResultResponse.getCorrect() * 100) / results;
@@ -90,14 +107,14 @@ public class ResultServiceImpl implements ResultService {
 
     public List<ResultResponse> saveResult1(String email, List<ResultRequest> resultRequest) {
         Student student = studentRepository.findStudentByUserEmail(email);
-        for (ResultRequest f:resultRequest) {
+        for (ResultRequest f : resultRequest) {
             List<Variant> variants = variantRepository.findAllById(f.getVariantId());
-            for (Variant variant:variants) {
+            for (Variant variant : variants) {
                 f.setStudentAnswer(variant.getOption());
                 f.setIsTrue(variant.getAnswer());
-        }
+            }
             List<Result> results = resultMapper.convert1(resultRequest);
-            for (Result r:results) {
+            for (Result r : results) {
                 r.setStudent(student);
             }
             List<Result> results1 = resultRepository.saveAll(results);

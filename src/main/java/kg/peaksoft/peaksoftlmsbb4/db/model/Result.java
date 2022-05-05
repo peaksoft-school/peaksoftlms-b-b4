@@ -1,11 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.db.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,8 +34,7 @@ public class Result {
     @JoinColumn(name = "student_id")
     private Student student;
 
-
-
-
+    @OneToMany(mappedBy = "result", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Variant> variants;
 
 }

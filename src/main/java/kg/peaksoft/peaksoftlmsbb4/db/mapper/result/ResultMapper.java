@@ -1,17 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.result;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.GetResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Result;
-import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -34,6 +27,7 @@ public class ResultMapper implements Converter<Result, ResultRequest, ResultResp
         ResultResponse resultResponse = new ResultResponse();
         resultResponse.setId(result.getId());
         resultResponse.setStudentAnswer(result.getStudentAnswers());
+        resultResponse.setIsTrue(result.getIsTrue());
         return resultResponse;
     }
 
@@ -45,13 +39,12 @@ public class ResultMapper implements Converter<Result, ResultRequest, ResultResp
         return resultResponses;
     }
 
-    public List<Result> convert1(List<ResultRequest>resultRequests) {
-      List<Result>results=new ArrayList<>();
+    public List<Result> convert1(List<ResultRequest> resultRequests) {
+        List<Result> results = new ArrayList<>();
         for (Result q : results) {
             q.setStudentAnswers(q.getStudentAnswers());
             q.setIsTrue(q.getIsTrue());
         }
         return results;
     }
-
 }

@@ -32,7 +32,7 @@ public class Test {
     private List<Question> questions;
 
     @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "lessons_id")
     private Lesson lessons;
 
