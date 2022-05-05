@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import java.util.List;
 
 @RestController
@@ -31,7 +30,7 @@ public class GroupApi {
     @Operation(summary = "Create new group",
             description = "This endpoint save new groups. Only users with role admin can add new groups")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public GroupResponse saveGroup(@ModelAttribute GroupRequest groupRequest) {
+    public GroupResponse saveGroup(@RequestBody GroupRequest groupRequest) {
         return groupService.saveGroup(groupRequest);
     }
 
@@ -79,8 +78,8 @@ public class GroupApi {
     @Operation(summary = "Delete group with ID",
             description = "Delete group with ID. Only users with role admin can delete courses")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void deleteById(@PathVariable Long id) {
-        groupService.deleteById(id);
+    public String deleteById(@PathVariable Long id) {
+        return groupService.deleteById(id);
     }
 
 

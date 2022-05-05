@@ -68,7 +68,7 @@ public class VideoLessonApi {
             description = "Delete the video lesson with ID")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public void delete(@PathVariable Long id) {
-        videoLessonService.delete(id);
+    public String delete(@PathVariable Long id) {
+        return videoLessonService.delete(id);
     }
 }

@@ -6,10 +6,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
-import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
@@ -17,12 +13,17 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,7 +63,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CoursePaginationResponse coursesForPagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page,size);
+        Pageable pageable = PageRequest.of(page, size);
         CoursePaginationResponse coursePaginationResponse = new CoursePaginationResponse();
         coursePaginationResponse.setCourses(courseMapper.deConvert(courseRepository.findAll(pageable).getContent()));
         coursePaginationResponse.setPages(courseRepository.findAll(pageable).getTotalPages());
@@ -90,7 +91,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void delete(Long id) {
+    public String delete(Long id) {
         boolean existsById = courseRepository.existsById(id);
         if (!existsById) {
             log.error("not found course with id:{}", id);
@@ -100,6 +101,7 @@ public class CourseServiceImpl implements CourseService {
         awss3Service.deleteFile(courseRepository.getById(id).getImage());
         courseRepository.deleteById(id);
         log.info("successful delete by this id:{}", id);
+        return "Course deleted";
     }
 
     @Override
@@ -122,20 +124,24 @@ public class CourseServiceImpl implements CourseService {
         return teacherResponses;
     }
 
+    @Transactional
     @Override
-    public void assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest, List<Long> teacherId) {
+    public String assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest) {
         Course course = courseRepository.findById(assignTeacherRequest.getCourseId())
                 .orElseThrow(() ->
                         new NotFoundException(String.format("Course with id = %s not found", assignTeacherRequest.getCourseId())));
-        for (Long id : teacherId) {
+
+        for (Long id : assignTeacherRequest.getTeacherId()) {
             course.addTeacher(teacherService.findBy(id));
         }
+        courseRepository.save(course);
         log.info("successful assign teacher with id=%s to course");
+        return String.format("Teachers added to %s course", course.getCourseName());
     }
 
     private Course getById(Long id) {
-        return courseRepository.findById(id).orElseThrow(()->new NotFoundException(
-                String.format("Course with id=%s does not exists",id)
+        return courseRepository.findById(id).orElseThrow(() -> new NotFoundException(
+                String.format("Course with id=%s does not exists", id)
         ));
     }
 }

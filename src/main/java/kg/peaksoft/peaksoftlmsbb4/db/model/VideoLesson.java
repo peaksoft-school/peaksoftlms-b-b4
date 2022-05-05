@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.*;
+
 @Entity
 @Table(name = "video_lessons")
 @Getter
@@ -25,8 +27,7 @@ public class VideoLesson {
     private String description;
     private String link;
 
-    @ManyToOne
-    @JoinColumn(name = "lesson_id")
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH}, mappedBy = "videoLesson")
     private Lesson lessons;
 
 }

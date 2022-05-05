@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
@@ -26,49 +24,20 @@ public class Lesson {
     )
     private Long id;
     private String name;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lessons")
-    private List<Task> tasks;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lessons")
-    private List<Link> links;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lessons")
-    private List<VideoLesson> videoLessons;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "lessons")
-    private List<Presentation> presentations;
-    @ManyToOne(cascade = {MERGE,REFRESH,DETACH,PERSIST})
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "task_id")
+    private Task task;
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "link_id")
+    private Link link;
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "video_lesson_id")
+    private VideoLesson videoLesson;
+
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "presentation_id")
+    private Presentation presentation;
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH, PERSIST})
     @JoinColumn(name = "course_id")
     private Course courses;
-
-    public void setPresentation(Presentation presentation) {
-        if (presentations == null) {
-            presentations = new ArrayList<>();
-        }
-        presentations.add(presentation);
-        presentation.setLessons(this);
-    }
-
-    public void setLink(Link link) {
-        if (links == null) {
-            links = new ArrayList<>();
-        }
-        links.add(link);
-        link.setLessons(this);
-    }
-
-    public void setTask(Task task) {
-        if (tasks == null) {
-            tasks = new ArrayList<>();
-        }
-        tasks.add(task);
-        task.setLessons(this);
-    }
-
-    public void setVideoLesson(VideoLesson videoLesson) {
-        if (videoLessons == null) {
-            videoLessons = new ArrayList<>();
-        }
-        videoLessons.add(videoLesson);
-        videoLesson.setLessons(this);
-    }
-
-
 }

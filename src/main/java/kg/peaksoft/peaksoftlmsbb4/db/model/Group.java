@@ -33,7 +33,7 @@ public class Group {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Student> students = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},mappedBy = "groups")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, mappedBy = "groups")
     private List<Course> courses = new ArrayList<>();
 
     @JsonIgnore
@@ -46,9 +46,9 @@ public class Group {
         course.setGroup(this);
     }
 
-    public void setStudent(Student student){
-        if(student==null){
-            students=new ArrayList<>();
+    public void setStudent(Student student) {
+        if (student == null) {
+            students = new ArrayList<>();
         }
         students.add(student);
     }

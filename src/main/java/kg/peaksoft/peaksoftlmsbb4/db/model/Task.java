@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.*;
+
 @Entity
 @Table(name = "tasks")
 @Getter
@@ -29,8 +31,7 @@ public class Task {
     private String link;
     private String code;
 
-    @ManyToOne
-    @JoinColumn(name = "lesson_id")
+    @OneToOne(cascade = {DETACH, REFRESH, MERGE}, mappedBy = "task")
     private Lesson lessons;
 
 

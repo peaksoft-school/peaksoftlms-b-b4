@@ -47,7 +47,7 @@ public class LinkApi {
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     @Operation(summary = "Delete the link",
             description = "Delete links with ID. Only users with role teacher can delete links")
-    public void delete(@PathVariable Long id) {
-        linkService.delete(id);
+    public String delete(@PathVariable Long id) {
+       return linkService.delete(id);
     }
 }

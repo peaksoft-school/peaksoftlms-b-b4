@@ -1,11 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.security;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import kg.peaksoft.peaksoftlmsbb4.security.config.JwtConfig;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
+import kg.peaksoft.peaksoftlmsbb4.security.config.JwtConfig;
 import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtUtils;
-import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -81,7 +80,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public ModelMapper mapper(){
+    public ModelMapper mapper() {
         return new ModelMapper();
     }
 

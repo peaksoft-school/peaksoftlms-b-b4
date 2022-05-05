@@ -5,9 +5,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponsePagination;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.group.GroupMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
@@ -15,6 +12,9 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -103,15 +103,17 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     public GroupResponse update(Long id, GroupRequest groupRequest) {
         Group group = findBy(id);
-        String currentGroupName = group.getGroupName();
-        String newGroupName = groupRequest.getGroupName();
-        if (!currentGroupName.equals(newGroupName)) {
-            group.setGroupName(newGroupName);
+        if (!group.getGroupName().equals(groupRequest.getGroupName())) {
+            group.setGroupName(groupRequest.getGroupName());
         }
-        String currentDescription = group.getDescription();
-        String newDescription = groupRequest.getDescription();
-        if (!currentDescription.equals(newDescription)) {
-            group.setDescription(newDescription);
+        if (!group.getDescription().equals(groupRequest.getDescription())) {
+            group.setDescription(groupRequest.getDescription());
+        }
+        if (!group.getImage().equals(groupRequest.getImage())){
+            group.setImage(groupRequest.getImage());
+        }
+        if (!group.getDateOfStart().isEqual(groupRequest.getDateOfStart())){
+            group.setImage(groupRequest.getImage());
         }
         log.info("successful update group by Id:{}", id);
         return groupMapper.deConvert(group);
@@ -139,13 +141,14 @@ public class GroupServiceImpl implements GroupService {
 
 
     @Override
-    public void assignGroupToCourse(AssignGroupRequest assignGroupRequest, Long groupId) {
-        Course course1 = courseRepository.findById(assignGroupRequest.getCourseId())
+    public String assignGroupToCourse(AssignGroupRequest assignGroupRequest) {
+        Course course = courseRepository.findById(assignGroupRequest.getCourseId())
                 .orElseThrow(() -> new BadRequestException(
                         String.format("Course with id %s not found", assignGroupRequest.getCourseId())));
-        Group group = groupRepository.getById(groupId);
-        course1.setGroup(group);
-        log.info("successfully assign group to course by group id:{}", groupId);
+        Group group = groupRepository.getById(assignGroupRequest.getGroupId());
+        course.setGroup(group);
+        log.info("successfully assign group to course by group id:{}", assignGroupRequest.getGroupId());
+        return String.format("Group %s added to %s course", group.getGroupName(), course.getCourseName());
     }
 }
 

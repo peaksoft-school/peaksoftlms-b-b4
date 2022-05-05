@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.*;
+
 @Entity
 @Table(name = "presentation")
 @Getter
@@ -25,8 +27,7 @@ public class Presentation {
     private String description;
     private String file;
 
-    @ManyToOne
-    @JoinColumn(name = "lesson_id")
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH}, mappedBy = "presentation")
     private Lesson lessons;
 
 }

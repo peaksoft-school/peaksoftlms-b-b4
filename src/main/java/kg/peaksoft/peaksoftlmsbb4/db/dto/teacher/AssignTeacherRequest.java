@@ -4,9 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class AssignTeacherRequest {
     @JsonProperty("course_id")
     private Long courseId;
+    @JsonProperty("teacher_id")
+    private List<Long> teacherId;
 }

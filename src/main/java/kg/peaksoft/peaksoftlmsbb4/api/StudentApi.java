@@ -14,8 +14,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,8 +81,8 @@ public class StudentApi {
     @Operation(summary = "Delete the student",
             description = "Delete student with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void deleteStudent(@PathVariable("id") Long id) {
-        studentService.deleteStudent(id);
+    public String deleteStudent(@PathVariable("id") Long id) {
+      return studentService.deleteStudent(id);
     }
 
     @GetMapping("/format")
