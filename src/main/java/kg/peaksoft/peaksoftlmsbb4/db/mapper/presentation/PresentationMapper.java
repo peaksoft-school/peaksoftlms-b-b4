@@ -4,13 +4,16 @@ import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Presentation;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class PresentationMapper implements Converter<Presentation, PresentationRequest, PresentationResponse> {
+
     @Override
     public Presentation convert(PresentationRequest presentationRequest) {
         Presentation presentation = new Presentation();

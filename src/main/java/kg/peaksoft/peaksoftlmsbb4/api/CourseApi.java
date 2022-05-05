@@ -8,9 +8,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CoursePaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
@@ -19,7 +19,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import java.util.List;
 
 @RestController
@@ -50,14 +49,29 @@ public class CourseApi {
             description = "Returns all courses that are,if there are no courses,then an error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Found the courses",
+                    description = "All courses with pagination",
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = CourseApi.class)))})})
     @GetMapping
-    @PermitAll
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<CourseResponse> findAllCourse() {
         return courseService.findAll();
+    }
+
+    @Operation(summary = "Pagination",
+            description = "Returns all courses that are,if there are no courses,then an error")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Found the courses",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = CourseApi.class)))})})
+    @GetMapping("/pagination")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public CoursePaginationResponse getAllCoursesForPagination(@RequestParam int page,
+                                                               @RequestParam int size) {
+        return courseService.coursesForPagination(page, size);
     }
 
     @Operation(summary = "Updates the course",
@@ -73,15 +87,14 @@ public class CourseApi {
             description = "Delete course with id. Only users with role admin can delete courses")
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
-    public void deleteCourse(@PathVariable Long id) {
-        courseService.delete(id);
-
+    public String deleteCourse(@PathVariable Long id) {
+        return courseService.delete(id);
     }
 
     @Operation(summary = "Get students by course id",
             description = "Get all students in this course")
     @GetMapping("/students/{id}")
-    @PermitAll
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
         return courseService.getAllStudentsByCourseId(id);
     }
@@ -89,7 +102,7 @@ public class CourseApi {
     @Operation(summary = "Get teachers with ID",
             description = "Get all teachers in this course")
     @GetMapping("/teachers/{id}")
-    @PermitAll
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<TeacherResponse> getAllTeacherByCourseId(@PathVariable Long id) {
         return courseService.getAllTeacherByCourseId(id);
     }
@@ -98,17 +111,8 @@ public class CourseApi {
             description = "This endpoint for adding a teacher to a course. Only user with role admin can add teacher to course")
     @PostMapping("/assignTeacher")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void assignTeacherToCourse(@RequestBody AssignTeacherRequest assignTeacherRequest,
-                                      @RequestParam(value = "teachersId", required = false) List<Long> teacherId) {
-        courseService.assignTeachersToCourse(assignTeacherRequest, teacherId);
+    public String assignTeacherToCourse(@RequestBody AssignTeacherRequest assignTeacherRequest) {
+        return courseService.assignTeachersToCourse(assignTeacherRequest);
     }
 
-    @PostMapping("/assignStudent")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public void assignStudentToCourse(
-            @RequestBody AssignStudentRequest assignStudentRequest,
-            @RequestParam(value = "studentsId", required = false) List<Long> studentId
-    ) {
-        courseService.assignStudentsToCourse(assignStudentRequest, studentId);
-    }
 }

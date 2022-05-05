@@ -1,7 +1,7 @@
 //package kg.peaksoft.peaksoftlmsbb4.repository;
 //
+//import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 //import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
-//import kg.peaksoft.peaksoftlmsbb4.model.Course;
 //import lombok.extern.slf4j.Slf4j;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;

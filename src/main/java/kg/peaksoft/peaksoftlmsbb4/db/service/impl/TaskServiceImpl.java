@@ -2,13 +2,13 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.service.TaskService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.task.TaskMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TaskRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.TaskService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,11 +25,13 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final LessonRepository lessonRepository;
+    private final AWSS3Service awss3Service;
 
     @Override
     public TaskResponse saveTasks(TaskRequest taskRequest) {
         Lesson lessons = lessonRepository.findById(taskRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", taskRequest.getLessonId())
+
         ));
         Task task = taskMapper.convert(taskRequest);
         Task save = taskRepository.save(task);
@@ -40,7 +42,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task findById(Long id) {
-        log.info("successfully find by id:{}", id);
+        log.info("successfully find task by id:{}", id);
         return taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
     }
 
@@ -54,20 +56,15 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponse update(Long id, TaskRequest taskRequest) {
         boolean exist = taskRepository.existsById(id);
         if (!exist) {
+            log.error("not found task with id:{}", id);
             throw new NotFoundException(String.format("Task is not found id=%s", id));
         }
         Task task = findById(id);
         if (!task.getName().equals(taskRequest.getName())) {
             task.setName(taskRequest.getName());
         }
-        if (!task.getImage().equals(taskRequest.getImage())) {
-            task.setImage(taskRequest.getImage());
-        }
         if (!task.getCode().equals(taskRequest.getCode())) {
             task.setCode(taskRequest.getCode());
-        }
-        if (!task.getFile().equals(taskRequest.getFile())) {
-            task.setFile(taskRequest.getFile());
         }
         if (!task.getLink().equals(taskRequest.getLink())) {
             task.setLink(taskRequest.getLink());
@@ -75,18 +72,31 @@ public class TaskServiceImpl implements TaskService {
         if (!task.getText().equals(taskRequest.getText())) {
             task.setText(taskRequest.getText());
         }
-        log.info("successfully update id:{}", id);
+        log.info("successfully update task with id:{}", id);
         return taskMapper.deConvert(task);
     }
 
+
     @Override
-    public void delete(Long id) {
+    public String delete(Long id) {
         boolean exits = taskRepository.existsById(id);
         if (!exits) {
+            log.error("not found task with  id:{}", id);
             throw new NotFoundException(String.format("Task is not found id=%s", id));
 
         }
-        log.info("successfully delet by id :{}", id);
+        log.info("successfully delete task by id :{}", id);
+        awss3Service.deleteFile(taskRepository.getById(id).getFile());
+        awss3Service.deleteFile(taskRepository.getById(id).getImage());
         taskRepository.deleteById(id);
+        return "Task deleted";
+    }
+
+    @Override
+    public TaskResponse findTaskByLessonId(Long id) {
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(
+                        String.format("Lesson with id = %s not found", id)));
+        return taskMapper.deConvert(lesson.getTask());
     }
 }

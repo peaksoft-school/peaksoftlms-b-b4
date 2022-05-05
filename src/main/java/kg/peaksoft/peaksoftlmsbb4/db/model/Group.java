@@ -46,9 +46,9 @@ public class Group {
         course.setGroup(this);
     }
 
-    public void setStudent(Student student){
-        if(student==null){
-            students=new ArrayList<>();
+    public void setStudent(Student student) {
+        if (student == null) {
+            students = new ArrayList<>();
         }
         students.add(student);
     }

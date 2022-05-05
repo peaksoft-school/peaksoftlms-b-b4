@@ -30,13 +30,13 @@ public class LinkServiceImpl implements LinkService {
     public LinkResponse saveLinks(LinkRequest linkRequest) {
         System.out.println("This method works exactly");
         Lesson lessons = lessonRepository.findById(linkRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
-                String.format("Link with id %s not found",linkRequest.getLessonId())
+                String.format("Link with id %s not found", linkRequest.getLessonId())
         ));
         log.info("found lesson:{}", lessons);
         Link link = linkMapper.convert(linkRequest);
         log.info("found link:{}", lessons);
         Link save = linkRepository.save(link);
-        log.info("saved lesson:{}", lessons);
+        log.info("save lesson:{}", lessons);
         lessons.setLink(save);
         log.info("successfully save links:{}", link);
         return linkMapper.deConvert(save);
@@ -44,6 +44,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public LinkResponse findById(Long id) {
+        log.info("successfully find link by id:{}", id);
         return linkMapper.deConvert(getLinkById(id));
     }
 
@@ -53,10 +54,12 @@ public class LinkServiceImpl implements LinkService {
         return linkRepository.findAll().stream().map(linkMapper::deConvert).collect(Collectors.toList());
     }
 
+
     @Override
     public LinkResponse update(Long id, LinkRequest linkRequest) {
         boolean exist = linkRepository.existsById(id);
         if (!exist) {
+            log.error("not found link with id:{}", id);
             throw new NotFoundException(String.format("Link is not found with  id=%s", id));
         }
         Link link = getLinkById(id);
@@ -66,22 +69,32 @@ public class LinkServiceImpl implements LinkService {
         if (!link.getText().equals(linkRequest.getText())) {
             link.setText(linkRequest.getText());
         }
-        log.info("successfully update id:{}", id);
+        log.info("successfully update link with id:{}", id);
         return linkMapper.deConvert(link);
     }
 
     @Override
-    public void delete(Long id) {
+    public String delete(Long id) {
         boolean exits = linkRepository.existsById(id);
         if (!exits) {
-            throw new NotFoundException(String.format("link is does not exists id=%s", id));
+            log.error("not found link with id:{}", id);
+            throw new NotFoundException(String.format("link is does not exists with id=%s", id));
         }
-        log.info("successfully delete by id:{}", id);
+        log.info("successfully delete link by id:{}", id);
         linkRepository.deleteById(id);
+        return "Link deleted";
+    }
+
+    @Override
+    public LinkResponse findLinkByLessonId(Long id) {
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(
+                        String.format("Lesson with id = %s not found", id)));
+        return linkMapper.deConvert(lesson.getLink());
     }
 
     private Link getLinkById(Long id) {
-        log.info("successfully find by id:{}", id);
+        log.info("successfully find link by id:{}", id);
         return linkRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Link is not found id=%s", id)));
     }
 }

@@ -68,8 +68,8 @@ public class LessonsApi {
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     @Operation(summary = "Delete the lesson",
             description = "Delete lesson with ID. Only users with role teacher can delete lesson")
-    public void delete(@PathVariable Long id) {
-        lessonService.delete(id);
+    public String delete(@PathVariable Long id) {
+        return lessonService.delete(id);
     }
 
 }

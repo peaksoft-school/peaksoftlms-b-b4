@@ -16,7 +16,6 @@ import static javax.persistence.CascadeType.*;
 @Setter
 public class Teacher {
 
-
     @Id
     @SequenceGenerator(
             name = "teachers_id_seq",
@@ -39,6 +38,7 @@ public class Teacher {
 
     @OneToOne(cascade = {MERGE, REFRESH, PERSIST}, orphanRemoval = true,
             fetch = FetchType.EAGER)
+
     private User user;
 
     @JsonIgnore
@@ -46,10 +46,12 @@ public class Teacher {
     private List<Course> courses;
 
     @JsonIgnore
-    public void setCourse(Course course) {
-        if (course == null) {
-            courses = new ArrayList<>();
+    public void addCourse(Course course) {
+        if (this.courses == null) {
+            this.courses = new ArrayList<>();
         }
-     }
+        this.courses.add(course);
+    }
+
 
 }

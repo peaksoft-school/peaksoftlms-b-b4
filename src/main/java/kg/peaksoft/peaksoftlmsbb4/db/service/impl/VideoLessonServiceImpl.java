@@ -2,13 +2,13 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.service.VideoLessonService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.videolesson.VideoLessonMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.VideoLesson;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VideoLessonRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.service.VideoLessonService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,14 +40,17 @@ public class VideoLessonServiceImpl implements VideoLessonService {
 
     @Override
     public VideoLessonResponse findById(Long id) {
+        log.info("successfully find video lesson by id:{}", id);
         return videoLessonMapper.deConvert(findBy(id));
     }
 
 
     private VideoLesson findBy(Long id) {
-        log.info("successfully find by id:{}", id);
+        log.info("successfully find video lesson by id:{}", id);
         return videoLessonRepository.findById(id).orElseThrow(() -> {
-            throw new NotFoundException(String.format("Not found id=%s", id));
+            log.error("not found video lesson with id:{}", id);
+            throw new NotFoundException(String.format("Not found video lesson with id=%s", id));
+
         });
     }
 
@@ -61,7 +64,8 @@ public class VideoLessonServiceImpl implements VideoLessonService {
     public VideoLessonResponse update(Long id, VideoLessonRequest videoLessonRequest) {
         boolean exist = videoLessonRepository.existsById(id);
         if (!exist) {
-            throw new NotFoundException(String.format("Not found id=%s", id));
+            log.error("not found video lesson with id:{}", id);
+            throw new NotFoundException(String.format("Not found video lesson with id=%s", id));
         }
         VideoLesson videoLesson = findBy(id);
         if (!videoLesson.getName().equals(videoLessonRequest.getName())) {
@@ -73,17 +77,27 @@ public class VideoLessonServiceImpl implements VideoLessonService {
         if (!videoLesson.getDescription().equals(videoLessonRequest.getDescription())) {
             videoLesson.setDescription(videoLessonRequest.getDescription());
         }
-        log.info("successfully update id:{}", id);
+        log.info("successfully update video lesson  by id:{}", id);
         return videoLessonMapper.deConvert(videoLesson);
     }
 
     @Override
-    public void delete(Long id) {
+    public String delete(Long id) {
         boolean exist = videoLessonRepository.existsById(id);
         if (!exist) {
+            log.error("not found video lesson with id:{}", id);
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
-        log.info("successfully delete by id:{}", id);
+        log.info("successfully delete video lesson by id:{}", id);
         videoLessonRepository.deleteById(id);
+        return "Video deleted";
+    }
+
+    @Override
+    public VideoLessonResponse findLessonByLessonId(Long id) {
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(
+                        String.format("Lesson with id = %s not found", id)));
+        return videoLessonMapper.deConvert(lesson.getVideoLesson());
     }
 }

@@ -43,7 +43,7 @@ public class Course {
     @JoinTable(name = "course_teacher",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
-    private List<Teacher> teachers;
+    private List<Teacher> teachers = new ArrayList<>();
 
     @ManyToMany(cascade = ALL)
     @JoinTable(name = "courses_groups",
@@ -81,10 +81,11 @@ public class Course {
     }
 
     public void addTeacher(Teacher teacher) {
-        if (teacher == null) {
-            teachers = new ArrayList<>();
+        if (this.teachers == null) {
+            this.teachers = new ArrayList<>();
         }
-        teachers.add(teacher);
+        this.teachers.add(teacher);
+        teacher.addCourse(this);
     }
 
     public void setGroup(Group group) {

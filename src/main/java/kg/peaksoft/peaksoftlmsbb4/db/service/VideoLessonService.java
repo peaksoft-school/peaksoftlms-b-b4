@@ -17,6 +17,8 @@ public interface VideoLessonService {
 
     VideoLessonResponse update(Long id, VideoLessonRequest videoLessonRequest);
 
-    void delete(Long id);
+    String delete(Long id);
+
+    VideoLessonResponse findLessonByLessonId(Long id);
 
 }

@@ -16,8 +16,7 @@ public class GroupRequest {
     private String groupName;
     private String description;
     private String image;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @JsonProperty("date_of_start")
     private LocalDate dateOfStart;
-
 }

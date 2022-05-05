@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
@@ -26,14 +24,19 @@ public class Lesson {
     )
     private Long id;
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lessons")
-    private List<Task> tasks;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lessons")
-    private List<Link> links;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lessons")
-    private List<VideoLesson> videoLessons;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lessons")
-    private List<Presentation> presentations;
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "task_id")
+    private Task task;
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "link_id")
+    private Link link;
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "video_lesson_id")
+    private VideoLesson videoLesson;
+
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "presentation_id")
+    private Presentation presentation;
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH, PERSIST})
     @JoinColumn(name = "course_id")
     private Course courses;

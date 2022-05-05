@@ -10,6 +10,9 @@ import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class StudentMapper implements Converter<Student, StudentRequest, StudentResponse> {
@@ -42,5 +45,13 @@ public class StudentMapper implements Converter<Student, StudentRequest, Student
         studentResponse.setRole(student.getUser().getRole());
         studentResponse.setEmail(student.getUser().getEmail());
         return studentResponse;
+    }
+
+    public List<StudentResponse> deConvert(List<Student> students){
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (Student s:students) {
+            studentResponses.add(deConvert(s));
+        }
+        return studentResponses;
     }
 }

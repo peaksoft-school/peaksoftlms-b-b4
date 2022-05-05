@@ -42,9 +42,10 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         if (!course.getDescription().equals(courseRequest.getCourseName())) {
             course.setDescription(courseRequest.getDescription());
         }
-        if (!course.getImage().equals(courseRequest.getImage())) {
+        if (!course.getImage().equals(courseRequest.getImage())){
             course.setImage(courseRequest.getImage());
         }
+
     }
 
     public List<CourseResponse> deConvert(List<Course> courses) {

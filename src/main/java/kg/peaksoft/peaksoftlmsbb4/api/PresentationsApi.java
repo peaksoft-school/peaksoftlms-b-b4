@@ -22,8 +22,7 @@ public class PresentationsApi {
     @Operation(summary = "Add new presentation",
             description = "This endpoint save new presentations. Only users with role teacher can add new presentation to lesson")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public PresentationResponse savePresentations(
-            @RequestBody PresentationRequest presentationRequest) {
+    public PresentationResponse savePresentations(@RequestBody PresentationRequest presentationRequest) {
         return presentationService.savePresentation(presentationRequest);
     }
 
@@ -49,7 +48,7 @@ public class PresentationsApi {
     @PreAuthorize("hasAnyAuthority('TEACHER')")
     @Operation(summary = "Delete the presentation",
             description = "Delete links with ID. Only users with role teacher can delete links")
-    public void delete(@PathVariable Long id) {
-        presentationService.delete(id);
+    public String delete(@PathVariable Long id) {
+        return presentationService.delete(id);
     }
 }

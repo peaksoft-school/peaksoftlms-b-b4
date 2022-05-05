@@ -17,7 +17,7 @@ public interface TeacherService {
 
     Teacher findBy(Long id);
 
-    void deleteTeacher(Long id);
+    String deleteTeacher(Long id);
 
     List<TeacherResponse> findAllTeacher();
 

@@ -10,5 +10,4 @@ import javax.validation.constraints.Email;
 public class AuthRequestDto {
     private String email;
     private String password;
-
 }

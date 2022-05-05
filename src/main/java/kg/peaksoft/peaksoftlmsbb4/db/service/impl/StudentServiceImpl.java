@@ -1,13 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.result.ResultMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
@@ -23,8 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,24 +42,20 @@ public class StudentServiceImpl implements StudentService {
     private final StudentMapper studentMapper;
     private final CourseRepository courseRepository;
     private final GroupRepository groupRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final CourseMapper courseMapper;
-    private final ResultMapper resultMapper;
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
-        if (studentRepository.existsByUser_Email((email))) {
+        if (studentRepository.existsByEmail((email))) {
+            log.error("there is such a student with email :{}", email);
             throw new BadRequestException(
-                    String.format("There is such a = %s", email)
+                    String.format("There is such a student with email = %s", email)
             );
         }
-        String encodedPassword = passwordEncoder.encode(studentRequest.getPassword());
-        studentRequest.setPassword(encodedPassword);
         Student student = studentMapper.convert(studentRequest);
         Student student1 = studentRepository.save(student);
 
-        log.info("successful save this student:{}", student1);
+        log.info("successful save  student:{}", student1);
         return studentMapper.deConvert(student1);
 
     }
@@ -81,42 +75,55 @@ public class StudentServiceImpl implements StudentService {
         if (!student.getStudyFormat().equals(studentRequest.getStudyFormat())) {
             student.setStudyFormat(studentRequest.getStudyFormat());
         }
-        if (!student.getUser().getEmail().equals(studentRequest.getEmail())) {
-            student.getUser().setEmail(studentRequest.getEmail());
+        if (!student.getEmail().equals(studentRequest.getEmail())) {
+            student.setEmail(studentRequest.getEmail());
         }
-        log.info("successful update this id:{}", id);
+        log.info("successful update student with id:{}", id);
         return studentMapper.deConvert(student);
     }
 
     @Override
     public StudentResponse findById(Long id) {
+        log.info("successfully find student by id:{}", id);
         return studentMapper.deConvert(getById(id));
     }
 
     private Student getById(Long id) {
-        log.info("successful find by this id:{}", id);
+        log.info("successful get student by id:{}", id);
         return studentRepository.findById(id).orElseThrow(() -> new NotFoundException
                 (String.format("student with id = %s does not exists ", id)));
 
     }
 
     @Override
-    public void deleteStudent(Long id) {
+    public String deleteStudent(Long id) {
         boolean exists = studentRepository.existsById(id);
         if (!exists) {
+            log.error(" student not found with id:{}", id);
             throw new BadRequestException(String.format("Student with id = %s does not exists", id));
         }
-        log.info("successful delete this id:{}", id);
+        log.info("successful delete student by id:{}", id);
         studentRepository.deleteById(id);
+        return "Student deleted";
     }
 
     @Override
-    public List<StudentResponse> findAllStudent(Pageable pageable) {
+    public List<StudentResponse> findAllStudent() {
         log.info("successful find All");
-        return studentRepository.findAll(pageable).getContent()
+        return studentRepository.findAll()
                 .stream()
                 .map(studentMapper::deConvert).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public StudentPaginationResponse getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("studentName"));
+        StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
+        studentPaginationResponse.setPages((studentRepository.findAll(pageable).getTotalPages()));
+        studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
+        studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findAll(pageable).getContent()));
+        return studentPaginationResponse;
     }
 
     @Override
@@ -130,14 +137,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void assignStudentToCourse(AssignStudentRequest assignStudentRequest, Long studentId) {
-        Course course1 = courseRepository.findById(assignStudentRequest.getCourseId())
+    public String assignStudentToCourse(AssignStudentRequest assignStudentRequest) {
+        Course course = courseRepository.findById(assignStudentRequest.getCourseId())
                 .orElseThrow(() ->
                         new NotFoundException(
                                 String.format("Not found course with id=%s", assignStudentRequest.getCourseId())));
-        Student student1 = studentRepository.getById(studentId);
-        course1.addStudent(student1);
-
+        Student student = studentRepository.getById(assignStudentRequest.getStudentId());
+        course.addStudent(student);
+        log.info("successfully assign student to course by student id:{}", assignStudentRequest.getStudentId());
+        return String.format("%s added to %s course", student.getStudentName(), course.getCourseName());
     }
 
     @Override
@@ -162,10 +170,11 @@ public class StudentServiceImpl implements StudentService {
                 student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
                 student.setGroupId(group.getId());
                 Student s = studentMapper.convert(student);
-                String email = s.getUser().getEmail();
-                if (studentRepository.existsByUser_Email((email))) {
+                String email = s.getEmail();
+                if (studentRepository.existsByEmail((email))) {
+                    log.error("there is such a student with email:{}", email);
                     throw new BadRequestException(
-                            String.format("There is such a = %s", email)
+                            String.format("There is such a student with email= %s", email)
                     );
                 }
                 Student students = studentRepository.save(s);
@@ -179,23 +188,12 @@ public class StudentServiceImpl implements StudentService {
         }
 
         return student1;
-    }
 
-    @Override
-    public List<CourseResponse> studentCourses(String email) {
-        Student student = studentRepository.findStudentByUserEmail(email);
-        return courseMapper.deConvert(student.getCourses());
     }
-
-    @Override
-    public List<ResultResponse> studentResult(String email) {
-        Student studentByUserEmail = studentRepository.findStudentByUserEmail(email);
-        return resultMapper.deConvert(studentByUserEmail.getResults());
-    }
-
 
     @Override
     public List<Student> findByStudentName(String name) {
+        log.info("successfully filter students by name:{}", name);
         return studentRepository.findByStudentName(name);
     }
 

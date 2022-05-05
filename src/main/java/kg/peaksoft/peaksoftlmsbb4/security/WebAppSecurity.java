@@ -80,7 +80,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public ModelMapper mapper(){
+    public ModelMapper mapper() {
         return new ModelMapper();
     }
 
