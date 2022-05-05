@@ -10,5 +10,5 @@ public class VariantRequest {
     @JsonProperty("option")
     private String option;
     @JsonProperty("answer")
-    private Boolean answer;
+    private Boolean choiceAnswer;
 }

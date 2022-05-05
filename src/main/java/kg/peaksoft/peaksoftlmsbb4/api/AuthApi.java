@@ -25,7 +25,7 @@ public class AuthApi {
 
     @PostMapping("/login")
     @PermitAll
-    private AuthResponseDto authentication(@Valid  @RequestBody AuthRequestDto authRequestDto) {
+    private AuthResponseDto authentication( @RequestBody AuthRequestDto authRequestDto) {
         return authService.authenticate(authRequestDto);
     }
 }

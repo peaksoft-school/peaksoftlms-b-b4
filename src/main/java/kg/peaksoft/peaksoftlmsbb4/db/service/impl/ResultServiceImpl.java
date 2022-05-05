@@ -30,27 +30,7 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public ResultResponse saveResult(String email, ResultRequest resultRequest) {
-        Student student = studentRepository.findStudentByUserEmail(email);
-        List<Variant> variants = variantRepository.findAllById(resultRequest.getVariantId());
-        int counter=0;
-        for (Variant variant : variants) {
-            resultRequest.setStudentAnswer(variant.getOption());
-            System.err.println("hello error");
-            if (variant.getAnswer()){
-                counter++;
-                System.err.println("hello error2");
-                resultRequest.setIsTrue(variant.getAnswer());
-            }else if (counter>4){
-                throw new BadRequestException("error");
-            }
-
-
-            Result convert = resultMapper.convert(resultRequest);
-            convert.setStudent(student);
-            Result save = resultRepository.save(convert);
-            return resultMapper.deConvert(save);
-        }
-        return null;
+      return null;
     }
 
     @Override
@@ -82,44 +62,10 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public GetResultResponse getResults(String email) {
-        GetResultResponse getResultResponse = new GetResultResponse();
-        Student studentByUserEmail = studentRepository.findStudentByUserEmail(email);
-        getResultResponse.setStudentName(studentByUserEmail.getStudentName());
-        long wrongAnswerCounter = 0;
-        long correctAnswerCounter = 0;
-        for (Result r : resultRepository.getResultsByStudentId(studentByUserEmail.getId())) {
-            if (r.getIsTrue()) {
-                correctAnswerCounter++;
-            } else {
-                wrongAnswerCounter++;
-            }
-        }
-        long results = wrongAnswerCounter + correctAnswerCounter;
-        long points = correctAnswerCounter * 2;
-        getResultResponse.setWrongAnswer(wrongAnswerCounter);
-        getResultResponse.setCorrect(correctAnswerCounter);
-        Long process = (getResultResponse.getCorrect() * 100) / results;
-        getResultResponse.setProcess(process);
-        getResultResponse.setPoints(points);
-        log.info("successful results this student:{}", studentByUserEmail);
-        return getResultResponse;
+        return null;
     }
 
     public List<ResultResponse> saveResult1(String email, List<ResultRequest> resultRequest) {
-        Student student = studentRepository.findStudentByUserEmail(email);
-        for (ResultRequest f : resultRequest) {
-            List<Variant> variants = variantRepository.findAllById(f.getVariantId());
-            for (Variant variant : variants) {
-                f.setStudentAnswer(variant.getOption());
-                f.setIsTrue(variant.getAnswer());
-            }
-            List<Result> results = resultMapper.convert1(resultRequest);
-            for (Result r : results) {
-                r.setStudent(student);
-            }
-            List<Result> results1 = resultRepository.saveAll(results);
-            return resultMapper.deConvert(results1);
-        }
         return null;
     }
 }

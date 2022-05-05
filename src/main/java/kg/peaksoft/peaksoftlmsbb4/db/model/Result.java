@@ -23,12 +23,6 @@ public class Result {
             generator = "result_id_seq"
     )
     private Long id;
-    private String studentAnswers;
-    private Boolean isTrue;
-
-    @OneToOne
-    @JoinColumn(name = "question_id")
-    private Question question;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "student_id")

@@ -27,4 +27,9 @@ public class Link {
     @ManyToOne
     @JoinColumn(name = "lesson_id")
     private Lesson lessons;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
 }

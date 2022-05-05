@@ -31,21 +31,23 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
         test.setIsEnabled(testRequest.getIsEnabled());
         int counter = 0;
         for (QuestionRequest q : testRequest.getQuestionRequestList()) {
-            questions.add(questionMapper.convert(q));
             if (q.getQuestionType() == QuestionType.ONE) {
                 for (VariantRequest v : q.getVariantRequests()) {
-                    if (v.getAnswer().equals(true)) {
+                    if (v.getChoiceAnswer()) {
                         counter++;
                     }
-                    if (v.getAnswer()) {
-                        if (counter > 0) {
-                            throw new BadRequestException("You can't choose multiple variants");
-                        }
-                    }
+                }
+                if (counter > 1) {
+                    throw new BadRequestException("You can't choose multiply answer");
+                } else {
+                    questions.add(questionMapper.convert(q));
+                    test.setQuestions(questions);
+                    return test;
                 }
 
             } else {
-                test.setQuestions1(questions);
+                questions.add(questionMapper.convert(q));
+                test.setQuestions(questions);
                 return test;
             }
         }

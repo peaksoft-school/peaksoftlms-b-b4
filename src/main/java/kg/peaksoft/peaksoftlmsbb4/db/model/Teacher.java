@@ -16,6 +16,7 @@ import static javax.persistence.CascadeType.*;
 @Setter
 public class Teacher {
 
+
     @Id
     @SequenceGenerator(
             name = "teachers_id_seq",
