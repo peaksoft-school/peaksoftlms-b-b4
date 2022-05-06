@@ -5,13 +5,11 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.result.ResultMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Result;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.ResultRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
-import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
+import kg.peaksoft.peaksoftlmsbb4.db.service.AnswerResultService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,14 +42,9 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public List<ResultResponse> findAll() {
-        List<Variant> all1 = variantRepository.findAll();
+     //   List<Variant> all1 = variantRepository.findAll();
         List<Result> all = resultRepository.findAll();
-        for (Result result:all) {
-            result.setVariants(all1);
-            log.info("successful find all Results:{}", all);
             return resultMapper.deConvert(all);
-        }
-        return null;
     }
 
     @Override

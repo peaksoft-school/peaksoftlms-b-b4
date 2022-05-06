@@ -20,11 +20,25 @@ public class ResultMapper implements Converter<Result, ResultRequest, ResultResp
     private final TestRepository testRepository;
 
     @Override
-    public Result convert(ResultRequest resultRequest) {
+    public Result convert(AnswerRequest answerRequest) {
         Result result = new Result();
-        Test test = testRepository.findById(resultRequest.getTestId())
-                .orElseThrow(() -> new NotFoundException("Test not found"));
-
+        Test test = testRepository.findById(answerRequest.getTestId()).orElseThrow();
+        int scoreForQuestion = 100 / test.getQuestions().size();
+        int counter = 0;
+        int resultOfVariant = 0;
+        for (QuestionAnswerRequest q : answerRequest.getQuestionAnswerRequests()) {
+            Question question = questionRepository.getById(q.getQuestionId());
+            if (question.getQuestionType() == QuestionType.MANY) {
+                resultOfVariant += resultOfVariant(scoreForQuestion, question, q.getVariantId());
+            } else {
+                for (Long id : q.getVariantId()) {
+                    if (variantRepository.getById(id).getAnswer()) {
+                        counter++;
+                    }
+                }
+            }
+            result.setTotalResult(totalResult(scoreForQuestion, counter, resultOfVariant));
+        }
         return result;
     }
 

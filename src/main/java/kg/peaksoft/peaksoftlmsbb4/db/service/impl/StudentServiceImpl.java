@@ -46,7 +46,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
-        if (studentRepository.existsByEmail((email))) {
+        if (studentRepository.existsByUserEmail((email))) {
             log.error("there is such a student with email :{}", email);
             throw new BadRequestException(
                     String.format("There is such a student with email = %s", email)
@@ -75,8 +75,8 @@ public class StudentServiceImpl implements StudentService {
         if (!student.getStudyFormat().equals(studentRequest.getStudyFormat())) {
             student.setStudyFormat(studentRequest.getStudyFormat());
         }
-        if (!student.getEmail().equals(studentRequest.getEmail())) {
-            student.setEmail(studentRequest.getEmail());
+        if (!student.getUser().getEmail().equals(studentRequest.getEmail())) {
+            student.getUser().setEmail(studentRequest.getEmail());
         }
         log.info("successful update student with id:{}", id);
         return studentMapper.deConvert(student);
@@ -170,8 +170,8 @@ public class StudentServiceImpl implements StudentService {
                 student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
                 student.setGroupId(group.getId());
                 Student s = studentMapper.convert(student);
-                String email = s.getEmail();
-                if (studentRepository.existsByEmail((email))) {
+                String email = s.getUser().getEmail();
+                if (studentRepository.existsByUserEmail((email))) {
                     log.error("there is such a student with email:{}", email);
                     throw new BadRequestException(
                             String.format("There is such a student with email= %s", email)

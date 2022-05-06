@@ -21,14 +21,14 @@ public class Test {
             allocationSize = 1
     )
     @GeneratedValue(
-            strategy = GenerationType.AUTO,
+            strategy = GenerationType.SEQUENCE,
             generator = "tests_id_seq"
     )
     private Long id;
     private String testName;
     private Boolean isEnabled;
 
-    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany( cascade = CascadeType.ALL)
     private List<Question> questions;
 
     @JsonIgnore
@@ -36,13 +36,13 @@ public class Test {
     @JoinColumn(name = "lessons_id")
     private Lesson lessons;
 
-    public void setQuestions1(List<Question> question) {
-        if (questions == null) {
-            questions = question;
-        }
-        for (Question q:question) {
-            q.setTest(this);
-        }
-    }
+//    public void setQuestions1(List<Question> question) {
+//        if (questions == null) {
+//            questions = question;
+//        }
+//        for (Question q:question) {
+//            q.setTest(this);
+//        }
+//    }
 
 }

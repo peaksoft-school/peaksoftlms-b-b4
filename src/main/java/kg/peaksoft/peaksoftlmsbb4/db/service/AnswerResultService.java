@@ -6,7 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 
 import java.util.List;
 
-public interface ResultService {
+public interface AnswerResultService {
     ResultResponse saveResult(String email, ResultRequest resultRequest);
 
     ResultResponse findById(Long id);

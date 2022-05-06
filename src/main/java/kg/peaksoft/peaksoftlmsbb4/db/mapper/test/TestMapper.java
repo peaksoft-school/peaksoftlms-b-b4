@@ -6,10 +6,13 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.variant.VariantMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,6 +25,7 @@ import java.util.List;
 public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
 
     private final QuestionMapper questionMapper;
+    private final VariantMapper variantMapper;
 
     @Override
     public Test convert(TestRequest testRequest) {
@@ -45,11 +49,11 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
                     return test;
                 }
 
-            } else {
+            } else
                 questions.add(questionMapper.convert(q));
                 test.setQuestions(questions);
                 return test;
-            }
+
         }
         return null;
     }
@@ -78,6 +82,8 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
         }
         return testResponses;
     }
+
+
 
 
 }

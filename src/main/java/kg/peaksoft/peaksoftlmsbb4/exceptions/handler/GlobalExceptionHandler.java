@@ -25,11 +25,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionResponse handleAnyExceptions(Exception e) {
-        e.printStackTrace();
         ExceptionResponse exceptionResponse = new ExceptionResponse();
-        exceptionResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        exceptionResponse.setStatus(HttpStatus.NOT_FOUND);
         exceptionResponse.setMessage(e.getMessage());
         return exceptionResponse;
     }

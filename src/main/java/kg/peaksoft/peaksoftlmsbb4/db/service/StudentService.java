@@ -35,7 +35,4 @@ public interface StudentService {
 
     List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException;
 
-    List<CourseResponse> studentCourses(String email);
-
-    List<ResultResponse> studentResult(String email);
 }

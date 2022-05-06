@@ -6,7 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.result.GetResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
-import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
+import kg.peaksoft.peaksoftlmsbb4.db.service.AnswerResultService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,21 +23,21 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Result", description = "The  Result API")
 public class ResultApi {
-    private final ResultService resultService;
+    private final AnswerResultService resultService;
 
     @PostMapping()
     @PreAuthorize("hasAuthority('STUDENT')")
-    @Operation(summary = "Add new results",
-            description = "This endpoint create new result. Only users with role student can add new task to variant")
-    public ResultResponse save(
-            @Valid Authentication authentication,
-            @RequestBody ResultRequest resultRequest) {
-        User user = (User) authentication.getPrincipal();
-        return resultService.saveResult(user.getUsername(), resultRequest);
-    }
+  //  @Operation(summary = "Add new results",
+   //         description = "This endpoint create new result. Only users with role student can add new task to variant")
+//    public AnswerResponse save(
+//            @Valid Authentication authentication,
+//            @RequestBody AnswerRequest answerRequest) {
+//        User user = (User) authentication.getPrincipal();
+//          return resultService.saveResult(user.getUsername(), answerRequest);
+//    }
 
     @GetMapping
-    @Operation(summary = "Gets a list", description = "Returns all results that are,if there are no tesults,then an error")
+    @Operation(summary = "Gets a list", description = "Returns all results that are,if there are no Results,then an error")
     public List<ResultResponse> findAll() {
         return resultService.findAll();
     }

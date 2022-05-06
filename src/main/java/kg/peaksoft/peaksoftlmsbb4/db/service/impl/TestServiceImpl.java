@@ -12,7 +12,6 @@ import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,7 +26,7 @@ public class TestServiceImpl implements TestService {
     private final TestMapper testMapper;
 
     @Override
-    public TestResponse saveTest( TestRequest testRequest) {
+    public TestResponse saveTest(TestRequest testRequest) {
         Lesson lesson = lessonRepository.findById(testRequest.getLessonsId()).orElseThrow(() -> new BadRequestException(
                 String.format("Course with id %s does not exists", testRequest.getLessonsId())
         ));

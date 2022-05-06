@@ -41,40 +41,9 @@ public class Lesson {
     @JoinColumn(name = "course_id")
     private Course courses;
 
-    @OneToOne(mappedBy = "lessons", cascade = ALL, orphanRemoval = true)
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "test_id")
     private Test test;
-
-    public void setPresentation(Presentation presentation) {
-        if (presentations == null) {
-            presentations = new ArrayList<>();
-        }
-        presentations.add(presentation);
-        presentation.setLessons(this);
-    }
-
-    public void setLink(Link link) {
-        if (links == null) {
-            links = new ArrayList<>();
-        }
-        links.add(link);
-        link.setLessons(this);
-    }
-
-    public void setTask(Task task) {
-        if (tasks == null) {
-            tasks = new ArrayList<>();
-        }
-        tasks.add(task);
-        task.setLessons(this);
-    }
-
-    public void setVideoLesson(VideoLesson videoLesson) {
-        if (videoLessons == null) {
-            videoLessons = new ArrayList<>();
-        }
-        videoLessons.add(videoLesson);
-        videoLesson.setLessons(this);
-    }
 
 
 }
