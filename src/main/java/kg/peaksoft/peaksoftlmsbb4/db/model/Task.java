@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static javax.persistence.CascadeType.*;
 
 @Entity
@@ -24,12 +26,11 @@ public class Task {
             generator = "task_id_seq"
     )
     private Long id;
-    private String text;
-    private String file;
     private String name;
-    private String image;
-    private String link;
-    private String code;
+
+    @OneToMany(cascade = ALL)
+    @JoinColumn(name = "resources_id")
+    private List<Resource> resources;
 
     @OneToOne(cascade = {DETACH, REFRESH, MERGE}, mappedBy = "task")
     private Lesson lessons;

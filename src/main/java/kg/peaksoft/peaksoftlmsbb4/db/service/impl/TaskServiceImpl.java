@@ -2,8 +2,10 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.ResourceType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.task.TaskMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TaskRepository;
@@ -40,8 +42,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.deConvert(save);
     }
 
-    @Override
-    public Task findById(Long id) {
+    private Task findById(Long id) {
         log.info("successfully find task by id:{}", id);
         return taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
     }
@@ -63,15 +64,6 @@ public class TaskServiceImpl implements TaskService {
         if (!task.getName().equals(taskRequest.getName())) {
             task.setName(taskRequest.getName());
         }
-        if (!task.getCode().equals(taskRequest.getCode())) {
-            task.setCode(taskRequest.getCode());
-        }
-        if (!task.getLink().equals(taskRequest.getLink())) {
-            task.setLink(taskRequest.getLink());
-        }
-        if (!task.getText().equals(taskRequest.getText())) {
-            task.setText(taskRequest.getText());
-        }
         log.info("successfully update task with id:{}", id);
         return taskMapper.deConvert(task);
     }
@@ -85,10 +77,14 @@ public class TaskServiceImpl implements TaskService {
             throw new NotFoundException(String.format("Task is not found id=%s", id));
 
         }
-        log.info("successfully delete task by id :{}", id);
-        awss3Service.deleteFile(taskRepository.getById(id).getFile());
-        awss3Service.deleteFile(taskRepository.getById(id).getImage());
+//        for (Resource r : taskRepository.getById(id).getResources()) {
+//            if (r.getResourceType() == ResourceType.FILE || r.getResourceType() == ResourceType.IMAGE) {
+//                awss3Service.deleteFile(r.getValue());
+//                awss3Service.deleteFile(r.getValue());
+//            }
+//        }
         taskRepository.deleteById(id);
+        log.info("successfully delete task by id :{}", id);
         return "Task deleted";
     }
 

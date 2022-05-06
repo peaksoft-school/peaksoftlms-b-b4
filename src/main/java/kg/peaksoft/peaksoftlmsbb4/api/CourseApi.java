@@ -54,21 +54,7 @@ public class CourseApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = CourseApi.class)))})})
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public List<CourseResponse> findAllCourse() {
-        return courseService.findAll();
-    }
-
-    @Operation(summary = "Pagination",
-            description = "Returns all courses that are,if there are no courses,then an error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Found the courses",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = CourseApi.class)))})})
-    @GetMapping("/pagination")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public CoursePaginationResponse getAllCoursesForPagination(@RequestParam int page,
                                                                @RequestParam int size) {
         return courseService.coursesForPagination(page, size);

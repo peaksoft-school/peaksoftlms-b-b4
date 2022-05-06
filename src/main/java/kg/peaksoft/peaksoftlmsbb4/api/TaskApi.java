@@ -29,11 +29,11 @@ public class TaskApi {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Gets a single tasks by identifier",
+    @Operation(summary = "Gets a single task by lesson identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public Task findById(@PathVariable Long id) {
-        return taskService.findById(id);
+    public TaskResponse findById(@PathVariable Long id) {
+        return taskService.findTaskByLessonId(id);
     }
 
     @PutMapping("/{id}")

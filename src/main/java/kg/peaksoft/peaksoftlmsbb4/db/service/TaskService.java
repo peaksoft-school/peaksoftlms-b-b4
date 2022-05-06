@@ -10,8 +10,6 @@ import java.util.List;
 public interface TaskService {
     TaskResponse saveTasks(TaskRequest taskRequest);
 
-    Task findById(Long id);
-
     List<TaskResponse> findAll();
 
     TaskResponse update(Long id, TaskRequest taskRequest);

@@ -34,7 +34,6 @@ public class GroupApi {
         return groupService.saveGroup(groupRequest);
     }
 
-
     @Operation(summary = "Gets a list",
             description = "Returns all groups that are,if there are no groups,then an error")
     @ApiResponses(value = {
@@ -43,22 +42,8 @@ public class GroupApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     @GetMapping
-    public List<GroupResponse> findAllGroup() {
-        return groupService.findAllGroup();
-    }
-
-    @Operation(summary = "Pagination",
-            description = "Returns all groups that are,if there are no groups,then an error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Found the groups",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    @GetMapping("/pagination")
     public GroupResponsePagination getAllForPagination(@RequestParam int page,
                                                        @RequestParam int size) {
         return groupService.getAllForPagination(page, size);

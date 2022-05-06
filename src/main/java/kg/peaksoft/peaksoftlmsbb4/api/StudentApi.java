@@ -41,23 +41,9 @@ public class StudentApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = StudentApi.class)))})})
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public List<StudentResponse> findAll() {
-        return studentService.findAllStudent();
-    }
-
-    @GetMapping("/pagination")
-    @Operation(summary = "Pagination",
-            description = "Returns all students that are,if there are no students,then an error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "All students with pagination",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = StudentApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public StudentPaginationResponse getAll(@RequestParam int page,
                                             @RequestParam int size) {
-        return studentService.getAll(page,size);
+        return studentService.getAll(page, size);
     }
 
     @PostMapping
@@ -82,7 +68,7 @@ public class StudentApi {
             description = "Delete student with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteStudent(@PathVariable("id") Long id) {
-      return studentService.deleteStudent(id);
+        return studentService.deleteStudent(id);
     }
 
     @GetMapping("/format")
@@ -118,5 +104,5 @@ public class StudentApi {
         return studentService.importExcelFile(files, id);
     }
 
-    }
+}
 
