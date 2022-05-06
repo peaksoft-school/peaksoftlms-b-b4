@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -62,8 +63,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CoursePaginationResponse coursesForPagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public CoursePaginationResponse coursesForPagination(int page, int size, String studyFormat) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(studyFormat));
         CoursePaginationResponse coursePaginationResponse = new CoursePaginationResponse();
         coursePaginationResponse.setCourses(courseMapper.deConvert(courseRepository.findAll(pageable).getContent()));
         coursePaginationResponse.setPages(courseRepository.findAll(pageable).getTotalPages());
