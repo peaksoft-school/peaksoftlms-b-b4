@@ -1,5 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
+import com.poiji.bind.Poiji;
+import com.poiji.exception.PoijiExcelType;
+import com.poiji.option.PoijiOptions;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
@@ -17,20 +20,18 @@ import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -46,7 +47,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
-        if (studentRepository.existsByEmail((email))) {
+        if (studentRepository.existsStudentByUserEmail((email))) {
             log.error("there is such a student with email :{}", email);
             throw new BadRequestException(
                     String.format("There is such a student with email = %s", email)
@@ -75,8 +76,8 @@ public class StudentServiceImpl implements StudentService {
         if (!student.getStudyFormat().equals(studentRequest.getStudyFormat())) {
             student.setStudyFormat(studentRequest.getStudyFormat());
         }
-        if (!student.getEmail().equals(studentRequest.getEmail())) {
-            student.setEmail(studentRequest.getEmail());
+        if (!student.getUser().getEmail().equals(studentRequest.getEmail())) {
+            student.getUser().setEmail(studentRequest.getEmail());
         }
         log.info("successful update student with id:{}", id);
         return studentMapper.deConvert(student);
@@ -108,32 +109,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponse> findAllStudent() {
-        log.info("successful find All");
-        return studentRepository.findAll()
-                .stream()
-                .map(studentMapper::deConvert).collect(Collectors.toList());
-
-    }
-
-    @Override
-    public StudentPaginationResponse getAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("studentName"));
+    public StudentPaginationResponse getAll(int page, int size, StudyFormat studyFormat) {
+        Pageable pageable = PageRequest.of(page, size);
         StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
-        studentPaginationResponse.setPages((studentRepository.findAll(pageable).getTotalPages()));
+        studentPaginationResponse.setPages((studentRepository.findStudentByStudyFormat(studyFormat, pageable).getTotalPages()));
         studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
-        studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findAll(pageable).getContent()));
+        studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findStudentByStudyFormat(studyFormat, pageable).getContent()));
         return studentPaginationResponse;
-    }
-
-    @Override
-    public List<StudentResponse> findByStudyFormat(StudyFormat studyFormat) {
-        List<StudentResponse> studentResponse = new ArrayList<>();
-        for (Student s : studentRepository.findByStudyFormat(studyFormat)) {
-            studentResponse.add(studentMapper.deConvert(s));
-        }
-        log.info("successful find by Study format:{}", studyFormat);
-        return studentResponse;
     }
 
     @Override
@@ -141,7 +123,8 @@ public class StudentServiceImpl implements StudentService {
         Course course = courseRepository.findById(assignStudentRequest.getCourseId())
                 .orElseThrow(() ->
                         new NotFoundException(
-                                String.format("Not found course with id=%s", assignStudentRequest.getCourseId())));
+                                String.format("Not found course with id=%s",
+                                        assignStudentRequest.getCourseId())));
         Student student = studentRepository.getById(assignStudentRequest.getStudentId());
         course.addStudent(student);
         log.info("successfully assign student to course by student id:{}", assignStudentRequest.getStudentId());
@@ -149,42 +132,62 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException {
-        Group group = groupRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("Group with id = %s not found", id)
-        ));
+    public List<StudentResponse> importExcelFile(MultipartFile files) throws IOException {
+        log.info("this method working done");
+        System.out.println(files.getName());
+        PoijiOptions options = PoijiOptions.PoijiOptionsBuilder.settings(0)
+                .addListDelimiter(";")
+                .build();
+
         List<StudentResponse> student1 = new ArrayList<>();
+        InputStream stream = new FileInputStream(new File(files.getName()));
+        List<StudentRequest> students = Poiji.fromExcel(stream, PoijiExcelType.XLS, StudentRequest.class, options);
 
-        XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
-        XSSFSheet worksheet = workbook.getSheetAt(0);
+//        XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
+//        XSSFSheet worksheet = workbook.getSheetAt(0);
 
-        for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
-            if (index > 0) {
-
-                StudentRequest student = new StudentRequest();
-                XSSFRow row = worksheet.getRow(index);
-                student.setStudentName(row.getCell(0).getStringCellValue());
-                student.setLastName(row.getCell(1).getStringCellValue());
-                student.setEmail(row.getCell(2).getStringCellValue());
-                student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
-                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
-                student.setGroupId(group.getId());
-                Student s = studentMapper.convert(student);
-                String email = s.getEmail();
-                if (studentRepository.existsByEmail((email))) {
-                    log.error("there is such a student with email:{}", email);
-                    throw new BadRequestException(
-                            String.format("There is such a student with email= %s", email)
-                    );
-                }
-                Student students = studentRepository.save(s);
-                group.setStudent(students);
-                log.info("successful import excel students:{}", student.getStudentName());
-                student1.add(studentMapper.deConvert(students));
-            }
-
+//        for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
+//            if (index > 0) {
+//
+//                StudentRequest student = new StudentRequest();
+//                XSSFRow row = worksheet.getRow(index);
+//                if (row.getCell(0).getStringCellValue() != null) {
+//                    student.setStudentName(row.getCell(0).getStringCellValue());
+//                } else {
+//                    throw new IOException("Student name can't be null");
+//                }
+//                student.setLastName(row.getCell(1).getStringCellValue());
+//                if (row.getCell(2).getStringCellValue() != null) {
+//                    student.setEmail(row.getCell(2).getStringCellValue());
+//                } else {
+//                    throw new IOException("Student email can't be empty");
+//                }
+//                student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
+//                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+//                if (row.getCell(5).getStringCellValue() != null) {
+//                    student.setPassword(row.getCell(5).getStringCellValue());
+//                } else {
+//                    throw new IOException("Student password can't be empty");
+//                }
+//                student.setGroupId(group.getId());
+//                Student s = studentMapper.convert(student);
+//                String email = s.getUser().getEmail();
+//                if (studentRepository.existsStudentByUserEmail((email))) {
+//                    log.error("there is such a student with email:{}", email);
+//                    throw new BadRequestException(
+//                            String.format("There is such a student with email= %s", email)
+//                    );
+//                }
+//                Student students = studentRepository.save(s);
+//                group.setStudent(students);
+//                log.info("successful import excel students:{}", student.getStudentName());
+//                student1.add(studentMapper.deConvert(students));
+//            }
+//
+//        }
+        for (StudentRequest s : students) {
+            student1.add(studentMapper.deConvert(studentRepository.save(studentMapper.convert(s))));
         }
-
         return student1;
 
     }

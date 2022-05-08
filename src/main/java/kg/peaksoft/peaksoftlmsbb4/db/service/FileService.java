@@ -7,6 +7,5 @@ import java.io.UnsupportedEncodingException;
 
 public interface FileService {
     String uploadFile(MultipartFile file);
-    S3Object downloadFile(String fileName);
     String deleteFile(String file) throws UnsupportedEncodingException;
 }

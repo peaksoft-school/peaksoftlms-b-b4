@@ -49,15 +49,9 @@ public class AWSS3Service implements FileService {
     }
 
     @Override
-    public S3Object downloadFile(String fileName) {
-        log.info("file opened");
-        return awsS3Client.getObject(new GetObjectRequest("peaksoft-lms-b4", fileName));
-    }
-
-    @Override
     public String deleteFile(String file) {
         String[] fileName = file.split("/");
-        awsS3Client.deleteObject("peaksoft-lms-b4", fileName[3]);
+        awsS3Client.deleteObject("peaksoft-lms-b4", fileName[fileName.length-1]);
         log.info("File deleted");
         return "Deleted File: " + file;
     }

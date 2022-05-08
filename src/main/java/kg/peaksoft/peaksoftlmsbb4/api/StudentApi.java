@@ -14,6 +14,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,7 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Student", description = "The Student API")
+@Slf4j
 public class StudentApi {
 
     private final StudentService studentService;
@@ -42,8 +44,9 @@ public class StudentApi {
                                     array = @ArraySchema(schema = @Schema(implementation = StudentApi.class)))})})
     @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
     public StudentPaginationResponse getAll(@RequestParam int page,
-                                            @RequestParam int size) {
-        return studentService.getAll(page, size);
+                                            @RequestParam int size,
+                                            @RequestParam StudyFormat studyFormat) {
+        return studentService.getAll(page, size,studyFormat);
     }
 
     @PostMapping
@@ -71,14 +74,6 @@ public class StudentApi {
         return studentService.deleteStudent(id);
     }
 
-    @GetMapping("/format")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Get student by study format",
-            description = "Here you can choose the format of training")
-    public List<StudentResponse> getStudyFormat(@RequestParam(required = false) StudyFormat studyFormat) {
-        return studentService.findByStudyFormat(studyFormat);
-    }
-
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Gets a single  student by identifier",
@@ -100,8 +95,9 @@ public class StudentApi {
     @PostMapping("/import")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<StudentResponse> importExcelFile
-            (@RequestParam("groupId") Long id, @RequestParam(name = "file") MultipartFile files) throws IOException {
-        return studentService.importExcelFile(files, id);
+            (@RequestParam(name = "file") MultipartFile files) throws IOException {
+        log.info("this endpoint is working");
+        return studentService.importExcelFile(files);
     }
 
 }

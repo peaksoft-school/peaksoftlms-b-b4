@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/s3")
@@ -25,12 +26,7 @@ public class AWSS3ClientApi {
     }
 
     @DeleteMapping
-    public String deleteFile(@RequestParam String file){
-       return awsS3Service.deleteFile(file);
-    }
-
-    @GetMapping
-    public S3Object download(@RequestParam String file){
-        return awsS3Service.downloadFile(file);
+    public String deleteFile(@RequestParam String file) {
+        return awsS3Service.deleteFile(file);
     }
 }
