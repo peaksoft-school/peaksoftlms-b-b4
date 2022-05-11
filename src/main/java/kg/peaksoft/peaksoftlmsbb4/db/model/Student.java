@@ -47,24 +47,13 @@ public class Student {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Result> results = new ArrayList<>();
-
+    
     @JsonIgnore
     public void setCourse(Course course) {
         if (course == null) {
             courses = new ArrayList<>();
         }
         courses.add(course);
-    }
-
-    @JsonIgnore
-    public void setResult(Result result) {
-        if (result == null) {
-            results = new ArrayList<>();
-        }
-        results.add(result);
     }
 
 

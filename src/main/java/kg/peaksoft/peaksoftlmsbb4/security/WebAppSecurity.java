@@ -47,7 +47,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService getUserDetailsService() {
         return (email) -> userRepository.findByEmail(email).orElseThrow(
-                ()->new NotFoundException("Неверные учетные данные пользователя"));
+                ()->new NotFoundException("Not found "));
     }
 
     @Override

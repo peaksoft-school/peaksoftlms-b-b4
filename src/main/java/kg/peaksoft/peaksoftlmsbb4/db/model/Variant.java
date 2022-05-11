@@ -29,8 +29,4 @@ public class Variant {
     private Question question;
 
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "result_id")
-    private Result result;
-
 }

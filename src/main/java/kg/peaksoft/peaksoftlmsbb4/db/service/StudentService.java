@@ -1,7 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
@@ -25,7 +23,7 @@ public interface StudentService {
 
     List<StudentResponse> findAllStudent();
 
-    StudentPaginationResponse getAll(int size,int page);
+    StudentPaginationResponse getAll(int size, int page);
 
     List<StudentResponse> findByStudyFormat(StudyFormat studyFormat);
 
