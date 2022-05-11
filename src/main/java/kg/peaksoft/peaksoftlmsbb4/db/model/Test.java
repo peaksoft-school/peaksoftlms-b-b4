@@ -1,12 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.db.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,7 +26,7 @@ public class Test {
     private String testName;
     private Boolean isEnabled;
 
-    @OneToMany( cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions;
 
     @JsonIgnore
