@@ -14,14 +14,13 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/s3")
+@RequestMapping("api/files")
 public class AWSS3ClientApi {
     private AWSS3Service awsS3Service;
 
-    @Operation(summary = "Upload file",
-            description = "This endpoint for upload file to s3")
+    @Operation(summary = "Upload file", description = "This endpoint for upload file to s3")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-    @PostMapping()
+    @PostMapping("upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
         String publicURL = awsS3Service.uploadFile(file);
         Map<String, String> response = new HashMap<>();
@@ -32,7 +31,7 @@ public class AWSS3ClientApi {
     @Operation(summary = "Delete the file ",
             description = "Delete file in s3")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-    @DeleteMapping
+    @DeleteMapping("delete")
     public String deleteFile(@RequestParam String file) {
         return awsS3Service.deleteFile(file);
     }
