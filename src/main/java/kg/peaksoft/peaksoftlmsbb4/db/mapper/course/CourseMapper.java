@@ -23,7 +23,7 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         course.setDescription(courseRequest.getDescription());
         course.setImage(courseRequest.getImage());
         course.setDateOfStart(LocalDate.now());
-        if (course.getDateOfFinish().isBefore(LocalDate.now())){
+        if (courseRequest.getDateOfFinish().isBefore(LocalDate.now())){
             throw new BadRequestException("Date of finish can't be before than date of start");
         }else {
             course.setDateOfFinish(courseRequest.getDateOfFinish());

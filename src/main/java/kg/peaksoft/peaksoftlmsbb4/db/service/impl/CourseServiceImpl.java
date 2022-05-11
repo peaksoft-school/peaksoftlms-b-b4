@@ -99,7 +99,9 @@ public class CourseServiceImpl implements CourseService {
             throw new NotFoundException(String.format(" course with id=%s does not exists", id));
         }
         log.info("successful delete course with id:{}", id);
-        awss3Service.deleteFile(courseRepository.getById(id).getImage());
+        if(courseRepository.getById(id).getImage()!=null){
+            awss3Service.deleteFile(courseRepository.getById(id).getImage());
+        }
         courseRepository.deleteById(id);
         log.info("successful delete by this id:{}", id);
         return "Course deleted";

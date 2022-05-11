@@ -4,6 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.task.TaskMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.ResourceRepository;
@@ -24,14 +25,12 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final LessonRepository lessonRepository;
-    private final AWSS3Service awss3Service;
     private final ResourceRepository resourceRepository;
 
     @Override
     public TaskResponse saveTasks(TaskRequest taskRequest) {
         Lesson lessons = lessonRepository.findById(taskRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", taskRequest.getLessonId())
-
         ));
         Task task = taskMapper.convert(taskRequest);
         Task save = taskRepository.save(task);
@@ -66,7 +65,7 @@ public class TaskServiceImpl implements TaskService {
     public String delete(Long id) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("Task is not found id=%s", id)));
-        // task.remove(task.getResources());
+        resourceRepository.deleteAll(task.getResources());
         taskRepository.delete(task);
         log.info("successfully delete task by id :{}", id);
         return "Task deleted";

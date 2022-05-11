@@ -32,7 +32,7 @@ public class TaskMapper implements Converter<Task, TaskRequest, TaskResponse> {
     @Override
     public TaskResponse deConvert(Task task) {
         TaskResponse taskResponse = new TaskResponse();
-        taskResponse.setId(taskResponse.getId());
+        taskResponse.setId(task.getId());
         taskResponse.setName(task.getName());
         List<ResourceResponse> resourceResponses = new ArrayList<>();
         for (Resource r:task.getResources()) {

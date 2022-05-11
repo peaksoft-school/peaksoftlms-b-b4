@@ -1,5 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
@@ -10,6 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +36,7 @@ public class PeaksoftlmsBB4Application {
         return "<h1>Welcome to Peaksoftlms-B application!!!<h1/>";
     }
 
-//    @Bean
+    @Bean
     public CommandLineRunner CommandLineRunnerBean() {
         return (args) -> {
             User user = new User();
@@ -59,6 +63,8 @@ public class PeaksoftlmsBB4Application {
         };
     }
 }
+
+
 
 
 

@@ -2,9 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
 import kg.peaksoft.peaksoftlmsbb4.db.service.FileService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
