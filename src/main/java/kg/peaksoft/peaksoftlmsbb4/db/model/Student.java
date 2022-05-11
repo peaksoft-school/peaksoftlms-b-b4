@@ -31,9 +31,6 @@ public class Student {
     private String studentName;
     private String lastName;
     private String phoneNumber;
-    @OneToOne(cascade = {MERGE, REFRESH, PERSIST}, orphanRemoval = true,
-            fetch = FetchType.EAGER)
-    private User user;
 
     @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;

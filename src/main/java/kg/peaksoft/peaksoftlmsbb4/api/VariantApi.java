@@ -6,6 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.VariantService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/variants")
 @CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
 @Tag(name = "Variant", description = "The Variant API")
+@PreAuthorize("hasAnyAuthority('INTRUCTOR,STUDENT')")
 public class VariantApi {
     private final VariantService variantService;
 
