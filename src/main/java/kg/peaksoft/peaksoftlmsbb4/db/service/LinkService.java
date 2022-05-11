@@ -11,8 +11,6 @@ public interface LinkService {
 
     LinkResponse findById(Long id);
 
-    List<LinkResponse> findAll();
-
     LinkResponse update(Long id, LinkRequest linkRequest);
 
     String delete(Long id);

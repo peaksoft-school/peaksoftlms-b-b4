@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.student;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import kg.peaksoft.peaksoftlmsbb4.annotations.password.ValidPassword;
 import kg.peaksoft.peaksoftlmsbb4.annotations.phoneNumber.ValidPhoneNumber;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import lombok.Getter;
@@ -36,6 +37,10 @@ public class StudentRequest {
     @NotEmpty(message = "email must have a value")
     private String email;
 
+    @ValidPassword
+    private String password;
+
+    @JsonProperty("group_id")
     private Long groupId;
 
 }

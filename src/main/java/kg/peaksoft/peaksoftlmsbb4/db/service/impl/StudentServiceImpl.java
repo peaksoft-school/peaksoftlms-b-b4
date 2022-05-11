@@ -22,7 +22,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +29,6 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -46,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
-        if (studentRepository.existsByEmail((email))) {
+        if (studentRepository.existsStudentByUserEmail((email))) {
             log.error("there is such a student with email :{}", email);
             throw new BadRequestException(
                     String.format("There is such a student with email = %s", email)
@@ -75,8 +73,8 @@ public class StudentServiceImpl implements StudentService {
         if (!student.getStudyFormat().equals(studentRequest.getStudyFormat())) {
             student.setStudyFormat(studentRequest.getStudyFormat());
         }
-        if (!student.getEmail().equals(studentRequest.getEmail())) {
-            student.setEmail(studentRequest.getEmail());
+        if (!student.getUser().getEmail().equals(studentRequest.getEmail())) {
+            student.getUser().setEmail(studentRequest.getEmail());
         }
         log.info("successful update student with id:{}", id);
         return studentMapper.deConvert(student);
@@ -108,32 +106,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponse> findAllStudent() {
-        log.info("successful find All");
-        return studentRepository.findAll()
-                .stream()
-                .map(studentMapper::deConvert).collect(Collectors.toList());
-
-    }
-
-    @Override
-    public StudentPaginationResponse getAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("studentName"));
+    public StudentPaginationResponse getAll(int page, int size, StudyFormat studyFormat) {
+        Pageable pageable = PageRequest.of(page, size);
         StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
-        studentPaginationResponse.setPages((studentRepository.findAll(pageable).getTotalPages()));
+        studentPaginationResponse.setPages((studentRepository.findStudentByStudyFormat(studyFormat, pageable).getTotalPages()));
         studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
-        studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findAll(pageable).getContent()));
+        studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findStudentByStudyFormat(studyFormat, pageable).getContent()));
         return studentPaginationResponse;
-    }
-
-    @Override
-    public List<StudentResponse> findByStudyFormat(StudyFormat studyFormat) {
-        List<StudentResponse> studentResponse = new ArrayList<>();
-        for (Student s : studentRepository.findByStudyFormat(studyFormat)) {
-            studentResponse.add(studentMapper.deConvert(s));
-        }
-        log.info("successful find by Study format:{}", studyFormat);
-        return studentResponse;
     }
 
     @Override
@@ -141,7 +120,8 @@ public class StudentServiceImpl implements StudentService {
         Course course = courseRepository.findById(assignStudentRequest.getCourseId())
                 .orElseThrow(() ->
                         new NotFoundException(
-                                String.format("Not found course with id=%s", assignStudentRequest.getCourseId())));
+                                String.format("Not found course with id=%s",
+                                        assignStudentRequest.getCourseId())));
         Student student = studentRepository.getById(assignStudentRequest.getStudentId());
         course.addStudent(student);
         log.info("successfully assign student to course by student id:{}", assignStudentRequest.getStudentId());
@@ -149,29 +129,40 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException {
-        Group group = groupRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("Group with id = %s not found", id)
-        ));
-        List<StudentResponse> student1 = new ArrayList<>();
+    public List<StudentResponse> importExcelFile(MultipartFile files,Long id) throws IOException {
 
+        Group group = groupRepository.findById(id).orElseThrow(()->
+                new NotFoundException(String.format("Group with id = %s does not exists",id)));
         XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
         XSSFSheet worksheet = workbook.getSheetAt(0);
-
+        List<StudentResponse> student1 = new ArrayList<>();
         for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
             if (index > 0) {
 
                 StudentRequest student = new StudentRequest();
                 XSSFRow row = worksheet.getRow(index);
-                student.setStudentName(row.getCell(0).getStringCellValue());
+                if (row.getCell(0).getStringCellValue() != null) {
+                    student.setStudentName(row.getCell(0).getStringCellValue());
+                } else {
+                    throw new IOException("Student name can't be null");
+                }
                 student.setLastName(row.getCell(1).getStringCellValue());
-                student.setEmail(row.getCell(2).getStringCellValue());
+                if (row.getCell(2).getStringCellValue() != null) {
+                    student.setEmail(row.getCell(2).getStringCellValue());
+                } else {
+                    throw new IOException("Student email can't be empty");
+                }
                 student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
                 student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+                if (row.getCell(5).getStringCellValue() != null) {
+                    student.setPassword(row.getCell(5).getStringCellValue());
+                } else {
+                    throw new IOException("Student password can't be empty");
+                }
                 student.setGroupId(group.getId());
                 Student s = studentMapper.convert(student);
-                String email = s.getEmail();
-                if (studentRepository.existsByEmail((email))) {
+                String email = s.getUser().getEmail();
+                if (studentRepository.existsStudentByUserEmail((email))) {
                     log.error("there is such a student with email:{}", email);
                     throw new BadRequestException(
                             String.format("There is such a student with email= %s", email)
@@ -184,15 +175,14 @@ public class StudentServiceImpl implements StudentService {
             }
 
         }
-
         return student1;
 
     }
 
     @Override
-    public List<Student> findByStudentName(String name) {
+    public List<StudentResponse> findByStudentName(String name) {
         log.info("successfully filter students by name:{}", name);
-        return studentRepository.findByStudentName(name);
+        return studentMapper.deConvert(studentRepository.findByStudentName(name));
     }
 
 }

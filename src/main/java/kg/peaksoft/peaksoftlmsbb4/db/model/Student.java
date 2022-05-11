@@ -3,20 +3,20 @@ package kg.peaksoft.peaksoftlmsbb4.db.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.REFRESH;
+import static javax.persistence.CascadeType.*;
 
-@Entity
-@Table(name = "student")
 @Getter
 @Setter
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "student")
 public class Student {
 
     @Id
@@ -31,14 +31,15 @@ public class Student {
     private Long id;
     private String studentName;
     private String lastName;
-    private String email;
-    private Role role;
     private String phoneNumber;
+    @OneToOne(cascade = {MERGE, REFRESH, PERSIST}, orphanRemoval = true,
+            fetch = FetchType.EAGER)
+    private User user;
 
     @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;
 
-    @ManyToOne
+    @ManyToOne(cascade = {REFRESH,DETACH,MERGE})
     @JsonIgnore
     @JoinColumn(name = "group_id")
     private Group group;

@@ -22,7 +22,7 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
-        user.setRole(Role.TEACHER);
+        user.setRole(Role.INSTRUCTOR);
         teacher.setUser(user);
         return teacher;
 

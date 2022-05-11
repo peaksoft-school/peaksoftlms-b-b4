@@ -1,21 +1,17 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.task;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceRequest;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Getter
 @Setter
 public class TaskRequest {
-    private String text;
-    private String file;
-    @NotBlank
     private String name;
-    private String image;
-    private String link;
-    private String code;
-    @JsonProperty("lesson_id")
+    @JsonProperty("resource")
+    private List<ResourceRequest> resources;
     private Long lessonId;
 }

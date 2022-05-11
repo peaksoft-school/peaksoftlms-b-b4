@@ -13,7 +13,6 @@ public interface PresentationService {
 
     PresentationResponse update(Long id, PresentationRequest presentationRequest);
 
-    List<PresentationResponse> findAll();
 
     String delete(Long id);
 

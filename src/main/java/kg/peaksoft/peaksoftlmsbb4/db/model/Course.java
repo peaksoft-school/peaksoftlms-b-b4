@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class Course {
     private String image;
     private String description;
     private LocalDate dateOfStart;
+    private LocalDate dateOfFinish;
 
     @ManyToMany(cascade =
             {PERSIST, REFRESH, DETACH, MERGE, REMOVE})
@@ -95,11 +97,20 @@ public class Course {
         lesson.setCourses(this);
     }
 
-    public Course(String courseName, String image, String description, LocalDate dateOfStart, List<Student> students, List<Teacher> teachers, List<Group> groups, List<Lesson> lessons) {
+    public Course(String courseName,
+                  String image,
+                  String description,
+                  LocalDate dateOfStart,
+                  LocalDate dateOfFinish,
+                  List<Student> students,
+                  List<Teacher> teachers,
+                  List<Group> groups,
+                  List<Lesson> lessons) {
         this.courseName = courseName;
         this.image = image;
         this.description = description;
         this.dateOfStart = dateOfStart;
+        this.dateOfFinish = dateOfFinish;
         this.students = students;
         this.teachers = teachers;
         this.groups = groups;

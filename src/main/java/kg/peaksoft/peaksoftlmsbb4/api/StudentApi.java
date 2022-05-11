@@ -14,6 +14,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,7 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Student", description = "The Student API")
+@Slf4j
 public class StudentApi {
 
     private final StudentService studentService;
@@ -40,24 +42,11 @@ public class StudentApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = StudentApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
-    public List<StudentResponse> findAll() {
-        return studentService.findAllStudent();
-    }
-
-    @GetMapping("/pagination")
-    @Operation(summary = "Pagination",
-            description = "Returns all students that are,if there are no students,then an error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "All students with pagination",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = StudentApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public StudentPaginationResponse getAll(@RequestParam int page,
-                                            @RequestParam int size) {
-        return studentService.getAll(page,size);
+                                            @RequestParam int size,
+                                            @RequestParam StudyFormat studyFormat) {
+        return studentService.getAll(page, size,studyFormat);
     }
 
     @PostMapping
@@ -82,15 +71,7 @@ public class StudentApi {
             description = "Delete student with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteStudent(@PathVariable("id") Long id) {
-      return studentService.deleteStudent(id);
-    }
-
-    @GetMapping("/format")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Get student by study format",
-            description = "Here you can choose the format of training")
-    public List<StudentResponse> getStudyFormat(@RequestParam(required = false) StudyFormat studyFormat) {
-        return studentService.findByStudyFormat(studyFormat);
+        return studentService.deleteStudent(id);
     }
 
     @GetMapping("/{id}")
@@ -105,7 +86,7 @@ public class StudentApi {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Get by name",
             description = "Get student by name")
-    public List<Student> getByStudentName(@RequestParam String name) {
+    public List<StudentResponse> getByStudentName(@RequestParam String name) {
         return studentService.findByStudentName(name);
     }
 
@@ -113,10 +94,9 @@ public class StudentApi {
             description = "This endpoint for import students list from excel to group")
     @PostMapping("/import")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public List<StudentResponse> importExcelFile
-            (@RequestParam("groupId") Long id, @RequestParam(name = "file") MultipartFile files) throws IOException {
-        return studentService.importExcelFile(files, id);
+    public List<StudentResponse> importExcelFile(@RequestParam(name = "file") MultipartFile files,@RequestParam Long groupId) throws IOException {
+        return studentService.importExcelFile(files,groupId);
     }
 
-    }
+}
 

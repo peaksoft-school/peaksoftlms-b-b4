@@ -28,7 +28,7 @@ public class VideoLessonApi {
     @PostMapping
     @Operation(summary = "Add new video lessons",
             description = "This method save new video lessons.Only users with role teacher can add new video to lesson")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public VideoLessonResponse saveVideo(@RequestBody VideoLessonRequest videoLessonRequest) {
         return videoLessonService.saveVideoLessons(videoLessonRequest);
     }
@@ -36,30 +36,15 @@ public class VideoLessonApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single videos by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public VideoLessonResponse findById(@PathVariable Long id) {
         return videoLessonService.findById(id);
-    }
-
-    @GetMapping
-    @Operation(summary = "Gets a list",
-            description = "Returns all videos that are,if there are no videos,then an error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Found the videos",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = VideoLessonApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
-    public List<VideoLessonResponse> findAll() {
-        return videoLessonService.findAll();
-
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update the video_lessons",
             description = "Updates the details of an endpoint with ID. Only users with role teacher can add new video to lesson")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public VideoLessonResponse update(@PathVariable Long id, @RequestBody VideoLessonRequest videoLessonRequest) {
         return videoLessonService.update(id, videoLessonRequest);
     }
@@ -67,7 +52,7 @@ public class VideoLessonApi {
     @Operation(summary = "Delete the video lesson",
             description = "Delete the video lesson with ID")
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public String delete(@PathVariable Long id) {
         return videoLessonService.delete(id);
     }

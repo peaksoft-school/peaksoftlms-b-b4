@@ -14,7 +14,7 @@ public interface CourseService {
     CourseResponse saveCourse(CourseRequest courseRequest);
 
     List<CourseResponse> findAll();
-    CoursePaginationResponse coursesForPagination(int page,int size);
+    CoursePaginationResponse coursesForPagination(int page,int size,String studyFormat);
 
     CourseResponse findById(Long id);
 

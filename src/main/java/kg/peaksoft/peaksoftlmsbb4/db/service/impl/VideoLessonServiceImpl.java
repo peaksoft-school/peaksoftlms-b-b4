@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -52,12 +50,6 @@ public class VideoLessonServiceImpl implements VideoLessonService {
             throw new NotFoundException(String.format("Not found video lesson with id=%s", id));
 
         });
-    }
-
-    @Override
-    public List<VideoLessonResponse> findAll() {
-        log.info("successfully find all video lessons");
-        return videoLessonRepository.findAll().stream().map(videoLessonMapper::deConvert).collect(Collectors.toList());
     }
 
     @Override

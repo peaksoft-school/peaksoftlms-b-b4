@@ -28,7 +28,7 @@ public class LessonsApi {
     @PostMapping
     @Operation(summary = "Add new lesson to course",
             description = "This endpoint save new lesson to course by ID. Only users with role teacher can add new lessons")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public LessonResponse saveLesson(@RequestBody LessonRequest lessonRequest) {
         return lessonService.saveLessons(lessonRequest);
     }
@@ -36,7 +36,7 @@ public class LessonsApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single lessons by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public LessonResponse findById(@PathVariable Long id) {
         return lessonService.findById(id);
     }
@@ -50,7 +50,7 @@ public class LessonsApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = LessonsApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public List<LessonResponse> findAll(@PathVariable Long id) {
         return lessonService.findAll(id);
     }
@@ -58,14 +58,14 @@ public class LessonsApi {
     @PutMapping("/{id}")
     @Operation(summary = "Update the lessons",
             description = "Updates the details of an endpoint with ID. Only users with role teacher can update the lesson")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public LessonResponse update(@PathVariable Long id, @RequestBody LessonRequest lessonRequest) {
         return lessonService.update(id, lessonRequest);
 
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @Operation(summary = "Delete the lesson",
             description = "Delete lesson with ID. Only users with role teacher can delete lesson")
     public String delete(@PathVariable Long id) {
