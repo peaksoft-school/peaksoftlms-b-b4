@@ -13,20 +13,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({
-            MethodArgumentNotValidException.class,
-            BadRequestException.class, NotFoundException.class})
+    @ExceptionHandler(
+            BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ExceptionResponse handleMethodArgumentNotValidException(RuntimeException e) {
+    public ExceptionResponse handleMethodArgumentNotValidException(BadRequestException e) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
         exceptionResponse.setStatus(HttpStatus.BAD_REQUEST);
         exceptionResponse.setMessage(e.getMessage());
         return exceptionResponse;
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ExceptionResponse handleAnyExceptions(Exception e) {
+    public ExceptionResponse handleAnyExceptions(NotFoundException e) {
+        e.printStackTrace();
         ExceptionResponse exceptionResponse = new ExceptionResponse();
         exceptionResponse.setStatus(HttpStatus.NOT_FOUND);
         exceptionResponse.setMessage(e.getMessage());
@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ExceptionResponse handleBadCredentialsException(BadCredentialsException badCredentialsException) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
         exceptionResponse.setStatus(HttpStatus.UNAUTHORIZED);

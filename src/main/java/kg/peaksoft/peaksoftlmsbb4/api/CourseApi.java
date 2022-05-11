@@ -39,7 +39,7 @@ public class CourseApi {
 
     @Operation(summary = "Gets a single courses by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUTOR')")
     @GetMapping("/{id}")
     public CourseResponse findById(@PathVariable Long id) {
         return courseService.findById(id);
@@ -54,24 +54,11 @@ public class CourseApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = CourseApi.class)))})})
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public List<CourseResponse> findAllCourse() {
-        return courseService.findAll();
-    }
-
-    @Operation(summary = "Pagination",
-            description = "Returns all courses that are,if there are no courses,then an error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Found the courses",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = CourseApi.class)))})})
-    @GetMapping("/pagination")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUTOR')")
     public CoursePaginationResponse getAllCoursesForPagination(@RequestParam int page,
-                                                               @RequestParam int size) {
-        return courseService.coursesForPagination(page, size);
+                                                               @RequestParam int size,
+                                                               @RequestParam String studyFormat) {
+        return courseService.coursesForPagination(page, size, studyFormat);
     }
 
     @Operation(summary = "Updates the course",
@@ -94,12 +81,12 @@ public class CourseApi {
     @Operation(summary = "Get students by course id",
             description = "Get all students in this course")
     @GetMapping("/students/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
         return courseService.getAllStudentsByCourseId(id);
     }
 
-    @Operation(summary = "Get teachers with ID",
+    @Operation(summary = "Get teachers by course ID",
             description = "Get all teachers in this course")
     @GetMapping("/teachers/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -109,7 +96,7 @@ public class CourseApi {
 
     @Operation(summary = "Assign teacher to course",
             description = "This endpoint for adding a teacher to a course. Only user with role admin can add teacher to course")
-    @PostMapping("/assignTeacher")
+    @PostMapping("/assignTeachers")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String assignTeacherToCourse(@RequestBody AssignTeacherRequest assignTeacherRequest) {
         return courseService.assignTeachersToCourse(assignTeacherRequest);

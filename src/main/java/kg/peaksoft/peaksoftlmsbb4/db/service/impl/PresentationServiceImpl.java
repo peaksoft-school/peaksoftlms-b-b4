@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -61,12 +59,6 @@ public class PresentationServiceImpl implements PresentationService {
         }
         log.info("successfully update id:{}", id);
         return presentationMapper.deConvert(presentation);
-    }
-
-    @Override
-    public List<PresentationResponse> findAll() {
-        log.info("successfully find all presentations");
-        return presentationRepository.findAll().stream().map(presentationMapper::deConvert).collect(Collectors.toList());
     }
 
     @Override

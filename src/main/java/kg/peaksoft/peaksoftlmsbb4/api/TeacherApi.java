@@ -37,7 +37,7 @@ public class TeacherApi {
     private final GroupService groupService;
     private final CourseService courseService;
 
-    @GetMapping("/All")
+    @GetMapping()
     @Operation(summary = "Gets a list",
             description = "Returns all teachers that are,if there are no teachers,then an error")
     @ApiResponses(value = {
@@ -79,7 +79,7 @@ public class TeacherApi {
     @Operation(summary = "Teacher's courses",
             description = "This endpoint for get all teacher's courses")
     @GetMapping("/teacherCourses")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public List<CourseResponse> teacherCourses(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return teacherService.teacherCourses(user.getEmail());
@@ -97,7 +97,7 @@ public class TeacherApi {
     @Operation(summary = "Assign student to course",
             description = "This endpoint for adding a student to a course. Only user with role teacher can add student to course")
     @PostMapping("/assignStudent")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public String assignStudentToCourse(@RequestBody AssignStudentRequest assignStudentRequest) {
         return studentService.assignStudentToCourse(assignStudentRequest);
     }
@@ -105,7 +105,7 @@ public class TeacherApi {
     @Operation(summary = "Assign group to course",
             description = "This endpoint for adding a group to course")
     @PostMapping("/assignGroup")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public String assignGroupToCourse(@RequestBody AssignGroupRequest assignGroupRequest) {
         return groupService.assignGroupToCourse(assignGroupRequest);
     }

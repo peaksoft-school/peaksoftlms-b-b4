@@ -17,6 +17,5 @@ public class CourseResponse {
     private String courseName;
     private String image;
     private String description;
-    @JsonProperty("date_of_start")
-    private LocalDate dateOfStart;
+    private String duration;
 }

@@ -17,20 +17,19 @@ import java.util.List;
 @AllArgsConstructor
 public class StudentMapper implements Converter<Student, StudentRequest, StudentResponse> {
     private final GroupRepository groupRepository;
-
     @Override
     public Student convert(StudentRequest studentRequest) {
         Student student = new Student();
+        User user = new User();
         student.setStudentName(studentRequest.getStudentName());
         student.setLastName(studentRequest.getLastName());
         student.setPhoneNumber(studentRequest.getPhoneNumber());
         student.setStudyFormat(studentRequest.getStudyFormat());
-        User user=new User();
+        student.setGroup(groupRepository.getById(studentRequest.getGroupId()));
+        user.setRole(Role.STUDENT);
         user.setPassword(studentRequest.getPassword());
         user.setEmail(studentRequest.getEmail());
-        user.setRole(Role.STUDENT);
         student.setUser(user);
-        student.setGroup(groupRepository.getById(studentRequest.getGroupId()));
         return student;
     }
 

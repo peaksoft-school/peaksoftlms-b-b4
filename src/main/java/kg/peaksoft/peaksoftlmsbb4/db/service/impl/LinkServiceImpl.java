@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -47,13 +45,6 @@ public class LinkServiceImpl implements LinkService {
         log.info("successfully find link by id:{}", id);
         return linkMapper.deConvert(getLinkById(id));
     }
-
-    @Override
-    public List<LinkResponse> findAll() {
-        log.info("successfully find all links");
-        return linkRepository.findAll().stream().map(linkMapper::deConvert).collect(Collectors.toList());
-    }
-
 
     @Override
     public LinkResponse update(Long id, LinkRequest linkRequest) {

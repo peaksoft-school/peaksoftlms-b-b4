@@ -34,7 +34,6 @@ public class GroupApi {
         return groupService.saveGroup(groupRequest);
     }
 
-
     @Operation(summary = "Gets a list",
             description = "Returns all groups that are,if there are no groups,then an error")
     @ApiResponses(value = {
@@ -43,22 +42,8 @@ public class GroupApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping
-    public List<GroupResponse> findAllGroup() {
-        return groupService.findAllGroup();
-    }
-
-    @Operation(summary = "Pagination",
-            description = "Returns all groups that are,if there are no groups,then an error")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Found the groups",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    @GetMapping("/pagination")
     public GroupResponsePagination getAllForPagination(@RequestParam int page,
                                                        @RequestParam int size) {
         return groupService.getAllForPagination(page, size);
@@ -68,7 +53,7 @@ public class GroupApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single groups by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public GroupResponse findById(@PathVariable Long id) {
         return groupService.findById(id);
     }
@@ -93,7 +78,7 @@ public class GroupApi {
     }
 
     @GetMapping("/students/{id}")
-    @Operation(summary = "Get teachers with ID",
+    @Operation(summary = "Get students by group ID",
             description = "Get all students in this groups")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {

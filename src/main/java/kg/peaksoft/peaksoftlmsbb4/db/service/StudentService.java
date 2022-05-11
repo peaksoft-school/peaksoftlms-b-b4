@@ -21,16 +21,12 @@ public interface StudentService {
 
     String deleteStudent(Long id);
 
-    List<StudentResponse> findAllStudent();
-
-    StudentPaginationResponse getAll(int size, int page);
-
-    List<StudentResponse> findByStudyFormat(StudyFormat studyFormat);
+    StudentPaginationResponse getAll(int size,int page,StudyFormat studyFormat);
 
     String assignStudentToCourse(AssignStudentRequest assignStudentRequest);
 
-    List<Student> findByStudentName(String name);
+    List<StudentResponse> findByStudentName(String name);
 
-    List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException;
+    List<StudentResponse> importExcelFile(MultipartFile files,Long id) throws IOException;
 
 }

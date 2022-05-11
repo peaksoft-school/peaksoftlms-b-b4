@@ -29,6 +29,7 @@ public class Group {
     private String description;
     private String image;
     private LocalDate dateOfStart;
+    private LocalDate dateOfFinish;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Student> students = new ArrayList<>();
