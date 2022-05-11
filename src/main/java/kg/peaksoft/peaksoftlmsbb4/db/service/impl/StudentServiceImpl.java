@@ -1,8 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import com.poiji.bind.Poiji;
-import com.poiji.exception.PoijiExcelType;
-import com.poiji.option.PoijiOptions;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
@@ -29,10 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 

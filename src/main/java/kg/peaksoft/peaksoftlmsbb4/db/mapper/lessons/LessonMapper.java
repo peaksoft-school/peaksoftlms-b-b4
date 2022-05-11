@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.mapper.lessons;
 import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.model.*;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

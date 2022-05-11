@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
-import com.amazonaws.services.s3.model.S3Object;
 import io.swagger.v3.oas.annotations.Operation;
 import kg.peaksoft.peaksoftlmsbb4.db.service.impl.AWSS3Service;
 import lombok.AllArgsConstructor;

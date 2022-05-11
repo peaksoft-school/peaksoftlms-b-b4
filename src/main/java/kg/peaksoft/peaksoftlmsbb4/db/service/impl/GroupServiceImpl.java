@@ -35,7 +35,6 @@ public class GroupServiceImpl implements GroupService {
     private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;
     private final CourseRepository courseRepository;
-    private final AWSS3Service awss3Service;
 
     @Override
     public GroupResponse saveGroup(GroupRequest groupRequest) {

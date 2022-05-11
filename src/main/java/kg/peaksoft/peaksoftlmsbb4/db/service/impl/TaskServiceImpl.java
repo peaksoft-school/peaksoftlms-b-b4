@@ -2,10 +2,8 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.enums.ResourceType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.task.TaskMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.ResourceRepository;
@@ -17,8 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
