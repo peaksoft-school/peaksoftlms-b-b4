@@ -13,8 +13,6 @@ public interface VideoLessonService {
 
     VideoLessonResponse findById(Long id);
 
-    List<VideoLessonResponse> findAll();
-
     VideoLessonResponse update(Long id, VideoLessonRequest videoLessonRequest);
 
     String delete(Long id);

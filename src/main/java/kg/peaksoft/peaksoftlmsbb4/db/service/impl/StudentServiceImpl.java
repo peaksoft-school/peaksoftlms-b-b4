@@ -20,6 +20,9 @@ import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -132,70 +135,60 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponse> importExcelFile(MultipartFile files) throws IOException {
-        log.info("this method working done");
-        System.out.println(files.getName());
-        PoijiOptions options = PoijiOptions.PoijiOptionsBuilder.settings(0)
-                .addListDelimiter(";")
-                .build();
+    public List<StudentResponse> importExcelFile(MultipartFile files,Long id) throws IOException {
 
+        Group group = groupRepository.findById(id).orElseThrow(()->
+                new NotFoundException(String.format("Group with id = %s does not exists",id)));
+        XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
+        XSSFSheet worksheet = workbook.getSheetAt(0);
         List<StudentResponse> student1 = new ArrayList<>();
-        InputStream stream = new FileInputStream(new File(files.getName()));
-        List<StudentRequest> students = Poiji.fromExcel(stream, PoijiExcelType.XLS, StudentRequest.class, options);
+        for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
+            if (index > 0) {
 
-//        XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
-//        XSSFSheet worksheet = workbook.getSheetAt(0);
+                StudentRequest student = new StudentRequest();
+                XSSFRow row = worksheet.getRow(index);
+                if (row.getCell(0).getStringCellValue() != null) {
+                    student.setStudentName(row.getCell(0).getStringCellValue());
+                } else {
+                    throw new IOException("Student name can't be null");
+                }
+                student.setLastName(row.getCell(1).getStringCellValue());
+                if (row.getCell(2).getStringCellValue() != null) {
+                    student.setEmail(row.getCell(2).getStringCellValue());
+                } else {
+                    throw new IOException("Student email can't be empty");
+                }
+                student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
+                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+                if (row.getCell(5).getStringCellValue() != null) {
+                    student.setPassword(row.getCell(5).getStringCellValue());
+                } else {
+                    throw new IOException("Student password can't be empty");
+                }
+                student.setGroupId(group.getId());
+                Student s = studentMapper.convert(student);
+                String email = s.getUser().getEmail();
+                if (studentRepository.existsStudentByUserEmail((email))) {
+                    log.error("there is such a student with email:{}", email);
+                    throw new BadRequestException(
+                            String.format("There is such a student with email= %s", email)
+                    );
+                }
+                Student students = studentRepository.save(s);
+                group.setStudent(students);
+                log.info("successful import excel students:{}", student.getStudentName());
+                student1.add(studentMapper.deConvert(students));
+            }
 
-//        for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
-//            if (index > 0) {
-//
-//                StudentRequest student = new StudentRequest();
-//                XSSFRow row = worksheet.getRow(index);
-//                if (row.getCell(0).getStringCellValue() != null) {
-//                    student.setStudentName(row.getCell(0).getStringCellValue());
-//                } else {
-//                    throw new IOException("Student name can't be null");
-//                }
-//                student.setLastName(row.getCell(1).getStringCellValue());
-//                if (row.getCell(2).getStringCellValue() != null) {
-//                    student.setEmail(row.getCell(2).getStringCellValue());
-//                } else {
-//                    throw new IOException("Student email can't be empty");
-//                }
-//                student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
-//                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
-//                if (row.getCell(5).getStringCellValue() != null) {
-//                    student.setPassword(row.getCell(5).getStringCellValue());
-//                } else {
-//                    throw new IOException("Student password can't be empty");
-//                }
-//                student.setGroupId(group.getId());
-//                Student s = studentMapper.convert(student);
-//                String email = s.getUser().getEmail();
-//                if (studentRepository.existsStudentByUserEmail((email))) {
-//                    log.error("there is such a student with email:{}", email);
-//                    throw new BadRequestException(
-//                            String.format("There is such a student with email= %s", email)
-//                    );
-//                }
-//                Student students = studentRepository.save(s);
-//                group.setStudent(students);
-//                log.info("successful import excel students:{}", student.getStudentName());
-//                student1.add(studentMapper.deConvert(students));
-//            }
-//
-//        }
-        for (StudentRequest s : students) {
-            student1.add(studentMapper.deConvert(studentRepository.save(studentMapper.convert(s))));
         }
         return student1;
 
     }
 
     @Override
-    public List<Student> findByStudentName(String name) {
+    public List<StudentResponse> findByStudentName(String name) {
         log.info("successfully filter students by name:{}", name);
-        return studentRepository.findByStudentName(name);
+        return studentMapper.deConvert(studentRepository.findByStudentName(name));
     }
 
 }

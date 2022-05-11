@@ -21,7 +21,7 @@ public class PresentationsApi {
     @PostMapping
     @Operation(summary = "Add new presentation",
             description = "This endpoint save new presentations. Only users with role teacher can add new presentation to lesson")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public PresentationResponse savePresentations(@RequestBody PresentationRequest presentationRequest) {
         return presentationService.savePresentation(presentationRequest);
     }
@@ -29,7 +29,7 @@ public class PresentationsApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single presentation by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public PresentationResponse findById(@PathVariable Long id) {
         return presentationService.findById(id);
 
@@ -38,14 +38,14 @@ public class PresentationsApi {
     @PutMapping("/{id}")
     @Operation(summary = "Update the presentations",
             description = "Updates the details of an endpoint with ID")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public PresentationResponse update(@PathVariable Long id,
                                        @RequestBody PresentationRequest presentationRequest) {
         return presentationService.update(id, presentationRequest);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @Operation(summary = "Delete the presentation",
             description = "Delete links with ID. Only users with role teacher can delete links")
     public String delete(@PathVariable Long id) {

@@ -25,8 +25,8 @@ public interface StudentService {
 
     String assignStudentToCourse(AssignStudentRequest assignStudentRequest);
 
-    List<Student> findByStudentName(String name);
+    List<StudentResponse> findByStudentName(String name);
 
-    List<StudentResponse> importExcelFile(MultipartFile files) throws IOException;
+    List<StudentResponse> importExcelFile(MultipartFile files,Long id) throws IOException;
 
 }

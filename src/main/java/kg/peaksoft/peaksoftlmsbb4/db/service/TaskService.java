@@ -10,8 +10,6 @@ import java.util.List;
 public interface TaskService {
     TaskResponse saveTasks(TaskRequest taskRequest);
 
-    List<TaskResponse> findAll();
-
     TaskResponse update(Long id, TaskRequest taskRequest);
 
     String delete(Long id);

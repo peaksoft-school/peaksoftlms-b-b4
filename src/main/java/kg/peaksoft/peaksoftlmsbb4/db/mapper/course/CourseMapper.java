@@ -4,9 +4,12 @@ import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +23,12 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         course.setCourseName(courseRequest.getCourseName());
         course.setDescription(courseRequest.getDescription());
         course.setImage(courseRequest.getImage());
-        course.setDateOfStart(courseRequest.getDateOfStart());
+        course.setDateOfStart(LocalDate.now());
+        if (course.getDateOfFinish().isBefore(LocalDate.now())){
+            throw new BadRequestException("Date of finish can't be before than date of start");
+        }else {
+            course.setDateOfFinish(courseRequest.getDateOfFinish());
+        }
         return course;
     }
 
@@ -31,7 +39,7 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         courseResponse.setCourseName(course.getCourseName());
         courseResponse.setDescription(course.getDescription());
         courseResponse.setImage(course.getImage());
-        courseResponse.setDateOfStart(course.getDateOfStart());
+        courseResponse.setDuration(course.getDateOfStart().getYear() +"-"+ course.getDateOfFinish().getYear());
         return courseResponse;
     }
 

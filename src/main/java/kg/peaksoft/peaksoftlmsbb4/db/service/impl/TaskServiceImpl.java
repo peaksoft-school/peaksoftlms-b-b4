@@ -8,6 +8,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.ResourceRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TaskRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TaskService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
@@ -28,6 +29,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final LessonRepository lessonRepository;
     private final AWSS3Service awss3Service;
+    private final ResourceRepository resourceRepository;
 
     @Override
     public TaskResponse saveTasks(TaskRequest taskRequest) {
@@ -48,12 +50,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskResponse> findAll() {
-        log.info("successfully find all tasks");
-        return taskRepository.findAll().stream().map(taskMapper::deConvert).collect(Collectors.toList());
-    }
-
-    @Override
     public TaskResponse update(Long id, TaskRequest taskRequest) {
         boolean exist = taskRepository.existsById(id);
         if (!exist) {
@@ -70,20 +66,12 @@ public class TaskServiceImpl implements TaskService {
 
 
     @Override
+    @Transactional
     public String delete(Long id) {
-        boolean exits = taskRepository.existsById(id);
-        if (!exits) {
-            log.error("not found task with  id:{}", id);
-            throw new NotFoundException(String.format("Task is not found id=%s", id));
-
-        }
-//        for (Resource r : taskRepository.getById(id).getResources()) {
-//            if (r.getResourceType() == ResourceType.FILE || r.getResourceType() == ResourceType.IMAGE) {
-//                awss3Service.deleteFile(r.getValue());
-//                awss3Service.deleteFile(r.getValue());
-//            }
-//        }
-        taskRepository.deleteById(id);
+        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(
+                String.format("Task is not found id=%s", id)));
+        // task.remove(task.getResources());
+        taskRepository.delete(task);
         log.info("successfully delete task by id :{}", id);
         return "Task deleted";
     }

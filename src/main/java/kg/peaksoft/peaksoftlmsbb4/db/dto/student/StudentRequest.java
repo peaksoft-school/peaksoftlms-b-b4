@@ -44,9 +44,10 @@ public class StudentRequest {
     @ExcelCellName("email")
     private String email;
 
-//    @ValidPassword
-//    private String password;
-//
-//    private Long groupId;
+    @ValidPassword
+    private String password;
+
+    @JsonProperty("group_id")
+    private Long groupId;
 
 }

@@ -55,12 +55,6 @@ public class VideoLessonServiceImpl implements VideoLessonService {
     }
 
     @Override
-    public List<VideoLessonResponse> findAll() {
-        log.info("successfully find all video lessons");
-        return videoLessonRepository.findAll().stream().map(videoLessonMapper::deConvert).collect(Collectors.toList());
-    }
-
-    @Override
     public VideoLessonResponse update(Long id, VideoLessonRequest videoLessonRequest) {
         boolean exist = videoLessonRepository.existsById(id);
         if (!exist) {

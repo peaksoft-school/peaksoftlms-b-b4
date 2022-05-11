@@ -21,7 +21,7 @@ public class LinkApi {
     @PostMapping
     @Operation(summary = "Add new link",
             description = "This endpoint save new links to lesson. Only users with role teacher can add new link to lesson")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public LinkResponse saveLink(@RequestBody LinkRequest linkRequest) {
         return linkService.saveLinks(linkRequest);
     }
@@ -29,7 +29,7 @@ public class LinkApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single links by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public LinkResponse findById(@PathVariable Long id) {
         return linkService.findById(id);
     }
@@ -37,14 +37,14 @@ public class LinkApi {
     @PutMapping("/{id}")
     @Operation(summary = "Update the link",
             description = "Updates the details of an endpoint with ID. Only users with role teacher can update the link")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public LinkResponse update(@PathVariable Long id, @RequestBody LinkRequest linkRequest) {
         return linkService.update(id, linkRequest);
 
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @Operation(summary = "Delete the link",
             description = "Delete links with ID. Only users with role teacher can delete links")
     public String delete(@PathVariable Long id) {

@@ -22,7 +22,7 @@ public class TaskApi {
     @PostMapping
     @Operation(summary = "Add new tasks",
             description = "This endpoint save new task. Only users with role teacher can add new task to lesson")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public TaskResponse saveTasks(@RequestBody TaskRequest taskRequest) {
         return taskService.saveTasks(taskRequest);
 
@@ -31,7 +31,7 @@ public class TaskApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single task by lesson identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public TaskResponse findById(@PathVariable Long id) {
         return taskService.findTaskByLessonId(id);
     }
@@ -39,13 +39,13 @@ public class TaskApi {
     @PutMapping("/{id}")
     @Operation(summary = "Update the tasks",
             description = "Updates the details of an endpoint with ID")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public TaskResponse update(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
         return taskService.update(id, taskRequest);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('TEACHER')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @Operation(summary = "Delete the task",
             description = "Delete task with ID")
     public String delete(@PathVariable Long id) {

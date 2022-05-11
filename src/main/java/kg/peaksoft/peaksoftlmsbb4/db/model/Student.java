@@ -39,7 +39,7 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;
 
-    @ManyToOne
+    @ManyToOne(cascade = {REFRESH,DETACH,MERGE})
     @JsonIgnore
     @JoinColumn(name = "group_id")
     private Group group;

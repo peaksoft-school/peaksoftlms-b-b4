@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class TaskResponse {
+   private Long id;
    private String name;
    private List<ResourceResponse> resources;
 }

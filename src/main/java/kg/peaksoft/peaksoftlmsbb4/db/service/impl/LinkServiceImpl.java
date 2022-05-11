@@ -49,13 +49,6 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public List<LinkResponse> findAll() {
-        log.info("successfully find all links");
-        return linkRepository.findAll().stream().map(linkMapper::deConvert).collect(Collectors.toList());
-    }
-
-
-    @Override
     public LinkResponse update(Long id, LinkRequest linkRequest) {
         boolean exist = linkRepository.existsById(id);
         if (!exist) {

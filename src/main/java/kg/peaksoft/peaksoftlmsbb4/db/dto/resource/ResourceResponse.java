@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ResourceResponse {
+    private Long id;
     @JsonProperty("resource_type")
     private ResourceType resourceType;
     private String value;

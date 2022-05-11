@@ -1,10 +1,12 @@
 package kg.peaksoft.peaksoftlmsbb4.api;
 
 import com.amazonaws.services.s3.model.S3Object;
+import io.swagger.v3.oas.annotations.Operation;
 import kg.peaksoft.peaksoftlmsbb4.db.service.impl.AWSS3Service;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,14 +19,20 @@ import java.util.Map;
 public class AWSS3ClientApi {
     private AWSS3Service awsS3Service;
 
-    @PostMapping
+    @Operation(summary = "Upload file",
+            description = "This endpoint for upload file to s3")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @PostMapping()
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
         String publicURL = awsS3Service.uploadFile(file);
         Map<String, String> response = new HashMap<>();
-        response.put("publicURL", publicURL);
+        response.put("URL", publicURL);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Delete the file ",
+            description = "Delete file in s3")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @DeleteMapping
     public String deleteFile(@RequestParam String file) {
         return awsS3Service.deleteFile(file);

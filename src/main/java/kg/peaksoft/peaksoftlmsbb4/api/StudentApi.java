@@ -42,7 +42,7 @@ public class StudentApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = StudentApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public StudentPaginationResponse getAll(@RequestParam int page,
                                             @RequestParam int size,
                                             @RequestParam StudyFormat studyFormat) {
@@ -86,7 +86,7 @@ public class StudentApi {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Get by name",
             description = "Get student by name")
-    public List<Student> getByStudentName(@RequestParam String name) {
+    public List<StudentResponse> getByStudentName(@RequestParam String name) {
         return studentService.findByStudentName(name);
     }
 
@@ -94,10 +94,8 @@ public class StudentApi {
             description = "This endpoint for import students list from excel to group")
     @PostMapping("/import")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public List<StudentResponse> importExcelFile
-            (@RequestParam(name = "file") MultipartFile files) throws IOException {
-        log.info("this endpoint is working");
-        return studentService.importExcelFile(files);
+    public List<StudentResponse> importExcelFile(@RequestParam(name = "file") MultipartFile files,@RequestParam Long groupId) throws IOException {
+        return studentService.importExcelFile(files,groupId);
     }
 
 }

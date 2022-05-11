@@ -42,7 +42,7 @@ public class GroupApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping
     public GroupResponsePagination getAllForPagination(@RequestParam int page,
                                                        @RequestParam int size) {
@@ -53,7 +53,7 @@ public class GroupApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single groups by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('ADMIN','TEACHER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public GroupResponse findById(@PathVariable Long id) {
         return groupService.findById(id);
     }
@@ -78,7 +78,7 @@ public class GroupApi {
     }
 
     @GetMapping("/students/{id}")
-    @Operation(summary = "Get teachers with ID",
+    @Operation(summary = "Get students by group ID",
             description = "Get all students in this groups")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {

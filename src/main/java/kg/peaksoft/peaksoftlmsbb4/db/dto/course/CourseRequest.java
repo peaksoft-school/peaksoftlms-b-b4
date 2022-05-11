@@ -2,11 +2,8 @@ package kg.peaksoft.peaksoftlmsbb4.db.dto.course;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.URL;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -23,12 +20,12 @@ public class CourseRequest {
     private String description;
     @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    @JsonProperty("date_of_start")
-    private LocalDate dateOfStart;
+    @JsonProperty("date_of_finish")
+    private LocalDate dateOfFinish;
 
     public CourseRequest(String courseName, String description, LocalDate dateOfStart) {
         this.courseName = courseName;
         this.description = description;
-        this.dateOfStart = dateOfStart;
+        this.dateOfFinish = dateOfStart;
     }
 }

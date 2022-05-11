@@ -14,6 +14,5 @@ public class GroupResponse {
     private String groupName;
     private String description;
     private String image;
-    @JsonProperty("date_of_start")
-    private LocalDate dateOfStart;
+    private String duration;
 }

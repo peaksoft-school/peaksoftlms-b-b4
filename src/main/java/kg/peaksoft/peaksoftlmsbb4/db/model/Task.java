@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.db.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.CascadeType.*;
@@ -29,11 +29,15 @@ public class Task {
     private String name;
 
     @OneToMany(cascade = ALL)
-    @JoinColumn(name = "resources_id")
     private List<Resource> resources;
 
-    @OneToOne(cascade = {DETACH, REFRESH, MERGE}, mappedBy = "task")
+    @OneToOne(cascade = {REMOVE, DETACH, REFRESH, MERGE}, mappedBy = "task")
     private Lesson lessons;
 
-
+    public void setResource(Resource resource) {
+        if (resources == null) {
+            resources = new ArrayList<>();
+        }
+        resources.add(resource);
+    }
 }

@@ -46,14 +46,14 @@ public class PeaksoftlmsBB4Application {
             User teacher = new User();
             teacher.setEmail("chyngyz@gmail.com");
             teacher.setPassword(encoder.encode("teacher"));
-            teacher.setRole(Role.TEACHER);
+            teacher.setRole(Role.INSTRUCTOR);
             Teacher teacher1 = new Teacher();
             teacher1.setName("Chyngyz");
             teacher1.setLastName("Sharshekeev");
             teacher1.setPhoneNumber("0777777777");
             teacher1.setSpecialization("Java developer");
             teacher1.setUser(teacher);
-            if(!userRepository.existsByEmail(teacher.getEmail())){
+            if (!userRepository.existsByEmail(teacher.getEmail())) {
                 teacherRepository.save(teacher1);
             }
         };

@@ -64,12 +64,6 @@ public class PresentationServiceImpl implements PresentationService {
     }
 
     @Override
-    public List<PresentationResponse> findAll() {
-        log.info("successfully find all presentations");
-        return presentationRepository.findAll().stream().map(presentationMapper::deConvert).collect(Collectors.toList());
-    }
-
-    @Override
     public String delete(Long id) {
         boolean exits = presentationRepository.existsById(id);
         if (!exits) {

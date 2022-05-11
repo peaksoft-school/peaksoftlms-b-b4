@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.*;
+
 @Getter
 @Setter
 @Entity
