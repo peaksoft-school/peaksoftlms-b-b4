@@ -31,6 +31,7 @@ public class AuthServiceImpl implements AuthService {
                 authRequest.getEmail(),
                 authRequest.getPassword()
         ));
+
         User user = userRepository.findByEmail(authRequest.getEmail()).orElseThrow(() -> new NotFoundException(
                 "user with this email does not exists"
         ));

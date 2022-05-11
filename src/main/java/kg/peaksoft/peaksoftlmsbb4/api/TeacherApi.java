@@ -51,10 +51,11 @@ public class TeacherApi {
         return teacherService.findAllTeacher();
     }
 
-    @PostMapping
+
     @Operation(summary = "Add new teacher",
             description = "This endpoint save new teacher")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PostMapping
     public TeacherResponse saveTeacher(@Valid @RequestBody TeacherRequest teacherRequest) {
         return teacherService.saveTeacher(teacherRequest);
     }
