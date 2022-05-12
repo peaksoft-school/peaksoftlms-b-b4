@@ -10,7 +10,6 @@ import java.util.List;
 @Setter
 public class GroupResponsePagination {
     private int pages;
-    @JsonProperty("current_page")
     private int currentPage;
     private List<GroupResponse> groups;
 }
