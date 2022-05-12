@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @ToString
 public class CourseResponse {
     private Long id;
-    @JsonProperty("course_name")
     private String courseName;
     private String image;
     private String description;

@@ -36,6 +36,7 @@ public class PresentationsApi {
     }
 
     @PutMapping("/{id}")
+
     @Operation(summary = "Update the presentations",
             description = "Updates the details of an endpoint with ID")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
