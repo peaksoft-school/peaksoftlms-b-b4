@@ -33,7 +33,7 @@ public class PeaksoftlmsBB4Application {
         return "<h1>Welcome to Peaksoftlms-B application!!!<h1/>";
     }
 
-//    @Bean
+//  @Bean
     public CommandLineRunner CommandLineRunnerBean() {
         return (args) -> {
             User user = new User();
