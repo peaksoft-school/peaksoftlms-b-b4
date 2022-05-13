@@ -63,8 +63,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CoursePaginationResponse coursesForPagination(int page, int size, String studyFormat) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(studyFormat));
+    public CoursePaginationResponse coursesForPagination(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         CoursePaginationResponse coursePaginationResponse = new CoursePaginationResponse();
         coursePaginationResponse.setCourses(courseMapper.deConvert(courseRepository.findAll(pageable).getContent()));
         coursePaginationResponse.setPages(courseRepository.findAll(pageable).getTotalPages());

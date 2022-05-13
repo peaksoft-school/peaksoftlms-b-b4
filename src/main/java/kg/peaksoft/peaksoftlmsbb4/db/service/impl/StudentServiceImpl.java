@@ -109,7 +109,11 @@ public class StudentServiceImpl implements StudentService {
     public StudentPaginationResponse getAll(int page, int size, StudyFormat studyFormat) {
         Pageable pageable = PageRequest.of(page, size);
         StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
-        studentPaginationResponse.setPages((studentRepository.findStudentByStudyFormat(studyFormat, pageable).getTotalPages()));
+        if(studyFormat.equals(StudyFormat.ALL)){
+            studentRepository.findAll();
+        }
+            studentPaginationResponse.setPages((studentRepository.findStudentByStudyFormat(studyFormat, pageable).getTotalPages()));
+
         studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
         studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findStudentByStudyFormat(studyFormat, pageable).getContent()));
         return studentPaginationResponse;
