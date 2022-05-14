@@ -21,7 +21,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -99,7 +98,7 @@ public class CourseServiceImpl implements CourseService {
             throw new NotFoundException(String.format(" course with id=%s does not exists", id));
         }
         log.info("successful delete course with id:{}", id);
-        if(courseRepository.getById(id).getImage()!=null){
+        if (courseRepository.getById(id).getImage() != null) {
             awss3Service.deleteFile(courseRepository.getById(id).getImage());
         }
         courseRepository.deleteById(id);

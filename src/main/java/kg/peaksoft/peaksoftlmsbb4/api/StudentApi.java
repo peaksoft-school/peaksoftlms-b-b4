@@ -11,7 +11,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +45,8 @@ public class StudentApi {
     public StudentPaginationResponse getAll(@RequestParam int page,
                                             @RequestParam int size,
                                             @RequestParam StudyFormat studyFormat) {
-        return studentService.getAll(page, size,studyFormat);
+
+        return studentService.getAll(page, size, studyFormat);
     }
 
     @PostMapping
@@ -94,9 +94,8 @@ public class StudentApi {
             description = "This endpoint for import students list from excel to group")
     @PostMapping("/import")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public List<StudentResponse> importExcelFile(@RequestParam(name = "file") MultipartFile files,@RequestParam Long groupId) throws IOException {
-        return studentService.importExcelFile(files,groupId);
+    public List<StudentResponse> importExcelFile(@RequestParam(name = "file") MultipartFile files, @RequestParam Long groupId) throws IOException {
+        return studentService.importExcelFile(files, groupId);
     }
-
 }
 
