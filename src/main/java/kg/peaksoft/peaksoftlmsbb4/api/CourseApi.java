@@ -56,9 +56,8 @@ public class CourseApi {
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUTOR')")
     public CoursePaginationResponse getAllCoursesForPagination(@RequestParam int page,
-                                                               @RequestParam int size,
-                                                               @RequestParam String studyFormat) {
-        return courseService.coursesForPagination(page, size, studyFormat);
+                                                               @RequestParam int size) {
+        return courseService.coursesForPagination(page, size);
     }
 
     @Operation(summary = "Updates the course",

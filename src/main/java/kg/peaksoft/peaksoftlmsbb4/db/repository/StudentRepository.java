@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long>, PagingAndSortingRepository<Student,Long> {
+public interface StudentRepository extends JpaRepository<Student, Long>, PagingAndSortingRepository<Student, Long> {
 
     boolean existsStudentByUserEmail(String email);
 
@@ -21,4 +21,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>, PagingA
     List<Student> findByStudentName(@Param("studentName") String studentName);
 
     Page<Student> findStudentByStudyFormat(StudyFormat studyFormat, Pageable pageable);
+
+    @Query("select s from Student s")
+    Page<Student> findAllByStudent(Pageable pageable);
 }
