@@ -19,12 +19,13 @@ import static java.net.HttpURLConnection.HTTP_OK;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/files")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AWSS3ClientApi {
     private AWSS3Service awsS3Service;
 
     @Operation(summary = "Upload file", description = "This endpoint for upload file to s3")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-    @PostMapping("upload")
+    @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
         String publicURL = awsS3Service.uploadFile(file);
         Map<String, String> response = new HashMap<>();
