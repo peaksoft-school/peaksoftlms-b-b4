@@ -14,18 +14,10 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/questions")
-@CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Question", description = "The Question API")
 public class QuestionApi {
     private final QuestionService questionService;
-
-    @Operation(summary = "Add new question",
-            description = "This endpoint save new question. Only users with role teacher can add new question to test")
-    @PostMapping()
-    @PreAuthorize("hasAuthority('INSTRUCTOR')")
-    public QuestionResponse saveQuestion(@Valid @RequestBody QuestionRequest questionRequest) {
-        return questionService.saveQuestion(questionRequest);
-    }
 
     @Operation(summary = "Gets a single question by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")

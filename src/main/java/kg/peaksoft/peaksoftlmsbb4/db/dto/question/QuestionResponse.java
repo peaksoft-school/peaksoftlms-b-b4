@@ -11,10 +11,13 @@ import java.util.List;
 @Getter
 @Setter
 public class QuestionResponse {
+    @JsonProperty("question_id")
     private Long id;
+    @JsonProperty("question")
     private String question;
     @JsonProperty("question_type")
     private QuestionType questionType;
+    @JsonProperty("variants")
     private List<VariantResponse> variantResponses;
 
 }

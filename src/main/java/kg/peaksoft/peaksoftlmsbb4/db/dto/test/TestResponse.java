@@ -10,9 +10,11 @@ import java.util.List;
 @Getter
 @Setter
 public class TestResponse {
+    @JsonProperty("test_id")
     private Long id;
     @JsonProperty("test_name")
     private String testName;
+    @JsonProperty("questions")
     private List<QuestionResponse> questionResponses;
 
 }

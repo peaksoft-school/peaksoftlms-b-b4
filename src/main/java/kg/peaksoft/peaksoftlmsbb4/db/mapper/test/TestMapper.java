@@ -28,10 +28,10 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
         List<Question> questions = new ArrayList<>();
         Test test = new Test();
         test.setTestName(testRequest.getTestName());
-        test.setIsEnabled(testRequest.getIsEnabled());
-        int counter = 0;
+        test.setIsEnabled(testRequest.getDisable());
         for (QuestionRequest q : testRequest.getQuestionRequestList()) {
-            if (q.getQuestionType() == QuestionType.ONE) {
+            int counter = 0;
+            if (q.getQuestionType() == QuestionType.SINGLE) {
                 for (VariantRequest v : q.getVariantRequests()) {
                     if (v.getChoiceAnswer()) {
                         counter++;
@@ -41,17 +41,12 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
                     throw new BadRequestException("You can't choose multiply answer");
                 } else {
                     questions.add(questionMapper.convert(q));
-                    test.setQuestions(questions);
-                    return test;
                 }
-
             } else
                 questions.add(questionMapper.convert(q));
-            test.setQuestions(questions);
-            return test;
-
         }
-        return null;
+        test.setQuestions(questions);
+        return test;
     }
 
     @Override

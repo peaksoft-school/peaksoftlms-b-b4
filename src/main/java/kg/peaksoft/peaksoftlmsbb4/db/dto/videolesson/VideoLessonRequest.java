@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson;
+package kg.peaksoft.peaksoftlmsbb4.db.dto.videolesson;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

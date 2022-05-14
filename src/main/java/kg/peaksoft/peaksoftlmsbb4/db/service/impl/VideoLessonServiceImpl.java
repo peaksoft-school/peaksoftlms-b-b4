@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.videolesson.VideoLessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.videolesson.VideoLessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.videolesson.VideoLessonMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.VideoLesson;

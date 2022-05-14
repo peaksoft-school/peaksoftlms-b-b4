@@ -14,5 +14,6 @@ public class QuestionRequest {
     private String question;
     @JsonProperty("question_type")
     private QuestionType questionType;
+    @JsonProperty("variants")
     private List<VariantRequest> variantRequests;
 }

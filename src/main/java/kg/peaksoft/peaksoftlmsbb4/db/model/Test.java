@@ -34,12 +34,9 @@ public class Test {
     @JoinColumn(name = "lessons_id")
     private Lesson lessons;
 
-//    public void setQuestions1(List<Question> question) {
+//    public void setQuestions(List<Question> question) {
 //        if (questions == null) {
 //            questions = question;
-//        }
-//        for (Question q:question) {
-//            q.setTest(this);
 //        }
 //    }
 

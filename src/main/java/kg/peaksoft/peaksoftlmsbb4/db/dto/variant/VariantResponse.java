@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VariantResponse {
+    @JsonProperty("variant_id")
     private Long id;
     @JsonProperty("option")
     private String option;

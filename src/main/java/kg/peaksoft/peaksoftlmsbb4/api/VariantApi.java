@@ -15,18 +15,11 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/variants")
-@CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Variant", description = "The Variant API")
 @PreAuthorize("hasAnyAuthority('INTRUCTOR,STUDENT')")
 public class VariantApi {
     private final VariantService variantService;
-
-    @Operation(summary = "Add new variant",
-            description = "This endpoint save new variant. Only users with role teacher can add new variant to question")
-    @PostMapping()
-    public VariantResponse saveVariant(@Valid @RequestBody VariantRequest variantRequest) {
-        return variantService.saveVariant(variantRequest);
-    }
 
     @Operation(summary = "Gets a single variant by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")

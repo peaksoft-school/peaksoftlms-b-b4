@@ -15,16 +15,17 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/tests")
-@CrossOrigin(origins = "http//localhost:1234", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Test", description = "The Test API")
 public class TestApi {
     private final TestService testService;
 
     @Operation(summary = "Add new test",
             description = "This endpoint create new test. Only users with role teacher can add new task to lesson")
-    @PreAuthorize("hasAuthority('TEACHER')")
+//    @PreAuthorize("hasAuthority('INSTRUCTOR')")
+    @PermitAll
     @PostMapping()
-    public TestResponse saveTest(@Valid @RequestBody TestRequest testRequest) {
+    public TestResponse saveTest(@RequestBody TestRequest testRequest) {
         return testService.saveTest(testRequest);
     }
 
@@ -32,24 +33,25 @@ public class TestApi {
             description = "For valid response try integer IDs with value >= 1 and...")
     @PermitAll
     @GetMapping("/{id}")
-    public TestResponse findById(@Valid @PathVariable Long id) {
+    public TestResponse findById(@PathVariable Long id) {
         return testService.findById(id);
     }
 
     @Operation(summary = "Update test",
             description = "Updates the details of an endpoint with ID")
     @PutMapping("{id}")
-    @PreAuthorize("hasAuthority('TEACHER')")
-    public TestResponse updateTest(
-            @Valid @PathVariable Long id, @RequestBody TestRequest testRequest) {
+//    @PreAuthorize("hasAuthority('INSTRUCTOR')")
+    @PermitAll
+    public TestResponse updateTest(@PathVariable Long id, @RequestBody TestRequest testRequest) {
         return testService.update(id, testRequest);
     }
 
     @Operation(summary = "Delete test",
             description = "Delete the test with id")
-    @PreAuthorize("hasAuthority('TEACHER')")
+//    @PreAuthorize("hasAuthority('INSTRUCTOR')")
     @DeleteMapping("/{id}")
-    public String deleteTest(@Valid @PathVariable Long id) {
+    @PermitAll
+    public String deleteTest(@PathVariable Long id) {
         testService.delete(id);
         return String.format("successfully delete this id=%s", id);
     }

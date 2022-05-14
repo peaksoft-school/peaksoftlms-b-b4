@@ -1,0 +1,22 @@
+package kg.peaksoft.peaksoftlmsbb4.api;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@AllArgsConstructor
+@RequestMapping("/api/results")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@Tag(name = "Result", description = "The Result API")
+public class ResultApi {
+    private final ResultService resultService;
+
+    @PostMapping
+    public ResultResponse saveResult(@RequestBody AnswerRequest answerRequest){
+        return resultService.saveResult(answerRequest);
+    }
+}
