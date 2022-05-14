@@ -76,7 +76,7 @@ public class StudentApi {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    @Operation(summary = "Gets a single  student by identifier",
+    @Operation(summary = "Gets a single student by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     public StudentResponse findById(@PathVariable Long id) {
         return studentService.findById(id);
