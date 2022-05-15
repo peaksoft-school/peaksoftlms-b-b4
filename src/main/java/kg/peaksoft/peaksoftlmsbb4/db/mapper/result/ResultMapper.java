@@ -1,13 +1,14 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.result;
 
-import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Result;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Results;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TestRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
@@ -20,12 +21,12 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class ResultMapper implements Converter<Results, AnswerRequest, ResultResponse> {
+public class ResultMapper{
     private final TestRepository testRepository;
     private final VariantRepository variantRepository;
+    private final StudentRepository studentRepository;
 
-    @Override
-    public Results convert(AnswerRequest answerRequest) {
+    public Results convert(AnswerRequest answerRequest,String email) {
         Results results = new Results();
         results.setDateOfPassed(LocalDateTime.now());
         results.setId(answerRequest.getTestId());
@@ -42,8 +43,6 @@ public class ResultMapper implements Converter<Results, AnswerRequest, ResultRes
         return results;
     }
 
-
-    @Override
     public ResultResponse deConvert(Results results) {
         ResultResponse resultResponse = new ResultResponse();
         resultResponse.setResult(results.getResult());

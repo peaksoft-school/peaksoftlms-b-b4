@@ -15,7 +15,7 @@ public class ResultServiceImpl implements ResultService {
     private final ResultsRepository resultsRepository;
 
     @Override
-    public ResultResponse saveResult(AnswerRequest answerRequest) {
-        return resultMapper.deConvert(resultsRepository.save(resultMapper.convert(answerRequest)));
+    public ResultResponse saveResult(AnswerRequest answerRequest,String email) {
+        return resultMapper.deConvert(resultsRepository.save(resultMapper.convert(answerRequest,email)));
     }
 }
