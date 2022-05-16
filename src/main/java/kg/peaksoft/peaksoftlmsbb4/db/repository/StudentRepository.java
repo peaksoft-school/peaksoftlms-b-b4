@@ -23,5 +23,5 @@ public interface StudentRepository extends JpaRepository<Student, Long>, PagingA
 
     Page<Student> findStudentByStudyFormat(StudyFormat studyFormat, Pageable pageable);
 
-    Student findStudentBy(String email);
+    Student findStudentByUser_Email(String email);
 }

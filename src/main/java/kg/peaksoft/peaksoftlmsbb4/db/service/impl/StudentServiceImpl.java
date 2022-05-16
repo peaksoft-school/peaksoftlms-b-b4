@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +41,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentMapper studentMapper;
     private final CourseRepository courseRepository;
     private final GroupRepository groupRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
@@ -50,6 +52,7 @@ public class StudentServiceImpl implements StudentService {
                     String.format("There is such a student with email = %s", email)
             );
         }
+        studentRequest.setPassword(passwordEncoder.encode(studentRequest.getPassword()));
         Student student = studentMapper.convert(studentRequest);
         Student student1 = studentRepository.save(student);
 

@@ -21,18 +21,21 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class ResultMapper{
+public class ResultMapper {
     private final TestRepository testRepository;
     private final VariantRepository variantRepository;
     private final StudentRepository studentRepository;
 
-    public Results convert(AnswerRequest answerRequest,String email) {
+    public Results convert(AnswerRequest answerRequest, String email) {
         Results results = new Results();
         results.setDateOfPassed(LocalDateTime.now());
         results.setId(answerRequest.getTestId());
         results.setResult(Result.PASSED);
         Test test = testRepository.findById(answerRequest.getTestId()).orElseThrow(() ->
                 new BadRequestException(String.format("test with id = %s ", answerRequest.getTestId())));
+        results.setTest(test);
+        Student student = studentRepository.findStudentByUser_Email(email);
+        results.setStudent(student);
         int counter = 0;
         int incr = 0;
         for (Question q : test.getQuestions()) {
@@ -52,7 +55,9 @@ public class ResultMapper{
         return resultResponse;
     }
 
-    private int calculateGradeOfQuestion(Question question, List<Long> answerOfQuestion, int size) {
+    private int calculateGradeOfQuestion(Question question,
+                                         List<Long> answerOfQuestion,
+                                         int size) {
         int grade = 0;
         if (question.getQuestionType() == QuestionType.SINGLE) {
             for (Long aLong : answerOfQuestion) {
@@ -60,7 +65,7 @@ public class ResultMapper{
                     grade = 100 / size;
                 }
             }
-        }else {
+        } else {
             int maxGrade = 100 / size;
 
         }
