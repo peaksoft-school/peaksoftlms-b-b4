@@ -7,8 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AssignGroupRequest {
-    @JsonProperty("course_id")
     private Long courseId;
-    @JsonProperty("group_id")
     private Long groupId;
 }

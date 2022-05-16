@@ -9,6 +9,6 @@ import lombok.Setter;
 public class VariantRequest {
     @JsonProperty("option")
     private String option;
-    @JsonProperty("correct_answer")
+    @JsonProperty("correctAnswer")
     private Boolean choiceAnswer;
 }

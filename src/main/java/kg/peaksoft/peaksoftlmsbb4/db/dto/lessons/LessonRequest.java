@@ -11,7 +11,5 @@ import javax.validation.constraints.NotBlank;
 public class LessonRequest {
     @NotBlank
     private String name;
-
-    @JsonProperty("course_id")
     private Long courseId;
 }

@@ -32,7 +32,7 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
         for (QuestionRequest q : testRequest.getQuestionRequestList()) {
             int counter = 0;
             if (q.getQuestionType() == QuestionType.SINGLE) {
-                for (VariantRequest v : q.getVariantRequests()) {
+                for (VariantRequest v : q.getVariants()) {
                     if (v.getChoiceAnswer()) {
                         counter++;
                     }

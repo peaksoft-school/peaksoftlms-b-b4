@@ -12,12 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 public class TestRequest {
-    @JsonProperty("test_name")
     private String testName;
-    @JsonProperty("is_enabled")
     private Boolean disable=false;
-    @JsonProperty("lesson_id")
     private Long lessonsId;
-    @JsonProperty("question_list")
     private List<QuestionRequest> questionRequestList;
 }

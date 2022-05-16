@@ -25,7 +25,7 @@ public class QuestionMapper implements Converter<Question, QuestionRequest, Ques
         Question question = new Question();
         question.setQuestion(questionRequest.getQuestion());
         question.setQuestionType(questionRequest.getQuestionType());
-        for (VariantRequest q:questionRequest.getVariantRequests()) {
+        for (VariantRequest q:questionRequest.getVariants()) {
             variant.add(variantMapper.convert(q));
         }
         question.setVariants(variant);

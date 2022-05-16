@@ -10,13 +10,9 @@ import lombok.Setter;
 @Setter
 public class StudentResponse {
     private Long id;
-    @JsonProperty("student_name")
     private String studentName;
-    @JsonProperty("last_name")
     private String lastName;
-    @JsonProperty("study_format")
     private StudyFormat studyFormat;
-    @JsonProperty("phone_number")
     private String phoneNumber;
     private String email;
     private Role role;

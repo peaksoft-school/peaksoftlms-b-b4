@@ -12,8 +12,6 @@ import java.util.List;
 @Setter
 public class QuestionRequest {
     private String question;
-    @JsonProperty("question_type")
     private QuestionType questionType;
-    @JsonProperty("variants")
-    private List<VariantRequest> variantRequests;
+    private List<VariantRequest> variants;
 }

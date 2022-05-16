@@ -13,7 +13,6 @@ import javax.persistence.Enumerated;
 @Setter
 @AllArgsConstructor
 public class ResourceRequest {
-    @JsonProperty("type")
     private ResourceType resourceType;
     private String value;
 }

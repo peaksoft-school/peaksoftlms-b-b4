@@ -13,7 +13,6 @@ public class VideoLessonRequest {
     private String description;
     @NotBlank
     private String link;
-    @JsonProperty("lesson_id")
     private Long lessonId;
 
 }

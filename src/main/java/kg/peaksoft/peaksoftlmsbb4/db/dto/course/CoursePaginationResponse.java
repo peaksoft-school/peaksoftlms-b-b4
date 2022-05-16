@@ -10,7 +10,6 @@ import java.util.List;
 @Setter
 public class CoursePaginationResponse {
     private int pages;
-    @JsonProperty("current_page")
     private int currentPage;
     private List<CourseResponse> courses;
 }
