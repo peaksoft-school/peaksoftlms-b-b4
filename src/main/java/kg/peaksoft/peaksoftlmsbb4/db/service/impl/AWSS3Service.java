@@ -34,29 +34,29 @@ public class AWSS3Service implements FileService {
         metaData.setContentType(file.getContentType());
 
         try {
-            awsS3Client.putObject("peaksoft-lms", key, file.getInputStream(), metaData);
+            awsS3Client.putObject("peaksoftlms", key, file.getInputStream(), metaData);
             log.info("upload the file");
         } catch (IOException e) {
             log.error("an exception occured while uploading the file");
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An exception occured while uploading the file");
         }
 
-        awsS3Client.setObjectAcl("peaksoft-lms", key, CannedAccessControlList.PublicRead);
+        awsS3Client.setObjectAcl("peaksoftlms", key, CannedAccessControlList.PublicRead);
 
-        return awsS3Client.getResourceUrl("peaksoft-lms", key);
+        return awsS3Client.getResourceUrl("peaksoftlms", key);
     }
 
     @Override
     public String deleteFile(String file) {
         String[] fileName = file.split("/");
-        awsS3Client.deleteObject("peaksoft-lms", fileName[fileName.length-1]);
+        awsS3Client.deleteObject("peaksoftlms", fileName[fileName.length-1]);
         log.info("File deleted");
         return "Deleted File: " + file;
     }
 
     @Override
     public byte[] downloadFile(String file) {
-        S3Object object = awsS3Client.getObject("peaksoft-lms", file);
+        S3Object object = awsS3Client.getObject("peaksoftlms", file);
         S3ObjectInputStream objectContent = object.getObjectContent();
         try {
             return IOUtils.toByteArray(objectContent);
