@@ -2,7 +2,6 @@ package kg.peaksoft.peaksoftlmsbb4.db.repository;
 
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long>, PagingAndSortingRepository<Student,Long> {
+public interface StudentRepository extends JpaRepository<Student, Long>, PagingAndSortingRepository<Student, Long> {
 
     boolean existsStudentByUserEmail(String email);
 
@@ -24,4 +23,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>, PagingA
     Page<Student> findStudentByStudyFormat(StudyFormat studyFormat, Pageable pageable);
 
     Student findStudentByUser_Email(String email);
+
+    @Query("select s from Student s")
+    Page<Student> findAllByStudent(Pageable pageable);
 }

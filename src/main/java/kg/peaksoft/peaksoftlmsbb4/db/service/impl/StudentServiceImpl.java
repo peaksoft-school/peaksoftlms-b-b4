@@ -1,9 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.*;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
@@ -30,6 +27,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -112,9 +110,15 @@ public class StudentServiceImpl implements StudentService {
     public StudentPaginationResponse getAll(int page, int size, StudyFormat studyFormat) {
         Pageable pageable = PageRequest.of(page, size);
         StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
-        studentPaginationResponse.setPages((studentRepository.findStudentByStudyFormat(studyFormat, pageable).getTotalPages()));
-        studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
-        studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findStudentByStudyFormat(studyFormat, pageable).getContent()));
+        if (studyFormat.equals(StudyFormat.ALL)) {
+            studentPaginationResponse.setPages((studentRepository.findAll(pageable).getTotalPages()));
+            studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
+            studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findAllByStudent(pageable).getContent()));
+        }else {
+            studentPaginationResponse.setPages((studentRepository.findStudentByStudyFormat(studyFormat, pageable).getTotalPages()));
+            studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
+            studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findStudentByStudyFormat(studyFormat, pageable).getContent()));
+        }
         return studentPaginationResponse;
     }
 
@@ -132,10 +136,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponse> importExcelFile(MultipartFile files,Long id) throws IOException {
+    public List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException {
 
-        Group group = groupRepository.findById(id).orElseThrow(()->
-                new NotFoundException(String.format("Group with id = %s does not exists",id)));
+        Group group = groupRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("Group with id = %s does not exists", id)));
         XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
         XSSFSheet worksheet = workbook.getSheetAt(0);
         List<StudentResponse> student1 = new ArrayList<>();
@@ -157,11 +161,13 @@ public class StudentServiceImpl implements StudentService {
                 }
                 student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
                 student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
-                if (row.getCell(5).getStringCellValue() != null) {
-                    student.setPassword(row.getCell(5).getStringCellValue());
+
+                if (!row.getCell(5).getStringCellValue().equals("")) {
+                    student.setPassword(String.valueOf(row.getCell(5).getNumericCellValue()));
                 } else {
                     throw new IOException("Student password can't be empty");
                 }
+
                 student.setGroupId(group.getId());
                 Student s = studentMapper.convert(student);
                 String email = s.getUser().getEmail();
@@ -187,5 +193,6 @@ public class StudentServiceImpl implements StudentService {
         log.info("successfully filter students by name:{}", name);
         return studentMapper.deConvert(studentRepository.findByStudentName(name));
     }
+
 
 }
