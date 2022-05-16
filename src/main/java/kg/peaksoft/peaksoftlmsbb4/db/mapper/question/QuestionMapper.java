@@ -35,7 +35,7 @@ public class QuestionMapper implements Converter<Question, QuestionRequest, Ques
     @Override
     public QuestionResponse deConvert(Question question) {
         QuestionResponse questionResponse = new QuestionResponse();
-        questionResponse.setId(question.getId());
+        questionResponse.setQuestionId(question.getId());
         questionResponse.setQuestion(question.getQuestion());
         questionResponse.setQuestionType(question.getQuestionType());
         questionResponse.setVariantResponses(variantMapper.deConvert(question.getVariants()));
