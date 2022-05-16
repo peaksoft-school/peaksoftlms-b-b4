@@ -17,19 +17,15 @@ public class StudentRequest {
 
     @NotBlank
     @Size(min = 2, max = 20, message = "first name should be between 2 and 20 characters")
-    @JsonProperty("student_name")
     private String studentName;
 
     @NotBlank
     @Size(min = 2, max = 20, message = "last name should be between 2 and 20 characters")
-    @JsonProperty("last_name")
     private String lastName;
 
     @ValidPhoneNumber
-    @JsonProperty("phone_number")
     private String phoneNumber;
 
-    @JsonProperty("study_format")
     @Enumerated(EnumType.STRING)
     private StudyFormat studyFormat;
 
@@ -40,7 +36,6 @@ public class StudentRequest {
     @ValidPassword
     private String password;
 
-    @JsonProperty("group_id")
     private Long groupId;
 
 }

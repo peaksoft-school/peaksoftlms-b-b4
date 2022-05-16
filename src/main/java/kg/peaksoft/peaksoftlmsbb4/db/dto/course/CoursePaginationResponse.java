@@ -9,7 +9,6 @@ import java.util.List;
 @Setter
 public class CoursePaginationResponse {
     private int pages;
-
     private int currentPage;
     private List<CourseResponse> courses;
 }

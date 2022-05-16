@@ -12,6 +12,5 @@ public class LessonRequest {
     @NotBlank
     private String name;
 
-    @JsonProperty("course_id")
     private Long courseId;
 }

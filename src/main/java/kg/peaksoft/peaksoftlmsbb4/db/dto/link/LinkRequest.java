@@ -13,7 +13,6 @@ public class LinkRequest {
     private String text;
     @NotBlank
     private String link;
-    @JsonProperty("lesson_id")
     private Long lessonId;
 
 }

@@ -11,7 +11,6 @@ import java.util.List;
 @Setter
 public class TaskRequest {
     private String name;
-    @JsonProperty("resource")
     private List<ResourceRequest> resources;
     private Long lessonId;
 }
