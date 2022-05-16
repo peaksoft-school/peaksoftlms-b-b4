@@ -14,4 +14,5 @@ public class GroupResponse {
     private String description;
     private String image;
     private String duration;
+    private LocalDate dateOfFinish;
 }

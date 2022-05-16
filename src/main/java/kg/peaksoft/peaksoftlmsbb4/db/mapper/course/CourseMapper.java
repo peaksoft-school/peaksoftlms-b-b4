@@ -39,6 +39,7 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         courseResponse.setDescription(course.getDescription());
         courseResponse.setImage(course.getImage());
         courseResponse.setDuration(course.getDateOfStart().getYear() +"-"+ course.getDateOfFinish().getYear());
+        courseResponse.setDateOfFinish(course.getDateOfFinish());
         return courseResponse;
     }
 

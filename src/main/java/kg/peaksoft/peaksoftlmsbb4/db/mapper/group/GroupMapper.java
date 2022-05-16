@@ -39,6 +39,7 @@ public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse
         groupResponse.setDescription(group.getDescription());
         groupResponse.setDuration(group.getDateOfStart().getYear()+"-"+group.getDateOfFinish().getYear());
         groupResponse.setImage(group.getImage());
+        groupResponse.setDateOfFinish(group.getDateOfFinish());
         return groupResponse;
     }
 
