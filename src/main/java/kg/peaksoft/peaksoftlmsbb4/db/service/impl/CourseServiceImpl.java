@@ -91,7 +91,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public String delete(Long id) {
+    public Long delete(Long id) {
         boolean existsById = courseRepository.existsById(id);
         if (!existsById) {
             log.error("not found course with id:{}", id);
@@ -103,7 +103,7 @@ public class CourseServiceImpl implements CourseService {
         }
         courseRepository.deleteById(id);
         log.info("successful delete by this id:{}", id);
-        return "Course deleted";
+        return id;
     }
 
     @Override

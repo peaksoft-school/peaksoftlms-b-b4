@@ -14,13 +14,17 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/students")
@@ -70,8 +74,10 @@ public class StudentApi {
     @Operation(summary = "Delete the student",
             description = "Delete student with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String deleteStudent(@PathVariable("id") Long id) {
-        return studentService.deleteStudent(id);
+    public ResponseEntity<Map<String,Long>> deleteStudent(@PathVariable("id") Long id) {
+        Map<String,Long> response = new HashMap<>();
+        response.put("id",studentService.deleteStudent(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

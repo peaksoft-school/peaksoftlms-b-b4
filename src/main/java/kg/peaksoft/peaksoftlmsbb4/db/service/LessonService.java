@@ -15,6 +15,6 @@ public interface LessonService {
 
     LessonResponse update(Long id, LessonRequest lessonRequest);
 
-    String delete(Long id);
+    Long delete(Long id);
 
 }

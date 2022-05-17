@@ -85,7 +85,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public String deleteById(Long id) {
+    public Long deleteById(Long id) {
         boolean exists = groupRepository.existsById(id);
         if (!exists) {
             log.error("not found group with id:{}", id);
@@ -98,7 +98,7 @@ public class GroupServiceImpl implements GroupService {
         }
         groupRepository.deleteById(id);
         log.info("successful delete group by id:{}", id);
-        return String.format("successful delete group  by id=%s", id);
+        return id;
     }
 
     @Override

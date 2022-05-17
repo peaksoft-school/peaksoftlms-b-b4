@@ -40,7 +40,6 @@ public class AWSS3ClientApi {
     public String deleteFile(@RequestParam String file) {
         return awsS3Service.deleteFile(file);
     }
-
     @Operation(summary = "Download file", description = "Download file from aws s3 repository by file name")
     @GetMapping("/download/{filename}")
     public ResponseEntity<byte[]> download(@PathVariable("filename") String filename) {

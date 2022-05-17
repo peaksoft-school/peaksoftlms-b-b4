@@ -26,7 +26,6 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -92,7 +91,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public String deleteStudent(Long id) {
+    public Long deleteStudent(Long id) {
         boolean exists = studentRepository.existsById(id);
         if (!exists) {
             log.error(" student not found with id:{}", id);
@@ -100,7 +99,7 @@ public class StudentServiceImpl implements StudentService {
         }
         log.info("successful delete student by id:{}", id);
         studentRepository.deleteById(id);
-        return "Student deleted";
+        return id;
     }
 
     @Override

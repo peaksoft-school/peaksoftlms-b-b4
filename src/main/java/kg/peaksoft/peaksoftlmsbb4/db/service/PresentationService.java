@@ -4,7 +4,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationResponse;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
 public interface PresentationService {
     PresentationResponse savePresentation(PresentationRequest presentationRequest);
@@ -14,7 +13,7 @@ public interface PresentationService {
     PresentationResponse update(Long id, PresentationRequest presentationRequest);
 
 
-    String delete(Long id);
+    Long delete(Long id);
 
     PresentationResponse findPresentationByLessonId(Long id);
 }

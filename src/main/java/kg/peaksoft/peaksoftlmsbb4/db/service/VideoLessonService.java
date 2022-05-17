@@ -4,8 +4,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonResponse;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public interface VideoLessonService {
 
@@ -15,7 +13,7 @@ public interface VideoLessonService {
 
     VideoLessonResponse update(Long id, VideoLessonRequest videoLessonRequest);
 
-    String delete(Long id);
+    Long delete(Long id);
 
     VideoLessonResponse findLessonByLessonId(Long id);
 
