@@ -69,7 +69,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public String delete(Long id) {
+    public Long delete(Long id) {
         boolean exits = lessonRepository.existsById(id);
         if (!exits) {
             log.error("not found lesson with  id:{}", id);
@@ -77,7 +77,7 @@ public class LessonServiceImpl implements LessonService {
         }
         log.info("successfully delete lesson with id:{}", id);
         lessonRepository.deleteById(id);
-        return "Group deleted";
+        return id;
     }
 
     private Lesson getLessonById(Long id) {

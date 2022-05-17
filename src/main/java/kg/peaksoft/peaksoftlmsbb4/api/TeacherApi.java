@@ -18,12 +18,16 @@ import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -71,8 +75,10 @@ public class TeacherApi {
     @Operation(summary = "Delete the teacher",
             description = "Delete the teacher with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String deleteTeacher(@PathVariable("id") Long id) {
-        return teacherService.deleteTeacher(id);
+    public ResponseEntity<Map<String,Long>> deleteTeacher(@PathVariable("id") Long id) {
+        Map<String,Long> response = new HashMap<>();
+        response.put("id",teacherService.deleteTeacher(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Operation(summary = "Teacher's courses",

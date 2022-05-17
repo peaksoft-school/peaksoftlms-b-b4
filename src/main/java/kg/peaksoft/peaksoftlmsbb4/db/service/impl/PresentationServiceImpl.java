@@ -62,7 +62,7 @@ public class PresentationServiceImpl implements PresentationService {
     }
 
     @Override
-    public String delete(Long id) {
+    public Long delete(Long id) {
         boolean exits = presentationRepository.existsById(id);
         if (!exits) {
             log.error("not found presentation with id:{}", id);
@@ -71,7 +71,7 @@ public class PresentationServiceImpl implements PresentationService {
         log.info("successfully delete presentation by id:{}", id);
         awss3Service.deleteFile(presentationRepository.getById(id).getFile());
         presentationRepository.deleteById(id);
-        return "Presentation deleted";
+        return id;
     }
 
     @Override

@@ -16,10 +16,14 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -73,8 +77,10 @@ public class CourseApi {
             description = "Delete course with id. Only users with role admin can delete courses")
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
-    public String deleteCourse(@PathVariable Long id) {
-        return courseService.delete(id);
+    public ResponseEntity<Map<String,Long>> deleteCourse(@PathVariable Long id) {
+        Map<String,Long> response = new HashMap<>();
+        response.put("id",courseService.delete(id));
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @Operation(summary = "Get students by course id",

@@ -11,10 +11,14 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.VideoLessonService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -53,7 +57,9 @@ public class VideoLessonApi {
             description = "Delete the video lesson with ID")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
-    public String delete(@PathVariable Long id) {
-        return videoLessonService.delete(id);
+    public ResponseEntity<Map<String,Long>> delete(@PathVariable Long id) {
+        Map<String,Long> response = new HashMap<>();
+        response.put("id",videoLessonService.delete(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
