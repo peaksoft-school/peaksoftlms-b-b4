@@ -93,9 +93,9 @@ public class GroupServiceImpl implements GroupService {
                     String.format("group with id = %s does not exists", id)
             );
         }
-        if(!groupRepository.getById(id).getImage().equals(" ") || groupRepository.getById(id).getImage() != null){
-            awss3Service.deleteFile(groupRepository.getById(id).getImage());
-        }
+//        if(!groupRepository.getById(id).getImage().equals(" ") || groupRepository.getById(id).getImage() != null){
+//            awss3Service.deleteFile(groupRepository.getById(id).getImage());
+//        }
         groupRepository.deleteById(id);
         log.info("successful delete group by id:{}", id);
         return id;
