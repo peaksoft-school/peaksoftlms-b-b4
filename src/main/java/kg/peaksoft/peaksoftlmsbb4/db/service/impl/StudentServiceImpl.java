@@ -145,7 +145,6 @@ public class StudentServiceImpl implements StudentService {
         List<StudentResponse> student1 = new ArrayList<>();
         for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
             if (index > 0) {
-
                 StudentRequest student = new StudentRequest();
                 XSSFRow row = worksheet.getRow(index);
                 if (row.getCell(0).getStringCellValue() != null) {

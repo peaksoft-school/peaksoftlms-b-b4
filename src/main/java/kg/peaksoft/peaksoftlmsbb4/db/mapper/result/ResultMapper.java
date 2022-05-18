@@ -67,6 +67,23 @@ public class ResultMapper {
             }
         } else {
             int maxGrade = 100 / size;
+            int counterOfWrongAnswer = 0;
+            int counterOfCorrectAnswer = 0;
+            for (Long aLong : answerOfQuestion) {
+                if (variantRepository.getById(aLong).getAnswer()) {
+                    counterOfCorrectAnswer++;
+                } else {
+                    counterOfWrongAnswer++;
+                }
+            }
+            if (counterOfCorrectAnswer < counterOfWrongAnswer) {
+                maxGrade = 0;
+                return maxGrade;
+            } else if (counterOfCorrectAnswer == 0) {
+                maxGrade = 0;
+                return maxGrade;
+            } else if (counterOfWrongAnswer == counterOfCorrectAnswer-1) {
+            }
 
         }
         return grade;
