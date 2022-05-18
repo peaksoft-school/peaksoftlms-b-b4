@@ -4,24 +4,30 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
+import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -139,54 +145,86 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException {
 
+
         Group group = groupRepository.findById(id).orElseThrow(() ->
                 new NotFoundException(String.format("Group with id = %s does not exists", id)));
-        XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
-        XSSFSheet worksheet = workbook.getSheetAt(0);
-        List<StudentResponse> student1 = new ArrayList<>();
-        for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
-            if (index > 0) {
+        List<Student> students = new ArrayList<>();
 
-                StudentRequest student = new StudentRequest();
-                XSSFRow row = worksheet.getRow(index);
-                if (row.getCell(0).getStringCellValue() != null) {
+        XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
+        XSSFSheet wordSheet = workbook.getSheetAt(0);
+
+        for (int index = 0; index<wordSheet.getPhysicalNumberOfRows(); index++) {
+            if (index > 0) {
+                Student student = new Student();
+                User user = new User();
+                XSSFRow row = wordSheet.getRow(index);
+
+                Cell studentName = row.getCell(0, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (studentName != null) {
                     student.setStudentName(row.getCell(0).getStringCellValue());
                 } else {
-                    throw new IOException("Student name can't be null");
-                }
-                student.setLastName(row.getCell(1).getStringCellValue());
-                if (row.getCell(2).getStringCellValue() != null) {
-                    student.setEmail(row.getCell(2).getStringCellValue());
-                } else {
-                    throw new IOException("Student email can't be empty");
-                }
-                student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
-                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
-
-                if (!row.getCell(5).getStringCellValue().equals("")) {
-                    student.setPassword(String.valueOf(row.getCell(5).getNumericCellValue()));
-                } else {
-                    throw new IOException("Student password can't be empty");
+                    throw new BadRequestException("Student name can't be null");
                 }
 
-                student.setGroupId(group.getId());
-                Student s = studentMapper.convert(student);
-                String email = s.getUser().getEmail();
-                if (studentRepository.existsStudentByUserEmail((email))) {
-                    log.error("there is such a student with email:{}", email);
-                    throw new BadRequestException(
-                            String.format("There is such a student with email= %s", email)
-                    );
+
+                Cell lastName = row.getCell(1, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (lastName != null) {
+                    student.setLastName(row.getCell(1).getStringCellValue());
+                } else {
+                    throw new BadRequestException("Student last name can't be null");
+
                 }
-                Student students = studentRepository.save(s);
-                group.setStudent(students);
-                log.info("successful import excel students:{}", student.getStudentName());
-                student1.add(studentMapper.deConvert(students));
+
+                Cell email = row.getCell(2, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (email != null) {
+                    user.setEmail(row.getCell(2).getStringCellValue());
+                } else {
+                    throw new BadRequestException("Student email can't be null");
+
+                }
+
+                Cell phoneNumber = row.getCell(3, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (phoneNumber != null) {
+                    student.setPhoneNumber(String.valueOf((int)row.getCell(3).getNumericCellValue()));
+                }else {
+                    throw new BadRequestException("Student phoneNumber can't be null");
+                }
+
+                Cell studyFormat = row.getCell(4, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (studyFormat != null) {
+                    student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+                } else {
+                    throw new BadRequestException("Student studyFormat can't be null");
+                }
+                Cell password = row.getCell(5, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (password != null) {
+                    user.setPassword(passwordEncoder.encode(String.valueOf(row.getCell(5).getNumericCellValue())));
+                }else {
+                    throw new BadRequestException( "Student password can't be null");
+                }
+                user.setRole(Role.STUDENT);
+                student.setUser(user);
+                students.add(student);
             }
+        }
+
+        for (Student student: students){
+            student.setGroup(group);
+            String email = student.getUser().getEmail();
+            if (userRepository.existsByEmail((email))) {
+                throw new BadRequestException(
+                        String.format("There is such a = %s",email )
+                );
+            }
+            studentRepository.save(student);
+            log.info("successful import excel students:{}",student.getStudentName());
 
         }
-        return student1;
-
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (Student student : studentRepository.findAll()) {
+            studentResponses.add(studentMapper.deConvert(student));
+        }
+        return studentResponses;
     }
 
     @Override
