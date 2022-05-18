@@ -13,14 +13,10 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponsePagination;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -50,7 +46,7 @@ public class GroupApi {
     @GetMapping
     public GroupResponsePagination getAllForPagination(@RequestParam int page,
                                                        @RequestParam int size) {
-        return groupService.getAllForPagination(page, size);
+        return groupService.getAllForPagination(--page, size);
     }
 
 
@@ -67,10 +63,8 @@ public class GroupApi {
     @Operation(summary = "Delete group with ID",
             description = "Delete group with ID. Only users with role admin can delete courses")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Map<String,Long>> deleteById(@PathVariable Long id) {
-        Map<String,Long> response = new HashMap<>();
-        response.put("id", groupService.deleteById(id));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public GroupResponse deleteById(@PathVariable Long id) {
+        return groupService.deleteById(id);
     }
 
 

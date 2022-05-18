@@ -61,13 +61,14 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Long delete(Long id) {
+    public TaskResponse delete(Long id) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("Task is not found id=%s", id)));
+        Task resource_not_found_with_id = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("resource not found with id", id)));
         resourceRepository.deleteAll(task.getResources());
         taskRepository.delete(task);
         log.info("successfully delete task by id :{}", id);
-        return id;
+        return taskMapper.deConvert(resource_not_found_with_id);
     }
 
     @Override

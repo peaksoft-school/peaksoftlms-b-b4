@@ -1,6 +1,9 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.student.*;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
@@ -91,26 +94,27 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Long deleteStudent(Long id) {
+    public StudentResponse deleteStudent(Long id) {
         boolean exists = studentRepository.existsById(id);
         if (!exists) {
             log.error(" student not found with id:{}", id);
             throw new BadRequestException(String.format("Student with id = %s does not exists", id));
         }
+        Student student = studentRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Student with id = %s does not found", id)));
         log.info("successful delete student by id:{}", id);
         studentRepository.deleteById(id);
-        return id;
+        return studentMapper.deConvert(student);
     }
 
     @Override
     public StudentPaginationResponse getAll(int page, int size, StudyFormat studyFormat) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page-1, size);
         StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
         if (studyFormat.equals(StudyFormat.ALL)) {
             studentPaginationResponse.setPages((studentRepository.findAll(pageable).getTotalPages()));
             studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
             studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findAllByStudent(pageable).getContent()));
-        }else {
+        } else {
             studentPaginationResponse.setPages((studentRepository.findStudentByStudyFormat(studyFormat, pageable).getTotalPages()));
             studentPaginationResponse.setCurrentPage(pageable.getPageNumber());
             studentPaginationResponse.setStudents(studentMapper.deConvert(studentRepository.findStudentByStudyFormat(studyFormat, pageable).getContent()));
