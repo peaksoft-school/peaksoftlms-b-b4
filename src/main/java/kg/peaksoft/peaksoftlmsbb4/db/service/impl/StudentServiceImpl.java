@@ -150,7 +150,11 @@ public class StudentServiceImpl implements StudentService {
                 Student student = new Student();
                 User user = new User();
                 XSSFRow row = wordSheet.getRow(index);
-                student.setStudentName(row.getCell(0).getStringCellValue());
+                if(!row.getCell(0).getStringCellValue().equals("")) {
+                    student.setStudentName(row.getCell(0).getStringCellValue());
+                }else {
+                    throw new IOException("no");
+                }
                 student.setLastName(row.getCell(1).getStringCellValue());
                 user.setEmail(row.getCell(2).getStringCellValue());
                 student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
@@ -176,13 +180,14 @@ public class StudentServiceImpl implements StudentService {
                 );
             }
             studentRepository.save(student);
+            log.info("successful import excel students:{}",student.getStudentName());
+
         }
 
         List<StudentResponse> studentResponses = new ArrayList<>();
         for (Student student : studentRepository.findAll()) {
             studentResponses.add(studentMapper.deConvert(student));
         }
-        log.info("Found {} students ", studentResponses.size());
         return studentResponses;
     }
 
