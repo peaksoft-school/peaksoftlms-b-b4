@@ -107,7 +107,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentPaginationResponse getAll(int page, int size, StudyFormat studyFormat) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size-1);
         StudentPaginationResponse studentPaginationResponse = new StudentPaginationResponse();
         if (studyFormat.equals(StudyFormat.ALL)) {
             studentPaginationResponse.setPages((studentRepository.findAll(pageable).getTotalPages()));

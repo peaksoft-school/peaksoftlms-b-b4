@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 public class AnswerResponse {
     private Long id;
-    private Long grade;
+    private int grade;
     private List<Long> studentAnswer;
     private List<Long> correctAnswer;
 }

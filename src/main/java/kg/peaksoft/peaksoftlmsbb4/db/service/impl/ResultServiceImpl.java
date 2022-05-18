@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.result.ResultMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.ResultsRepository;
@@ -15,7 +16,7 @@ public class ResultServiceImpl implements ResultService {
     private final ResultsRepository resultsRepository;
 
     @Override
-    public ResultResponse saveResult(AnswerRequest answerRequest,String email) {
+    public AnswerResponse saveResult(AnswerRequest answerRequest, String email) {
         return resultMapper.deConvert(resultsRepository.save(resultMapper.convert(answerRequest,email)));
     }
 }

@@ -9,5 +9,5 @@ import java.util.List;
 @Setter
 public class QuestionAnswerRequest {
     private Long questionId;
-    private List<Long> variantId;
+    private List<Long> choiceId;
 }

@@ -36,11 +36,4 @@ public class Task {
 
     @OneToOne(cascade = {REMOVE, DETACH, REFRESH, MERGE}, mappedBy = "task")
     private Lesson lessons;
-
-    public void setResource(Resource resource) {
-        if (resources == null) {
-            resources = new ArrayList<>();
-        }
-        resources.add(resource);
-    }
 }

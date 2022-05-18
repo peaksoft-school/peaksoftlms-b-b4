@@ -62,7 +62,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupResponsePagination getAllForPagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page-1, size);
         GroupResponsePagination groupResponsePagination = new GroupResponsePagination();
         groupResponsePagination.setGroups(groupMapper.deConvert(groupRepository.findAll(pageable).getContent()));
         groupResponsePagination.setPages(groupRepository.findAll(pageable).getTotalPages());
@@ -112,10 +112,13 @@ public class GroupServiceImpl implements GroupService {
             group.setDescription(groupRequest.getDescription());
         }
         if (!group.getImage().equals(groupRequest.getImage())){
+            if (!group.getImage().equals(" ")){
+                awss3Service.deleteFile(group.getImage());
+            }
             group.setImage(groupRequest.getImage());
         }
         if (!group.getDateOfStart().isEqual(groupRequest.getDateOfFinish())){
-            group.setImage(groupRequest.getImage());
+            group.setDateOfFinish(groupRequest.getDateOfFinish());
         }
         log.info("successful update group by Id:{}", id);
         return groupMapper.deConvert(group);

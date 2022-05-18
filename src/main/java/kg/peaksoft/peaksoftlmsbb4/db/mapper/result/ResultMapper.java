@@ -1,13 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.result;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Result;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Results;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
+import kg.peaksoft.peaksoftlmsbb4.db.model.*;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TestRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
@@ -16,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,21 +38,34 @@ public class ResultMapper {
         int counter = 0;
         int incr = 0;
         for (Question q : test.getQuestions()) {
-            counter += calculateGradeOfQuestion(q, answerRequest.getQuestionAnswers().get(incr).getVariantId(), test.getQuestions().size());
+            counter += calculateGradeOfQuestion(q, answerRequest.getQuestionAnswers().get(incr).getChoiceId(), test.getQuestions().size());
             incr++;
         }
         results.setGrade(counter);
         return results;
     }
 
-    public ResultResponse deConvert(Results results) {
-        ResultResponse resultResponse = new ResultResponse();
-        resultResponse.setResult(results.getResult());
-        resultResponse.setGrade(results.getGrade());
-        resultResponse.setId(results.getId());
-        resultResponse.setDateOfPassed(results.getDateOfPassed());
-        return resultResponse;
+    public AnswerResponse deConvert(Results results) {
+        AnswerResponse answerResponse = new AnswerResponse();
+//        answerResponse.setResult(results.getResult());
+        answerResponse.setGrade(results.getGrade());
+        answerResponse.setId(results.getId());
+        List<Long> correctVariantsId = new ArrayList<>();
+        for (Question q : results.getTest().getQuestions()) {
+            for (Variant v : q.getVariants()) {
+                if (v.getAnswer()){
+                    correctVariantsId.add(v.getId());
+                }
+            }
+        }
+        answerResponse.setCorrectAnswer(correctVariantsId);
+//        answerResponse.setDateOfPassed(results.getDateOfPassed());
+        return answerResponse;
     }
+
+//    public AnswerResponse deConvert(Result result){
+//        return
+//    }
 
     private int calculateGradeOfQuestion(Question question,
                                          List<Long> answerOfQuestion,
@@ -69,6 +81,12 @@ public class ResultMapper {
             int maxGrade = 100 / size;
             int counterOfWrongAnswer = 0;
             int counterOfCorrectAnswer = 0;
+            int counterOfCorrectVariant = 0;
+            for (Variant v : question.getVariants()) {
+                if (v.getAnswer()) {
+                    counterOfCorrectVariant++;
+                }
+            }
             for (Long aLong : answerOfQuestion) {
                 if (variantRepository.getById(aLong).getAnswer()) {
                     counterOfCorrectAnswer++;
@@ -77,14 +95,16 @@ public class ResultMapper {
                 }
             }
             if (counterOfCorrectAnswer < counterOfWrongAnswer) {
-                maxGrade = 0;
-                return maxGrade;
+                grade = 0;
             } else if (counterOfCorrectAnswer == 0) {
-                maxGrade = 0;
-                return maxGrade;
-            } else if (counterOfWrongAnswer == counterOfCorrectAnswer-1) {
+                grade = 0;
+            } else if (counterOfWrongAnswer == counterOfCorrectAnswer) {
+                grade = 0;
+            } else if (counterOfCorrectVariant == counterOfCorrectAnswer) {
+                grade = maxGrade;
+            } else if (counterOfCorrectAnswer + 1 == counterOfCorrectVariant) {
+                grade = (maxGrade / counterOfCorrectVariant) * counterOfCorrectAnswer;
             }
-
         }
         return grade;
     }

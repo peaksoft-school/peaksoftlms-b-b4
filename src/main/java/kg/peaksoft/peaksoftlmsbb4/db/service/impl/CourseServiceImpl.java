@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
@@ -63,7 +64,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CoursePaginationResponse coursesForPagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size-1);
         CoursePaginationResponse coursePaginationResponse = new CoursePaginationResponse();
         coursePaginationResponse.setCourses(courseMapper.deConvert(courseRepository.findAll(pageable).getContent()));
         coursePaginationResponse.setPages(courseRepository.findAll(pageable).getTotalPages());
@@ -79,13 +80,20 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseResponse update(Long id, CourseRequest courseRequest) {
-        boolean exists = courseRepository.existsById(id);
-        if (!exists) {
-            log.error("not found course with id:{}", id);
-            throw new NotFoundException(String.format("Course with id=%s not found ", id));
+        Course course = courseRepository.findById(id).orElseThrow(()->
+                new NotFoundException(String.format("course with id = %s not found",id)));
+        if (!course.getCourseName().equals(courseRequest.getCourseName())) {
+            course.setCourseName(courseRequest.getCourseName());
         }
-        Course course = getById(id);
-        courseMapper.update(course, courseRequest);
+        if (!course.getDescription().equals(courseRequest.getCourseName())) {
+            course.setDescription(courseRequest.getDescription());
+        }
+        if (!course.getImage().equals(courseRequest.getImage())){
+            if (!course.getImage().equals(" ")){
+                awss3Service.deleteFile(course.getImage());
+            }
+            course.setImage(courseRequest.getImage());
+        }
         log.info("successful update this course:{}", course);
         return courseMapper.deConvert(course);
     }

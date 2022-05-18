@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 public class ResultApi {
     private final ResultService resultService;
 
-    @PostMapping
-    @PreAuthorize("hasAnyAuthority('STUDENT')")
-    public ResultResponse saveResult(Authentication authentication, @RequestBody AnswerRequest answerRequest){
-        User user = (User) authentication.getPrincipal();
-        return resultService.saveResult(answerRequest,user.getEmail());
-    }
+//    @PostMapping
+//    @PreAuthorize("hasAnyAuthority('STUDENT')")
+//    public ResultResponse saveResult(Authentication authentication, @RequestBody AnswerRequest answerRequest){
+//        User user = (User) authentication.getPrincipal();
+//        return resultService.saveResult(answerRequest,user.getEmail());
+//    }
 }
