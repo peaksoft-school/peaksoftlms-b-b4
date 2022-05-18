@@ -26,6 +26,6 @@ public interface StudentService {
 
     List<StudentResponse> findByStudentName(String name);
 
-    List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException;
+    List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws Exception;
 
 }

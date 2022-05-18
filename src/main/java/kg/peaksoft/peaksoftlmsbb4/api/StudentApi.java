@@ -100,7 +100,7 @@ public class StudentApi {
             description = "This endpoint for import students list from excel to group")
     @PostMapping("/import")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public List<StudentResponse> importExcelFile(@RequestParam(name = "file") MultipartFile files, @RequestParam Long groupId) throws IOException {
+    public List<StudentResponse> importExcelFile(@RequestParam(name = "file") MultipartFile files, @RequestParam Long groupId) throws Exception {
         return studentService.importExcelFile(files, groupId);
     }
 }

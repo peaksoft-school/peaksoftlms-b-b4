@@ -18,6 +18,8 @@ import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -138,8 +140,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException {
+    public List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws Exception {
 
+        Group group = groupRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("Group with id = %s does not exists", id)));
         List<Student> students = new ArrayList<>();
 
         XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
@@ -150,30 +154,39 @@ public class StudentServiceImpl implements StudentService {
                 Student student = new Student();
                 User user = new User();
                 XSSFRow row = wordSheet.getRow(index);
-                if(!row.getCell(0).getStringCellValue().equals("")) {
+                Cell studentName=row.getCell(0, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if(studentName!=null) {
                     student.setStudentName(row.getCell(0).getStringCellValue());
                 }else {
-                    throw new IOException("no");
+                    throw new Exception("null studentName");
                 }
-                student.setLastName(row.getCell(1).getStringCellValue());
-                user.setEmail(row.getCell(2).getStringCellValue());
+                Cell lastName=row.getCell(0, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if(lastName!=null) {
+                    student.setLastName(row.getCell(1).getStringCellValue());
+                }
+                else {
+                    throw new Exception("null lastName");
+
+                }
+                Cell email=row.getCell(0, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if(email!=null) {
+                    user.setEmail(row.getCell(2).getStringCellValue());
+                }else {
+                    throw new Exception("null email");
+
+                }
                 student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
                 student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
                 user.setPassword(passwordEncoder.encode(String.valueOf(row.getCell(5).getNumericCellValue())));
                 user.setRole(Role.STUDENT);
-
-
-
                 student.setUser(user);
                 students.add(student);
             }
         }
 
         for (Student student: students){
-            Group group = groupRepository.getById(id);
             student.setGroup(group);
             String email = student.getUser().getEmail();
-
             if (userRepository.existsByEmail((email))) {
                 throw new BadRequestException(
                         String.format("There is such a = %s",email )
@@ -183,7 +196,6 @@ public class StudentServiceImpl implements StudentService {
             log.info("successful import excel students:{}",student.getStudentName());
 
         }
-
         List<StudentResponse> studentResponses = new ArrayList<>();
         for (Student student : studentRepository.findAll()) {
             studentResponses.add(studentMapper.deConvert(student));
