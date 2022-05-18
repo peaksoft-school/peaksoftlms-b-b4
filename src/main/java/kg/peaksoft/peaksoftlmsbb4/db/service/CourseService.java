@@ -20,7 +20,7 @@ public interface CourseService {
 
     CourseResponse update(Long id, CourseRequest courseRequest);
 
-    String delete(Long id);
+    Long delete(Long id);
 
     List<StudentResponse> getAllStudentsByCourseId(Long id);
 

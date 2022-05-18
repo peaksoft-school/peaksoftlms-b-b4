@@ -31,6 +31,9 @@ public class Task {
     @OneToMany(cascade = ALL)
     private List<Resource> resources;
 
+//    @OneToMany(cascade = ALL)
+//    private List<Link> link;
+
     @OneToOne(cascade = {REMOVE, DETACH, REFRESH, MERGE}, mappedBy = "task")
     private Lesson lessons;
 

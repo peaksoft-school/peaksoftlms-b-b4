@@ -91,16 +91,19 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public String delete(Long id) {
+    public Long delete(Long id) {
         boolean existsById = courseRepository.existsById(id);
         if (!existsById) {
             log.error("not found course with id:{}", id);
             throw new NotFoundException(String.format(" course with id=%s does not exists", id));
         }
         log.info("successful delete course with id:{}", id);
+        if (!courseRepository.getById(id).getImage().equals(" ")) {
+            awss3Service.deleteFile(courseRepository.getById(id).getImage());
+        }
         courseRepository.deleteById(id);
         log.info("successful delete by this id:{}", id);
-        return "Course deleted";
+        return id;
     }
 
     @Override

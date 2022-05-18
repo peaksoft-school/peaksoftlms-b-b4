@@ -36,11 +36,10 @@ public class AWSS3ClientApi {
     @Operation(summary = "Delete the file ",
             description = "Delete file in s3")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
-    @DeleteMapping("delete")
+    @DeleteMapping("/delete")
     public String deleteFile(@RequestParam String file) {
         return awsS3Service.deleteFile(file);
     }
-
     @Operation(summary = "Download file", description = "Download file from aws s3 repository by file name")
     @GetMapping("/download/{filename}")
     public ResponseEntity<byte[]> download(@PathVariable("filename") String filename) {

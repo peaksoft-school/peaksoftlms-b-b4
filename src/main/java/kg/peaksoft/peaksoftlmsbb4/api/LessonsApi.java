@@ -11,10 +11,14 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.LessonService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -68,8 +72,10 @@ public class LessonsApi {
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @Operation(summary = "Delete the lesson",
             description = "Delete lesson with ID. Only users with role teacher can delete lesson")
-    public String delete(@PathVariable Long id) {
-        return lessonService.delete(id);
+    public ResponseEntity<Map<String,Long>> delete(@PathVariable Long id) {
+        Map<String,Long> response = new HashMap<>();
+        response.put("id", lessonService.delete(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

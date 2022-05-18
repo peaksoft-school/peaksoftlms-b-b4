@@ -65,7 +65,7 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public String delete(Long id) {
+    public Long delete(Long id) {
         boolean exits = linkRepository.existsById(id);
         if (!exits) {
             log.error("not found link with id:{}", id);
@@ -73,7 +73,7 @@ public class LinkServiceImpl implements LinkService {
         }
         log.info("successfully delete link by id:{}", id);
         linkRepository.deleteById(id);
-        return "Link deleted";
+        return id;
     }
 
     @Override

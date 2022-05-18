@@ -4,7 +4,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.task.TaskMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.ResourceRepository;
@@ -62,13 +61,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public String delete(Long id) {
+    public Long delete(Long id) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("Task is not found id=%s", id)));
         resourceRepository.deleteAll(task.getResources());
         taskRepository.delete(task);
         log.info("successfully delete task by id :{}", id);
-        return "Task deleted";
+        return id;
     }
 
     @Override

@@ -4,7 +4,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.link.LinkRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.link.LinkResponse;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
 public interface LinkService {
     LinkResponse saveLinks(LinkRequest linkRequest);
@@ -13,7 +12,7 @@ public interface LinkService {
 
     LinkResponse update(Long id, LinkRequest linkRequest);
 
-    String delete(Long id);
+    Long delete(Long id);
 
     LinkResponse findLinkByLessonId(Long id);
 }

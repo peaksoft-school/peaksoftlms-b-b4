@@ -19,7 +19,7 @@ public interface GroupService {
 
     GroupResponse findById(Long id);
 
-    String deleteById(Long id);
+    Long deleteById(Long id);
 
     GroupResponse update(Long id, GroupRequest groupRequest);
 

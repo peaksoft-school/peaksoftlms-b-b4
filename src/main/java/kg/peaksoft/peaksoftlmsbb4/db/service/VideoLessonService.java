@@ -13,7 +13,7 @@ public interface VideoLessonService {
 
     VideoLessonResponse update(Long id, VideoLessonRequest videoLessonRequest);
 
-    String delete(Long id);
+    Long delete(Long id);
 
     VideoLessonResponse findLessonByLessonId(Long id);
 
