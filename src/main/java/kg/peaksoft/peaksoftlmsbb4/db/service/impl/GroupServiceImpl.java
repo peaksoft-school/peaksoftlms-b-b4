@@ -39,7 +39,6 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupResponse saveGroup(GroupRequest groupRequest) {
-
         String name = groupRequest.getGroupName();
         if (groupRepository.existsByGroupName((name))) {
             log.error("there is such a group name:{}", name);
@@ -104,7 +103,9 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public GroupResponse update(Long id, GroupRequest groupRequest) {
-        Group group = findBy(id);
+        Group group = groupRepository.findById(id).orElseThrow(
+                ()-> new NotFoundException(String.format("Group with id=%s not found",id))
+        );
         if (!group.getGroupName().equals(groupRequest.getGroupName())) {
             group.setGroupName(groupRequest.getGroupName());
         }
@@ -112,12 +113,9 @@ public class GroupServiceImpl implements GroupService {
             group.setDescription(groupRequest.getDescription());
         }
         if (!group.getImage().equals(groupRequest.getImage())){
-            if (!group.getImage().equals(" ")){
-                awss3Service.deleteFile(group.getImage());
-            }
             group.setImage(groupRequest.getImage());
         }
-        if (!group.getDateOfStart().isEqual(groupRequest.getDateOfFinish())){
+        if (!group.getDateOfFinish().isEqual(groupRequest.getDateOfFinish())){
             group.setDateOfFinish(groupRequest.getDateOfFinish());
         }
         log.info("successful update group by Id:{}", id);
