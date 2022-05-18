@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,15 +55,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<GroupResponse> findAllGroup() {
-        log.info("successful find all groups:{}", groupRepository.findAll());
-        return groupRepository.findAll().stream()
-                .map(groupMapper::deConvert).collect(Collectors.toList());
-    }
-
-    @Override
     public GroupResponsePagination getAllForPagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page-1, size);
         GroupResponsePagination groupResponsePagination = new GroupResponsePagination();
         groupResponsePagination.setGroups(groupMapper.deConvert(groupRepository.findAll(pageable).getContent()));
         groupResponsePagination.setPages(groupRepository.findAll(pageable).getTotalPages());
@@ -85,7 +79,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Long deleteById(Long id) {
+    public GroupResponse deleteById(Long id) {
         boolean exists = groupRepository.existsById(id);
         if (!exists) {
             log.error("not found group with id:{}", id);
@@ -96,9 +90,10 @@ public class GroupServiceImpl implements GroupService {
         if(!groupRepository.getById(id).getImage().equals(" ")){
             awss3Service.deleteFile(groupRepository.getById(id).getImage());
         }
+        Group byId = groupRepository.findById(id).orElseThrow(()->new NotFoundException(String.format("Course with id %s not found",id)));
         groupRepository.deleteById(id);
         log.info("successful delete group by id:{}", id);
-        return id;
+        return groupMapper.deConvert(byId);
     }
 
     @Override

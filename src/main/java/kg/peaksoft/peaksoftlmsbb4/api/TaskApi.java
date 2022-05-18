@@ -4,16 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TaskService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -53,9 +47,7 @@ public class TaskApi {
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @Operation(summary = "Delete the task",
             description = "Delete task with ID")
-    public ResponseEntity<Map<String,Long>> delete(@PathVariable Long id) {
-        Map<String,Long> response = new HashMap<>();
-        response.put("id",taskService.delete(id));
-       return new ResponseEntity<>(response, HttpStatus.OK);
+    public TaskResponse delete(@PathVariable Long id) {
+        return taskService.delete(id);
     }
 }

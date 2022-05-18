@@ -18,7 +18,7 @@ public interface StudentService {
 
     StudentResponse findById(Long id);
 
-    Long deleteStudent(Long id);
+    StudentResponse deleteStudent(Long id);
 
     StudentPaginationResponse getAll(int size, int page, StudyFormat studyFormat);
 

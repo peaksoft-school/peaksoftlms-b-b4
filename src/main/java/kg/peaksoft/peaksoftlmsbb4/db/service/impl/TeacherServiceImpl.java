@@ -100,16 +100,17 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Long deleteTeacher(Long id) {
+    public TeacherResponse deleteTeacher(Long id) {
         boolean exists = teacherRepository.existsById(id);
 
         if (!exists) {
             log.error("not found teacher with id:{}", id);
             throw new BadRequestException(String.format("teacher with id = %s does not exists", id));
         }
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("teacher not found %s with id", id)));
         log.info("successful delete teacher by id:{}", id);
         teacherRepository.deleteById(id);
-        return id;
+        return teacherMapper.deConvert(teacher);
     }
 
     @Override

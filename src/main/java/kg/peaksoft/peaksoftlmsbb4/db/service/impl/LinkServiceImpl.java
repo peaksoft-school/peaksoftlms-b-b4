@@ -65,15 +65,16 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public Long delete(Long id) {
+    public LinkResponse delete(Long id) {
         boolean exits = linkRepository.existsById(id);
         if (!exits) {
             log.error("not found link with id:{}", id);
             throw new NotFoundException(String.format("link is does not exists with id=%s", id));
         }
         log.info("successfully delete link by id:{}", id);
+        Link link = linkRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Lesson with id %s not found", id)));
         linkRepository.deleteById(id);
-        return id;
+        return linkMapper.deConvert(link);
     }
 
     @Override

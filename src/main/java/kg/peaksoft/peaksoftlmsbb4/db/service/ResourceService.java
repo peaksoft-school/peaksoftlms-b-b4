@@ -1,5 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceResponse;
+
 public interface ResourceService {
-    String delete(Long id);
+    ResourceResponse delete(Long id);
 }

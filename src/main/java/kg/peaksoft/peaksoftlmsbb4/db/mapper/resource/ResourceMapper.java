@@ -4,7 +4,9 @@ import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ResourceMapper implements Converter<Resource, ResourceRequest, ResourceResponse> {
     @Override
     public Resource convert(ResourceRequest resourceRequest) {
