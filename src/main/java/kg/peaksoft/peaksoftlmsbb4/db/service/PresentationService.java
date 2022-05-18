@@ -13,7 +13,7 @@ public interface PresentationService {
     PresentationResponse update(Long id, PresentationRequest presentationRequest);
 
 
-    Long delete(Long id);
+    PresentationResponse delete(Long id);
 
     PresentationResponse findPresentationByLessonId(Long id);
 }

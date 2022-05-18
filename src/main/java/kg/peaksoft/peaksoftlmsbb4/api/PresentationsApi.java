@@ -6,13 +6,8 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.PresentationService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -54,9 +49,7 @@ public class PresentationsApi {
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @Operation(summary = "Delete the presentation",
             description = "Delete links with ID. Only users with role teacher can delete links")
-    public ResponseEntity<Map<String,Long>> delete(@PathVariable Long id) {
-        Map<String,Long> response = new HashMap<>();
-        response.put("id",presentationService.delete(id));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public PresentationResponse delete(@PathVariable Long id) {
+        return presentationService.delete(id);
     }
 }

@@ -14,12 +14,11 @@ import java.util.List;
 public interface GroupService {
     GroupResponse saveGroup(GroupRequest groupRequest);
 
-    List<GroupResponse> findAllGroup();
     GroupResponsePagination getAllForPagination(int page,int size);
 
     GroupResponse findById(Long id);
 
-    Long deleteById(Long id);
+    GroupResponse deleteById(Long id);
 
     GroupResponse update(Long id, GroupRequest groupRequest);
 

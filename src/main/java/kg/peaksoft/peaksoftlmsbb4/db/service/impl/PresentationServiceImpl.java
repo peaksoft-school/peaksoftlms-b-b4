@@ -62,7 +62,7 @@ public class PresentationServiceImpl implements PresentationService {
     }
 
     @Override
-    public Long delete(Long id) {
+    public PresentationResponse delete(Long id) {
         boolean exits = presentationRepository.existsById(id);
         if (!exits) {
             log.error("not found presentation with id:{}", id);
@@ -70,8 +70,9 @@ public class PresentationServiceImpl implements PresentationService {
         }
         log.info("successfully delete presentation by id:{}", id);
         awss3Service.deleteFile(presentationRepository.getById(id).getFile());
+        Presentation presentation = presentationRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Presentation with id %s not found", id)));
         presentationRepository.deleteById(id);
-        return id;
+        return presentationMapper.deConvert(presentation);
     }
 
     @Override
