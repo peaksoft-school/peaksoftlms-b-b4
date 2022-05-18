@@ -17,7 +17,6 @@ import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -149,40 +148,60 @@ public class StudentServiceImpl implements StudentService {
         XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
         XSSFSheet wordSheet = workbook.getSheetAt(0);
 
-        for (int index = 0; index<wordSheet.getPhysicalNumberOfRows(); index++){
-            if (index>0){
+        for (int index = 0; index<wordSheet.getPhysicalNumberOfRows(); index++) {
+            if (index > 0) {
                 Student student = new Student();
                 User user = new User();
                 XSSFRow row = wordSheet.getRow(index);
-                Cell studentName=row.getCell(0, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
-                if(studentName!=null) {
+
+                Cell studentName = row.getCell(0, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (studentName != null) {
                     student.setStudentName(row.getCell(0).getStringCellValue());
-                }else {
-                    throw new Exception("null studentName");
+                } else {
+                    throw new BadRequestException("Student name can't be null");
                 }
-                Cell lastName=row.getCell(0, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
-                if(lastName!=null) {
+
+
+                Cell lastName = row.getCell(1, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (lastName != null) {
                     student.setLastName(row.getCell(1).getStringCellValue());
-                }
-                else {
-                    throw new Exception("null lastName");
+                } else {
+                    throw new BadRequestException("Student last name can't be null");
 
                 }
-                Cell email=row.getCell(0, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
-                if(email!=null) {
+
+                Cell email = row.getCell(2, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (email != null) {
                     user.setEmail(row.getCell(2).getStringCellValue());
-                }else {
-                    throw new Exception("null email");
+                } else {
+                    throw new BadRequestException("Student email can't be null");
 
                 }
-                student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
-                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
-                user.setPassword(passwordEncoder.encode(String.valueOf(row.getCell(5).getNumericCellValue())));
-                user.setRole(Role.STUDENT);
-                student.setUser(user);
-                students.add(student);
+
+                Cell phoneNumber = row.getCell(3, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (phoneNumber != null) {
+                    student.setPhoneNumber(String.valueOf((int)row.getCell(3).getNumericCellValue()));
+                }else {
+                    throw new BadRequestException("Student phoneNumber can't be null");
+                }
+
+                Cell studyFormat = row.getCell(4, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (studyFormat != null) {
+                    student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+                } else {
+                    throw new BadRequestException("Student studyFormat can't be null");
+                }
+                Cell password = row.getCell(5, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (password != null) {
+                    user.setPassword(passwordEncoder.encode(String.valueOf(row.getCell(5).getNumericCellValue())));
+                }else {
+                    throw new BadRequestException( "Student password can't be null");
+                }
+                    user.setRole(Role.STUDENT);
+                    student.setUser(user);
+                    students.add(student);
+                }
             }
-        }
 
         for (Student student: students){
             student.setGroup(group);
@@ -202,6 +221,7 @@ public class StudentServiceImpl implements StudentService {
         }
         return studentResponses;
     }
+
 
     @Override
     public List<StudentResponse> findByStudentName(String name) {
