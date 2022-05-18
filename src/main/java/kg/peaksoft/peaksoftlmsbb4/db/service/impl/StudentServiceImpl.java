@@ -43,6 +43,7 @@ public class StudentServiceImpl implements StudentService {
     private final CourseRepository courseRepository;
     private final GroupRepository groupRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
@@ -147,18 +148,16 @@ public class StudentServiceImpl implements StudentService {
         for (int index = 0; index<wordSheet.getPhysicalNumberOfRows(); index++){
             if (index>0){
                 Student student = new Student();
+                User user = new User();
                 XSSFRow row = wordSheet.getRow(index);
                 student.setStudentName(row.getCell(0).getStringCellValue());
                 student.setLastName(row.getCell(1).getStringCellValue());
-                student.setPhoneNumber(String.valueOf((int)row.getCell(2).getNumericCellValue()));
-                student.setStudyFormat(StudyFormat.valueOf(row.getCell(3).getStringCellValue()));
-
-                User user = new User();
-                user.setEmail(row.getCell(4).getStringCellValue());
-                user.setPassword(passwordEncoder.encode(row.getCell(5).getStringCellValue()));
+                user.setEmail(row.getCell(2).getStringCellValue());
+                student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
+                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+                user.setPassword(passwordEncoder.encode(String.valueOf(row.getCell(5).getNumericCellValue())));
                 user.setRole(Role.STUDENT);
 
-                String email = user.getEmail();
 
 
                 student.setUser(user);
@@ -167,8 +166,15 @@ public class StudentServiceImpl implements StudentService {
         }
 
         for (Student student: students){
-            Group groupEntity = groupRepository.getById(id);
-            student.setGroup(groupEntity);
+            Group group = groupRepository.getById(id);
+            student.setGroup(group);
+            String email = student.getUser().getEmail();
+
+            if (userRepository.existsByEmail((email))) {
+                throw new BadRequestException(
+                        String.format("There is such a = %s",email )
+                );
+            }
             studentRepository.save(student);
         }
 
