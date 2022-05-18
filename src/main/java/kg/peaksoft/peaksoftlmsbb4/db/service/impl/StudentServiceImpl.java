@@ -1,24 +1,29 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.*;
+import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
+import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentMapper studentMapper;
     private final CourseRepository courseRepository;
     private final GroupRepository groupRepository;
-
+    private final PasswordEncoder passwordEncoder;
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
@@ -134,54 +139,45 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException {
 
-        Group group = groupRepository.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("Group with id = %s does not exists", id)));
+        List<Student> students = new ArrayList<>();
+
         XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
-        XSSFSheet worksheet = workbook.getSheetAt(0);
-        List<StudentResponse> student1 = new ArrayList<>();
-        for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
-            if (index > 0) {
+        XSSFSheet wordSheet = workbook.getSheetAt(0);
 
-                StudentRequest student = new StudentRequest();
-                XSSFRow row = worksheet.getRow(index);
-                if (row.getCell(0).getStringCellValue() != null) {
-                    student.setStudentName(row.getCell(0).getStringCellValue());
-                } else {
-                    throw new IOException("Student name can't be null");
-                }
+        for (int index = 0; index<wordSheet.getPhysicalNumberOfRows(); index++){
+            if (index>0){
+                Student student = new Student();
+                XSSFRow row = wordSheet.getRow(index);
+                student.setStudentName(row.getCell(0).getStringCellValue());
                 student.setLastName(row.getCell(1).getStringCellValue());
-                if (row.getCell(2).getStringCellValue() != null) {
-                    student.setEmail(row.getCell(2).getStringCellValue());
-                } else {
-                    throw new IOException("Student email can't be empty");
-                }
-                student.setPhoneNumber(String.valueOf(row.getCell(3).getNumericCellValue()));
-                student.setStudyFormat(StudyFormat.valueOf(row.getCell(4).getStringCellValue()));
+                student.setPhoneNumber(String.valueOf((int)row.getCell(2).getNumericCellValue()));
+                student.setStudyFormat(StudyFormat.valueOf(row.getCell(3).getStringCellValue()));
 
-                if (!row.getCell(5).getStringCellValue().equals("")) {
-                    student.setPassword(String.valueOf(row.getCell(5).getNumericCellValue()));
-                } else {
-                    throw new IOException("Student password can't be empty");
-                }
+                User user = new User();
+                user.setEmail(row.getCell(4).getStringCellValue());
+                user.setPassword(passwordEncoder.encode(row.getCell(5).getStringCellValue()));
+                user.setRole(Role.STUDENT);
 
-                student.setGroupId(group.getId());
-                Student s = studentMapper.convert(student);
-                String email = s.getUser().getEmail();
-                if (studentRepository.existsStudentByUserEmail((email))) {
-                    log.error("there is such a student with email:{}", email);
-                    throw new BadRequestException(
-                            String.format("There is such a student with email= %s", email)
-                    );
-                }
-                Student students = studentRepository.save(s);
-                group.setStudent(students);
-                log.info("successful import excel students:{}", student.getStudentName());
-                student1.add(studentMapper.deConvert(students));
+                String email = user.getEmail();
+
+
+                student.setUser(user);
+                students.add(student);
             }
-
         }
-        return student1;
 
+        for (Student student: students){
+            Group groupEntity = groupRepository.getById(id);
+            student.setGroup(groupEntity);
+            studentRepository.save(student);
+        }
+
+        List<StudentResponse> studentResponses = new ArrayList<>();
+        for (Student student : studentRepository.findAll()) {
+            studentResponses.add(studentMapper.deConvert(student));
+        }
+        log.info("Found {} students ", studentResponses.size());
+        return studentResponses;
     }
 
     @Override
