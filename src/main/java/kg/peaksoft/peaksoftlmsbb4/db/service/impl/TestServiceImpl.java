@@ -30,17 +30,21 @@ public class TestServiceImpl implements TestService {
         Lesson lesson = lessonRepository.findById(testRequest.getLessonsId()).orElseThrow(() -> new BadRequestException(
                 String.format("Course with id %s does not exists", testRequest.getLessonsId())
         ));
-        String name = testRequest.getTestName();
-        if (testRepository.existsByTestName((name))) {
-            throw new BadRequestException(
-                    String.format("There is such a = %s ", name)
-            );
+        if (lesson.getTest() == null){
+            String name = testRequest.getTestName();
+            if (testRepository.existsByTestName((name))) {
+                throw new BadRequestException(
+                        String.format("There is such a = %s ", name)
+                );
+            }
+            Test test = testMapper.convert(testRequest);
+            test.setLessons(lesson);
+            log.info("successful test save :{}", test);
+            Test test1 = testRepository.save(test);
+            return testMapper.deConvert(test1);
+        }else {
+            throw new BadRequestException("in this lesson test already exists");
         }
-        Test test = testMapper.convert(testRequest);
-        test.setLessons(lesson);
-        log.info("successful test save :{}", test);
-        Test test1 = testRepository.save(test);
-        return testMapper.deConvert(test1);
     }
 
     @Override

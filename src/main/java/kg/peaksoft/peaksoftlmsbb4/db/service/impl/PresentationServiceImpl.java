@@ -8,6 +8,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Presentation;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.PresentationRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.PresentationService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,11 +31,15 @@ public class PresentationServiceImpl implements PresentationService {
         Lesson lessons = lessonRepository.findById(presentationRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", presentationRequest.getLessonId())
         ));
-        Presentation presentation = presentationMapper.convert(presentationRequest);
-        Presentation save = presentationRepository.save(presentation);
-        lessons.setPresentation(save);
-        log.info("successfully save presentation:{}", presentation);
-        return presentationMapper.deConvert(save);
+        if (lessons.getPresentation() == null){
+            Presentation presentation = presentationMapper.convert(presentationRequest);
+            Presentation save = presentationRepository.save(presentation);
+            lessons.setPresentation(save);
+            log.info("successfully save presentation:{}", presentation);
+            return presentationMapper.deConvert(save);
+        }else {
+            throw new BadRequestException("in this lesson presentation already exists");
+        }
     }
 
     @Override
