@@ -7,6 +7,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.GroupRepository;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,8 @@ public class StudentMapper implements Converter<Student, StudentRequest, Student
         student.setLastName(studentRequest.getLastName());
         student.setPhoneNumber(studentRequest.getPhoneNumber());
         student.setStudyFormat(studentRequest.getStudyFormat());
-        student.setGroup(groupRepository.getById(studentRequest.getGroupId()));
+        student.setGroup(groupRepository.findById(studentRequest.getGroupId()).orElseThrow(
+                ()-> new NotFoundException(String.format("Group with id = %s not found",studentRequest.getGroupId()))));
         user.setRole(Role.STUDENT);
         user.setPassword(studentRequest.getPassword());
         user.setEmail(studentRequest.getEmail());
