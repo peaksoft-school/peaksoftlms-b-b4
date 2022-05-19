@@ -57,6 +57,7 @@ public class StudentServiceImpl implements StudentService {
                     String.format("There is such a student with email = %s", email)
             );
         }
+        studentRequest.setPassword(passwordEncoder.encode(studentRequest.getPassword()));
         Student student = studentMapper.convert(studentRequest);
         Student student1 = studentRepository.save(student);
 
