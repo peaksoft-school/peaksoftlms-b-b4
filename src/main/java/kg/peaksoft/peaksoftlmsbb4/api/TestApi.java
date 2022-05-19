@@ -31,7 +31,7 @@ public class TestApi {
 
     @Operation(summary = "Gets a single tasks by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PermitAll
+    @PreAuthorize("hasAnyAuthority('STUDENT','INSTRUCTOR')")
     @GetMapping("/{id}")
     public TestResponse findById(@PathVariable Long id) {
         return testService.findById(id);
@@ -39,7 +39,7 @@ public class TestApi {
 
     @Operation(summary = "Find test by lesson ID",
             description = "Gets a single tasks by lesson identifier")
-    @PermitAll
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','STUDENT')")
     @GetMapping("/{id}")
     public TestResponse findByLessonId(@PathVariable Long id) {
         return testService.findByLessonId(id);
@@ -49,7 +49,6 @@ public class TestApi {
             description = "Updates the details of an endpoint with ID")
     @PutMapping("{id}")
     @PreAuthorize("hasAuthority('INSTRUCTOR')")
-    @PermitAll
     public TestResponse updateTest(@PathVariable Long id, @RequestBody TestRequest testRequest) {
         return testService.update(id, testRequest);
     }
@@ -58,7 +57,6 @@ public class TestApi {
             description = "Delete the test with id")
     @PreAuthorize("hasAuthority('INSTRUCTOR')")
     @DeleteMapping("/{id}")
-    @PermitAll
     public String deleteTest(@PathVariable Long id) {
         testService.delete(id);
         return String.format("successfully delete this id=%s", id);

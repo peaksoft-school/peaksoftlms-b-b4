@@ -37,6 +37,7 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
         teacherResponse.setPhoneNumber(teacher.getPhoneNumber());
         teacherResponse.setSpecialization(teacher.getSpecialization());
         teacherResponse.setEmail(teacher.getUser().getEmail());
+        teacherResponse.setFullName(teacher.getName()+" "+teacher.getLastName());
         return teacherResponse;
 
     }
