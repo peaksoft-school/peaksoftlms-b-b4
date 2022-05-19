@@ -36,9 +36,7 @@ public class Teacher {
 
     private String specialization;
 
-    @OneToOne(cascade = {MERGE, REFRESH, PERSIST}, orphanRemoval = true,
-            fetch = FetchType.EAGER)
-
+    @OneToOne(cascade = {MERGE, REFRESH, PERSIST}, orphanRemoval = true)
     private User user;
 
     @JsonIgnore

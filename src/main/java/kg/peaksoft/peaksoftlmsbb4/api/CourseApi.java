@@ -57,7 +57,7 @@ public class CourseApi {
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUTOR')")
     public CoursePaginationResponse getAllCoursesForPagination(@RequestParam int page,
                                                                @RequestParam int size) {
-        return courseService.coursesForPagination(page, size);
+        return courseService.coursesForPagination(--page, size);
     }
 
     @Operation(summary = "Updates the course",

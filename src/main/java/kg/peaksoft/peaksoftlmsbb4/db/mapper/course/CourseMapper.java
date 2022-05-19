@@ -43,19 +43,6 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         return courseResponse;
     }
 
-    public void update(Course course, CourseRequest courseRequest) {
-        if (!course.getCourseName().equals(courseRequest.getCourseName())) {
-            course.setCourseName(courseRequest.getCourseName());
-        }
-        if (!course.getDescription().equals(courseRequest.getCourseName())) {
-            course.setDescription(courseRequest.getDescription());
-        }
-        if (!course.getImage().equals(courseRequest.getImage())){
-            course.setImage(courseRequest.getImage());
-        }
-
-    }
-
     public List<CourseResponse> deConvert(List<Course> courses) {
         List<CourseResponse> courseResponses = new ArrayList<>();
         for (Course c : courses) {

@@ -13,7 +13,7 @@ import java.util.List;
 public class LinkMapper implements Converter<Link, LinkRequest, LinkResponse> {
     @Override
     public Link convert(LinkRequest linkRequest) {
-        Link link=new Link();
+        Link link = new Link();
         link.setLink(linkRequest.getLink());
         link.setText(linkRequest.getText());
         return link;
@@ -21,16 +21,16 @@ public class LinkMapper implements Converter<Link, LinkRequest, LinkResponse> {
 
     @Override
     public LinkResponse deConvert(Link link) {
-        LinkResponse linkResponse=new LinkResponse();
+        LinkResponse linkResponse = new LinkResponse();
         linkResponse.setId(link.getId());
         linkResponse.setLink(link.getLink());
         linkResponse.setText(link.getText());
         return linkResponse;
     }
-    
-    public List<LinkResponse> deConvert(List<Link> links){
+
+    public List<LinkResponse> deConvert(List<Link> links) {
         List<LinkResponse> linkResponses = new ArrayList<>();
-        for (Link l:links) {
+        for (Link l : links) {
             linkResponses.add(deConvert(l));
         }
         return linkResponses;

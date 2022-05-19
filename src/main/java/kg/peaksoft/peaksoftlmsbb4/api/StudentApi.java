@@ -46,7 +46,7 @@ public class StudentApi {
                                             @RequestParam int size,
                                             @RequestParam StudyFormat studyFormat) {
 
-        return studentService.getAll(page, size, studyFormat);
+        return studentService.getAll(--page, size, studyFormat);
     }
 
     @PostMapping
