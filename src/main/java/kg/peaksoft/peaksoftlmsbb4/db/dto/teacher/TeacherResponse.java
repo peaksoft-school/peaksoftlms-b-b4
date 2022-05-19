@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.teacher;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,6 @@ import lombok.Setter;
 public class TeacherResponse {
 
     private Long id;
-
 
     private String teacherName;
 

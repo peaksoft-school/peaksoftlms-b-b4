@@ -40,4 +40,10 @@ public class Lesson {
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH, PERSIST})
     @JoinColumn(name = "course_id")
     private Course courses;
+
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "test_id")
+    private Test test;
+
+
 }

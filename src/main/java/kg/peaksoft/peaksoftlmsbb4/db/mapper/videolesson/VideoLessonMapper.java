@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.videolesson;
 
 import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.videoleson.VideoLessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.videolesson.VideoLessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.videolesson.VideoLessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.VideoLesson;
 import org.springframework.stereotype.Component;
 

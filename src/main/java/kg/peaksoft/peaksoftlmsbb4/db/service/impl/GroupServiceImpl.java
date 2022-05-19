@@ -40,7 +40,6 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupResponse saveGroup(GroupRequest groupRequest) {
-
         String name = groupRequest.getGroupName();
         if (groupRepository.existsByGroupName((name))) {
             log.error("there is such a group name:{}", name);
@@ -56,7 +55,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupResponsePagination getAllForPagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page-1, size);
+        Pageable pageable = PageRequest.of(page, size);
         GroupResponsePagination groupResponsePagination = new GroupResponsePagination();
         groupResponsePagination.setGroups(groupMapper.deConvert(groupRepository.findAll(pageable).getContent()));
         groupResponsePagination.setPages(groupRepository.findAll(pageable).getTotalPages());
@@ -99,7 +98,9 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public GroupResponse update(Long id, GroupRequest groupRequest) {
-        Group group = findBy(id);
+        Group group = groupRepository.findById(id).orElseThrow(
+                ()-> new NotFoundException(String.format("Group with id=%s not found",id))
+        );
         if (!group.getGroupName().equals(groupRequest.getGroupName())) {
             group.setGroupName(groupRequest.getGroupName());
         }
@@ -109,8 +110,8 @@ public class GroupServiceImpl implements GroupService {
         if (!group.getImage().equals(groupRequest.getImage())){
             group.setImage(groupRequest.getImage());
         }
-        if (!group.getDateOfStart().isEqual(groupRequest.getDateOfFinish())){
-            group.setImage(groupRequest.getImage());
+        if (!group.getDateOfFinish().isEqual(groupRequest.getDateOfFinish())){
+            group.setDateOfFinish(groupRequest.getDateOfFinish());
         }
         log.info("successful update group by Id:{}", id);
         return groupMapper.deConvert(group);

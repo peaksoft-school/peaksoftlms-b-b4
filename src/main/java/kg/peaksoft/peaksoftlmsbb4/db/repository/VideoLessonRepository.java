@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface VideoLessonRepository extends JpaRepository<VideoLesson,Long> {
+public interface VideoLessonRepository extends JpaRepository<VideoLesson, Long> {
 }

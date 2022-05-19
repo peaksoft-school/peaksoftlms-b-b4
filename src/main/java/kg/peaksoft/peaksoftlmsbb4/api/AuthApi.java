@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class AuthApi {
             description = "This entrypoint returns a JWT auth_token for authenticating further requests to the API")
     @PostMapping("/login")
     @PermitAll
-    private AuthResponseDto authentication(@RequestBody AuthRequestDto authRequestDto) {
+    private AuthResponseDto authentication( @RequestBody AuthRequestDto authRequestDto) {
         return authService.authenticate(authRequestDto);
     }
 }

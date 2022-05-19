@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Task,Long> {
+public interface TaskRepository extends JpaRepository<Task, Long> {
 }
