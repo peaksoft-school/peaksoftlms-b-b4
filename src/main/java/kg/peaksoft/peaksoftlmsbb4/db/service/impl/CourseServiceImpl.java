@@ -88,7 +88,9 @@ public class CourseServiceImpl implements CourseService {
         if (!course.getDescription().equals(courseRequest.getCourseName())) {
             course.setDescription(courseRequest.getDescription());
         }
-        if (!course.getDateOfFinish().isEqual(courseRequest.getDateOfFinish()))
+        if (!course.getDateOfFinish().isEqual(courseRequest.getDateOfFinish())){
+            course.setDateOfFinish(courseRequest.getDateOfFinish());
+        }
         if (!course.getImage().equals(courseRequest.getImage())){
             course.setImage(courseRequest.getImage());
         }

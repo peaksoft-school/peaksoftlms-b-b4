@@ -9,6 +9,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.ResourceRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TaskRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TaskService;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +32,15 @@ public class TaskServiceImpl implements TaskService {
         Lesson lessons = lessonRepository.findById(taskRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", taskRequest.getLessonId())
         ));
-        Task task = taskMapper.convert(taskRequest);
-        Task save = taskRepository.save(task);
-        lessons.setTask(save);
-        log.info("successfully save task:{}", task);
-        return taskMapper.deConvert(save);
+        if (lessons.getTest() == null){
+            Task task = taskMapper.convert(taskRequest);
+            Task save = taskRepository.save(task);
+            lessons.setTask(save);
+            log.info("successfully save task:{}", task);
+            return taskMapper.deConvert(save);
+        } else {
+            throw new BadRequestException("in this lesson task already exists");
+        }
     }
 
     private Task findById(Long id) {

@@ -9,6 +9,5 @@ import java.util.List;
 public class AnswerResponse {
     private Long id;
     private int grade;
-    private List<Long> studentAnswer;
     private List<Long> correctAnswer;
 }

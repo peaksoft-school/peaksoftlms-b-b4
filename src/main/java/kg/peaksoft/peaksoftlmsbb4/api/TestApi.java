@@ -22,7 +22,7 @@ public class TestApi {
 
     @Operation(summary = "Add new test",
             description = "This endpoint create new test. Only users with role teacher can add new task to lesson")
-//    @PreAuthorize("hasAuthority('INSTRUCTOR')")
+    @PreAuthorize("hasAuthority('INSTRUCTOR')")
     @PermitAll
     @PostMapping()
     public TestResponse saveTest(@RequestBody TestRequest testRequest) {
@@ -31,26 +31,32 @@ public class TestApi {
 
     @Operation(summary = "Gets a single tasks by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PermitAll
+    @PreAuthorize("hasAnyAuthority('STUDENT','INSTRUCTOR')")
     @GetMapping("/{id}")
     public TestResponse findById(@PathVariable Long id) {
         return testService.findById(id);
     }
 
+    @Operation(summary = "Find test by lesson ID",
+            description = "Gets a single tasks by lesson identifier")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','STUDENT')")
+    @GetMapping("/{id}")
+    public TestResponse findByLessonId(@PathVariable Long id) {
+        return testService.findByLessonId(id);
+    }
+
     @Operation(summary = "Update test",
             description = "Updates the details of an endpoint with ID")
     @PutMapping("{id}")
-//    @PreAuthorize("hasAuthority('INSTRUCTOR')")
-    @PermitAll
+    @PreAuthorize("hasAuthority('INSTRUCTOR')")
     public TestResponse updateTest(@PathVariable Long id, @RequestBody TestRequest testRequest) {
         return testService.update(id, testRequest);
     }
 
     @Operation(summary = "Delete test",
             description = "Delete the test with id")
-//    @PreAuthorize("hasAuthority('INSTRUCTOR')")
+    @PreAuthorize("hasAuthority('INSTRUCTOR')")
     @DeleteMapping("/{id}")
-    @PermitAll
     public String deleteTest(@PathVariable Long id) {
         testService.delete(id);
         return String.format("successfully delete this id=%s", id);

@@ -15,5 +15,5 @@ public class StudentResponse {
     private String phoneNumber;
     private String email;
     private Role role;
-
+    private String fullName;
 }
