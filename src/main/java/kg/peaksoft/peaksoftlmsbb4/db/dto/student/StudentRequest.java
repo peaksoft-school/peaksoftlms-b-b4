@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import kg.peaksoft.peaksoftlmsbb4.annotations.password.ValidPassword;
 import kg.peaksoft.peaksoftlmsbb4.annotations.phoneNumber.ValidPhoneNumber;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
+import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Transient;
 import javax.validation.constraints.*;
 
 @Getter
@@ -37,5 +39,6 @@ public class StudentRequest {
     private String password;
 
     private Long groupId;
+
 
 }

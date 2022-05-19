@@ -6,13 +6,8 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.link.LinkRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.link.LinkResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.LinkService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -52,9 +47,7 @@ public class LinkApi {
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @Operation(summary = "Delete the link",
             description = "Delete links with ID. Only users with role teacher can delete links")
-    public ResponseEntity<Map<String,Long>> delete(@PathVariable Long id) {
-        Map<String,Long> response = new HashMap<>();
-        response.put("id",linkService.delete(id));
-       return new ResponseEntity<>(response, HttpStatus.OK);
+    public LinkResponse delete(@PathVariable Long id) {
+        return linkService.delete(id);
     }
 }

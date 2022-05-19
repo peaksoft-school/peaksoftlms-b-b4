@@ -14,17 +14,13 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/students")
@@ -50,7 +46,7 @@ public class StudentApi {
                                             @RequestParam int size,
                                             @RequestParam StudyFormat studyFormat) {
 
-        return studentService.getAll(page, size, studyFormat);
+        return studentService.getAll(--page, size, studyFormat);
     }
 
     @PostMapping
@@ -74,10 +70,8 @@ public class StudentApi {
     @Operation(summary = "Delete the student",
             description = "Delete student with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Map<String,Long>> deleteStudent(@PathVariable("id") Long id) {
-        Map<String,Long> response = new HashMap<>();
-        response.put("id",studentService.deleteStudent(id));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public StudentResponse deleteStudent(@PathVariable("id") Long id) {
+        return studentService.deleteStudent(id);
     }
 
     @GetMapping("/{id}")
@@ -100,7 +94,7 @@ public class StudentApi {
             description = "This endpoint for import students list from excel to group")
     @PostMapping("/import")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public List<StudentResponse> importExcelFile(@RequestParam(name = "file") MultipartFile files, @RequestParam Long groupId) throws IOException {
+    public List<StudentResponse> importExcelFile(@RequestParam(name = "file") MultipartFile files, @RequestParam Long groupId) throws Exception {
         return studentService.importExcelFile(files, groupId);
     }
 }

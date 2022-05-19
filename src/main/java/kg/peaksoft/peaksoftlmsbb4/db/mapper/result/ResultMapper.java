@@ -47,7 +47,6 @@ public class ResultMapper {
 
     public AnswerResponse deConvert(Results results) {
         AnswerResponse answerResponse = new AnswerResponse();
-//        answerResponse.setResult(results.getResult());
         answerResponse.setGrade(results.getGrade());
         answerResponse.setId(results.getId());
         List<Long> correctVariantsId = new ArrayList<>();
@@ -59,13 +58,18 @@ public class ResultMapper {
             }
         }
         answerResponse.setCorrectAnswer(correctVariantsId);
-//        answerResponse.setDateOfPassed(results.getDateOfPassed());
         return answerResponse;
     }
 
-//    public AnswerResponse deConvert(Result result){
-//        return
-//    }
+    public ResultResponse deConvertToResultResponse(Results result){
+        ResultResponse response = new ResultResponse();
+        response.setResult(result.getResult());
+        response.setId(response.getId());
+        response.setDateOfPassed(result.getDateOfPassed());
+        response.setGrade(result.getGrade());
+        response.setStudentFullName(result.getStudent().getStudentName()+" "+result.getStudent().getLastName());
+        return response;
+    }
 
     private int calculateGradeOfQuestion(Question question,
                                          List<Long> answerOfQuestion,

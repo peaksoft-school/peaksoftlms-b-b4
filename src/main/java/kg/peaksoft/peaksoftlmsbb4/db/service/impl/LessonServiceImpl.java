@@ -69,15 +69,16 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public Long delete(Long id) {
+    public LessonResponse delete(Long id) {
         boolean exits = lessonRepository.existsById(id);
         if (!exits) {
             log.error("not found lesson with  id:{}", id);
             throw new NotFoundException(String.format("Lesson is not found id=%s", id));
         }
         log.info("successfully delete lesson with id:{}", id);
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Lesson with id %s not found", id)));
         lessonRepository.deleteById(id);
-        return id;
+        return lessonMapper.deConvert(lesson);
     }
 
     private Lesson getLessonById(Long id) {

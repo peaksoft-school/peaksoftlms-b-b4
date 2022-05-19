@@ -10,7 +10,7 @@ public interface TaskService {
 
     TaskResponse update(Long id, TaskRequest taskRequest);
 
-    Long delete(Long id);
+    TaskResponse delete(Long id);
 
     TaskResponse findTaskByLessonId(Long id);
 

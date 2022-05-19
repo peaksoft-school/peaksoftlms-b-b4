@@ -18,6 +18,7 @@ import static javax.persistence.CascadeType.*;
 @Entity
 @Table(name = "student")
 public class Student {
+
     @Id
     @SequenceGenerator(
             name = "student_id_seq",
@@ -47,7 +48,7 @@ public class Student {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private User user;
-    
+
     @JsonIgnore
     public void setCourse(Course course) {
         if (course == null) {

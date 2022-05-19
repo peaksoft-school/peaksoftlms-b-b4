@@ -74,15 +74,16 @@ public class VideoLessonServiceImpl implements VideoLessonService {
     }
 
     @Override
-    public Long delete(Long id) {
+    public VideoLessonResponse delete(Long id) {
         boolean exist = videoLessonRepository.existsById(id);
         if (!exist) {
             log.error("not found video lesson with id:{}", id);
             throw new NotFoundException(String.format("Not found id=%s", id));
         }
         log.info("successfully delete video lesson by id:{}", id);
+        VideoLesson videoLesson = videoLessonRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("student not found %s with id", id)));
         videoLessonRepository.deleteById(id);
-        return id;
+        return videoLessonMapper.deConvert(videoLesson);
     }
 
     @Override

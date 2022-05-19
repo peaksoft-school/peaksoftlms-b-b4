@@ -64,7 +64,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CoursePaginationResponse coursesForPagination(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size-1);
+        Pageable pageable = PageRequest.of(page, size);
         CoursePaginationResponse coursePaginationResponse = new CoursePaginationResponse();
         coursePaginationResponse.setCourses(courseMapper.deConvert(courseRepository.findAll(pageable).getContent()));
         coursePaginationResponse.setPages(courseRepository.findAll(pageable).getTotalPages());
@@ -97,7 +97,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Long delete(Long id) {
+    public CourseResponse delete(Long id) {
         boolean existsById = courseRepository.existsById(id);
         if (!existsById) {
             log.error("not found course with id:{}", id);
@@ -107,9 +107,10 @@ public class CourseServiceImpl implements CourseService {
         if (!courseRepository.getById(id).getImage().equals(" ")) {
             awss3Service.deleteFile(courseRepository.getById(id).getImage());
         }
+        Course course = courseRepository.findById(id).orElseThrow(() -> new NotFoundException("course with id %s does not found"));
         courseRepository.deleteById(id);
         log.info("successful delete by this id:{}", id);
-        return id;
+        return courseMapper.deConvert(course);
     }
 
     @Override

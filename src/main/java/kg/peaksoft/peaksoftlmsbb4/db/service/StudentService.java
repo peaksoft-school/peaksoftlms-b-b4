@@ -18,7 +18,7 @@ public interface StudentService {
 
     StudentResponse findById(Long id);
 
-    Long deleteStudent(Long id);
+    StudentResponse deleteStudent(Long id);
 
     StudentPaginationResponse getAll(int size, int page, StudyFormat studyFormat);
 
@@ -26,6 +26,6 @@ public interface StudentService {
 
     List<StudentResponse> findByStudentName(String name);
 
-    List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws IOException;
+    List<StudentResponse> importExcelFile(MultipartFile files, Long id) throws Exception;
 
 }

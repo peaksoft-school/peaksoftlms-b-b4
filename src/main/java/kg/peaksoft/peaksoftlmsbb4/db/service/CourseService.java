@@ -6,6 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface CourseService {
 
     CourseResponse update(Long id, CourseRequest courseRequest);
 
-    Long delete(Long id);
+    CourseResponse delete(Long id);
 
     List<StudentResponse> getAllStudentsByCourseId(Long id);
 

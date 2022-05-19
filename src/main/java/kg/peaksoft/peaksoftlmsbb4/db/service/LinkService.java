@@ -12,7 +12,7 @@ public interface LinkService {
 
     LinkResponse update(Long id, LinkRequest linkRequest);
 
-    Long delete(Long id);
+    LinkResponse delete(Long id);
 
     LinkResponse findLinkByLessonId(Long id);
 }

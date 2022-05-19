@@ -12,4 +12,5 @@ public class ResultResponse {
     private Result result;
     private LocalDateTime dateOfPassed;
     private int grade;
+    private String studentFullName;
 }
