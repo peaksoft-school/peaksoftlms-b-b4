@@ -53,6 +53,13 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    public TestResponse findByLessonId(Long id) {
+        return testMapper.deConvert(lessonRepository.findById(id).orElseThrow(()->
+                new NotFoundException(String.format("lesson with id = %s not found",id))).getTest());
+    }
+
+
+    @Override
     public List<TestResponse> findAll() {
         log.info("successful find all");
         List<Test> all = testRepository.findAll();
