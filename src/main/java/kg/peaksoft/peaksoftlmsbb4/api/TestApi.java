@@ -40,7 +40,7 @@ public class TestApi {
     @Operation(summary = "Find test by lesson ID",
             description = "Gets a single tasks by lesson identifier")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR','STUDENT')")
-    @GetMapping("/{id}")
+    @GetMapping("lesson/{id}")
     public TestResponse findByLessonId(@PathVariable Long id) {
         return testService.findByLessonId(id);
     }
