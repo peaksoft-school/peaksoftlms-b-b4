@@ -9,7 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 @Component
@@ -43,10 +45,10 @@ public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse
         return groupResponse;
     }
 
-    public List<GroupResponse> deConvert(List<Group> groups){
-        List<GroupResponse> groupResponses = new ArrayList<>();
+    public Deque<GroupResponse> deConvert(List<Group> groups){
+        Deque<GroupResponse> groupResponses = new ArrayDeque<>();
         for (Group g:groups) {
-            groupResponses.add(deConvert(g));
+            groupResponses.addFirst(deConvert(g));
         }
         return groupResponses;
     }

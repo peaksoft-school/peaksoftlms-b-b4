@@ -41,7 +41,7 @@ public class LessonsApi {
         return lessonService.findById(id);
     }
 
-    @GetMapping("teacherCourses/{id}")
+    @GetMapping("courseLessons/{id}")
     @Operation(summary = "Gets a list",
             description = "Returns all course's lessons that are,if there are no lessons,then an error")
     @ApiResponses(value = {
@@ -50,7 +50,7 @@ public class LessonsApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = LessonsApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','STUDENT')")
     public List<LessonResponse> findAll(@PathVariable Long id) {
         return lessonService.findAll(id);
     }

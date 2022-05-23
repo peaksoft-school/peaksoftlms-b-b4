@@ -10,7 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
-import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
@@ -29,7 +28,7 @@ public class TestApi {
         return testService.saveTest(testRequest);
     }
 
-    @Operation(summary = "Gets a single tasks by identifier",
+    @Operation(summary = "Gets a single test by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT','INSTRUCTOR')")
     @GetMapping("/{id}")

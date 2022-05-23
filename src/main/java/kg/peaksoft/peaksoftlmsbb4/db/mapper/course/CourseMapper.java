@@ -9,7 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 @Component
@@ -43,10 +45,10 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         return courseResponse;
     }
 
-    public List<CourseResponse> deConvert(List<Course> courses) {
-        List<CourseResponse> courseResponses = new ArrayList<>();
+    public Deque<CourseResponse> deConvert(List<Course> courses) {
+        Deque<CourseResponse> courseResponses = new ArrayDeque<>();
         for (Course c : courses) {
-            courseResponses.add(deConvert(c));
+            courseResponses.addFirst(deConvert(c));
         }
         return courseResponses;
     }

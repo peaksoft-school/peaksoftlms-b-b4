@@ -1,11 +1,13 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
@@ -34,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 @Service
@@ -48,6 +51,8 @@ public class StudentServiceImpl implements StudentService {
     private final GroupRepository groupRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final CourseMapper courseMapper;
+
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
@@ -153,7 +158,7 @@ public class StudentServiceImpl implements StudentService {
         XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
         XSSFSheet wordSheet = workbook.getSheetAt(0);
 
-        for (int index = 0; index<wordSheet.getPhysicalNumberOfRows(); index++) {
+        for (int index = 0; index < wordSheet.getPhysicalNumberOfRows(); index++) {
             if (index > 0) {
                 Student student = new Student();
                 User user = new User();
@@ -185,8 +190,8 @@ public class StudentServiceImpl implements StudentService {
 
                 Cell phoneNumber = row.getCell(3, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
                 if (phoneNumber != null) {
-                    student.setPhoneNumber(String.valueOf((int)row.getCell(3).getNumericCellValue()));
-                }else {
+                    student.setPhoneNumber(String.valueOf((int) row.getCell(3).getNumericCellValue()));
+                } else {
                     throw new BadRequestException("Student phoneNumber can't be null");
                 }
 
@@ -197,28 +202,27 @@ public class StudentServiceImpl implements StudentService {
                     throw new BadRequestException("Student studyFormat can't be null");
                 }
                 Cell password = row.getCell(5, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+
                 if (password != null) {
                     user.setPassword(passwordEncoder.encode(String.valueOf(row.getCell(5).getNumericCellValue())));
-                }else {
-                    throw new BadRequestException( "Student password can't be null");
+                } else {
+                    throw new BadRequestException("Student password can't be null");
                 }
                 user.setRole(Role.STUDENT);
                 student.setUser(user);
                 students.add(student);
             }
         }
-
-        for (Student student: students){
+        for (Student student : students) {
             student.setGroup(group);
             String email = student.getUser().getEmail();
             if (userRepository.existsByEmail((email))) {
                 throw new BadRequestException(
-                        String.format("There is such a = %s",email )
+                        String.format("There is such a = %s", email)
                 );
             }
             studentRepository.save(student);
-            log.info("successful import excel students:{}",student.getStudentName());
-
+            log.info("successful import excel students:{}", student.getStudentName());
         }
         List<StudentResponse> studentResponses = new ArrayList<>();
         for (Student student : studentRepository.findAll()) {
@@ -228,10 +232,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponse> findByStudentName(String name) {
+    public Deque<CourseResponse> getStudentCourses(String email) {
+        Student student = studentRepository.findStudentByUser_Email(email);
+        return courseMapper.deConvert(student.getCourses());
+    }
+
+    @Override
+    public Deque<StudentResponse> findByStudentName(String name) {
         log.info("successfully filter students by name:{}", name);
         return studentMapper.deConvert(studentRepository.findByStudentName(name));
     }
-
-
 }

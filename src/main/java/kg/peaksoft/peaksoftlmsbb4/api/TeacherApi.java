@@ -23,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Deque;
 import java.util.List;
 
 @RestController
@@ -80,7 +81,7 @@ public class TeacherApi {
             description = "This endpoint for get all teacher's courses")
     @GetMapping("/teacherCourses")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
-    public List<CourseResponse> teacherCourses(Authentication authentication) {
+    public Deque<CourseResponse> teacherCourses(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return teacherService.teacherCourses(user.getEmail());
     }

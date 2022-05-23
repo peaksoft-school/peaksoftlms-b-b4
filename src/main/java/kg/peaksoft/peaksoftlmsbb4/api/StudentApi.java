@@ -7,19 +7,25 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
+import kg.peaksoft.peaksoftlmsbb4.db.model.User;
+import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
 import kg.peaksoft.peaksoftlmsbb4.db.service.StudentService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
+import java.util.Deque;
 import java.util.List;
 
 @RestController
@@ -31,6 +37,7 @@ import java.util.List;
 public class StudentApi {
 
     private final StudentService studentService;
+    private final ResultService resultService;
 
     @GetMapping
     @Operation(summary = "Gets a list",
@@ -86,7 +93,7 @@ public class StudentApi {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Get by name",
             description = "Get student by name")
-    public List<StudentResponse> getByStudentName(@RequestParam String name) {
+    public Deque<StudentResponse> getByStudentName(@RequestParam String name) {
         return studentService.findByStudentName(name);
     }
 
@@ -96,6 +103,22 @@ public class StudentApi {
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<StudentResponse> importExcelFile(@RequestParam(name = "file") MultipartFile files, @RequestParam Long groupId) throws Exception {
         return studentService.importExcelFile(files, groupId);
+    }
+
+    @GetMapping("/studentCourses")
+    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    public Deque<CourseResponse> studentCourses(Authentication authentication){
+        User user = (User) authentication.getPrincipal();
+        return studentService.getStudentCourses(user.getEmail());
+    }
+
+    @PostMapping("test")
+    @Operation(summary = "Pass the test",
+            description = "This endpoint for pass the test")
+    @PreAuthorize("hasAnyAuthority('STUDENT')")
+    public AnswerResponse saveResult(Authentication authentication, @RequestBody AnswerRequest answerRequest){
+        User user = (User) authentication.getPrincipal();
+        return resultService.saveResult(answerRequest,user.getEmail());
     }
 }
 

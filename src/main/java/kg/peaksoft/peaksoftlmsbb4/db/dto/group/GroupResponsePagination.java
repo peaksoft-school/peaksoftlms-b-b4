@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Deque;
 import java.util.List;
 
 @Getter
@@ -11,5 +12,5 @@ import java.util.List;
 public class GroupResponsePagination {
     private int pages;
     private int currentPage;
-    private List<GroupResponse> groups;
+    private Deque<GroupResponse> groups;
 }
