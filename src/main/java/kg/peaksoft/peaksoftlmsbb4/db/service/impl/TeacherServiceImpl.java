@@ -110,7 +110,7 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("teacher not found %s with id", id)));
         log.info("successful delete teacher by id:{}", id);
         teacherRepository.deleteById(id);
-        return teacherMapper.deConvert(teacher);
+        return teacherMapper.deConvert(teacher );
     }
 
     @Override
