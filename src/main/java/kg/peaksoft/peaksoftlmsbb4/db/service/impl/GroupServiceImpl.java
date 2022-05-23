@@ -84,7 +84,7 @@ public class GroupServiceImpl implements GroupService {
                     String.format("group with id = %s does not exists", id)
             );
         }
-        if(!groupRepository.getById(id).getImage().equals(" ")){
+        if(!groupRepository.getById(id).getImage().equals("")){
             awss3Service.deleteFile(groupRepository.getById(id).getImage());
         }
         Group byId = groupRepository.findById(id).orElseThrow(()->new NotFoundException(String.format("Course with id %s not found",id)));
