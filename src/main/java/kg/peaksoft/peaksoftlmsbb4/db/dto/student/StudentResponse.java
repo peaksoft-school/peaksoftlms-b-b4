@@ -16,4 +16,5 @@ public class StudentResponse {
     private String email;
     private Role role;
     private String fullName;
+    private String groupName;
 }

@@ -48,6 +48,7 @@ public class StudentMapper implements Converter<Student, StudentRequest, Student
         studentResponse.setRole(student.getUser().getRole());
         studentResponse.setEmail(student.getUser().getEmail());
         studentResponse.setFullName(student.getStudentName()+" "+student.getLastName());
+        studentResponse.setGroupName(student.getGroup().getGroupName());
         return studentResponse;
     }
 
