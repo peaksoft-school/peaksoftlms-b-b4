@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.AssignGroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
@@ -48,8 +49,9 @@ public class TeacherApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = TeacherApi.class)))})})
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public List<TeacherResponse> findAll() {
-        return teacherService.findAllTeacher();
+    public TeacherPaginationResponse findAll(@RequestParam int page,
+                                             @RequestParam int size) {
+        return teacherService.findAllTeacher(--page, size);
     }
 
 

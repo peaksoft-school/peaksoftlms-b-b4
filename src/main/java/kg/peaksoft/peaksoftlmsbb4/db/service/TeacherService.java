@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
@@ -20,7 +21,7 @@ public interface TeacherService {
 
     TeacherResponse deleteTeacher(Long id);
 
-    List<TeacherResponse> findAllTeacher();
+    TeacherPaginationResponse findAllTeacher(int page,int size);
 
     Deque<CourseResponse> teacherCourses(String email);
 

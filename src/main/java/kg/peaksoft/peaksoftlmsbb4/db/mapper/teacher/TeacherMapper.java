@@ -9,6 +9,10 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class TeacherMapper implements Converter<Teacher, TeacherRequest, TeacherResponse> {
@@ -37,8 +41,16 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
         teacherResponse.setPhoneNumber(teacher.getPhoneNumber());
         teacherResponse.setSpecialization(teacher.getSpecialization());
         teacherResponse.setEmail(teacher.getUser().getEmail());
-        teacherResponse.setFullName(teacher.getName()+" "+teacher.getLastName());
+        teacherResponse.setFullName(teacher.getName() + " " + teacher.getLastName());
         return teacherResponse;
 
+    }
+
+    public Deque<TeacherResponse> deConvert(List<Teacher> teachers) {
+        Deque<TeacherResponse> teacherResponses = new ArrayDeque<>();
+        for (Teacher t : teachers) {
+            teacherResponses.addFirst(deConvert(t));
+        }
+        return teacherResponses;
     }
 }

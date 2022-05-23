@@ -1,6 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
@@ -12,13 +13,14 @@ import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Deque;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 @Slf4j
@@ -115,11 +117,14 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<TeacherResponse> findAllTeacher() {
+    public TeacherPaginationResponse findAllTeacher(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        TeacherPaginationResponse teacherPaginationResponse = new TeacherPaginationResponse();
+        teacherPaginationResponse.setTeachers(teacherMapper.deConvert(teacherRepository.findAll(pageable).getContent()));
+        teacherPaginationResponse.setPages(teacherRepository.findAll(pageable).getTotalPages());
+        teacherPaginationResponse.setCurrentPage(pageable.getPageNumber());
         log.info("successful find all teachers");
-        return teacherRepository.findAll()
-                .stream()
-                .map(teacherMapper::deConvert).collect(Collectors.toList());
+        return teacherPaginationResponse;
     }
 
     @Override
