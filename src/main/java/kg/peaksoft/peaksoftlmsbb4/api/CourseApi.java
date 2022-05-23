@@ -39,7 +39,7 @@ public class CourseApi {
 
     @Operation(summary = "Gets a single courses by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping("/{id}")
     public CourseResponse findById(@PathVariable Long id) {
         return courseService.findById(id);
@@ -54,7 +54,7 @@ public class CourseApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = CourseApi.class)))})})
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     public CoursePaginationResponse getAllCoursesForPagination(@RequestParam int page,
                                                                @RequestParam int size) {
         return courseService.coursesForPagination(--page, size);

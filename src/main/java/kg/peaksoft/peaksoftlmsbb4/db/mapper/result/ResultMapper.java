@@ -99,7 +99,6 @@ public class ResultMapper {
                 }
             }
             if (counterOfCorrectAnswer < counterOfWrongAnswer) {
-                grade = 0;
             } else if (counterOfCorrectAnswer == 0) {
                 grade = 0;
             } else if (counterOfWrongAnswer == counterOfCorrectAnswer) {
