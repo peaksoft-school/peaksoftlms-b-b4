@@ -80,18 +80,18 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseResponse update(Long id, CourseRequest courseRequest) {
-        Course course = courseRepository.findById(id).orElseThrow(()->
-                new NotFoundException(String.format("course with id = %s not found",id)));
+        Course course = courseRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("course with id = %s not found", id)));
         if (!course.getCourseName().equals(courseRequest.getCourseName())) {
             course.setCourseName(courseRequest.getCourseName());
         }
         if (!course.getDescription().equals(courseRequest.getCourseName())) {
             course.setDescription(courseRequest.getDescription());
         }
-        if (!course.getDateOfFinish().isEqual(courseRequest.getDateOfFinish())){
+        if (!course.getDateOfFinish().isEqual(courseRequest.getDateOfFinish())) {
             course.setDateOfFinish(courseRequest.getDateOfFinish());
         }
-        if (!course.getImage().equals(courseRequest.getImage())){
+        if (!course.getImage().equals(courseRequest.getImage())) {
             course.setImage(courseRequest.getImage());
         }
         log.info("successful update this course:{}", course);

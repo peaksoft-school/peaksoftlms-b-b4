@@ -3,7 +3,6 @@ package kg.peaksoft.peaksoftlmsbb4.annotations.phoneNumber;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-
 public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumber, String> {
 
     @Override
