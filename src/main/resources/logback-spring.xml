@@ -4,7 +4,7 @@
     <property name="LOGS" value="./logs" />
 
     <appender name="Appender" class="kg.peaksoft.peaksoftlmsbb4.io.LogzioLogbackAppender">
-        <token>4fed391f-d870-413f-8f6e-f70276143b75</token>
+        <token>CyKqUyfHPiNklMqbDcwmrdnrqPUluGlx</token>
         <logzioUrl>https://app-eu.logz.io/#/goto/e07dc56fb68a7707120c159943200602?switchToAccountId=494600</logzioUrl>
         <logzioType>java-application</logzioType>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
