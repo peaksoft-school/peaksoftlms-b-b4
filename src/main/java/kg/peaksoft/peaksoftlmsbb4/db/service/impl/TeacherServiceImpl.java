@@ -81,7 +81,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (!teacher.getUser().getEmail().equals(teacherRequest.getEmail())) {
             teacher.getUser().setEmail(teacherRequest.getEmail());
         }
-        if (!passwordEncoder.matches(teacherRequest.getPassword(), teacher.getUser().getPassword())) {
+        if (!passwordEncoder.matches(teacherRequest.getPassword(), teacher.getUser().getPassword()) || !teacherRequest.getPassword().equals("")) {
             teacher.getUser().setPassword(passwordEncoder.encode(teacherRequest.getPassword()));
         }
         log.info("successful update teacher by id:{}", id);

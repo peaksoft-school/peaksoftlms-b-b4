@@ -35,7 +35,7 @@ public class StudentRequest {
     @NotEmpty(message = "email must have a value")
     private String email;
 
-    @ValidPassword
+    @NotBlank
     private String password;
 
     private Long groupId;
