@@ -8,6 +8,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TeacherRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
@@ -32,16 +33,17 @@ public class TeacherServiceImpl implements TeacherService {
     private final PasswordEncoder passwordEncoder;
     private final TeacherMapper teacherMapper;
     private final CourseMapper courseMapper;
+    private final UserRepository userRepository;
 
     @Override
     public TeacherResponse saveTeacher(TeacherRequest teacherRequest) {
 
         String email = teacherRequest.getEmail();
 
-        if (teacherRepository.existsByUserEmail((email))) {
-            log.error("does not exits teacher with email:{}", email);
+        if (userRepository.existsByEmail((email))) {
+            log.error("user with this email already exists:{}", email);
             throw new BadRequestException(
-                    String.format("teacher with email = %s does not exists", email)
+                    String.format("user with this email = %s already exists:", email)
             );
         }
         String encodedPassword = passwordEncoder.encode(teacherRequest.getPassword());
@@ -113,7 +115,7 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("teacher not found %s with id", id)));
         log.info("successful delete teacher by id:{}", id);
         teacherRepository.deleteById(id);
-        return teacherMapper.deConvert(teacher );
+        return teacherMapper.deConvert(teacher);
     }
 
     @Override

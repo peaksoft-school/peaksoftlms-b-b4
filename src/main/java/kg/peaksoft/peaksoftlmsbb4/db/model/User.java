@@ -28,6 +28,7 @@ public class User implements UserDetails {
             generator = "users_id_seq"
     )
     private Long id;
+    @Column(unique = true)
     private String email;
     private String password;
     private boolean isAccountNonExpired = true;

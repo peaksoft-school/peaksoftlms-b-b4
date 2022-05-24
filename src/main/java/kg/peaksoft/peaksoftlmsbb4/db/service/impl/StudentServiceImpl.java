@@ -56,7 +56,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentResponse saveStudent(StudentRequest studentRequest) {
         String email = studentRequest.getEmail();
-        if (studentRepository.existsStudentByUserEmail((email))) {
+        if (userRepository.existsByEmail((email))) {
             log.error("there is such a student with email :{}", email);
             throw new BadRequestException(
                     String.format("There is such a student with email = %s", email)
