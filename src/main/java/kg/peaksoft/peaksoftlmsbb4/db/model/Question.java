@@ -28,8 +28,6 @@ public class Question {
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
 
-//    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-//    private Test test;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Variant> variants;
 
@@ -50,5 +48,12 @@ public class Question {
         }
     }
 
-
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", questionType=" + questionType +
+                '}';
+    }
 }

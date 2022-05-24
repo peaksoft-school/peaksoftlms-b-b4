@@ -32,4 +32,13 @@ public class Resource {
         this.resourceType = resourceType;
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "id=" + id +
+                ", resourceType=" + resourceType +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

@@ -28,5 +28,12 @@ public class Variant {
     @JoinColumn(name = "question_id")
     private Question question;
 
-
+    @Override
+    public String toString() {
+        return "Variant{" +
+                "id=" + id +
+                ", option='" + option + '\'' +
+                ", answer=" + answer +
+                '}';
+    }
 }

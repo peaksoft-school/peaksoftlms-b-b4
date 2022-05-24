@@ -29,8 +29,12 @@ public class Link {
     @OneToOne(cascade = {DETACH, MERGE, REFRESH}, mappedBy = "link")
     private Lesson lessons;
 
-//    @ManyToOne
-//    @JoinColumn(name = "teacher_id")
-//    private Teacher teacher;
-
+    @Override
+    public String toString() {
+        return "Link{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", link='" + link + '\'' +
+                '}';
+    }
 }

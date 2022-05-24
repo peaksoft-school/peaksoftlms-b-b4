@@ -41,4 +41,14 @@ public class Results {
     @ManyToOne(cascade = {DETACH,MERGE,REFRESH,PERSIST})
     @JoinColumn(name = "test_id")
     private Test test;
+
+    @Override
+    public String toString() {
+        return "Results{" +
+                "id=" + id +
+                ", result=" + result +
+                ", dateOfPassed=" + dateOfPassed +
+                ", grade=" + grade +
+                '}';
+    }
 }

@@ -30,4 +30,13 @@ public class Presentation {
     @OneToOne(cascade = {DETACH, MERGE, REFRESH}, mappedBy = "presentation")
     private Lesson lessons;
 
+    @Override
+    public String toString() {
+        return "Presentation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", file='" + file + '\'' +
+                '}';
+    }
 }

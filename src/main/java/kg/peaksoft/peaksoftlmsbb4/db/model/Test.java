@@ -34,10 +34,13 @@ public class Test {
     @JoinColumn(name = "lessons_id")
     private Lesson lessons;
 
-//    public void setQuestions(List<Question> question) {
-//        if (questions == null) {
-//            questions = question;
-//        }
-//    }
-
+    @Override
+    public String toString() {
+        return "Test{" +
+                "id=" + id +
+                ", testName='" + testName + '\'' +
+                ", isEnabled=" + isEnabled +
+                ", questions=" + questions +
+                '}';
+    }
 }

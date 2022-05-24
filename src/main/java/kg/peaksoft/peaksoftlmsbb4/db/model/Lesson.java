@@ -45,5 +45,11 @@ public class Lesson {
     @JoinColumn(name = "test_id")
     private Test test;
 
-
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

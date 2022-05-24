@@ -53,4 +53,16 @@ public class Group {
         }
         students.add(student);
     }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", groupName='" + groupName + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", dateOfStart=" + dateOfStart +
+                ", dateOfFinish=" + dateOfFinish +
+                '}';
+    }
 }

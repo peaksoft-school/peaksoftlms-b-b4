@@ -57,5 +57,14 @@ public class Student {
         courses.add(course);
     }
 
-
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", studentName='" + studentName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", studyFormat=" + studyFormat +
+                '}';
+    }
 }

@@ -30,4 +30,13 @@ public class VideoLesson {
     @OneToOne(cascade = {DETACH, MERGE, REFRESH}, mappedBy = "videoLesson")
     private Lesson lessons;
 
+    @Override
+    public String toString() {
+        return "VideoLesson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", link='" + link + '\'' +
+                '}';
+    }
 }

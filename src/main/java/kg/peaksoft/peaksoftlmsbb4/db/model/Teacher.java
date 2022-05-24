@@ -51,5 +51,15 @@ public class Teacher {
         this.courses.add(course);
     }
 
-
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", specialization='" + specialization + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

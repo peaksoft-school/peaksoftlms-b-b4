@@ -116,5 +116,17 @@ public class Course {
         this.groups = groups;
         this.lessons = lessons;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", courseName='" + courseName + '\'' +
+                ", image='" + image + '\'' +
+                ", description='" + description + '\'' +
+                ", dateOfStart=" + dateOfStart +
+                ", dateOfFinish=" + dateOfFinish +
+                '}';
+    }
 }
 
