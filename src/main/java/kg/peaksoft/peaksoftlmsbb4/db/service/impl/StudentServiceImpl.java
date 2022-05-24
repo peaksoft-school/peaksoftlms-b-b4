@@ -88,6 +88,9 @@ public class StudentServiceImpl implements StudentService {
         if (!student.getUser().getEmail().equals(studentRequest.getEmail())) {
             student.getUser().setEmail(studentRequest.getEmail());
         }
+        if (!student.getUser().getPassword().equals(studentRequest.getPassword()) || !studentRequest.getPassword().equals("")){
+            student.getUser().setPassword(studentRequest.getPassword());
+        }
         log.info("successful update student with id:{}", id);
         return studentMapper.deConvert(student);
     }
