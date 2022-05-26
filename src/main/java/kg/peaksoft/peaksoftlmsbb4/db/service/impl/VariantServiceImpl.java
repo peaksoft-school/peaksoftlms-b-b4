@@ -26,16 +26,6 @@ public class VariantServiceImpl implements VariantService {
     private final VariantMapper variantMapper;
 
     @Override
-    public VariantResponse saveVariant(VariantRequest variantRequest) {
-        Question question = new Question();
-        Variant map = variantMapper.convert(variantRequest);
-        Variant save = variantRepository.save(map);
-        question.setVariant(save);
-        log.info("successful variant save:{}", save);
-        return variantMapper.deConvert(save);
-    }
-
-    @Override
     public VariantResponse findById(Long id) {
         Variant variant = variantRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("this id not found=%s", id)

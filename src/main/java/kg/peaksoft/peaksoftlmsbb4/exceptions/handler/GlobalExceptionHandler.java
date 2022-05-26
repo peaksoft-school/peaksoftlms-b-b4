@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.exceptions.handler;
 
+import com.amazonaws.services.kms.model.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.model.ExceptionResponse;
@@ -39,6 +40,16 @@ public class GlobalExceptionHandler {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
         exceptionResponse.setStatus(HttpStatus.UNAUTHORIZED);
         exceptionResponse.setMessage(badCredentialsException.getMessage());
+        return exceptionResponse;
+    }
+
+    @ExceptionHandler(
+            AlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.ALREADY_REPORTED)
+    public ExceptionResponse handleMethodValidException(AlreadyExistsException e) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setStatus(HttpStatus.ALREADY_REPORTED);
+        exceptionResponse.setMessage(e.getMessage());
         return exceptionResponse;
     }
 }

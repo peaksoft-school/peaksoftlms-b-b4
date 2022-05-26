@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
+import com.amazonaws.services.kms.model.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CoursePaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
@@ -13,6 +14,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.TeacherRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
@@ -40,6 +42,7 @@ public class CourseServiceImpl implements CourseService {
     private final TeacherMapper teacherMapper;
     private final TeacherService teacherService;
     private final AWSS3Service awss3Service;
+    private final TeacherRepository teacherRepository;
 
     @Override
     public CourseResponse saveCourse(CourseRequest courseRequest) {
@@ -135,19 +138,25 @@ public class CourseServiceImpl implements CourseService {
         return teacherResponses;
     }
 
-    @Transactional
+
     @Override
+    @Transactional
     public String assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest) {
         Course course = courseRepository.findById(assignTeacherRequest.getCourseId())
-                .orElseThrow(() ->
-                        new NotFoundException(String.format("Course with id = %s not found", assignTeacherRequest.getCourseId())));
-
+                .orElseThrow(() -> new NotFoundException("Course not found by this id"));
         for (Long id : assignTeacherRequest.getTeacherId()) {
-            course.addTeacher(teacherService.findBy(id));
+            Teacher instructor = teacherRepository.findById(id).orElseThrow(() ->
+                    new NotFoundException("Instructor not found by this id"));
+            for (Teacher instructorEntity : course.getTeachers()) {
+                if (instructor.getId().equals(instructorEntity.getId())) {
+                    throw new AlreadyExistsException(
+                            "Instructors with id  already assigned to course");
+                }
+            }
+            course.addTeacher(instructor);
         }
         courseRepository.save(course);
-        log.info("successful assign teacher with id=%s to course");
-        return String.format("Teachers added to %s course", course.getCourseName());
+        return String.format("All instructors added to course = %s", course.getCourseName());
     }
 
     private Course getById(Long id) {

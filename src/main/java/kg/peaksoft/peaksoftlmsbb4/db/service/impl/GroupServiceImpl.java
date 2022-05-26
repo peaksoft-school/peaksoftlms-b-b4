@@ -84,10 +84,10 @@ public class GroupServiceImpl implements GroupService {
                     String.format("group with id = %s does not exists", id)
             );
         }
-        if(!groupRepository.getById(id).getImage().equals("")){
+        if (!groupRepository.getById(id).getImage().equals("")) {
             awss3Service.deleteFile(groupRepository.getById(id).getImage());
         }
-        Group byId = groupRepository.findById(id).orElseThrow(()->new NotFoundException(String.format("Course with id %s not found",id)));
+        Group byId = groupRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Course with id %s not found", id)));
         groupRepository.deleteById(id);
         log.info("successful delete group by id:{}", id);
         return groupMapper.deConvert(byId);
@@ -97,7 +97,7 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     public GroupResponse update(Long id, GroupRequest groupRequest) {
         Group group = groupRepository.findById(id).orElseThrow(
-                ()-> new NotFoundException(String.format("Group with id=%s not found",id))
+                () -> new NotFoundException(String.format("Group with id=%s not found", id))
         );
         if (!group.getGroupName().equals(groupRequest.getGroupName())) {
             group.setGroupName(groupRequest.getGroupName());
@@ -105,10 +105,10 @@ public class GroupServiceImpl implements GroupService {
         if (!group.getDescription().equals(groupRequest.getDescription())) {
             group.setDescription(groupRequest.getDescription());
         }
-        if (!group.getImage().equals(groupRequest.getImage())){
+        if (!group.getImage().equals(groupRequest.getImage())) {
             group.setImage(groupRequest.getImage());
         }
-        if (!group.getDateOfFinish().isEqual(groupRequest.getDateOfFinish())){
+        if (!group.getDateOfFinish().isEqual(groupRequest.getDateOfFinish())) {
             group.setDateOfFinish(groupRequest.getDateOfFinish());
         }
         log.info("successful update group by Id:{}", id);
@@ -139,12 +139,21 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public String assignGroupToCourse(AssignGroupRequest assignGroupRequest) {
         Course course = courseRepository.findById(assignGroupRequest.getCourseId())
-                .orElseThrow(() -> new BadRequestException(
-                        String.format("Course with id %s not found", assignGroupRequest.getCourseId())));
-        Group group = groupRepository.getById(assignGroupRequest.getGroupId());
+                .orElseThrow(() ->
+                        new NotFoundException(
+                                String.format("Not found course with id=%s",
+                                        assignGroupRequest.getCourseId())));
+        Group group = groupRepository.findById(assignGroupRequest.getGroupId()).
+                orElseThrow(() -> new NotFoundException("student with id = %s does not exists " + assignGroupRequest.getGroupId()));
+        for (Group s : course.getGroups()) {
+            if (s.getId().equals(group.getId())) {
+                throw new BadRequestException(
+                        String.format("There is such a student with id = %s", group.getId()));
+            }
+        }
         course.setGroup(group);
-        log.info("successfully assign group to course by group id:{}", assignGroupRequest.getGroupId());
-        return String.format("Group %s added to %s course", group.getGroupName(), course.getCourseName());
+        log.info("successfully assign student to course by student id:{}", assignGroupRequest.getCourseId());
+        return String.format("%s added to %s course", group.getGroupName(), course.getCourseName());
     }
 }
 
