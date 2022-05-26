@@ -137,6 +137,7 @@ public class StudentServiceImpl implements StudentService {
         return studentPaginationResponse;
     }
 
+    @Transactional
     @Override
     public String assignStudentToCourse(AssignStudentRequest assignStudentRequest) {
         Course course = courseRepository.findById(assignStudentRequest.getCourseId())
@@ -144,7 +145,14 @@ public class StudentServiceImpl implements StudentService {
                         new NotFoundException(
                                 String.format("Not found course with id=%s",
                                         assignStudentRequest.getCourseId())));
-        Student student = studentRepository.getById(assignStudentRequest.getStudentId());
+        Student student = studentRepository.findById(assignStudentRequest.getStudentId()).
+                orElseThrow(()->new NotFoundException("student with id = %s does not exists "+assignStudentRequest.getStudentId()));
+        for (Student s:course.getStudents()) {
+            if(s.getId().equals(student.getId())){
+                throw new BadRequestException(
+                        String.format("There is such a student with id = %s",student.getId()));
+            }
+        }
         course.addStudent(student);
         log.info("successfully assign student to course by student id:{}", assignStudentRequest.getStudentId());
         return String.format("%s added to %s course", student.getStudentName(), course.getCourseName());
