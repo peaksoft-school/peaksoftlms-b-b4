@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.group;
 
-import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 

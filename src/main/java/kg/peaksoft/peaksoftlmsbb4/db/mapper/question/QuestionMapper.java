@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.question;
 
-import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;

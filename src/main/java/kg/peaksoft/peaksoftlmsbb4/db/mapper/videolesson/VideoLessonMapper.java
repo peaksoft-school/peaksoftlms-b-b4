@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.videolesson;
 
-import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.videolesson.VideoLessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.videolesson.VideoLessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.VideoLesson;

@@ -48,7 +48,6 @@ public class VideoLessonServiceImpl implements VideoLessonService {
         return videoLessonRepository.findById(id).orElseThrow(() -> {
             log.error("not found video lesson with id:{}", id);
             throw new NotFoundException(String.format("Not found video lesson with id=%s", id));
-
         });
     }
 

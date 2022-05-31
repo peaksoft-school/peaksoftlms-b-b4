@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.variant;
 
-import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;

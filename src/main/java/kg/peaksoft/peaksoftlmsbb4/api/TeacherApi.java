@@ -54,7 +54,6 @@ public class TeacherApi {
         return teacherService.findAllTeacher(--page, size);
     }
 
-
     @Operation(summary = "Add new teacher",
             description = "This endpoint save new teacher")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -63,11 +62,11 @@ public class TeacherApi {
         return teacherService.saveTeacher(teacherRequest);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @Operation(summary = "Update the teacher",
             description = "Updates the details of an endpoint with ID")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public TeacherResponse updateTeacher(@PathVariable("id") Long id, @RequestBody @Valid TeacherRequest teacherRequest) {
+    public TeacherResponse updateTeacher(@PathVariable("id") Long id, @RequestBody TeacherRequest teacherRequest) {
         return teacherService.updateTeacher(id, teacherRequest);
     }
 
@@ -87,7 +86,6 @@ public class TeacherApi {
         User user = (User) authentication.getPrincipal();
         return teacherService.teacherCourses(user.getEmail());
     }
-
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @Operation(summary = "Gets a single teacher by identifier",
@@ -121,4 +119,8 @@ public class TeacherApi {
         return courseService.getAllTeacherByCourseId(id);
     }
 
+    @GetMapping("Unassigned/{id}")
+    public Deque<TeacherResponse> teachersForAssign(@PathVariable Long id){
+        return teacherService.teacherForAssign(id);
+    }
 }

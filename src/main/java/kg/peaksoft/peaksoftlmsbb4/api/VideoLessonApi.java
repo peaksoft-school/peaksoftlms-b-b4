@@ -49,4 +49,12 @@ public class VideoLessonApi {
     public VideoLessonResponse delete(@PathVariable Long id) {
         return videoLessonService.delete(id);
     }
+
+    @GetMapping("lesson/{id}")
+    @Operation(summary = "Gets a single videos by lesson identifier",
+            description = "For valid response try integer IDs with value >= 1 and...")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    public VideoLessonResponse getVideoByLessonId(@PathVariable Long id){
+        return videoLessonService.findLessonByLessonId(id);
+    }
 }

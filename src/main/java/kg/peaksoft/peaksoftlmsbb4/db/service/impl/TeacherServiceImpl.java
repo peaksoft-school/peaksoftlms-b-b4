@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Deque;
+import java.util.List;
 
 
 @Service
@@ -81,7 +82,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (!teacher.getUser().getEmail().equals(teacherRequest.getEmail())) {
             teacher.getUser().setEmail(teacherRequest.getEmail());
         }
-        if (!passwordEncoder.matches(teacherRequest.getPassword(), teacher.getUser().getPassword()) || !teacherRequest.getPassword().equals("")) {
+        if (!passwordEncoder.matches(teacherRequest.getPassword(), teacher.getUser().getPassword())) {
             teacher.getUser().setPassword(passwordEncoder.encode(teacherRequest.getPassword()));
         }
         log.info("successful update teacher by id:{}", id);
@@ -135,4 +136,11 @@ public class TeacherServiceImpl implements TeacherService {
         log.info("find teacher by user email:{}", email);
         return courseMapper.deConvert(teacher.getCourses());
     }
+
+    @Override
+    public Deque<TeacherResponse> teacherForAssign(Long id) {
+        return teacherMapper.deConvert(teacherRepository.findAllTeacherForCourseById(id));
+    }
+
+
 }

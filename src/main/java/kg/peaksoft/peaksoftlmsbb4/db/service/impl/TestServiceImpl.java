@@ -37,6 +37,7 @@ public class TestServiceImpl implements TestService {
                         String.format("There is such a = %s ", name)
                 );
             }
+
             Test test = testMapper.convert(testRequest);
             test.setLessons(lesson);
             log.info("successful test save :{}", test);

@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.resource;
 
-import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;

@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.db.converter;
+package kg.peaksoft.peaksoftlmsbb4.db.dto.converter;
 
 public interface Converter<MODEL, REQUEST, RESPONSE> {
     MODEL convert(REQUEST request);

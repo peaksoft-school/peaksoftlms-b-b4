@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.presentation;
 
-import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Presentation;

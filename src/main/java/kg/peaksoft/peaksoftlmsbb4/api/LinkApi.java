@@ -50,4 +50,12 @@ public class LinkApi {
     public LinkResponse delete(@PathVariable Long id) {
         return linkService.delete(id);
     }
+
+    @GetMapping("lesson/{id}")
+    @Operation(summary = "Gets a single links by lesson identifier",
+            description = "For valid response try integer IDs with value >= 1 and...")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    public LinkResponse findByLessonId(@PathVariable Long id) {
+        return linkService.findLinkByLessonId(id);
+    }
 }

@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher;
 
-import kg.peaksoft.peaksoftlmsbb4.db.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
