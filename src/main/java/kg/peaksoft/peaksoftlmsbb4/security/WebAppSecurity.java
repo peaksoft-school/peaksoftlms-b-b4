@@ -1,7 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.security;
 
 import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.security.config.JwtConfig;
 import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtUtils;
@@ -22,8 +21,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.security.auth.login.CredentialException;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true,

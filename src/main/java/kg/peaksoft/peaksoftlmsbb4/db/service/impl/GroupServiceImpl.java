@@ -135,7 +135,6 @@ public class GroupServiceImpl implements GroupService {
         return studentResponses;
     }
 
-
     @Override
     public String assignGroupToCourse(AssignGroupRequest assignGroupRequest) {
         Course course = courseRepository.findById(assignGroupRequest.getCourseId())
