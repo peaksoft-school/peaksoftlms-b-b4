@@ -16,4 +16,5 @@ public class CourseResponse {
     private String description;
     private String duration;
     private LocalDate dateOfFinish;
+
 }

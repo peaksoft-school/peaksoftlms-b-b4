@@ -1,9 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.test;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +10,7 @@ import java.util.List;
 @Setter
 public class TestRequest {
     private String testName;
-    private Boolean disable=false;
+    private Boolean disable = false;
     private Long lessonsId;
     private List<QuestionRequest> questionRequestList;
 }

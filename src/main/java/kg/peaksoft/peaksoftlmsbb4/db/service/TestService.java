@@ -7,10 +7,15 @@ import java.util.List;
 
 public interface TestService {
     TestResponse saveTest(TestRequest testRequest);
+
     TestResponse findById(Long id);
+
     TestResponse findByLessonId(Long id);
+
     List<TestResponse> findAll();
+
     TestResponse update(Long id, TestRequest testRequest);
+
     void delete(Long id);
 
 }

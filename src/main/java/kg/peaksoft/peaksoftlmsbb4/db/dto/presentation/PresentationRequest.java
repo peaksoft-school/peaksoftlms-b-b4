@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.presentation;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 public class PresentationRequest {
     @NotBlank
     private String name;
+    @NotBlank
     private String description;
     @NotBlank
     private String file;

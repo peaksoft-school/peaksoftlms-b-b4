@@ -7,7 +7,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Link;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LinkRepository;
-import kg.peaksoft.peaksoftlmsbb4.db.service.LessonService;
 import kg.peaksoft.peaksoftlmsbb4.db.service.LinkService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
@@ -25,13 +24,14 @@ public class LinkServiceImpl implements LinkService {
     private final LinkRepository linkRepository;
     private final LinkMapper linkMapper;
     private final LessonRepository lessonRepository;
+
     @Override
     public LinkResponse saveLinks(LinkRequest linkRequest) {
         System.out.println("This method works exactly");
         Lesson lessons = lessonRepository.findById(linkRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
                 String.format("Link with id %s not found", linkRequest.getLessonId())
         ));
-        if(lessons.getLink()==null){
+        if (lessons.getLink() == null) {
             log.info("found lesson:{}", lessons);
             Link link = linkMapper.convert(linkRequest);
             log.info("found link:{}", lessons);
@@ -40,7 +40,7 @@ public class LinkServiceImpl implements LinkService {
             lessons.setLink(save);
             log.info("successfully save links:{}", link);
             return linkMapper.deConvert(save);
-        }else {
+        } else {
             throw new BadRequestException("in this lesson link already exists");
         }
 

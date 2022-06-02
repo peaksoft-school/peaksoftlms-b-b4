@@ -47,7 +47,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService getUserDetailsService() {
         return (email) -> userRepository.findByEmail(email)
-                .orElseThrow(()-> new BadCredentialsException("wrong login or password "));
+                .orElseThrow(() -> new BadCredentialsException("wrong login or password "));
     }
 
     @Override

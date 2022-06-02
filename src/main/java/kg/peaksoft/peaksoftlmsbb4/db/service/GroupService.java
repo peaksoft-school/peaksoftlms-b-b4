@@ -14,7 +14,7 @@ import java.util.List;
 public interface GroupService {
     GroupResponse saveGroup(GroupRequest groupRequest);
 
-    GroupResponsePagination getAllForPagination(int page,int size);
+    GroupResponsePagination getAllForPagination(int page, int size);
 
     GroupResponse findById(Long id);
 

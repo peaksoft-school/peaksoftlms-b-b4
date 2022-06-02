@@ -67,12 +67,12 @@ public class LogzioLogbackAppender extends UnsynchronizedAppenderBase<ILoggingEv
         super();
     }
 
-    public void setEncoder(Encoder<ILoggingEvent> encoder) {
-        this.encoder = encoder;
-    }
-
     public Encoder<ILoggingEvent> getEncoder() {
         return encoder;
+    }
+
+    public void setEncoder(Encoder<ILoggingEvent> encoder) {
+        this.encoder = encoder;
     }
 
     public String getFormat() {
@@ -134,24 +134,20 @@ public class LogzioLogbackAppender extends UnsynchronizedAppenderBase<ILoggingEv
         this.debug = debug;
     }
 
-    public void setInMemoryQueue(boolean inMemoryQueue) {
-        this.inMemoryQueue = inMemoryQueue;
-    }
-
     public boolean isInMemoryQueue() {
         return inMemoryQueue;
     }
 
-    public void setInMemoryQueueCapacityBytes(long inMemoryQueueCapacityBytes) {
-        this.inMemoryQueueCapacityBytes = inMemoryQueueCapacityBytes;
+    public void setInMemoryQueue(boolean inMemoryQueue) {
+        this.inMemoryQueue = inMemoryQueue;
     }
 
     public long getInMemoryQueueCapacityBytes() {
         return inMemoryQueueCapacityBytes;
     }
 
-    public void setInMemoryLogsCountCapacity(long inMemoryLogsCountCapacity) {
-        this.inMemoryLogsCountCapacity = inMemoryLogsCountCapacity;
+    public void setInMemoryQueueCapacityBytes(long inMemoryQueueCapacityBytes) {
+        this.inMemoryQueueCapacityBytes = inMemoryQueueCapacityBytes;
     }
 
     @Deprecated
@@ -161,6 +157,10 @@ public class LogzioLogbackAppender extends UnsynchronizedAppenderBase<ILoggingEv
 
     public long getInMemoryLogsCountCapacity() {
         return inMemoryLogsCountCapacity;
+    }
+
+    public void setInMemoryLogsCountCapacity(long inMemoryLogsCountCapacity) {
+        this.inMemoryLogsCountCapacity = inMemoryLogsCountCapacity;
     }
 
     public boolean isCompressRequests() {

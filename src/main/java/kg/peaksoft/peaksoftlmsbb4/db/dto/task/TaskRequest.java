@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.task;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceRequest;
 import lombok.Getter;
 import lombok.Setter;

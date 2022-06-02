@@ -1,7 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.group;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 

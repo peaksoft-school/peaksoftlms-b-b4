@@ -4,7 +4,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.enums.Result;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.checkerframework.checker.units.qual.C;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -34,11 +33,11 @@ public class Results {
 
     private int grade;
 
-    @OneToOne(cascade = {DETACH,MERGE,REFRESH,PERSIST})
+    @OneToOne(cascade = {DETACH, MERGE, REFRESH, PERSIST})
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @ManyToOne(cascade = {DETACH,MERGE,REFRESH,PERSIST})
+    @ManyToOne(cascade = {DETACH, MERGE, REFRESH, PERSIST})
     @JoinColumn(name = "test_id")
     private Test test;
 }

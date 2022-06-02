@@ -52,7 +52,7 @@ public class ResultMapper {
         List<Long> correctVariantsId = new ArrayList<>();
         for (Question q : results.getTest().getQuestions()) {
             for (Variant v : q.getVariants()) {
-                if (v.getAnswer()){
+                if (v.getAnswer()) {
                     correctVariantsId.add(v.getId());
                 }
             }
@@ -61,13 +61,13 @@ public class ResultMapper {
         return answerResponse;
     }
 
-    public ResultResponse deConvertToResultResponse(Results result){
+    public ResultResponse deConvertToResultResponse(Results result) {
         ResultResponse response = new ResultResponse();
         response.setResult(result.getResult());
         response.setId(response.getId());
         response.setDateOfPassed(result.getDateOfPassed());
         response.setGrade(result.getGrade());
-        response.setStudentFullName(result.getStudent().getStudentName()+" "+result.getStudent().getLastName());
+        response.setStudentFullName(result.getStudent().getStudentName() + " " + result.getStudent().getLastName());
         return response;
     }
 

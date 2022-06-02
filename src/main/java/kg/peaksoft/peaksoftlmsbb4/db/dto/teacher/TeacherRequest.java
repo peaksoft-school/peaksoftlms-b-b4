@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.teacher;
 
-import kg.peaksoft.peaksoftlmsbb4.annotations.password.ValidPassword;
 import kg.peaksoft.peaksoftlmsbb4.annotations.phoneNumber.ValidPhoneNumber;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +13,7 @@ import javax.validation.constraints.Size;
 @Getter
 public class TeacherRequest {
 
-//    @NotBlank
+    @NotBlank
     @Size(min = 2, max = 20, message = "first name should be between 2 and 20 characters")
     private String teacherName;
 
@@ -32,6 +31,6 @@ public class TeacherRequest {
     @NotEmpty(message = "email must have a value")
     private String email;
 
-//    @ValidPassword
+    //    @ValidPassword
     private String password;
 }

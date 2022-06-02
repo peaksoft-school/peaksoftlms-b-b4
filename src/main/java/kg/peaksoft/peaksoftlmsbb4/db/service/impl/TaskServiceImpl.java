@@ -32,7 +32,7 @@ public class TaskServiceImpl implements TaskService {
         Lesson lessons = lessonRepository.findById(taskRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", taskRequest.getLessonId())
         ));
-        if (lessons.getTest() == null){
+        if (lessons.getTest() == null) {
             Task task = taskMapper.convert(taskRequest);
             Task save = taskRepository.save(task);
             lessons.setTask(save);
@@ -69,7 +69,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponse delete(Long id) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(
                 String.format("Task is not found id=%s", id)));
-        Task resource_not_found_with_id = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("resource not found =%s with id",id)));
+        Task resource_not_found_with_id = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("resource not found =%s with id", id)));
         resourceRepository.deleteAll(task.getResources());
         taskRepository.delete(task);
         log.info("successfully delete task by id :{}", id);

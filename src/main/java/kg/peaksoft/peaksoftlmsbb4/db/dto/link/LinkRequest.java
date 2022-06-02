@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.link;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +12,7 @@ public class LinkRequest {
     private String text;
     @NotBlank
     private String link;
+    @NotBlank
     private Long lessonId;
 
 }

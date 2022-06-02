@@ -11,6 +11,7 @@ public class NotFoundException extends RuntimeException {
         super(message);
         log.error("Not found");
     }
+
     public NotFoundException() {
     }
 }

@@ -24,9 +24,9 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         course.setDescription(courseRequest.getDescription());
         course.setImage(courseRequest.getImage());
         course.setDateOfStart(LocalDate.now());
-        if (courseRequest.getDateOfFinish().isBefore(LocalDate.now())){
+        if (courseRequest.getDateOfFinish().isBefore(LocalDate.now())) {
             throw new BadRequestException("Date of finish can't be before than date of start");
-        }else {
+        } else {
             course.setDateOfFinish(courseRequest.getDateOfFinish());
         }
         return course;
@@ -39,7 +39,7 @@ public class CourseMapper implements Converter<Course, CourseRequest, CourseResp
         courseResponse.setCourseName(course.getCourseName());
         courseResponse.setDescription(course.getDescription());
         courseResponse.setImage(course.getImage());
-        courseResponse.setDuration(course.getDateOfStart().getYear() +"-"+ course.getDateOfFinish().getYear());
+        courseResponse.setDuration(course.getDateOfStart().getYear() + "-" + course.getDateOfFinish().getYear());
         courseResponse.setDateOfFinish(course.getDateOfFinish());
         return courseResponse;
     }

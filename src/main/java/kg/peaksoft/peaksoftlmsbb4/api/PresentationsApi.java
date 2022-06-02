@@ -57,7 +57,7 @@ public class PresentationsApi {
     @Operation(summary = "Gets a single presentation by lesson identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
-    public PresentationResponse getPresentationByLessonId(@PathVariable Long id){
+    public PresentationResponse getPresentationByLessonId(@PathVariable Long id) {
         return presentationService.findPresentationByLessonId(id);
     }
 }

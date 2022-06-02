@@ -6,7 +6,6 @@ import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.model.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

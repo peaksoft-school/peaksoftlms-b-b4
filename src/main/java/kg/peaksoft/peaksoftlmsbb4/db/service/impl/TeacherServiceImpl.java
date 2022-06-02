@@ -6,7 +6,9 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TeacherRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
@@ -20,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
@@ -35,6 +38,7 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherMapper teacherMapper;
     private final CourseMapper courseMapper;
     private final UserRepository userRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public TeacherResponse saveTeacher(TeacherRequest teacherRequest) {
@@ -138,9 +142,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Deque<TeacherResponse> teacherForAssign(Long id) {
-        return teacherMapper.deConvert(teacherRepository.findAllTeacherForCourseById(id));
+    public Deque<TeacherResponse> teacherResponsesForAssign(Long id) {
+        Deque<TeacherResponse> teacherResponses = new ArrayDeque<>();
+        List<Teacher> all = teacherRepository.findAll();
+        Course course = courseRepository.findById(id).orElseThrow(() -> new NotFoundException("here have mistake id course not found!!! "));
+        all.removeAll(course.getTeachers());
+        teacherResponses.addAll(teacherMapper.deConvert(all));
+        return teacherResponses;
     }
-
 
 }
