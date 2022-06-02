@@ -14,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+
 @RestController
 @SpringBootApplication
 @AllArgsConstructor

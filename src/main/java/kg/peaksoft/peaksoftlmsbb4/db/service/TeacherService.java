@@ -26,4 +26,6 @@ public interface TeacherService {
     Deque<CourseResponse> teacherCourses(String email);
 
     Deque<TeacherResponse> teacherForAssign(Long id);
+
+    public Deque<TeacherResponse>teacherResponsesForAssign(Long id);
 }

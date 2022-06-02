@@ -119,8 +119,13 @@ public class TeacherApi {
         return courseService.getAllTeacherByCourseId(id);
     }
 
+
     @GetMapping("Unassigned/{id}")
     public Deque<TeacherResponse> teachersForAssign(@PathVariable Long id){
         return teacherService.teacherForAssign(id);
+    }
+    @GetMapping("/teacherResponse/{id}")
+    public Deque<TeacherResponse>teacherResponses1212(@PathVariable Long id){
+        return teacherService.teacherResponsesForAssign(id);
     }
 }

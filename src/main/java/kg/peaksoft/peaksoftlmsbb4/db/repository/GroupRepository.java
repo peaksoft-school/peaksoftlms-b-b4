@@ -10,4 +10,5 @@ import java.util.Deque;
 public interface GroupRepository extends JpaRepository<Group, Long> {
     boolean existsByGroupName(String name);
 
+
 }
