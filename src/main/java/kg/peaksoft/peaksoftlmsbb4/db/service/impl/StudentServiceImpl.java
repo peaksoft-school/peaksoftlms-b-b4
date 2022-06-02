@@ -88,7 +88,7 @@ public class StudentServiceImpl implements StudentService {
         if (!student.getUser().getEmail().equals(studentRequest.getEmail())) {
             student.getUser().setEmail(studentRequest.getEmail());
         }
-        if (!student.getUser().getPassword().equals(studentRequest.getPassword()) || !studentRequest.getPassword().equals("")){
+        if (!student.getUser().getPassword().equals(studentRequest.getPassword()) || !studentRequest.getPassword().equals("")) {
             student.getUser().setPassword(studentRequest.getPassword());
         }
         log.info("successful update student with id:{}", id);
@@ -146,11 +146,11 @@ public class StudentServiceImpl implements StudentService {
                                 String.format("Not found course with id=%s",
                                         assignStudentRequest.getCourseId())));
         Student student = studentRepository.findById(assignStudentRequest.getStudentId()).
-                orElseThrow(()->new NotFoundException("student with id = %s does not exists "+assignStudentRequest.getStudentId()));
-        for (Student s:course.getStudents()) {
-            if(s.getId().equals(student.getId())){
+                orElseThrow(() -> new NotFoundException("student with id = %s does not exists " + assignStudentRequest.getStudentId()));
+        for (Student s : course.getStudents()) {
+            if (s.getId().equals(student.getId())) {
                 throw new BadRequestException(
-                        String.format("There is such a student with id = %s",student.getId()));
+                        String.format("There is such a student with id = %s", student.getId()));
             }
         }
         course.addStudent(student);

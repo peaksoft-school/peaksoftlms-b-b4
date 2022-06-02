@@ -21,11 +21,11 @@ public class QuestionMapper implements Converter<Question, QuestionRequest, Ques
 
     @Override
     public Question convert(QuestionRequest questionRequest) {
-        List<Variant>variant=new ArrayList<>();
+        List<Variant> variant = new ArrayList<>();
         Question question = new Question();
         question.setQuestion(questionRequest.getQuestion());
         question.setQuestionType(questionRequest.getQuestionType());
-        for (VariantRequest q:questionRequest.getVariants()) {
+        for (VariantRequest q : questionRequest.getVariants()) {
             variant.add(variantMapper.convert(q));
         }
         question.setVariants(variant);

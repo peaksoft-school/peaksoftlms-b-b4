@@ -24,9 +24,9 @@ public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse
         group.setDescription(groupRequest.getDescription());
         group.setImage(groupRequest.getImage());
         group.setDateOfStart(LocalDate.now());
-        if (groupRequest.getDateOfFinish().isBefore(LocalDate.now())){
+        if (groupRequest.getDateOfFinish().isBefore(LocalDate.now())) {
             throw new BadRequestException("Date of finish can't after than date of start");
-        }else {
+        } else {
             group.setDateOfFinish(groupRequest.getDateOfFinish());
         }
         return group;
@@ -38,15 +38,15 @@ public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse
         groupResponse.setId(group.getId());
         groupResponse.setGroupName(group.getGroupName());
         groupResponse.setDescription(group.getDescription());
-        groupResponse.setDuration(group.getDateOfStart().getYear()+"-"+group.getDateOfFinish().getYear());
+        groupResponse.setDuration(group.getDateOfStart().getYear() + "-" + group.getDateOfFinish().getYear());
         groupResponse.setImage(group.getImage());
         groupResponse.setDateOfFinish(group.getDateOfFinish());
         return groupResponse;
     }
 
-    public Deque<GroupResponse> deConvert(List<Group> groups){
+    public Deque<GroupResponse> deConvert(List<Group> groups) {
         Deque<GroupResponse> groupResponses = new ArrayDeque<>();
-        for (Group g:groups) {
+        for (Group g : groups) {
             groupResponses.addFirst(deConvert(g));
         }
         return groupResponses;

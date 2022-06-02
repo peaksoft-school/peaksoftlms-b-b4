@@ -31,13 +31,13 @@ public class PresentationServiceImpl implements PresentationService {
         Lesson lessons = lessonRepository.findById(presentationRequest.getLessonId()).orElseThrow(() -> new NotFoundException(
                 String.format("Lesson with id %s not found", presentationRequest.getLessonId())
         ));
-        if (lessons.getPresentation() == null){
+        if (lessons.getPresentation() == null) {
             Presentation presentation = presentationMapper.convert(presentationRequest);
             Presentation save = presentationRepository.save(presentation);
             lessons.setPresentation(save);
             log.info("successfully save presentation:{}", presentation);
             return presentationMapper.deConvert(save);
-        }else {
+        } else {
             throw new BadRequestException("in this lesson presentation already exists");
         }
     }

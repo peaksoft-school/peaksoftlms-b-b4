@@ -1,6 +1,5 @@
 package kg.peaksoft.peaksoftlmsbb4.db.dto.lessons;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +10,6 @@ import javax.validation.constraints.NotBlank;
 public class LessonRequest {
     @NotBlank
     private String name;
-
+    @NotBlank
     private Long courseId;
 }

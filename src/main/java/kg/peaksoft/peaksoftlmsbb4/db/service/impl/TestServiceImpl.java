@@ -30,7 +30,7 @@ public class TestServiceImpl implements TestService {
         Lesson lesson = lessonRepository.findById(testRequest.getLessonsId()).orElseThrow(() -> new BadRequestException(
                 String.format("Course with id %s does not exists", testRequest.getLessonsId())
         ));
-        if (lesson.getTest() == null){
+        if (lesson.getTest() == null) {
             String name = testRequest.getTestName();
             if (testRepository.existsByTestName((name))) {
                 throw new BadRequestException(
@@ -43,7 +43,7 @@ public class TestServiceImpl implements TestService {
             log.info("successful test save :{}", test);
             Test test1 = testRepository.save(test);
             return testMapper.deConvert(test1);
-        }else {
+        } else {
             throw new BadRequestException("in this lesson test already exists");
         }
     }
@@ -59,8 +59,8 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public TestResponse findByLessonId(Long id) {
-        return testMapper.deConvert(lessonRepository.findById(id).orElseThrow(()->
-                new NotFoundException(String.format("lesson with id = %s not found",id))).getTest());
+        return testMapper.deConvert(lessonRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("lesson with id = %s not found", id))).getTest());
     }
 
 

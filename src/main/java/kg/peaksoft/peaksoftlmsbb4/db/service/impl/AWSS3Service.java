@@ -1,7 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import kg.peaksoft.peaksoftlmsbb4.db.service.FileService;
 import lombok.AllArgsConstructor;
@@ -27,7 +30,7 @@ public class AWSS3Service implements FileService {
 
         String filenameExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
 
-        String key = UUID.randomUUID().toString() + "." +filenameExtension;
+        String key = UUID.randomUUID().toString() + "." + filenameExtension;
 
         ObjectMetadata metaData = new ObjectMetadata();
         metaData.setContentLength(file.getSize());
@@ -49,7 +52,7 @@ public class AWSS3Service implements FileService {
     @Override
     public String deleteFile(String file) {
         String[] fileName = file.split("/");
-        awsS3Client.deleteObject("peaksoft-lms-a4", fileName[fileName.length-1]);
+        awsS3Client.deleteObject("peaksoft-lms-a4", fileName[fileName.length - 1]);
         log.info("File deleted");
         return "Deleted File: " + file;
     }

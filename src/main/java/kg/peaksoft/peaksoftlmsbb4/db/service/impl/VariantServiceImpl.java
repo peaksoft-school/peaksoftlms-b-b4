@@ -2,13 +2,10 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.variant.VariantResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.variant.VariantMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.VariantService;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

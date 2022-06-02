@@ -14,7 +14,6 @@ public class QuestionResponse {
     private Long questionId;
     private String question;
     private QuestionType questionType;
-    @JsonProperty("variants")
     private List<VariantResponse> variantResponses;
 
 }

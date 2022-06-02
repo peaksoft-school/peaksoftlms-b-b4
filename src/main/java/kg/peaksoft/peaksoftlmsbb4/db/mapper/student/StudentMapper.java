@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class StudentMapper implements Converter<Student, StudentRequest, StudentResponse> {
     private final GroupRepository groupRepository;
+
     @Override
     public Student convert(StudentRequest studentRequest) {
         Student student = new Student();
@@ -28,7 +29,7 @@ public class StudentMapper implements Converter<Student, StudentRequest, Student
         student.setPhoneNumber(studentRequest.getPhoneNumber());
         student.setStudyFormat(studentRequest.getStudyFormat());
         student.setGroup(groupRepository.findById(studentRequest.getGroupId()).orElseThrow(
-                ()-> new NotFoundException(String.format("Group with id = %s not found",studentRequest.getGroupId()))));
+                () -> new NotFoundException(String.format("Group with id = %s not found", studentRequest.getGroupId()))));
         user.setRole(Role.STUDENT);
         user.setPassword(studentRequest.getPassword());
         user.setEmail(studentRequest.getEmail());
@@ -46,14 +47,14 @@ public class StudentMapper implements Converter<Student, StudentRequest, Student
         studentResponse.setStudyFormat(student.getStudyFormat());
         studentResponse.setRole(student.getUser().getRole());
         studentResponse.setEmail(student.getUser().getEmail());
-        studentResponse.setFullName(student.getStudentName()+" "+student.getLastName());
+        studentResponse.setFullName(student.getStudentName() + " " + student.getLastName());
         studentResponse.setGroupName(student.getGroup().getGroupName());
         return studentResponse;
     }
 
-    public Deque<StudentResponse> deConvert(List<Student> students){
+    public Deque<StudentResponse> deConvert(List<Student> students) {
         Deque<StudentResponse> studentResponses = new ArrayDeque<>();
-        for (Student s:students) {
+        for (Student s : students) {
             studentResponses.add(deConvert(s));
         }
         return studentResponses;

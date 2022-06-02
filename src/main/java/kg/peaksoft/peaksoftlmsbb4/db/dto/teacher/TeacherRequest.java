@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Getter
 public class TeacherRequest {
 
-    //    @NotBlank
+    @NotBlank
     @Size(min = 2, max = 20, message = "first name should be between 2 and 20 characters")
     private String teacherName;
 

@@ -107,7 +107,7 @@ public class StudentApi {
 
     @GetMapping("/studentCourses")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
-    public Deque<CourseResponse> studentCourses(Authentication authentication){
+    public Deque<CourseResponse> studentCourses(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return studentService.getStudentCourses(user.getEmail());
     }
@@ -116,9 +116,9 @@ public class StudentApi {
     @Operation(summary = "Pass the test",
             description = "This endpoint for pass the test")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
-    public AnswerResponse saveResult(Authentication authentication, @RequestBody AnswerRequest answerRequest){
+    public AnswerResponse saveResult(Authentication authentication, @RequestBody AnswerRequest answerRequest) {
         User user = (User) authentication.getPrincipal();
-        return resultService.saveResult(answerRequest,user.getEmail());
+        return resultService.saveResult(answerRequest, user.getEmail());
     }
 }
 

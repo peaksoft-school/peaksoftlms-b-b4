@@ -35,8 +35,8 @@ public class TaskMapper implements Converter<Task, TaskRequest, TaskResponse> {
         taskResponse.setId(task.getId());
         taskResponse.setName(task.getName());
         List<ResourceResponse> resourceResponses = new ArrayList<>();
-        for (Resource r:task.getResources()) {
-            resourceResponses.add(new ResourceResponse(r.getId(),r.getResourceType(), r.getValue()));
+        for (Resource r : task.getResources()) {
+            resourceResponses.add(new ResourceResponse(r.getId(), r.getResourceType(), r.getValue()));
         }
         taskResponse.setResources(resourceResponses);
         return taskResponse;

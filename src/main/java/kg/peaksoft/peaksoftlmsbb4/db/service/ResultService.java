@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface ResultService {
     AnswerResponse saveResult(AnswerRequest answerRequest, String email);
+
     List<ResultResponse> getResults(Long id);
 }

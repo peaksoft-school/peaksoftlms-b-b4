@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +66,26 @@ public class Course {
 
     }
 
+    public Course(String courseName,
+                  String image,
+                  String description,
+                  LocalDate dateOfStart,
+                  LocalDate dateOfFinish,
+                  List<Student> students,
+                  List<Teacher> teachers,
+                  List<Group> groups,
+                  List<Lesson> lessons) {
+        this.courseName = courseName;
+        this.image = image;
+        this.description = description;
+        this.dateOfStart = dateOfStart;
+        this.dateOfFinish = dateOfFinish;
+        this.students = students;
+        this.teachers = teachers;
+        this.groups = groups;
+        this.lessons = lessons;
+    }
+
     public void addTeacher(Teacher teacher) {
         if (this.teachers == null) {
             this.teachers = new ArrayList<>();
@@ -95,26 +114,6 @@ public class Course {
         }
         lessons.add(lesson);
         lesson.setCourses(this);
-    }
-
-    public Course(String courseName,
-                  String image,
-                  String description,
-                  LocalDate dateOfStart,
-                  LocalDate dateOfFinish,
-                  List<Student> students,
-                  List<Teacher> teachers,
-                  List<Group> groups,
-                  List<Lesson> lessons) {
-        this.courseName = courseName;
-        this.image = image;
-        this.description = description;
-        this.dateOfStart = dateOfStart;
-        this.dateOfFinish = dateOfFinish;
-        this.students = students;
-        this.teachers = teachers;
-        this.groups = groups;
-        this.lessons = lessons;
     }
 }
 

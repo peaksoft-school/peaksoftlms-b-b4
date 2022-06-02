@@ -118,11 +118,12 @@ public class TeacherApi {
     public List<TeacherResponse> getAllTeacherByCourseId(@PathVariable Long id) {
         return courseService.getAllTeacherByCourseId(id);
     }
+
     @Operation(summary = "find all teachers",
             description = "This method is a method of adding teachers to a course so you can give how many teachers per course ")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("Unassigned/{id}")
-    public Deque<TeacherResponse>teacherResponses1212(@PathVariable Long id){
+    public Deque<TeacherResponse> teacherResponses1212(@PathVariable Long id) {
         return teacherService.teacherResponsesForAssign(id);
     }
 }

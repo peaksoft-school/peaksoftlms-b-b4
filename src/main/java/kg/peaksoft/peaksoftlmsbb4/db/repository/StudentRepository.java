@@ -15,8 +15,6 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>, PagingAndSortingRepository<Student, Long> {
 
-    boolean existsStudentByUserEmail(String email);
-
     @Query("select s from Student s where s.studentName like %?1%")
     List<Student> findByStudentName(@Param("studentName") String studentName);
 
