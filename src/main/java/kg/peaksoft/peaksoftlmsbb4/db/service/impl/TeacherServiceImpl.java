@@ -142,11 +142,6 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Deque<TeacherResponse> teacherForAssign(Long id) {
-        return teacherMapper.deConvert(teacherRepository.findAllTeacherForCourseById(id));
-    }
-
-    @Override
     public Deque<TeacherResponse> teacherResponsesForAssign(Long id) {
         Deque<TeacherResponse> teacherResponses = new ArrayDeque<>();
         List<Teacher> all = teacherRepository.findAll();
