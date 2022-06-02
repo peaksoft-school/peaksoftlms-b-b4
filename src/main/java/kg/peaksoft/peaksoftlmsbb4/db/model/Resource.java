@@ -23,11 +23,13 @@ public class Resource {
             generator = "resource_id_seq"
     )
     private Long id;
+    private String name;
     private ResourceType resourceType;
     private String value;
 
-    public Resource(ResourceType resourceType, String value) {
+    public Resource(ResourceType resourceType, String value,String name) {
         this.resourceType = resourceType;
         this.value = value;
+        this.name = name;
     }
 }

@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ResourceRequest {
+    private String name;
     private ResourceType resourceType;
     private String value;
 }
