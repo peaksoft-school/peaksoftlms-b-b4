@@ -63,7 +63,6 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.deConvert(task);
     }
 
-
     @Override
     @Transactional
     public TaskResponse delete(Long id) {
