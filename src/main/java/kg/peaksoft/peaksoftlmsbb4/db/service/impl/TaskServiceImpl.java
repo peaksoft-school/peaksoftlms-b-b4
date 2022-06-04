@@ -83,4 +83,10 @@ public class TaskServiceImpl implements TaskService {
                         String.format("Lesson with id = %s not found", id)));
         return taskMapper.deConvert(lesson.getTask());
     }
+
+    @Override
+    public TaskResponse getById(Long id) {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("this id not found"));
+        return taskMapper.deConvert(task);
+    }
 }

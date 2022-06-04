@@ -14,6 +14,7 @@ public class VideoLessonRequest {
     private String description;
     @NotBlank
     private String link;
+
     private Long lessonId;
 
 }
