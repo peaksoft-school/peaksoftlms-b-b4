@@ -26,6 +26,11 @@ public class LessonMapper implements Converter<Lesson, LessonRequest, LessonResp
         LessonResponse lessonResponse = new LessonResponse();
         lessonResponse.setId(lesson.getId());
         lessonResponse.setName(lesson.getName());
+        lessonResponse.setVideoLessonId(lesson.getVideoLesson().getId());
+        lessonResponse.setPresentationId(lesson.getPresentation().getId());
+        lessonResponse.setLinkId(lesson.getLink().getId());
+        lessonResponse.setTaskId(lesson.getTask().getId());
+        lessonResponse.setTestId(lesson.getTest().getId());
         return lessonResponse;
     }
 
