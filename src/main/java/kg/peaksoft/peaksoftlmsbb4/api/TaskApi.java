@@ -51,12 +51,12 @@ public class TaskApi {
         return taskService.delete(id);
     }
 
-    @GetMapping("/{taskId}")
+    @GetMapping("task/{id}")
     @Operation(summary = "Gets a single task by lesson identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
-    public TaskResponse getById(@PathVariable Long taskId) {
-        return taskService.getById(taskId);
+    public TaskResponse getById(@PathVariable Long id) {
+        return taskService.getById(id);
     }
 
 
