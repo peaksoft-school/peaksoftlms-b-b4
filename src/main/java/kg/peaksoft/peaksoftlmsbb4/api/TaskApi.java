@@ -31,7 +31,7 @@ public class TaskApi {
     @Operation(summary = "Gets a single task by lesson identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
-    public TaskResponse findById(@PathVariable Long id) {
+    public TaskResponse findTaskByLessonId(@PathVariable Long id) {
         return taskService.findTaskByLessonId(id);
     }
 

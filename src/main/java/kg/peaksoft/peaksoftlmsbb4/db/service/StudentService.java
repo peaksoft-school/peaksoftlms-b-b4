@@ -23,7 +23,7 @@ public interface StudentService {
 
     StudentPaginationResponse getAll(int size, int page, StudyFormat studyFormat);
 
-    String assignStudentToCourse(AssignStudentRequest assignStudentRequest);
+    StudentResponse assignStudentToCourse(AssignStudentRequest assignStudentRequest);
 
     Deque<StudentResponse> findByStudentName(String name);
 

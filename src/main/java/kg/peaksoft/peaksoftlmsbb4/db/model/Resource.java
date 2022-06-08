@@ -25,6 +25,8 @@ public class Resource {
     private Long id;
     private String name;
     private ResourceType resourceType;
+
+    @Column(length = 10000000)
     private String value;
 
     public Resource(ResourceType resourceType, String value,String name) {

@@ -139,7 +139,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Transactional
     @Override
-    public String assignStudentToCourse(AssignStudentRequest assignStudentRequest) {
+    public StudentResponse assignStudentToCourse(AssignStudentRequest assignStudentRequest) {
         Course course = courseRepository.findById(assignStudentRequest.getCourseId())
                 .orElseThrow(() ->
                         new NotFoundException(
@@ -155,7 +155,7 @@ public class StudentServiceImpl implements StudentService {
         }
         course.addStudent(student);
         log.info("successfully assign student to course by student id:{}", assignStudentRequest.getStudentId());
-        return String.format("%s added to %s course", student.getStudentName(), course.getCourseName());
+        return studentMapper.deConvert(student);
     }
 
     @Override

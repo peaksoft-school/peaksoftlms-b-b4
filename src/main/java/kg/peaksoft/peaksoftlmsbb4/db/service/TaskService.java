@@ -15,5 +15,4 @@ public interface TaskService {
     TaskResponse findTaskByLessonId(Long id);
 
     TaskResponse getById(Long id);
-
 }

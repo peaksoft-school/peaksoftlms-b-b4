@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.group.AssignGroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.student.AssignStudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
@@ -99,7 +100,7 @@ public class TeacherApi {
             description = "This endpoint for adding a student to a course. Only user with role teacher can add student to course")
     @PostMapping("/assignStudent")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
-    public String assignStudentToCourse(@RequestBody AssignStudentRequest assignStudentRequest) {
+    public StudentResponse assignStudentToCourse(@RequestBody AssignStudentRequest assignStudentRequest) {
         return studentService.assignStudentToCourse(assignStudentRequest);
     }
 
@@ -123,7 +124,7 @@ public class TeacherApi {
             description = "This method is a method of adding teachers to a course so you can give how many teachers per course ")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("Unassigned/{id}")
-    public Deque<TeacherResponse> teacherResponses1212(@PathVariable Long id) {
+    public Deque<TeacherResponse> teacherResponses(@PathVariable Long id) {
         return teacherService.teacherResponsesForAssign(id);
     }
 }
