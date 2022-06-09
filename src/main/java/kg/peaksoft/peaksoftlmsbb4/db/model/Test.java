@@ -30,14 +30,8 @@ public class Test {
     private List<Question> questions;
 
     @JsonIgnore
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "lessons_id")
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},mappedBy = "test")
     private Lesson lessons;
 
-//    public void setQuestions(List<Question> question) {
-//        if (questions == null) {
-//            questions = question;
-//        }
-//    }
 
 }
