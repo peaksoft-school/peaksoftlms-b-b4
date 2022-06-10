@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+
 import static javax.persistence.CascadeType.*;
 
 @Entity

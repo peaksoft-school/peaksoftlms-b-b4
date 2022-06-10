@@ -40,6 +40,7 @@ public class TestServiceImpl implements TestService {
 
             Test test = testMapper.convert(testRequest);
             test.setLessons(lesson);
+            lesson.setTest(test);
             log.info("successful test save :{}", test);
             Test test1 = testRepository.save(test);
             return testMapper.deConvert(test1);
