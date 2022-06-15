@@ -65,6 +65,7 @@ public class ResultMapper {
 
     public ResultResponse deConvertToResultResponse(Results result) {
         ResultResponse response = new ResultResponse();
+        response.setName(result.getTest().getTestName());
         response.setTestIsEnabled(result.getTest().getIsEnabled());
         response.setResult(result.getResult());
         response.setId(result.getId());
