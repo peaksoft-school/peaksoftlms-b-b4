@@ -65,8 +65,9 @@ public class ResultMapper {
 
     public ResultResponse deConvertToResultResponse(Results result) {
         ResultResponse response = new ResultResponse();
+        response.setTestIsEnabled(result.getTest().getIsEnabled());
         response.setResult(result.getResult());
-        response.setId(response.getId());
+        response.setId(result.getId());
         response.setDateOfPassed(result.getDateOfPassed());
         response.setGrade(result.getGrade());
         response.setStudentFullName(result.getStudent().getStudentName() + " " + result.getStudent().getLastName());

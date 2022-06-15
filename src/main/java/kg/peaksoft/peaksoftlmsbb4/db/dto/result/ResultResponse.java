@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ResultResponse {
     private Long id;
+    private boolean testIsEnabled;
     private Result result;
     private LocalDateTime dateOfPassed;
     private int grade;
