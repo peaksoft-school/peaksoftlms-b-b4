@@ -2,6 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.switcher.SwitcherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TestService;
@@ -64,9 +65,9 @@ public class TestApi {
     @Operation(summary = "Switcher",
             description = "With this endpoint you can disable or enable test")
     @PreAuthorize("hasAuthority('INSTRUCTOR')")
-    @PostMapping("switcher/{id}")
-    public String switcher(@PathVariable Long id,@RequestParam boolean switcher){
-        return testService.switcher(id,switcher);
+    @PutMapping("switcher/{id}")
+    public boolean switcher(@PathVariable Long id, @RequestParam SwitcherRequest switcherRequest) {
+        return testService.switcher(id, switcherRequest);
     }
 
 }

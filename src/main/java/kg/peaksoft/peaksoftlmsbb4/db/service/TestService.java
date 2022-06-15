@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.switcher.SwitcherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
 
@@ -18,6 +19,6 @@ public interface TestService {
 
     void delete(Long id);
 
-    String switcher(Long id, boolean swithcer);
+    boolean switcher(Long id, SwitcherRequest switcherRequest);
 
 }

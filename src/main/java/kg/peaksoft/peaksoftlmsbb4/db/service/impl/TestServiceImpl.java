@@ -1,5 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
+import kg.peaksoft.peaksoftlmsbb4.db.dto.switcher.SwitcherRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.test.TestMapper;
@@ -101,16 +102,16 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public String switcher(Long id,boolean switcher) {
+    public boolean switcher(Long id, SwitcherRequest switcherRequest) {
         Test test = testRepository.findById(id).orElseThrow(()-> new NotFoundException("test not found"));
-        if (switcher){
-            test.setIsEnabled(switcher);
+        if (switcherRequest.isEnabled()){
+            test.setIsEnabled(switcherRequest.isEnabled());
             testRepository.save(test);
-            return "test enabled";
+            return true;
         }else {
-            test.setIsEnabled(switcher);
+            test.setIsEnabled(switcherRequest.isEnabled());
             testRepository.save(test);
-            return "test disabled";
+            return false;
         }
 
     }
