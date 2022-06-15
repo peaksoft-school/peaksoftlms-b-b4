@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.*;
+
 @Entity
 @Table(name = "groups")
 @Getter
@@ -31,10 +33,10 @@ public class Group {
     private LocalDate dateOfStart;
     private LocalDate dateOfFinish;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group", cascade = {DETACH,PERSIST,MERGE,REFRESH})
     private List<Student> students = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, mappedBy = "groups")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, DETACH}, mappedBy = "groups")
     private List<Course> courses = new ArrayList<>();
 
     @JsonIgnore
