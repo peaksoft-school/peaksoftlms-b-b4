@@ -10,5 +10,5 @@ import java.util.List;
 public class AnswerResponse {
     private Long id;
     private int grade;
-    private List<Long> correctAnswer;
+    private List<AnswerResultResponse> answerResultResponses;
 }

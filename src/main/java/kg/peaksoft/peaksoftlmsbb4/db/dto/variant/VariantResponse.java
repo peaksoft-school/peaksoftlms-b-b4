@@ -8,5 +8,4 @@ import lombok.Setter;
 public class VariantResponse {
     private Long id;
     private String option;
-
 }

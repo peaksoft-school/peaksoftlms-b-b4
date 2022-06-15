@@ -1,8 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.result;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.*;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Result;
 import kg.peaksoft.peaksoftlmsbb4.db.model.*;
@@ -49,18 +47,19 @@ public class ResultMapper {
         AnswerResponse answerResponse = new AnswerResponse();
         answerResponse.setGrade(results.getGrade());
         answerResponse.setId(results.getId());
-        List<Long> correctVariantsId = new ArrayList<>();
-        List<Long> wrongVariantsId = new ArrayList<>();
+        List<AnswerResultResponse> answerResultResponses = new ArrayList<>();
         for (Question q : results.getTest().getQuestions()) {
+            List<OptionResponse> optionResponses = new ArrayList<>();
             for (Variant v : q.getVariants()) {
                 if (v.getAnswer()) {
-                    correctVariantsId.add(v.getId());
+                    optionResponses.add(new OptionResponse(v.getId(), v.getOption(), true));
                 }else {
-                    wrongVariantsId.add(v.getId());
+                    optionResponses.add(new OptionResponse(v.getId(), v.getOption(), false));
                 }
             }
+            answerResultResponses.add(new AnswerResultResponse(q.getId(), q.getQuestion(), q.getQuestionType(), optionResponses));
         }
-        answerResponse.setCorrectAnswer(correctVariantsId);
+        answerResponse.setAnswerResultResponses(answerResultResponses);
         return answerResponse;
     }
 

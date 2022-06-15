@@ -24,7 +24,7 @@ public class Test {
     )
     private Long id;
     private String testName;
-    private Boolean isEnabled;
+    private Boolean isEnabled = true;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions;

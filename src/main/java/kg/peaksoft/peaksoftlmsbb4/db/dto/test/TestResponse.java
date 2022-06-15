@@ -11,5 +11,6 @@ import java.util.List;
 public class TestResponse {
     private Long id;
     private String testName;
+    private boolean isEnabled;
     private List<QuestionResponse> questionResponses;
 }

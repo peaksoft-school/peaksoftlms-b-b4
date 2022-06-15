@@ -55,6 +55,7 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
         TestResponse testResponse = new TestResponse();
         testResponse.setId(test.getId());
         testResponse.setTestName(test.getTestName());
+        testResponse.setEnabled(testResponse.isEnabled());
         if (test.getQuestions() != null) {
             testResponse.setQuestionResponses(questionMapper.deConvert(test.getQuestions()));
         }
