@@ -33,7 +33,7 @@ public class Group {
     private LocalDate dateOfStart;
     private LocalDate dateOfFinish;
 
-    @OneToMany(mappedBy = "group", cascade = {DETACH,PERSIST,MERGE,REFRESH})
+    @OneToMany(mappedBy = "group", cascade = {DETACH,PERSIST,MERGE,REFRESH,REMOVE})
     private List<Student> students = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, DETACH}, mappedBy = "groups")

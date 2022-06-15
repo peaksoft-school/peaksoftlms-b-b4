@@ -50,10 +50,13 @@ public class ResultMapper {
         answerResponse.setGrade(results.getGrade());
         answerResponse.setId(results.getId());
         List<Long> correctVariantsId = new ArrayList<>();
+        List<Long> wrongVariantsId = new ArrayList<>();
         for (Question q : results.getTest().getQuestions()) {
             for (Variant v : q.getVariants()) {
                 if (v.getAnswer()) {
                     correctVariantsId.add(v.getId());
+                }else {
+                    wrongVariantsId.add(v.getId());
                 }
             }
         }
