@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.TestResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,7 @@ public class ResultApi {
     @Operation(summary = "Get results",
             description = "This endpoint get results by test ID")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
-    public List<ResultResponse> getResults(@PathVariable Long id) {
+    public TestResultResponse getResults(@PathVariable Long id) {
         return resultService.getResults(id);
     }
 }

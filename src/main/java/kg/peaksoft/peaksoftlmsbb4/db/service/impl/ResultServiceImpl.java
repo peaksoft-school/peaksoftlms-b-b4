@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.dto.result.TestResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.result.ResultMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.ResultsRepository;
@@ -27,11 +27,9 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public List<ResultResponse> getResults(Long id) {
+    public TestResultResponse getResults(Long id) {
         Test test = testRepository.findById(id).orElseThrow();
-        return resultsRepository.findAllByTest(test).stream().
-                map(resultMapper::deConvertToResultResponse).
-                collect(Collectors.toList());
+        return resultMapper.deConvertToResultResponse(test);
     }
 
 

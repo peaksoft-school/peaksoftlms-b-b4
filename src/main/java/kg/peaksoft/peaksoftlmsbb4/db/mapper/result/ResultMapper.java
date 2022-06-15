@@ -4,6 +4,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.dto.result.*;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Result;
 import kg.peaksoft.peaksoftlmsbb4.db.model.*;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.ResultsRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.StudentRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TestRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
@@ -22,6 +23,7 @@ public class ResultMapper {
     private final TestRepository testRepository;
     private final VariantRepository variantRepository;
     private final StudentRepository studentRepository;
+    private final ResultsRepository resultsRepository;
 
     public Results convert(AnswerRequest answerRequest, String email) {
         Results results = new Results();
@@ -53,7 +55,7 @@ public class ResultMapper {
             for (Variant v : q.getVariants()) {
                 if (v.getAnswer()) {
                     optionResponses.add(new OptionResponse(v.getId(), v.getOption(), true));
-                }else {
+                } else {
                     optionResponses.add(new OptionResponse(v.getId(), v.getOption(), false));
                 }
             }
@@ -63,16 +65,16 @@ public class ResultMapper {
         return answerResponse;
     }
 
-    public ResultResponse deConvertToResultResponse(Results result) {
-        ResultResponse response = new ResultResponse();
-        response.setName(result.getTest().getTestName());
-        response.setTestIsEnabled(result.getTest().getIsEnabled());
-        response.setResult(result.getResult());
-        response.setId(result.getId());
-        response.setDateOfPassed(result.getDateOfPassed());
-        response.setGrade(result.getGrade());
-        response.setStudentFullName(result.getStudent().getStudentName() + " " + result.getStudent().getLastName());
-        return response;
+    public TestResultResponse deConvertToResultResponse(Test test) {
+        TestResultResponse testResultResponse = new TestResultResponse();
+        testResultResponse.setName(test.getTestName());
+        testResultResponse.setTestIsEnabled(test.getIsEnabled());
+        List<ResultResponse> response = new ArrayList<>();
+        for (Results r : resultsRepository.findAllByTest(test)) {
+            response.add(new ResultResponse(r.getId(), r.getResult(), r.getDateOfPassed(), r.getGrade(), r.getStudent().getStudentName()));
+        }
+        testResultResponse.setResultResponses(response);
+        return testResultResponse;
     }
 
     private int calculateGradeOfQuestion(Question question,
