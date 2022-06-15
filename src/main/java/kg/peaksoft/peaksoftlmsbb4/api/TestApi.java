@@ -66,7 +66,7 @@ public class TestApi {
             description = "With this endpoint you can disable or enable test")
     @PreAuthorize("hasAuthority('INSTRUCTOR')")
     @PutMapping("switcher/{id}")
-    public boolean switcher(@PathVariable Long id, @RequestParam SwitcherRequest switcherRequest) {
+    public boolean switcher(@PathVariable Long id, @RequestBody SwitcherRequest switcherRequest) {
         return testService.switcher(id, switcherRequest);
     }
 
