@@ -100,4 +100,19 @@ public class TestServiceImpl implements TestService {
         log.info("successful delete this id:{}", id);
     }
 
+    @Override
+    public String switcher(Long id,boolean switcher) {
+        Test test = testRepository.findById(id).orElseThrow(()-> new NotFoundException("test not found"));
+        if (switcher){
+            test.setIsEnabled(switcher);
+            testRepository.save(test);
+            return "test enabled";
+        }else {
+            test.setIsEnabled(switcher);
+            testRepository.save(test);
+            return "test disabled";
+        }
+
+    }
+
 }

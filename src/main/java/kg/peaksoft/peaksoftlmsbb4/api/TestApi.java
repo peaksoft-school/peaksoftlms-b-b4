@@ -61,4 +61,12 @@ public class TestApi {
         return String.format("successfully delete this id=%s", id);
     }
 
+    @Operation(summary = "Switcher",
+            description = "With this endpoint you can disable or enable test")
+    @PreAuthorize("hasAuthority('INSTRUCTOR')")
+    @PostMapping("switcher/{id}")
+    public String switcher(@PathVariable Long id,@RequestParam boolean switcher){
+        return testService.switcher(id,switcher);
+    }
+
 }

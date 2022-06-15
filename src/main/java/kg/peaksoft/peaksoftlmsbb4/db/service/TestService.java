@@ -18,4 +18,6 @@ public interface TestService {
 
     void delete(Long id);
 
+    String switcher(Long id, boolean swithcer);
+
 }

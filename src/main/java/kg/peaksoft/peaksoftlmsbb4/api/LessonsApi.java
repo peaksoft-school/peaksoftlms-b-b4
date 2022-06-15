@@ -36,7 +36,7 @@ public class LessonsApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single lessons by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','STUDENT')")
     public LessonResponse findById(@PathVariable Long id) {
         return lessonService.findById(id);
     }

@@ -29,7 +29,7 @@ public class LinkApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single links by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR','STUDENT')")
     public LinkResponse findById(@PathVariable Long id) {
         return linkService.findById(id);
     }
@@ -54,7 +54,7 @@ public class LinkApi {
     @GetMapping("lesson/{id}")
     @Operation(summary = "Gets a single links by lesson identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR','STUDENT')")
     public LinkResponse findByLessonId(@PathVariable Long id) {
         return linkService.findLinkByLessonId(id);
     }

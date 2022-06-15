@@ -194,13 +194,13 @@
 <!--                    <target>16</target>-->
 <!--                </configuration>-->
 <!--            </plugin>-->
-            <!--            <plugin>-->
+<!--                        <plugin>-->
 <!--                <groupId>org.flywaydb</groupId>-->
 <!--                <artifactId>flyway-maven-plugin</artifactId>-->
 <!--                <version>8.0.0</version>-->
 <!--                <configuration>-->
-<!--                    <user>databaseUser</user>-->
-<!--                    <password>databasePassword</password>-->
+<!--                    <user>postgres</user>-->
+<!--                    <password>postgres</password>-->
 <!--                    <schemas>-->
 <!--                        <schema>schemaName</schema>-->
 <!--                    </schemas>-->

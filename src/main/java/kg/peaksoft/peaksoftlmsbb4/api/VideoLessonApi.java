@@ -29,7 +29,7 @@ public class VideoLessonApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single videos by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','STUDENT')")
     public VideoLessonResponse findById(@PathVariable Long id) {
         return videoLessonService.findById(id);
     }

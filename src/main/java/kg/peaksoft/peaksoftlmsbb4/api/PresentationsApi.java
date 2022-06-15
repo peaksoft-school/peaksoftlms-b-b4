@@ -29,7 +29,7 @@ public class PresentationsApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single presentation by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','STUDENT')")
     public PresentationResponse findById(@PathVariable Long id) {
         return presentationService.findById(id);
 
@@ -56,7 +56,7 @@ public class PresentationsApi {
     @GetMapping("LessonPresentation/{id}")
     @Operation(summary = "Gets a single presentation by lesson identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR',STUDENT)")
     public PresentationResponse getPresentationByLessonId(@PathVariable Long id) {
         return presentationService.findPresentationByLessonId(id);
     }

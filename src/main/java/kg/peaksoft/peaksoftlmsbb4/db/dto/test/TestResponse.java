@@ -12,5 +12,4 @@ public class TestResponse {
     private Long id;
     private String testName;
     private List<QuestionResponse> questionResponses;
-
 }
