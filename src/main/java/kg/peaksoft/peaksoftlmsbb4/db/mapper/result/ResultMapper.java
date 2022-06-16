@@ -12,6 +12,7 @@ import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ResultMapper {
 
     public Results convert(AnswerRequest answerRequest, String email) {
         Results results = new Results();
-        results.setDateOfPassed(LocalDateTime.now());
+        results.setDateOfPassed(LocalDate.now());
         results.setId(answerRequest.getTestId());
         results.setResult(Result.PASSED);
         Test test = testRepository.findById(answerRequest.getTestId()).orElseThrow(() ->

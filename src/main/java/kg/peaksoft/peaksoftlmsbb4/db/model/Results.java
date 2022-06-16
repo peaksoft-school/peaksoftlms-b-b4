@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static javax.persistence.CascadeType.*;
@@ -29,7 +30,7 @@ public class Results {
     @Enumerated(EnumType.STRING)
     private Result result;
 
-    private LocalDateTime dateOfPassed;
+    private LocalDate dateOfPassed;
 
     private int grade;
 

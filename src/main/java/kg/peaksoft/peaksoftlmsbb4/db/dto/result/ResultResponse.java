@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 public class ResultResponse {
     private Long id;
     private Result result;
-    private LocalDateTime dateOfPassed;
+    private LocalDate dateOfPassed;
     private int grade;
     private String studentFullName;
 }
