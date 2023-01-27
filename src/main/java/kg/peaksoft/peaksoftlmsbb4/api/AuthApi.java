@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 
+@PermitAll
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/authentication")
@@ -22,8 +23,8 @@ public class AuthApi {
     @Operation(summary = "Retrieve Authentication Token",
             description = "This entrypoint returns a JWT auth_token for authenticating further requests to the API")
     @PostMapping("/login")
-    @PermitAll
     private AuthResponseDto authentication(@RequestBody AuthRequestDto authRequestDto) {
         return authService.authenticate(authRequestDto);
     }
+
 }
