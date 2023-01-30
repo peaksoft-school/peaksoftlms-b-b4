@@ -8,7 +8,9 @@ import java.util.Deque;
 @Getter
 @Setter
 public class CoursePaginationResponse {
+
     private int pages;
     private int currentPage;
     private Deque<CourseResponse> courses;
+
 }
