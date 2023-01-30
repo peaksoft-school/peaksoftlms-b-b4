@@ -1,9 +1,9 @@
-package kg.peaksoft.peaksoftlmsbb4.security;
+package kg.peaksoft.peaksoftlmsbb4.config;
 
 import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
-import kg.peaksoft.peaksoftlmsbb4.security.config.JwtConfig;
-import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtTokenVerifier;
-import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtUtils;
+import kg.peaksoft.peaksoftlmsbb4.config.jwt.JwtConfig;
+import kg.peaksoft.peaksoftlmsbb4.config.jwt.JwtTokenVerifier;
+import kg.peaksoft.peaksoftlmsbb4.config.jwt.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

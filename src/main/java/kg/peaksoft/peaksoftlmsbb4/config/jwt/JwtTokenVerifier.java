@@ -1,6 +1,5 @@
-package kg.peaksoft.peaksoftlmsbb4.security.jwt;
+package kg.peaksoft.peaksoftlmsbb4.config.jwt;
 
-import kg.peaksoft.peaksoftlmsbb4.security.config.JwtConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

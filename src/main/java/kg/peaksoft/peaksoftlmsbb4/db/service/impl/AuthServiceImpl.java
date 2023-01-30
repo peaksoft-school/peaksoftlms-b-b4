@@ -6,7 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.AuthService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.security.jwt.JwtUtils;
+import kg.peaksoft.peaksoftlmsbb4.config.jwt.JwtUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;

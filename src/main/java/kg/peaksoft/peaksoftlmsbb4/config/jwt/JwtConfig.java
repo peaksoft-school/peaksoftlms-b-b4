@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.security.config;
+package kg.peaksoft.peaksoftlmsbb4.config.jwt;
 
 import lombok.Getter;
 import lombok.Setter;
