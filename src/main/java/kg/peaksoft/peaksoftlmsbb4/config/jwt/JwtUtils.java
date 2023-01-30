@@ -12,11 +12,11 @@ import java.util.Date;
 @Component
 @AllArgsConstructor
 public class JwtUtils {
+
     private final JwtConfig jwtConfig;
 
     public String generateToken(Authentication authentication) {
         User authInfo = (User) authentication.getPrincipal();
-
         return Jwts.builder()
                 .setSubject(authInfo.getEmail())
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecretKey())
@@ -43,4 +43,5 @@ public class JwtUtils {
             return false;
         }
     }
+
 }
