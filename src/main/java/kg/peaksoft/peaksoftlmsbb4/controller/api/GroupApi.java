@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupResponse;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupResponsePagination;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
 import lombok.AllArgsConstructor;
@@ -44,7 +44,7 @@ public class GroupApi {
                                     array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @GetMapping
-    public GroupResponsePagination getAllForPagination(@RequestParam int page,
+    public GroupPaginationResponse getAllForPagination(@RequestParam int page,
                                                        @RequestParam int size) {
         return groupService.getAllForPagination(--page, size);
     }

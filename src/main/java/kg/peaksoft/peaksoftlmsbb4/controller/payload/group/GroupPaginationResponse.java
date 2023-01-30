@@ -7,7 +7,7 @@ import java.util.Deque;
 
 @Getter
 @Setter
-public class GroupResponsePagination {
+public class GroupPaginationResponse {
     private int pages;
     private int currentPage;
     private Deque<GroupResponse> groups;

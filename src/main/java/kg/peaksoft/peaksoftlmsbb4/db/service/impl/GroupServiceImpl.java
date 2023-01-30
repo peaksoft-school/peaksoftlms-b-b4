@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.AssignGroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupResponse;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupResponsePagination;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.group.GroupMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
@@ -52,13 +52,13 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupResponsePagination getAllForPagination(int page, int size) {
+    public GroupPaginationResponse getAllForPagination(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        GroupResponsePagination groupResponsePagination = new GroupResponsePagination();
-        groupResponsePagination.setGroups(groupMapper.deConvert(groupRepository.findAll(pageable).getContent()));
-        groupResponsePagination.setPages(groupRepository.findAll(pageable).getTotalPages());
-        groupResponsePagination.setCurrentPage(pageable.getPageNumber());
-        return groupResponsePagination;
+        GroupPaginationResponse groupPaginationResponse = new GroupPaginationResponse();
+        groupPaginationResponse.setGroups(groupMapper.deConvert(groupRepository.findAll(pageable).getContent()));
+        groupPaginationResponse.setPages(groupRepository.findAll(pageable).getTotalPages());
+        groupPaginationResponse.setCurrentPage(pageable.getPageNumber());
+        return groupPaginationResponse;
     }
 
     @Override
