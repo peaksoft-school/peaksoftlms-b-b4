@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LessonResponse {
+
     private Long id;
     private String name;
     private Long videoLessonId;
@@ -13,4 +14,5 @@ public class LessonResponse {
     private Long linkId;
     private Long taskId;
     private Long testId;
+
 }
