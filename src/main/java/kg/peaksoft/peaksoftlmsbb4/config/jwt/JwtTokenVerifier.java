@@ -16,10 +16,12 @@ import java.io.IOException;
 
 @AllArgsConstructor
 public class JwtTokenVerifier extends OncePerRequestFilter {
+
     private final JwtConfig jwtConfig;
     private final JwtUtils jwtUtils;
     private final UserDetailsService userDetailsService;
 
+    @SuppressWarnings("NullableProblems")
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -53,7 +55,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
-
         filterChain.doFilter(request, response);
     }
+
 }
