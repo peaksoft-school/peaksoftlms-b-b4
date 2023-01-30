@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.authentification.AuthRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.authentification.AuthResponseDto;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.authentification.AuthResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.AuthService;
@@ -24,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public AuthResponseDto authenticate(AuthRequest authRequest) {
+    public AuthResponse authenticate(AuthRequest authRequest) {
         Authentication authentication;
 
         authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
         ));
         String generatedToken = jwtUtils.generateToken(authentication);
         log.info("successful generated token :{}", generatedToken);
-        return AuthResponseDto.builder()
+        return AuthResponse.builder()
                 .email(authRequest.getEmail())
                 .token(generatedToken)
                 .role(user.getRole())
