@@ -11,11 +11,14 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class CourseRequest {
+
     @NotBlank
     @Size(min = 2, max = 20, message = "course name should be between 2 and 20 characters")
     private String courseName;
+
     private String image;
     private String description;
+
     @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dateOfFinish;
@@ -25,4 +28,5 @@ public class CourseRequest {
         this.description = description;
         this.dateOfFinish = dateOfStart;
     }
+
 }
