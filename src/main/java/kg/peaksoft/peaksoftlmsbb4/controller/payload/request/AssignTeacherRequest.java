@@ -8,6 +8,8 @@ import java.util.List;
 @Getter
 @Setter
 public class AssignTeacherRequest {
+
     private Long courseId;
     private List<Long> teacherId;
+
 }
