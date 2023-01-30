@@ -2,9 +2,9 @@ package kg.peaksoft.peaksoftlmsbb4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.switcher.SwitcherRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.switcher.SwitcherRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.test.TestRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.test.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TestService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

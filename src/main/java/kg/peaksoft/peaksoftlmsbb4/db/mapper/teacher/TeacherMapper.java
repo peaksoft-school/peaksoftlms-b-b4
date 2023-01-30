@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.teacher.TeacherRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;

@@ -2,18 +2,15 @@ package kg.peaksoft.peaksoftlmsbb4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.TestResultResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.AnswerRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.AnswerResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.TestResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor

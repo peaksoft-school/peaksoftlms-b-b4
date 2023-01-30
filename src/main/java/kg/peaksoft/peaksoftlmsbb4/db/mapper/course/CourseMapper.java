@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.course;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.course.CourseRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import lombok.AllArgsConstructor;

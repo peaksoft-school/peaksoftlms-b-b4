@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.authentification.AuthRequestDto;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.authentification.AuthResponseDto;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.authentification.AuthRequestDto;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.authentification.AuthResponseDto;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.AuthService;

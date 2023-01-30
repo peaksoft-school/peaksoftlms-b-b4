@@ -2,8 +2,8 @@ package kg.peaksoft.peaksoftlmsbb4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.authentification.AuthRequestDto;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.authentification.AuthResponseDto;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.authentification.AuthRequestDto;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.authentification.AuthResponseDto;
 import kg.peaksoft.peaksoftlmsbb4.db.service.impl.AuthServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

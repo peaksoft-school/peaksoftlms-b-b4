@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.presentation.PresentationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.presentation.PresentationRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.presentation.PresentationResponse;
 import org.springframework.stereotype.Service;
 
 @Service

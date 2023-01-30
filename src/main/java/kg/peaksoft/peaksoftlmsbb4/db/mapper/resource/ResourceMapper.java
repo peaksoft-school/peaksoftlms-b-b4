@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.resource;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.resource.ResourceRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.resource.ResourceResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;
 import org.springframework.stereotype.Component;
 

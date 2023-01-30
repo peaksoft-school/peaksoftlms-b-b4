@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.lessons.LessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.lessons.LessonResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

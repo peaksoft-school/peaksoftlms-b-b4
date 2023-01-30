@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.resource.ResourceResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.resource.ResourceMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.ResourceRepository;

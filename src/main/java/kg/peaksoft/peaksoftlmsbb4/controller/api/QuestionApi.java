@@ -2,8 +2,8 @@ package kg.peaksoft.peaksoftlmsbb4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.question.QuestionRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.question.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

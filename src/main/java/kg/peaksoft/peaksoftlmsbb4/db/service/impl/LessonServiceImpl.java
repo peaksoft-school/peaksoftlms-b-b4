@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.lessons.LessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.lessons.LessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.lessons.LessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.lessons.LessonMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;

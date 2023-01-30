@@ -1,10 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.group.AssignGroupRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponsePagination;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.AssignGroupRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupResponsePagination;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.group.GroupMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;

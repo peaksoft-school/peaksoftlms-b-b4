@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.result;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.*;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.*;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Result;
 import kg.peaksoft.peaksoftlmsbb4.db.model.*;
@@ -13,7 +13,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

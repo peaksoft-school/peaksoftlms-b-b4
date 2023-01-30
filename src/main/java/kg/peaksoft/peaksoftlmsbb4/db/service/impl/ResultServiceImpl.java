@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.TestResultResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.AnswerRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.AnswerResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.TestResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.result.ResultMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.ResultsRepository;
@@ -10,9 +10,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.repository.TestRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor

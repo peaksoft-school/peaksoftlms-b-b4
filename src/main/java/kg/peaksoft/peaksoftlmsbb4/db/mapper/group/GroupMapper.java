@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.group;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.group.GroupResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import lombok.AllArgsConstructor;

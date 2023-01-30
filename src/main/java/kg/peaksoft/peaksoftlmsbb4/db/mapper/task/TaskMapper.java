@@ -1,10 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.task;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.resource.ResourceResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.task.TaskResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.resource.ResourceRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.resource.ResourceResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.task.TaskRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.task.TaskResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
 import lombok.AllArgsConstructor;

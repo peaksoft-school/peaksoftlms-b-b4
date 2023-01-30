@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.switcher.SwitcherRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.switcher.SwitcherRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.test.TestRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.test.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.test.TestMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
