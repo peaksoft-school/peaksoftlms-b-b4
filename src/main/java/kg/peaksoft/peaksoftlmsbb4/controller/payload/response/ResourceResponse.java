@@ -9,8 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ResourceResponse {
+
     private Long id;
     private ResourceType resourceType;
     private String value;
     private String name;
+
 }
