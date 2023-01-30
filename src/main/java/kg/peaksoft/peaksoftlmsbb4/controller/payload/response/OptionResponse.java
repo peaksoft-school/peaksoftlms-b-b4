@@ -8,7 +8,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class OptionResponse {
+
     private Long id;
     private String option;
     private boolean isCorrect;
+
 }
