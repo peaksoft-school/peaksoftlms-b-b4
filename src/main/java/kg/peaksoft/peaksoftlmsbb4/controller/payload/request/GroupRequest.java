@@ -10,10 +10,14 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class GroupRequest {
+
     @NotNull
     private String groupName;
+
     private String description;
     private String image;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dateOfFinish;
+
 }
