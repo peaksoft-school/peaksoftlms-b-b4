@@ -8,8 +8,10 @@ import java.util.List;
 @Getter
 @Setter
 public class TestResponse {
+
     private Long id;
     private String testName;
     private boolean isEnabled;
     private List<QuestionResponse> questionResponses;
+
 }
