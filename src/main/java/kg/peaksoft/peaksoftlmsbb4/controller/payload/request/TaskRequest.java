@@ -1,6 +1,5 @@
-package kg.peaksoft.peaksoftlmsbb4.controller.payload.task;
+package kg.peaksoft.peaksoftlmsbb4.controller.payload.request;
 
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.resource.ResourceRequest;
 import lombok.Getter;
 import lombok.Setter;
 

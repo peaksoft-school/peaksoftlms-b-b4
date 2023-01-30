@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.controller.payload.videolesson;
+package kg.peaksoft.peaksoftlmsbb4.controller.payload.request;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,14 +7,12 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class VideoLessonRequest {
+public class LinkRequest {
     @NotBlank
-    private String name;
-    @NotBlank
-    private String description;
+    private String text;
     @NotBlank
     private String link;
-
+    @NotBlank
     private Long lessonId;
 
 }

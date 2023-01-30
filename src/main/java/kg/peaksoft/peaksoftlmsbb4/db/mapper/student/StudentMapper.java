@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.student;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.StudentRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Role;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;

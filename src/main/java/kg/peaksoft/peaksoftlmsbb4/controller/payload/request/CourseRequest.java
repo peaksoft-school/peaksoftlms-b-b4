@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.controller.payload.course;
+package kg.peaksoft.peaksoftlmsbb4.controller.payload.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

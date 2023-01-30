@@ -1,6 +1,6 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.task.TaskRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TaskRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.task.TaskResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.task.TaskMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;

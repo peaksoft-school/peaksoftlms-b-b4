@@ -2,10 +2,10 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import com.amazonaws.services.kms.model.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.course.CoursePaginationResponse;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.course.CourseRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.CourseRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.course.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.teacher.AssignTeacherRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.teacher.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;

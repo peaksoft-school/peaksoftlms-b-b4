@@ -1,24 +1,21 @@
-package kg.peaksoft.peaksoftlmsbb4.controller.payload.student;
+package kg.peaksoft.peaksoftlmsbb4.controller.payload.request;
 
 import kg.peaksoft.peaksoftlmsbb4.annotations.phoneNumber.ValidPhoneNumber;
-import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Getter
 @Setter
-public class StudentRequest {
+@Getter
+public class TeacherRequest {
 
     @NotBlank
     @Size(min = 2, max = 20, message = "first name should be between 2 and 20 characters")
-    private String studentName;
+    private String teacherName;
 
     @NotBlank
     @Size(min = 2, max = 20, message = "last name should be between 2 and 20 characters")
@@ -27,17 +24,13 @@ public class StudentRequest {
     @ValidPhoneNumber
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    private StudyFormat studyFormat;
+    @NotBlank(message = "specialization must have a value")
+    private String specialization;
 
-    @Email(message = "email must follow the formatter :***@**")
+    @Email
     @NotEmpty(message = "email must have a value")
     private String email;
 
-    @NotBlank
+    //    @ValidPassword
     private String password;
-
-    private Long groupId;
-
-
 }

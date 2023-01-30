@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.AnswerRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AnswerRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.AnswerResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.TestResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;

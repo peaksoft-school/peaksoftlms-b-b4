@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.lessons;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.lessons.LessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.LessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.lessons.LessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import lombok.AllArgsConstructor;

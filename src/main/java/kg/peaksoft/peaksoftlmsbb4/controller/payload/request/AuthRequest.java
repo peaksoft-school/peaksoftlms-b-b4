@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.controller.payload.authentification;
+package kg.peaksoft.peaksoftlmsbb4.controller.payload.request;
 
 import lombok.Getter;
 import lombok.Setter;

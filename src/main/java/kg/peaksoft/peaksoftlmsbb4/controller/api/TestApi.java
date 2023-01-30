@@ -2,8 +2,8 @@ package kg.peaksoft.peaksoftlmsbb4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.switcher.SwitcherRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.test.TestRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.SwitcherRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TestRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.test.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TestService;
 import lombok.AllArgsConstructor;

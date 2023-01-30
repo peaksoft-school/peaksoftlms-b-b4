@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.GroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentResponse;

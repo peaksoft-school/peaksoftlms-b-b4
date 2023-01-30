@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.lessons.LessonRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.LessonRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.lessons.LessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.LessonService;
 import lombok.AllArgsConstructor;
