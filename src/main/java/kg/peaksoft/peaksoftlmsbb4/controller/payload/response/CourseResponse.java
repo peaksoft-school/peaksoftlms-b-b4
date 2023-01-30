@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Setter
 @ToString
 public class CourseResponse {
+
     private Long id;
     private String courseName;
     private String image;
