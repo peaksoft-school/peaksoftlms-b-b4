@@ -1,9 +1,9 @@
 package kg.peaksoft.peaksoftlmsbb4.config;
 
-import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import kg.peaksoft.peaksoftlmsbb4.config.jwt.JwtConfig;
 import kg.peaksoft.peaksoftlmsbb4.config.jwt.JwtTokenVerifier;
 import kg.peaksoft.peaksoftlmsbb4.config.jwt.JwtUtils;
+import kg.peaksoft.peaksoftlmsbb4.db.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -23,9 +23,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true,
-        securedEnabled = true)
 @AllArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserRepository userRepository;
@@ -33,7 +32,7 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
     private final JwtUtils jwtUtils;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -46,8 +45,8 @@ public class WebAppSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService getUserDetailsService() {
-        return (email) -> userRepository.findByEmail(email)
-                .orElseThrow(() -> new BadCredentialsException("wrong login or password "));
+        return (email) -> userRepository.findByEmail(email).orElseThrow(() ->
+                new BadCredentialsException("wrong login or password "));
     }
 
     @Override
