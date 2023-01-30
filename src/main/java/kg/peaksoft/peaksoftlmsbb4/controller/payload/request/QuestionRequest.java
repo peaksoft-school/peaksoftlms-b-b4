@@ -9,7 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 public class QuestionRequest {
+
     private String question;
     private QuestionType questionType;
     private List<VariantRequest> variants;
+
 }
