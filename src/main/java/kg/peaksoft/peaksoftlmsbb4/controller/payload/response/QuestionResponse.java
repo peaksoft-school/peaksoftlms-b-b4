@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class QuestionResponse {
+
     private Long questionId;
     private String question;
     private QuestionType questionType;
