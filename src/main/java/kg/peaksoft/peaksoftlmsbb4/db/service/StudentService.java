@@ -1,10 +1,10 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.course.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AssignStudentRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentPaginationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.StudentPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.StudentRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.StudyFormat;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.PresentationRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.presentation.PresentationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.PresentationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.presentation.PresentationMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Presentation;

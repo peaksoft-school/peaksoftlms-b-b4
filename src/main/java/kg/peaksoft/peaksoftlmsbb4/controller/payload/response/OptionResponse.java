@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.controller.payload.result;
+package kg.peaksoft.peaksoftlmsbb4.controller.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

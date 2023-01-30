@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.course.CoursePaginationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.CoursePaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.CourseRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AssignTeacherRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TeacherResponse;
 
 import java.util.List;
 

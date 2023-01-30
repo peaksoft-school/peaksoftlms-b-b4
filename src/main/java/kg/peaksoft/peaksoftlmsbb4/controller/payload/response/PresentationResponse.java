@@ -1,14 +1,15 @@
-package kg.peaksoft.peaksoftlmsbb4.controller.payload.videolesson;
+package kg.peaksoft.peaksoftlmsbb4.controller.payload.response;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class VideoLessonResponse {
+public class PresentationResponse {
     private Long id;
     private String name;
     private String description;
-    private String link;
+    private String file;
+
 
 }

@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.controller.payload.resource;
+package kg.peaksoft.peaksoftlmsbb4.controller.payload.response;
 
 import kg.peaksoft.peaksoftlmsbb4.db.enums.ResourceType;
 import lombok.AllArgsConstructor;

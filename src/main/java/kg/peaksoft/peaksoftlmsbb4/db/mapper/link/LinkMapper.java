@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.mapper.link;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.LinkRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.link.LinkResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.LinkResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Link;
 import org.springframework.stereotype.Component;
 

@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.mapper.presentation;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.PresentationRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.presentation.PresentationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.PresentationResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Presentation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

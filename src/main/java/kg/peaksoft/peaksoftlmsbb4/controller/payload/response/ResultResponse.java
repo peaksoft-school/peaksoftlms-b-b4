@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.controller.payload.result;
+package kg.peaksoft.peaksoftlmsbb4.controller.payload.response;
 
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Result;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,5 @@
-package kg.peaksoft.peaksoftlmsbb4.controller.payload.test;
+package kg.peaksoft.peaksoftlmsbb4.controller.payload.response;
 
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.question.QuestionResponse;
 import lombok.Getter;
 import lombok.Setter;
 

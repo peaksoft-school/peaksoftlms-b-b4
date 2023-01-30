@@ -2,9 +2,9 @@ package kg.peaksoft.peaksoftlmsbb4.db.service;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AssignGroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.GroupRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupResponse;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupPaginationResponse;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.student.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupPaginationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
 import org.springframework.stereotype.Service;
 

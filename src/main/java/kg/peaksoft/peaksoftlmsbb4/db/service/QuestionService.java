@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.QuestionRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.question.QuestionResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.QuestionResponse;
 
 import java.util.List;
 

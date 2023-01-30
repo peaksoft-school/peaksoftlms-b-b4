@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.SwitcherRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TestRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.test.TestResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.TestService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

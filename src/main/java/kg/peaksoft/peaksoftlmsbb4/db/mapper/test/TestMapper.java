@@ -2,9 +2,9 @@ package kg.peaksoft.peaksoftlmsbb4.db.mapper.test;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.QuestionRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.question.QuestionResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TestRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.test.TestResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.VariantRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;

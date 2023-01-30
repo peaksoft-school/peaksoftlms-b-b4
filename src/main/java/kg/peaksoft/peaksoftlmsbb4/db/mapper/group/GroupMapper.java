@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.mapper.group;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.GroupRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.group.GroupResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.mapper.variant;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.VariantRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.variant.VariantResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.VariantResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.LinkRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.link.LinkResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.LinkResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.link.LinkMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Link;

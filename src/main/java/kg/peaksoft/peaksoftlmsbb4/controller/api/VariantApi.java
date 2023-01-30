@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.controller.api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.VariantRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.variant.VariantResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.VariantResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.VariantService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

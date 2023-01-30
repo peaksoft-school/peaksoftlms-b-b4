@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.mapper.result;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AnswerRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.result.*;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.*;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.Result;
 import kg.peaksoft.peaksoftlmsbb4.db.model.*;

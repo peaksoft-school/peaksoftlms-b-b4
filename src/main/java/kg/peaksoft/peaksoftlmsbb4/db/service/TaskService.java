@@ -1,7 +1,7 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TaskRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.task.TaskResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TaskResponse;
 import org.springframework.stereotype.Service;
 
 @Service

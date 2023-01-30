@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.controller.api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.VideoLessonRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.videolesson.VideoLessonResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.VideoLessonResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.VideoLessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
