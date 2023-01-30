@@ -8,7 +8,9 @@ import java.util.List;
 @Getter
 @Setter
 public class AnswerResponse {
+
     private Long id;
     private int grade;
     private List<AnswerResultResponse> answerResultResponses;
+
 }
