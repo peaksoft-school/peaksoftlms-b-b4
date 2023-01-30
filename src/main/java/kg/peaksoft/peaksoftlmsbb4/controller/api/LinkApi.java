@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.api;
+package kg.peaksoft.peaksoftlmsbb4.controller.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
