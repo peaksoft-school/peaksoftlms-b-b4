@@ -31,6 +31,6 @@ public class TeacherRequest {
     @NotEmpty(message = "email must have a value")
     private String email;
 
-    //    @ValidPassword
     private String password;
+
 }
