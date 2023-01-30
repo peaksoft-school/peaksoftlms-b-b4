@@ -8,8 +8,11 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 public class LessonRequest {
+
     @NotBlank
     private String name;
+
     @NotBlank
     private Long courseId;
+
 }
