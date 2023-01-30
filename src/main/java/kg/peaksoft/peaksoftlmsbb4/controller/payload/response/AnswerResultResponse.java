@@ -11,8 +11,10 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class AnswerResultResponse {
+
     private Long id;
     private String question;
     private QuestionType questionType;
     private List<OptionResponse> optionResponses;
+
 }
