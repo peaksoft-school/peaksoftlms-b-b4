@@ -11,9 +11,11 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 public class ResultResponse {
+
     private Long id;
     private Result result;
     private LocalDate dateOfPassed;
     private int grade;
     private String studentFullName;
+
 }
