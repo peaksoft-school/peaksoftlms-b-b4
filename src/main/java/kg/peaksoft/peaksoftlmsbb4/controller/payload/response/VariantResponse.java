@@ -6,6 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VariantResponse {
+
     private Long id;
     private String option;
+
 }
