@@ -8,7 +8,9 @@ import java.util.List;
 @Getter
 @Setter
 public class TaskRequest {
+
     private String name;
     private List<ResourceRequest> resources;
     private Long lessonId;
+
 }
