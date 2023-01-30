@@ -8,6 +8,8 @@ import java.util.List;
 @Getter
 @Setter
 public class QuestionAnswerRequest {
+
     private Long questionId;
     private List<Long> choiceId;
+
 }
