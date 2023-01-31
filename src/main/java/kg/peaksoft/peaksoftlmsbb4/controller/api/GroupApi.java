@@ -22,15 +22,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("api/groups")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 @Tag(name = "Group API", description = "The Group endpoints")
 public class GroupApi {
 
     private final GroupService groupService;
 
+
+    @Operation(summary = "Create new group", description = "This endpoint save new groups. Only users with role admin can add new groups")
     @PostMapping
-    @Operation(summary = "Create new group",
-            description = "This endpoint save new groups. Only users with role admin can add new groups")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public GroupResponse saveGroup(@RequestBody GroupRequest groupRequest) {
         return groupService.saveGroup(groupRequest);
     }
@@ -43,7 +43,7 @@ public class GroupApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @GetMapping
     public GroupPaginationResponse getAllForPagination(@RequestParam int page,
                                                        @RequestParam int size) {
@@ -54,7 +54,7 @@ public class GroupApi {
     @GetMapping("/{id}")
     @Operation(summary = "Gets a single groups by identifier",
             description = "For valid response try integer IDs with value >= 1 and...")
-    @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public GroupResponse findById(@PathVariable Long id) {
         return groupService.findById(id);
     }
@@ -63,7 +63,6 @@ public class GroupApi {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete group with ID",
             description = "Delete group with ID. Only users with role admin can delete courses")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public GroupResponse deleteById(@PathVariable Long id) {
         return groupService.deleteById(id);
     }
@@ -72,7 +71,6 @@ public class GroupApi {
     @PutMapping("/{id}")
     @Operation(summary = "Update the group",
             description = "Updates the details of an endpoint with ID. Only users with role admin can update the course")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public GroupResponse update(@PathVariable Long id,
                                 @RequestBody GroupRequest groupRequest) {
         return groupService.update(id, groupRequest);
@@ -81,7 +79,6 @@ public class GroupApi {
     @GetMapping("/students/{id}")
     @Operation(summary = "Get students by group ID",
             description = "Get all students in this groups")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
         return groupService.getAllStudentByGroupId(id);
     }
