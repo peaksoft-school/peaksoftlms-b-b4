@@ -28,11 +28,10 @@ public class GroupApi {
 
     private final GroupService groupService;
 
-
     @Operation(summary = "Create new group", description = "This endpoint save new groups. Only users with role admin can add new groups")
     @PostMapping
-    public GroupResponse saveGroup(@RequestBody GroupRequest groupRequest) {
-        return groupService.saveGroup(groupRequest);
+    public GroupResponse saveGroup(@RequestBody GroupRequest request) {
+        return groupService.saveGroup(request);
     }
 
     @Operation(summary = "Gets a list",
@@ -45,40 +44,31 @@ public class GroupApi {
                                     array = @ArraySchema(schema = @Schema(implementation = GroupApi.class)))})})
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @GetMapping
-    public GroupPaginationResponse getAllForPagination(@RequestParam int page,
-                                                       @RequestParam int size) {
+    public GroupPaginationResponse getAllForPagination(@RequestParam int page, @RequestParam int size) {
         return groupService.getAllForPagination(--page, size);
     }
 
-
-    @GetMapping("/{id}")
-    @Operation(summary = "Gets a single groups by identifier",
-            description = "For valid response try integer IDs with value >= 1 and...")
+    @Operation(summary = "Gets a single groups by identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("{id}")
     public GroupResponse findById(@PathVariable Long id) {
         return groupService.findById(id);
     }
 
-
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete group with ID",
-            description = "Delete group with ID. Only users with role admin can delete courses")
+    @Operation(summary = "Delete group with ID", description = "Delete group with ID. Only users with role admin can delete courses")
+    @DeleteMapping("{id}")
     public GroupResponse deleteById(@PathVariable Long id) {
         return groupService.deleteById(id);
     }
 
-
-    @PutMapping("/{id}")
-    @Operation(summary = "Update the group",
-            description = "Updates the details of an endpoint with ID. Only users with role admin can update the course")
-    public GroupResponse update(@PathVariable Long id,
-                                @RequestBody GroupRequest groupRequest) {
-        return groupService.update(id, groupRequest);
+    @Operation(summary = "Update the group", description = "Updates the details of an endpoint with ID. Only users with role admin can update the course")
+    @PutMapping("{id}")
+    public GroupResponse update(@PathVariable Long id, @RequestBody GroupRequest request) {
+        return groupService.update(id, request);
     }
 
-    @GetMapping("/students/{id}")
-    @Operation(summary = "Get students by group ID",
-            description = "Get all students in this groups")
+    @Operation(summary = "Get students by group ID", description = "Get all students in this groups")
+    @GetMapping("students/{id}")
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
         return groupService.getAllStudentByGroupId(id);
     }
