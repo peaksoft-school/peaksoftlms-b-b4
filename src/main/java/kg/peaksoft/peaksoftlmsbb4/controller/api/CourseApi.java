@@ -32,8 +32,8 @@ public class CourseApi {
 
     @Operation(summary = "Create new course", description = "This endpoint saves new courses. Only users with role admin can add new courses")
     @PostMapping()
-    public CourseResponse saveCourse(@RequestBody CourseRequest courseRequest) {
-        return courseService.saveCourse(courseRequest);
+    public CourseResponse saveCourse(@RequestBody CourseRequest request) {
+        return courseService.saveCourse(request);
     }
 
     @Operation(summary = "Gets a single courses by identifier", description = "For valid response try integer IDs with value >= 1 and...")
@@ -51,43 +51,41 @@ public class CourseApi {
                     content = {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = CourseApi.class)))})})
-    @GetMapping
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping
     public CoursePaginationResponse getAllCoursesForPagination(@RequestParam int page, @RequestParam int size) {
         return courseService.coursesForPagination(--page, size);
     }
 
     @Operation(summary = "Updates the course", description = "Updates the details of an endpoint with ID. Only users with role admin can update the course")
-    @PutMapping("/{id}")
-    public CourseResponse update(@PathVariable Long id, @RequestBody CourseRequest courseRequest) {
-        return courseService.update(id, courseRequest);
+    @PutMapping("{id}")
+    public CourseResponse update(@PathVariable Long id, @RequestBody CourseRequest request) {
+        return courseService.update(id, request);
     }
 
     @Operation(summary = "Delete the course ", description = "Delete course with id. Only users with role admin can delete courses")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public CourseResponse deleteCourse(@PathVariable Long id) {
         return courseService.delete(id);
     }
 
     @Operation(summary = "Get students by course id", description = "Get all students in this course")
-    @GetMapping("/students/{id}")
+    @GetMapping("students/{id}")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
         return courseService.getAllStudentsByCourseId(id);
     }
 
-    @Operation(summary = "Get teachers by course ID",
-            description = "Get all teachers in this course")
-    @GetMapping("/teachers/{id}")
+    @Operation(summary = "Get teachers by course ID", description = "Get all teachers in this course")
+    @GetMapping("teachers/{id}")
     public List<TeacherResponse> getAllTeacherByCourseId(@PathVariable Long id) {
         return courseService.getAllTeacherByCourseId(id);
     }
 
-    @Operation(summary = "Assign teacher to course",
-            description = "This endpoint for adding a teacher to a course. Only user with role admin can add teacher to course")
-    @PostMapping("/assignTeachers")
-    public String assignTeacherToCourse(@RequestBody AssignTeacherRequest assignTeacherRequest) {
-        return courseService.assignTeachersToCourse(assignTeacherRequest);
+    @Operation(summary = "Assign teacher to course", description = "This endpoint for adding a teacher to a course. Only user with role admin can add teacher to course")
+    @PostMapping("assign-teachers")
+    public String assignTeacherToCourse(@RequestBody AssignTeacherRequest request) {
+        return courseService.assignTeachersToCourse(request);
     }
 
 }
