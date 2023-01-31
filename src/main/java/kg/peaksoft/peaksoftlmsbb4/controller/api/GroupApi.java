@@ -8,22 +8,23 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.GroupRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupPaginationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.GroupService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
-@Tag(name = "Group", description = "The Group API")
+@RequiredArgsConstructor
+@RequestMapping("api/groups")
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/api/groups")
+@Tag(name = "Group API", description = "The Group endpoints")
 public class GroupApi {
+
     private final GroupService groupService;
 
     @PostMapping
@@ -84,4 +85,5 @@ public class GroupApi {
     public List<StudentResponse> getAllStudentByCourseId(@PathVariable Long id) {
         return groupService.getAllStudentByGroupId(id);
     }
+
 }
