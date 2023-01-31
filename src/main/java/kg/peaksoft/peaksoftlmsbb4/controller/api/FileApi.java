@@ -23,7 +23,7 @@ import static java.net.HttpURLConnection.HTTP_OK;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
 @Tag(name = "File API", description = "Aws S3 file endpoints")
-public class AWSS3ClientApi {
+public class FileApi {
 
     private AWSS3Service awsS3Service;
 
