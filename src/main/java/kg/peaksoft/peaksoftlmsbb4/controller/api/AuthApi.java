@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("api/public")
 @CrossOrigin(origins = "*", maxAge = 3600)
-@Tag(name = "AuthApi", description = "The AuthApi (for authentication) ")
+@Tag(name = "Auth API", description = "Authentication endpoints")
 public class AuthApi {
 
     private final AuthServiceImpl authService;
 
-    @Operation(summary = "Retrieve Authentication Token",
-            description = "This entrypoint returns a JWT auth_token for authenticating further requests to the API")
-    @PostMapping("/login")
+    @Operation(summary = "Login", description = "Authentication with email and password")
+    @PostMapping("login")
     private AuthResponse authentication(@RequestBody AuthRequest authRequest) {
         return authService.authenticate(authRequest);
     }
