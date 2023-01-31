@@ -5,15 +5,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AuthRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.AuthResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.impl.AuthServiceImpl;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
-
-@PermitAll
 @RestController
-@AllArgsConstructor
-@RequestMapping("api/authentication")
+@RequiredArgsConstructor
+@RequestMapping("api/public")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "AuthApi", description = "The AuthApi (for authentication) ")
 public class AuthApi {
