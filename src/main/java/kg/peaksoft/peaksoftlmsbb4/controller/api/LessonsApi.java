@@ -26,22 +26,19 @@ public class LessonsApi {
 
     private final LessonService lessonService;
 
+    @Operation(summary = "Add new lesson to course", description = "This endpoint save new lesson to course by ID. Only users with role teacher can add new lessons")
     @PostMapping
-    @Operation(summary = "Add new lesson to course",
-            description = "This endpoint save new lesson to course by ID. Only users with role teacher can add new lessons")
     public LessonResponse saveLesson(@RequestBody LessonRequest lessonRequest) {
         return lessonService.saveLessons(lessonRequest);
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Gets a single lessons by identifier",
-            description = "For valid response try integer IDs with value >= 1 and...")
+    @Operation(summary = "Gets a single lessons by identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
+    @GetMapping("/{id}")
     public LessonResponse findById(@PathVariable Long id) {
         return lessonService.findById(id);
     }
 
-    @GetMapping("courseLessons/{id}")
     @Operation(summary = "Gets a list",
             description = "Returns all course's lessons that are,if there are no lessons,then an error")
     @ApiResponses(value = {
@@ -51,23 +48,19 @@ public class LessonsApi {
                             @Content(mediaType = "application/json",
                                     array = @ArraySchema(schema = @Schema(implementation = LessonsApi.class)))})})
     @PreAuthorize("hasAnyAuthority('STUDENT')")
+    @GetMapping("courseLessons/{id}")
     public List<LessonResponse> findAll(@PathVariable Long id) {
         return lessonService.findAll(id);
     }
 
+    @Operation(summary = "Update the lessons", description = "Updates the details of an endpoint with ID. Only users with role teacher can update the lesson")
     @PutMapping("/{id}")
-    @Operation(summary = "Update the lessons",
-            description = "Updates the details of an endpoint with ID. Only users with role teacher can update the lesson")
-
     public LessonResponse update(@PathVariable Long id, @RequestBody LessonRequest lessonRequest) {
         return lessonService.update(id, lessonRequest);
-
     }
 
+    @Operation(summary = "Delete the lesson", description = "Delete lesson with ID. Only users with role teacher can delete lesson")
     @DeleteMapping("/{id}")
-
-    @Operation(summary = "Delete the lesson",
-            description = "Delete lesson with ID. Only users with role teacher can delete lesson")
     public LessonResponse delete(@PathVariable Long id) {
         return lessonService.delete(id);
     }
