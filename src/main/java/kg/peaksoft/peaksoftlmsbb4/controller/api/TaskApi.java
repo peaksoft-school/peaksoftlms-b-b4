@@ -21,10 +21,9 @@ public class TaskApi {
 
     @Operation(summary = "Add new tasks", description = "This endpoint save new task. Only users with role teacher can add new task to lesson")
     @PostMapping
-    public TaskResponse saveTasks(@RequestBody TaskRequest taskRequest) {
-        return taskService.saveTasks(taskRequest);
+    public TaskResponse saveTasks(@RequestBody TaskRequest request) {
+        return taskService.saveTasks(request);
     }
-
 
     @Operation(summary = "Gets a single task by lesson identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
@@ -33,13 +32,11 @@ public class TaskApi {
         return taskService.findTaskByLessonId(id);
     }
 
-
     @Operation(summary = "Update the tasks", description = "Updates the details of an endpoint with ID")
     @PutMapping("{id}")
-    public TaskResponse update(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
-        return taskService.update(id, taskRequest);
+    public TaskResponse update(@PathVariable Long id, @RequestBody TaskRequest request) {
+        return taskService.update(id, request);
     }
-
 
     @Operation(summary = "Delete the task", description = "Delete task with ID")
     @DeleteMapping("{id}")
@@ -47,13 +44,11 @@ public class TaskApi {
         return taskService.delete(id);
     }
 
-
     @Operation(summary = "Gets a single task by lesson identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
     @GetMapping("task/{id}")
     public TaskResponse getById(@PathVariable Long id) {
         return taskService.getById(id);
     }
-
 
 }
