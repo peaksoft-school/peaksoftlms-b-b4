@@ -21,8 +21,8 @@ public class LinkApi {
     @Operation(summary = "Add new link", description = "This endpoint save new links to lesson. Only users with role teacher can add new link to lesson")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @PostMapping
-    public LinkResponse saveLink(@RequestBody LinkRequest linkRequest) {
-        return linkService.saveLinks(linkRequest);
+    public LinkResponse saveLink(@RequestBody LinkRequest request) {
+        return linkService.saveLinks(request);
     }
 
     @Operation(summary = "Gets a single links by identifier", description = "For valid response try integer IDs with value >= 1 and...")
@@ -35,8 +35,8 @@ public class LinkApi {
     @Operation(summary = "Update the link", description = "Updates the details of an endpoint with ID. Only users with role teacher can update the link")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
     @PutMapping("{id}")
-    public LinkResponse update(@PathVariable Long id, @RequestBody LinkRequest linkRequest) {
-        return linkService.update(id, linkRequest);
+    public LinkResponse update(@PathVariable Long id, @RequestBody LinkRequest request) {
+        return linkService.update(id, request);
     }
 
     @Operation(summary = "Delete the link", description = "Delete links with ID. Only users with role teacher can delete links")
