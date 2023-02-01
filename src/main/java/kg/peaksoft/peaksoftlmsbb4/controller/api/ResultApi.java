@@ -18,22 +18,22 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Result API", description = "The Result endpoints")
 public class ResultApi {
+
     private final ResultService resultService;
 
-    @PostMapping
-    @Operation(summary = "Past the test",
-            description = "This endpoint for pass the test")
+    @Operation(summary = "Past the test", description = "This endpoint for pass the test")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
-    public AnswerResponse saveResult(Authentication authentication, @RequestBody AnswerRequest answerRequest) {
+    @PostMapping
+    public AnswerResponse saveResult(Authentication authentication, @RequestBody AnswerRequest request) {
         User user = (User) authentication.getPrincipal();
-        return resultService.saveResult(answerRequest, user.getEmail());
+        return resultService.saveResult(request, user.getEmail());
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Get results",
-            description = "This endpoint get results by test ID")
+    @Operation(summary = "Get results", description = "This endpoint get results by test ID")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @GetMapping("{id}")
     public TestResultResponse getResults(@PathVariable Long id) {
         return resultService.getResults(id);
     }
+
 }
