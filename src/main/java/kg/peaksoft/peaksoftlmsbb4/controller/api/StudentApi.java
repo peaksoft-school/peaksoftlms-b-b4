@@ -36,6 +36,7 @@ import java.util.List;
 public class StudentApi {
 
     private final StudentService studentService;
+
     private final ResultService resultService;
 
     @Operation(summary = "Gets a list", description = "Returns all students that are,if there are no students,then an error")
@@ -51,20 +52,17 @@ public class StudentApi {
         return studentService.getAll(--page, size, studyFormat);
     }
 
-
     @Operation(summary = "Add new student", description = "This endpoint save new student. Only users with role admin can add new students")
     @PostMapping
-    public StudentResponse saveStudent(@RequestBody @Valid StudentRequest studentRequest) {
-        return studentService.saveStudent(studentRequest);
+    public StudentResponse saveStudent(@RequestBody @Valid StudentRequest request) {
+        return studentService.saveStudent(request);
     }
-
 
     @Operation(summary = "Update the students", description = "Updates the details of an endpoint with ID.  Only users with role admin can update students")
     @PutMapping("{id}")
-    public StudentResponse updateStudent(@PathVariable("id") Long id, @RequestBody @Valid StudentRequest studentRequest) {
-        return studentService.updateStudent(id, studentRequest);
+    public StudentResponse updateStudent(@PathVariable("id") Long id, @RequestBody @Valid StudentRequest request) {
+        return studentService.updateStudent(id, request);
     }
-
 
     @Operation(summary = "Delete the student", description = "Delete student with ID")
     @DeleteMapping("{id}")
@@ -72,13 +70,11 @@ public class StudentApi {
         return studentService.deleteStudent(id);
     }
 
-
     @Operation(summary = "Gets a single student by identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @GetMapping("{id}")
     public StudentResponse findById(@PathVariable Long id) {
         return studentService.findById(id);
     }
-
 
     @Operation(summary = "Get by name", description = "Get student by name")
     @GetMapping("get-by-name")
@@ -92,7 +88,6 @@ public class StudentApi {
         return studentService.importExcelFile(files, groupId);
     }
 
-
     @PreAuthorize("hasAnyAuthority('STUDENT')")
     @GetMapping("student-courses")
     public Deque<CourseResponse> studentCourses(Authentication authentication) {
@@ -100,13 +95,13 @@ public class StudentApi {
         return studentService.getStudentCourses(user.getEmail());
     }
 
-
     @Operation(summary = "Pass the test", description = "This endpoint for pass the test")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
     @PostMapping("test")
-    public AnswerResponse saveResult(Authentication authentication, @RequestBody AnswerRequest answerRequest) {
+    public AnswerResponse saveResult(Authentication authentication, @RequestBody AnswerRequest request) {
         User user = (User) authentication.getPrincipal();
-        return resultService.saveResult(answerRequest, user.getEmail());
+        return resultService.saveResult(request, user.getEmail());
     }
+
 }
 
