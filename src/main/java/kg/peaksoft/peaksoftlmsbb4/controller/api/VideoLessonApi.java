@@ -19,38 +19,37 @@ public class VideoLessonApi {
 
     private final VideoLessonService videoLessonService;
 
+
+    @Operation(summary = "Add new video lessons", description = "This method save new video lessons.Only users with role teacher can add new video to lesson")
     @PostMapping
-    @Operation(summary = "Add new video lessons",
-            description = "This method save new video lessons.Only users with role teacher can add new video to lesson")
     public VideoLessonResponse saveVideo(@RequestBody VideoLessonRequest videoLessonRequest) {
         return videoLessonService.saveVideoLessons(videoLessonRequest);
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Gets a single videos by identifier",
-            description = "For valid response try integer IDs with value >= 1 and...")
+
+    @Operation(summary = "Gets a single videos by identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
+    @GetMapping("{id}")
     public VideoLessonResponse findById(@PathVariable Long id) {
         return videoLessonService.findById(id);
     }
 
-    @PutMapping("/{id}")
-    @Operation(summary = "Update the video_lessons",
-            description = "Updates the details of an endpoint with ID. Only users with role teacher can add new video to lesson")
+
+    @Operation(summary = "Update the video_lessons", description = "Updates the details of an endpoint with ID. Only users with role teacher can add new video to lesson")
+    @PutMapping("{id}")
     public VideoLessonResponse update(@PathVariable Long id, @RequestBody VideoLessonRequest videoLessonRequest) {
         return videoLessonService.update(id, videoLessonRequest);
     }
 
-    @Operation(summary = "Delete the video lesson",
-            description = "Delete the video lesson with ID")
-    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete the video lesson", description = "Delete the video lesson with ID")
+    @DeleteMapping("{id}")
     public VideoLessonResponse delete(@PathVariable Long id) {
         return videoLessonService.delete(id);
     }
 
+
+    @Operation(summary = "Gets a single videos by lesson identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @GetMapping("lesson/{id}")
-    @Operation(summary = "Gets a single videos by lesson identifier",
-            description = "For valid response try integer IDs with value >= 1 and...")
     public VideoLessonResponse getVideoByLessonId(@PathVariable Long id) {
         return videoLessonService.findLessonByLessonId(id);
     }
