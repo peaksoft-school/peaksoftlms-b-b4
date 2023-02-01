@@ -21,10 +21,9 @@ public class PresentationsApi {
 
     @Operation(summary = "Add new presentation", description = "This endpoint save new presentations. Only users with role teacher can add new presentation to lesson")
     @PostMapping
-    public PresentationResponse savePresentations(@RequestBody PresentationRequest presentationRequest) {
-        return presentationService.savePresentation(presentationRequest);
+    public PresentationResponse savePresentations(@RequestBody PresentationRequest request) {
+        return presentationService.savePresentation(request);
     }
-
 
     @Operation(summary = "Gets a single presentation by identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
@@ -33,15 +32,11 @@ public class PresentationsApi {
         return presentationService.findById(id);
     }
 
-
-
     @Operation(summary = "Update the presentations", description = "Updates the details of an endpoint with ID")
     @PutMapping("{id}")
-    public PresentationResponse update(@PathVariable Long id, @RequestBody PresentationRequest presentationRequest) {
-        return presentationService.update(id, presentationRequest);
+    public PresentationResponse update(@PathVariable Long id, @RequestBody PresentationRequest request) {
+        return presentationService.update(id, request);
     }
-
-
 
     @Operation(summary = "Delete the presentation", description = "Delete links with ID. Only users with role teacher can delete links")
     @DeleteMapping("{id}")
@@ -49,11 +44,11 @@ public class PresentationsApi {
         return presentationService.delete(id);
     }
 
-
     @Operation(summary = "Gets a single presentation by lesson identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
-    @GetMapping("LessonPresentation/{id}")
+    @GetMapping("lesson-presentation/{id}")
     public PresentationResponse getPresentationByLessonId(@PathVariable Long id) {
         return presentationService.findPresentationByLessonId(id);
     }
+
 }
