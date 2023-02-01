@@ -5,15 +5,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.LinkRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.LinkResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.service.LinkService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("api/links")
-@Tag(name = "Links", description = "The Links API")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Tag(name = "Links API", description = "The Links endpoints")
 public class LinkApi {
 
     private final LinkService linkService;
