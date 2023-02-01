@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/tests")
@@ -24,13 +22,13 @@ public class TestApi {
 
     @Operation(summary = "Add new test", description = "This endpoint create new test. Only users with role teacher can add new task to lesson")
     @PostMapping()
-    public TestResponse saveTest(@RequestBody TestRequest testRequest) {
-        return testService.saveTest(testRequest);
+    public TestResponse saveTest(@RequestBody TestRequest request) {
+        return testService.saveTest(request);
     }
 
     @Operation(summary = "Gets a single test by identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public TestResponse findById(@PathVariable Long id) {
         return testService.findById(id);
     }
@@ -44,12 +42,12 @@ public class TestApi {
 
     @Operation(summary = "Update test", description = "Updates the details of an endpoint with ID")
     @PutMapping("{id}")
-    public TestResponse updateTest(@PathVariable Long id, @RequestBody TestRequest testRequest) {
-        return testService.update(id, testRequest);
+    public TestResponse updateTest(@PathVariable Long id, @RequestBody TestRequest request) {
+        return testService.update(id, request);
     }
 
     @Operation(summary = "Delete test", description = "Delete the test with id")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public String deleteTest(@PathVariable Long id) {
         testService.delete(id);
         return String.format("successfully delete this id=%s", id);
@@ -57,8 +55,8 @@ public class TestApi {
 
     @Operation(summary = "Switcher", description = "With this endpoint you can disable or enable test")
     @PutMapping("switcher/{id}")
-    public boolean switcher(@PathVariable Long id, @RequestBody SwitcherRequest switcherRequest) {
-        return testService.switcher(id, switcherRequest);
+    public boolean switcher(@PathVariable Long id, @RequestBody SwitcherRequest request) {
+        return testService.switcher(id, request);
     }
 
 }
