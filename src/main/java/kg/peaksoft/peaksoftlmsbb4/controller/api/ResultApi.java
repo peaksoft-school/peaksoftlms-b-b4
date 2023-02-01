@@ -7,16 +7,16 @@ import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.AnswerResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TestResultResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.User;
 import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
-@RequestMapping("/api/results")
+@RequiredArgsConstructor
+@RequestMapping("api/results")
 @CrossOrigin(origins = "*", maxAge = 3600)
-@Tag(name = "Result", description = "The Result API")
+@Tag(name = "Result API", description = "The Result endpoints")
 public class ResultApi {
     private final ResultService resultService;
 
