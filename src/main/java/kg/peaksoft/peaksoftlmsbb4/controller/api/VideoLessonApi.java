@@ -19,13 +19,11 @@ public class VideoLessonApi {
 
     private final VideoLessonService videoLessonService;
 
-
     @Operation(summary = "Add new video lessons", description = "This method save new video lessons.Only users with role teacher can add new video to lesson")
     @PostMapping
-    public VideoLessonResponse saveVideo(@RequestBody VideoLessonRequest videoLessonRequest) {
-        return videoLessonService.saveVideoLessons(videoLessonRequest);
+    public VideoLessonResponse saveVideo(@RequestBody VideoLessonRequest request) {
+        return videoLessonService.saveVideoLessons(request);
     }
-
 
     @Operation(summary = "Gets a single videos by identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
@@ -34,11 +32,10 @@ public class VideoLessonApi {
         return videoLessonService.findById(id);
     }
 
-
     @Operation(summary = "Update the video_lessons", description = "Updates the details of an endpoint with ID. Only users with role teacher can add new video to lesson")
     @PutMapping("{id}")
-    public VideoLessonResponse update(@PathVariable Long id, @RequestBody VideoLessonRequest videoLessonRequest) {
-        return videoLessonService.update(id, videoLessonRequest);
+    public VideoLessonResponse update(@PathVariable Long id, @RequestBody VideoLessonRequest request) {
+        return videoLessonService.update(id, request);
     }
 
     @Operation(summary = "Delete the video lesson", description = "Delete the video lesson with ID")
@@ -47,10 +44,10 @@ public class VideoLessonApi {
         return videoLessonService.delete(id);
     }
 
-
     @Operation(summary = "Gets a single videos by lesson identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @GetMapping("lesson/{id}")
     public VideoLessonResponse getVideoByLessonId(@PathVariable Long id) {
         return videoLessonService.findLessonByLessonId(id);
     }
+
 }
