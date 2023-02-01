@@ -19,40 +19,38 @@ public class TaskApi {
 
     private final TaskService taskService;
 
+    @Operation(summary = "Add new tasks", description = "This endpoint save new task. Only users with role teacher can add new task to lesson")
     @PostMapping
-    @Operation(summary = "Add new tasks",
-            description = "This endpoint save new task. Only users with role teacher can add new task to lesson")
     public TaskResponse saveTasks(@RequestBody TaskRequest taskRequest) {
         return taskService.saveTasks(taskRequest);
-
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Gets a single task by lesson identifier",
-            description = "For valid response try integer IDs with value >= 1 and...")
+
+    @Operation(summary = "Gets a single task by lesson identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
+    @GetMapping("{id}")
     public TaskResponse findTaskByLessonId(@PathVariable Long id) {
         return taskService.findTaskByLessonId(id);
     }
 
-    @PutMapping("/{id}")
-    @Operation(summary = "Update the tasks",
-            description = "Updates the details of an endpoint with ID")
+
+    @Operation(summary = "Update the tasks", description = "Updates the details of an endpoint with ID")
+    @PutMapping("{id}")
     public TaskResponse update(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
         return taskService.update(id, taskRequest);
     }
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete the task",
-            description = "Delete task with ID")
+
+    @Operation(summary = "Delete the task", description = "Delete task with ID")
+    @DeleteMapping("{id}")
     public TaskResponse delete(@PathVariable Long id) {
         return taskService.delete(id);
     }
 
-    @GetMapping("task/{id}")
-    @Operation(summary = "Gets a single task by lesson identifier",
-            description = "For valid response try integer IDs with value >= 1 and...")
+
+    @Operation(summary = "Gets a single task by lesson identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('STUDENT')")
+    @GetMapping("task/{id}")
     public TaskResponse getById(@PathVariable Long id) {
         return taskService.getById(id);
     }
