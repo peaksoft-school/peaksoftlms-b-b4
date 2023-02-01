@@ -18,44 +18,39 @@ public class LinkApi {
 
     private final LinkService linkService;
 
-    @PostMapping
-    @Operation(summary = "Add new link",
-            description = "This endpoint save new links to lesson. Only users with role teacher can add new link to lesson")
+    @Operation(summary = "Add new link", description = "This endpoint save new links to lesson. Only users with role teacher can add new link to lesson")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
+    @PostMapping
     public LinkResponse saveLink(@RequestBody LinkRequest linkRequest) {
         return linkService.saveLinks(linkRequest);
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Gets a single links by identifier",
-            description = "For valid response try integer IDs with value >= 1 and...")
+    @Operation(summary = "Gets a single links by identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR','STUDENT')")
+    @GetMapping("{id}")
     public LinkResponse findById(@PathVariable Long id) {
         return linkService.findById(id);
     }
 
-    @PutMapping("/{id}")
-    @Operation(summary = "Update the link",
-            description = "Updates the details of an endpoint with ID. Only users with role teacher can update the link")
+    @Operation(summary = "Update the link", description = "Updates the details of an endpoint with ID. Only users with role teacher can update the link")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR')")
+    @PutMapping("{id}")
     public LinkResponse update(@PathVariable Long id, @RequestBody LinkRequest linkRequest) {
         return linkService.update(id, linkRequest);
-
     }
 
-    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete the link", description = "Delete links with ID. Only users with role teacher can delete links")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
-    @Operation(summary = "Delete the link",
-            description = "Delete links with ID. Only users with role teacher can delete links")
+    @DeleteMapping("{id}")
     public LinkResponse delete(@PathVariable Long id) {
         return linkService.delete(id);
     }
 
-    @GetMapping("lesson/{id}")
-    @Operation(summary = "Gets a single links by lesson identifier",
-            description = "For valid response try integer IDs with value >= 1 and...")
+    @Operation(summary = "Gets a single links by lesson identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @PreAuthorize("hasAnyAuthority('ADMIN','INSTRUCTOR','STUDENT')")
+    @GetMapping("lesson/{id}")
     public LinkResponse findByLessonId(@PathVariable Long id) {
         return linkService.findLinkByLessonId(id);
     }
+
 }
