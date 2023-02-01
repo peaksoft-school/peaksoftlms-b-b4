@@ -56,17 +56,15 @@ public class TeacherApi {
 
     @Operation(summary = "Add new teacher", description = "This endpoint save new teacher")
     @PostMapping
-    public TeacherResponse saveTeacher(@Valid @RequestBody TeacherRequest teacherRequest) {
-        return teacherService.saveTeacher(teacherRequest);
+    public TeacherResponse saveTeacher(@Valid @RequestBody TeacherRequest request) {
+        return teacherService.saveTeacher(request);
     }
-
 
     @Operation(summary = "Update the teacher", description = "Updates the details of an endpoint with ID")
     @PatchMapping("{id}")
-    public TeacherResponse updateTeacher(@PathVariable("id") Long id, @RequestBody TeacherRequest teacherRequest) {
-        return teacherService.updateTeacher(id, teacherRequest);
+    public TeacherResponse updateTeacher(@PathVariable("id") Long id, @RequestBody TeacherRequest request) {
+        return teacherService.updateTeacher(id, request);
     }
-
 
     @Operation(summary = "Delete the teacher", description = "Delete the teacher with ID")
     @DeleteMapping("{id}")
@@ -82,7 +80,6 @@ public class TeacherApi {
         return teacherService.teacherCourses(user.getEmail());
     }
 
-
     @Operation(summary = "Gets a single teacher by identifier", description = "For valid response try integer IDs with value >= 1 and...")
     @GetMapping("{id}")
     public TeacherResponse findById(@PathVariable Long id) {
@@ -92,15 +89,15 @@ public class TeacherApi {
     @Operation(summary = "Assign student to course", description = "This endpoint for adding a student to a course. Only user with role teacher can add student to course")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @PostMapping("assign-student")
-    public StudentResponse assignStudentToCourse(@RequestBody AssignStudentRequest assignStudentRequest) {
-        return studentService.assignStudentToCourse(assignStudentRequest);
+    public StudentResponse assignStudentToCourse(@RequestBody AssignStudentRequest request) {
+        return studentService.assignStudentToCourse(request);
     }
 
     @Operation(summary = "Assign group to course", description = "This endpoint for adding a group to course")
     @PreAuthorize("hasAnyAuthority('INSTRUCTOR')")
     @PostMapping("assign-group")
-    public String assignGroupToCourse(@RequestBody AssignGroupRequest assignGroupRequest) {
-        return groupService.assignGroupToCourse(assignGroupRequest);
+    public String assignGroupToCourse(@RequestBody AssignGroupRequest request) {
+        return groupService.assignGroupToCourse(request);
     }
 
     @Operation(summary = "Course's teachers", description = "Get all teachers ")
