@@ -5,4 +5,5 @@ public enum StudyFormat {
     ONLINE,
     OFFLINE,
     ALL
+
 }
