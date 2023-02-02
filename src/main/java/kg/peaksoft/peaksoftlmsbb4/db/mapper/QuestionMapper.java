@@ -1,9 +1,9 @@
-package kg.peaksoft.peaksoftlmsbb4.db.mapper.question;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.QuestionRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.VariantRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.variant.VariantMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;

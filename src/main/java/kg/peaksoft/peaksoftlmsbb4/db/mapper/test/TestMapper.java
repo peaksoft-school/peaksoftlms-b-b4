@@ -7,7 +7,7 @@ import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TestRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.VariantRequest;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.QuestionMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;

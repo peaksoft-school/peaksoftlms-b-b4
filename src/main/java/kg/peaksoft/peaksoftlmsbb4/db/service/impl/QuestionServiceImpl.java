@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.QuestionRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.QuestionResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.QuestionMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.QuestionService;
