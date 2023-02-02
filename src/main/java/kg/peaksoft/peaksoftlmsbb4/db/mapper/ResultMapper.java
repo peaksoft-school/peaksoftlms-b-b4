@@ -118,5 +118,5 @@ public class ResultMapper {
         }
         return grade;
     }
-    
+
 }

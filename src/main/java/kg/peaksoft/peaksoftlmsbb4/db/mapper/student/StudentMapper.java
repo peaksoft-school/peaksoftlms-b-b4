@@ -18,6 +18,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class StudentMapper implements Converter<Student, StudentRequest, StudentResponse> {
+
     private final GroupRepository groupRepository;
 
     @Override
@@ -59,4 +60,5 @@ public class StudentMapper implements Converter<Student, StudentRequest, Student
         }
         return studentResponses;
     }
+
 }
