@@ -7,7 +7,7 @@ import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
