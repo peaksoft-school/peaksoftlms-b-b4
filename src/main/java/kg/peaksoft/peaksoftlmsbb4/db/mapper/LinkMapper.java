@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.db.mapper.link;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.LinkRequest;
@@ -11,6 +11,7 @@ import java.util.List;
 
 @Component
 public class LinkMapper implements Converter<Link, LinkRequest, LinkResponse> {
+
     @Override
     public Link convert(LinkRequest linkRequest) {
         Link link = new Link();
@@ -35,4 +36,5 @@ public class LinkMapper implements Converter<Link, LinkRequest, LinkResponse> {
         }
         return linkResponses;
     }
+
 }
