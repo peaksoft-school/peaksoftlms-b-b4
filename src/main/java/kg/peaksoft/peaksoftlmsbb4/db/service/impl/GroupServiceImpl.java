@@ -6,7 +6,7 @@ import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupPaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.GroupMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.student.StudentMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.StudentMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Group;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
