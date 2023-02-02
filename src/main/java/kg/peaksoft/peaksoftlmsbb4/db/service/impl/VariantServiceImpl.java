@@ -2,7 +2,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.VariantRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.VariantResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.variant.VariantMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.VariantMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Variant;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.VariantRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.VariantService;
