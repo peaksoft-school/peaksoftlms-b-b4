@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.db.mapper.group;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.GroupRequest;
@@ -51,4 +51,5 @@ public class GroupMapper implements Converter<Group, GroupRequest, GroupResponse
         }
         return groupResponses;
     }
+
 }
