@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.db.mapper.videolesson;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.VideoLessonRequest;
@@ -11,6 +11,7 @@ import java.util.List;
 
 @Component
 public class VideoLessonMapper implements Converter<VideoLesson, VideoLessonRequest, VideoLessonResponse> {
+
     @Override
     public VideoLesson convert(VideoLessonRequest videoLessonRequest) {
         VideoLesson videoLesson = new VideoLesson();
@@ -30,7 +31,6 @@ public class VideoLessonMapper implements Converter<VideoLesson, VideoLessonRequ
         return videoLessonResponse;
     }
 
-
     public List<VideoLessonResponse> deConvert(List<VideoLesson> videoLessons) {
         List<VideoLessonResponse> responses = new ArrayList<>();
         for (VideoLesson videoLesson : videoLessons) {
@@ -38,4 +38,5 @@ public class VideoLessonMapper implements Converter<VideoLesson, VideoLessonRequ
         }
         return responses;
     }
+
 }
