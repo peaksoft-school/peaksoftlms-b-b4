@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.db.mapper.variant;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.VariantRequest;
@@ -11,6 +11,7 @@ import java.util.List;
 
 @Component
 public class VariantMapper implements Converter<Variant, VariantRequest, VariantResponse> {
+
     @Override
     public Variant convert(VariantRequest variantRequest) {
         Variant variant = new Variant();
@@ -34,4 +35,5 @@ public class VariantMapper implements Converter<Variant, VariantRequest, Variant
         }
         return variantResponses;
     }
+
 }
