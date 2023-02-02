@@ -16,6 +16,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class TeacherMapper implements Converter<Teacher, TeacherRequest, TeacherResponse> {
+
     @Override
     public Teacher convert(TeacherRequest request) {
         Teacher teacher = new Teacher();
@@ -29,7 +30,6 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
         user.setRole(Role.INSTRUCTOR);
         teacher.setUser(user);
         return teacher;
-
     }
 
     @Override
@@ -43,7 +43,6 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
         teacherResponse.setEmail(teacher.getUser().getEmail());
         teacherResponse.setFullName(teacher.getName() + " " + teacher.getLastName());
         return teacherResponse;
-
     }
 
     public Deque<TeacherResponse> deConvert(List<Teacher> teachers) {
@@ -53,4 +52,5 @@ public class TeacherMapper implements Converter<Teacher, TeacherRequest, Teacher
         }
         return teacherResponses;
     }
+
 }
