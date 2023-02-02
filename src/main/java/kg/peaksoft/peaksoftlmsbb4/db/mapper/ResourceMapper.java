@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.db.mapper.resource;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.ResourceRequest;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ResourceMapper implements Converter<Resource, ResourceRequest, ResourceResponse> {
+
     @Override
     public Resource convert(ResourceRequest resourceRequest) {
         Resource resource = new Resource();
@@ -20,4 +21,5 @@ public class ResourceMapper implements Converter<Resource, ResourceRequest, Reso
     public ResourceResponse deConvert(Resource resource) {
         return null;
     }
+
 }
