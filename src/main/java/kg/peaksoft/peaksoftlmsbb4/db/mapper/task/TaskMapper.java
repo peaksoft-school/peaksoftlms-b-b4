@@ -2,8 +2,8 @@ package kg.peaksoft.peaksoftlmsbb4.db.mapper.task;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.ResourceRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.ResourceResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TaskRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.ResourceResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TaskResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Resource;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Task;
@@ -23,7 +23,7 @@ public class TaskMapper implements Converter<Task, TaskRequest, TaskResponse> {
         task.setName(taskRequest.getName());
         List<Resource> resources = new ArrayList<>();
         for (ResourceRequest r : taskRequest.getResources()) {
-            resources.add(new Resource(r.getResourceType(), r.getValue(),r.getName()));
+            resources.add(new Resource(r.getResourceType(), r.getValue(), r.getName()));
         }
         task.setResources(resources);
         return task;
@@ -49,4 +49,5 @@ public class TaskMapper implements Converter<Task, TaskRequest, TaskResponse> {
         }
         return responses;
     }
+
 }
