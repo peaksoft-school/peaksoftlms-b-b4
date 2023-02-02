@@ -1,13 +1,12 @@
-package kg.peaksoft.peaksoftlmsbb4.db.mapper.test;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.QuestionRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.QuestionResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TestRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.VariantRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.QuestionResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TestResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.enums.QuestionType;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.QuestionMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
@@ -74,6 +73,5 @@ public class TestMapper implements Converter<Test, TestRequest, TestResponse> {
         }
         return testResponses;
     }
-
 
 }

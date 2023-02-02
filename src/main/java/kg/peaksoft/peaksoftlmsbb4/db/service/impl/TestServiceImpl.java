@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.SwitcherRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TestRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TestResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.test.TestMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.TestMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
