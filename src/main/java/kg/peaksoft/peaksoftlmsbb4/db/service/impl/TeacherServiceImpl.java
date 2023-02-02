@@ -5,7 +5,7 @@ import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TeacherPaginationR
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.CourseMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.TeacherMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;

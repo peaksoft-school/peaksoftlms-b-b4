@@ -9,7 +9,7 @@ import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AssignTeacherReques
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.StudentMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.TeacherMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Student;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
@@ -40,7 +40,6 @@ public class CourseServiceImpl implements CourseService {
     private final CourseMapper courseMapper;
     private final StudentMapper studentMapper;
     private final TeacherMapper teacherMapper;
-    private final TeacherService teacherService;
     private final AWSS3Service awss3Service;
     private final TeacherRepository teacherRepository;
 
