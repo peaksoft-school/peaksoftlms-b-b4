@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.db.mapper.result;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AnswerRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.*;
@@ -17,10 +17,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Component
 @AllArgsConstructor
 public class ResultMapper {
+
     private final TestRepository testRepository;
     private final VariantRepository variantRepository;
     private final StudentRepository studentRepository;
@@ -118,4 +118,5 @@ public class ResultMapper {
         }
         return grade;
     }
+    
 }
