@@ -1,4 +1,4 @@
-package kg.peaksoft.peaksoftlmsbb4.db.mapper.lessons;
+package kg.peaksoft.peaksoftlmsbb4.db.mapper;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.converter.Converter;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.LessonRequest;
@@ -51,6 +51,5 @@ public class LessonMapper implements Converter<Lesson, LessonRequest, LessonResp
         }
         return lessonResponses;
     }
-
 
 }
