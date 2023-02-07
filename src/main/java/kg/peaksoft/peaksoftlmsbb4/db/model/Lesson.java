@@ -5,33 +5,29 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import java.util.ArrayList;
-
 import static javax.persistence.CascadeType.*;
 
-@Entity
-@Table(name = "lessons")
 @Getter
 @Setter
+@Entity
+@Table(name = "lessons")
 public class Lesson {
+
     @Id
-    @SequenceGenerator(
-            name = "lessons_id_seq",
-            sequenceName = "lessons_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "lessons_id_seq"
-    )
+    @SequenceGenerator(name = "lessons_id_gen", sequenceName = "lessons_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lessons_id_gen")
     private Long id;
+
     private String name;
+
     @OneToOne(cascade = ALL)
     @JoinColumn(name = "task_id")
     private Task task;
+
     @OneToOne(cascade = ALL)
     @JoinColumn(name = "link_id")
     private Link link;
+
     @OneToOne(cascade = ALL)
     @JoinColumn(name = "video_lesson_id")
     private VideoLesson videoLesson;
@@ -39,6 +35,7 @@ public class Lesson {
     @OneToOne(cascade = ALL)
     @JoinColumn(name = "presentation_id")
     private Presentation presentation;
+
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH, PERSIST})
     @JoinColumn(name = "course_id")
     private Course courses;
@@ -46,6 +43,5 @@ public class Lesson {
     @OneToOne(cascade = ALL)
     @JoinColumn(name = "test_id")
     private Test test;
-
 
 }
