@@ -7,22 +7,17 @@ import javax.persistence.*;
 
 import static javax.persistence.CascadeType.*;
 
-@Entity
-@Table(name = "video_lessons")
 @Getter
 @Setter
+@Entity
+@Table(name = "video_lessons")
 public class VideoLesson {
+
     @Id
-    @SequenceGenerator(
-            name = "video_lesson_id_seq",
-            sequenceName = "video_lesson_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "video_lesson_id_seq"
-    )
+    @SequenceGenerator(name = "video_lesson_id_gen", sequenceName = "video_lesson_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "video_lesson_id_gen")
     private Long id;
+
     private String name;
     private String description;
     private String link;
