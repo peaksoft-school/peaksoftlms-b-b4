@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static javax.persistence.CascadeType.*;
 
@@ -15,16 +14,12 @@ import static javax.persistence.CascadeType.*;
 @Setter
 @Entity
 @NoArgsConstructor
+@Table(name = "results")
 public class Results {
+
     @Id
-    @SequenceGenerator(
-            name = "result_id_seq",
-            sequenceName = "result_id_seq",
-            allocationSize = 1)
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "result_id_seq"
-    )
+    @SequenceGenerator(name = "result_id_gen", sequenceName = "result_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "result_id_gen")
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -41,4 +36,5 @@ public class Results {
     @ManyToOne(cascade = {DETACH, MERGE, REFRESH, PERSIST})
     @JoinColumn(name = "test_id")
     private Test test;
+
 }
