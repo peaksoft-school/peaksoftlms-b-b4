@@ -7,22 +7,17 @@ import javax.persistence.*;
 
 import static javax.persistence.CascadeType.*;
 
-@Entity
-@Table(name = "links")
 @Getter
 @Setter
+@Entity
+@Table(name = "links")
 public class Link {
+
     @Id
-    @SequenceGenerator(
-            name = "links_id_seq",
-            sequenceName = "links_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "links_id_seq"
-    )
+    @SequenceGenerator(name = "links_id_gen", sequenceName = "links_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "links_id_gen")
     private Long id;
+
     private String text;
     private String link;
 
