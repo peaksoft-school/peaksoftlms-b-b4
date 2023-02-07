@@ -1,0 +1,56 @@
+2023-01-30 17:34:00,228 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.3.Final
+2023-01-30 17:34:00,236 INFO org.springframework.boot.StartupInfoLogger [main] Starting PeaksoftlmsBB4Application using Java 17.0.1 on LAPTOP-Q9VS4IDS with PID 17236 (D:\Projects B-4\peaksoftlms-b-b4\target\classes started by schoo in D:\Projects B-4\peaksoftlms-b-b4)
+2023-01-30 17:34:00,247 INFO org.springframework.boot.SpringApplication [main] The following 1 profile is active: "dev"
+2023-01-30 17:34:01,564 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-30 17:34:01,693 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 121 ms. Found 15 JPA repository interfaces.
+2023-01-30 17:34:01,946 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'credentialsProvider' of type [com.amazonaws.auth.AWSCredentialsProviderChain] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-01-30 17:34:02,271 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 5000 (http)
+2023-01-30 17:34:02,280 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-5000"]
+2023-01-30 17:34:02,281 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2023-01-30 17:34:02,281 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.60]
+2023-01-30 17:34:02,439 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2023-01-30 17:34:02,440 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2116 ms
+2023-01-30 17:34:02,661 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-30 17:34:02,721 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.7.Final
+2023-01-30 17:34:02,903 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-01-30 17:34:03,010 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2023-01-30 17:34:03,188 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2023-01-30 17:34:03,206 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2023-01-30 17:34:04,573 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-30 17:34:04,581 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-30 17:34:05,009 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-30 17:34:07,368 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will not secure any request
+2023-01-30 17:34:07,419 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-5000"]
+2023-01-30 17:34:07,443 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 5000 (http) with context path ''
+2023-01-30 17:34:07,453 INFO org.springframework.boot.StartupInfoLogger [main] Started PeaksoftlmsBB4Application in 7.954 seconds (JVM running for 9.193)
+2023-01-30 17:35:01,017 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-30 17:35:01,019 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-01-30 17:35:01,025 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-01-30 17:35:17,925 INFO org.springframework.boot.StartupInfoLogger [main] Starting PeaksoftlmsBB4Application using Java 17.0.1 on LAPTOP-Q9VS4IDS with PID 21816 (D:\Projects B-4\peaksoftlms-b-b4\target\classes started by schoo in D:\Projects B-4\peaksoftlms-b-b4)
+2023-01-30 17:35:17,919 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.3.Final
+2023-01-30 17:35:17,956 INFO org.springframework.boot.SpringApplication [main] The following 1 profile is active: "dev"
+2023-01-30 17:35:19,276 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-30 17:35:19,440 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 157 ms. Found 15 JPA repository interfaces.
+2023-01-30 17:35:19,677 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [main] Bean 'credentialsProvider' of type [com.amazonaws.auth.AWSCredentialsProviderChain] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-01-30 17:35:19,982 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 5000 (http)
+2023-01-30 17:35:19,989 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-5000"]
+2023-01-30 17:35:19,990 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2023-01-30 17:35:19,991 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.60]
+2023-01-30 17:35:20,157 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2023-01-30 17:35:20,158 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2134 ms
+2023-01-30 17:35:20,329 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-30 17:35:20,371 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.7.Final
+2023-01-30 17:35:20,499 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-01-30 17:35:20,605 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2023-01-30 17:35:20,870 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2023-01-30 17:35:20,890 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2023-01-30 17:35:22,145 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-30 17:35:22,152 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-30 17:35:22,534 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-30 17:35:24,783 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Will not secure any request
+2023-01-30 17:35:24,824 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-5000"]
+2023-01-30 17:35:24,846 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 5000 (http) with context path ''
+2023-01-30 17:35:24,856 INFO org.springframework.boot.StartupInfoLogger [main] Started PeaksoftlmsBB4Application in 7.541 seconds (JVM running for 8.445)
+2023-01-30 17:35:27,948 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-30 17:35:27,950 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-01-30 17:35:27,956 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.

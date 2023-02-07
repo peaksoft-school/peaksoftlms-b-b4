@@ -10,37 +10,30 @@ import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
-@Entity
-@Table(name = "course")
 @Getter
 @Setter
+@Entity
+@Table(name = "course")
 public class Course {
 
     @Id
-    @SequenceGenerator(
-            name = "course_id_seq",
-            sequenceName = "course_id_seq",
-            allocationSize = 1)
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "course_id_seq"
-    )
+    @SequenceGenerator(name = "course_id_gen", sequenceName = "course_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_id_gen")
     private Long id;
+
     private String courseName;
     private String image;
     private String description;
     private LocalDate dateOfStart;
     private LocalDate dateOfFinish;
 
-    @ManyToMany(cascade =
-            {PERSIST, REFRESH, DETACH, MERGE, REMOVE})
+    @ManyToMany(cascade = ALL)
     @JoinTable(name = "courses_students",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Student> students;
 
-    @ManyToMany(cascade =
-            {PERSIST, REFRESH, DETACH, MERGE, REMOVE})
+    @ManyToMany(cascade = ALL)
     @JoinTable(name = "course_teacher",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
@@ -115,5 +108,6 @@ public class Course {
         lessons.add(lesson);
         lesson.setCourses(this);
     }
+
 }
 
