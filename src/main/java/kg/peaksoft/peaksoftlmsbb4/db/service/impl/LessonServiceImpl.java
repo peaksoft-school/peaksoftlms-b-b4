@@ -17,22 +17,21 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
-@AllArgsConstructor
 @Slf4j
 @Transactional
+@AllArgsConstructor
+@Service
 public class LessonServiceImpl implements LessonService {
+
     private final LessonRepository lessonRepository;
     private final LessonMapper lessonMapper;
     private final CourseRepository courseRepository;
 
-
     @Override
-    public LessonResponse saveLessons(LessonRequest lessonRequest) {
-        Course course = courseRepository.findById(lessonRequest.getCourseId()).orElseThrow(() -> new BadRequestException(
-                String.format("Course with id %s does not exists", lessonRequest.getCourseId())
-        ));
-        Lesson lessons = lessonMapper.convert(lessonRequest);
+    public LessonResponse saveLessons(LessonRequest request) {
+        Course course = courseRepository.findById(request.getCourseId()).orElseThrow(() ->
+                new BadRequestException(String.format("Course with id %s does not exists", request.getCourseId())));
+        Lesson lessons = lessonMapper.convert(request);
         Lesson save = lessonRepository.save(lessons);
         course.setLesson(save);
         log.info("successfully save lessons:{}", lessons);
@@ -54,15 +53,16 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public LessonResponse update(Long id, LessonRequest lessonRequest) {
+    public LessonResponse update(Long id, LessonRequest request) {
         boolean exist = lessonRepository.existsById(id);
         if (!exist) {
             log.error("not found  lesson with id:{}", id);
             throw new NotFoundException(String.format("Not found lesson with id=%s", id));
         }
-        Lesson lessons = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Not found id=%s", id)));
-        if (!lessons.getName().equals(lessonRequest.getName())) {
-            lessons.setName(lessonRequest.getName());
+        Lesson lessons = lessonRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("Not found id=%s", id)));
+        if (!lessons.getName().equals(request.getName())) {
+            lessons.setName(request.getName());
         }
         log.info("lesson successfully update with id:{}", id);
         return lessonMapper.deConvert(lessons);
@@ -76,13 +76,16 @@ public class LessonServiceImpl implements LessonService {
             throw new NotFoundException(String.format("Lesson is not found id=%s", id));
         }
         log.info("successfully delete lesson with id:{}", id);
-        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Lesson with id %s not found", id)));
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("Lesson with id %s not found", id)));
         lessonRepository.deleteById(id);
         return lessonMapper.deConvert(lesson);
     }
 
     private Lesson getLessonById(Long id) {
         log.info("successfully get lesson by id:{}", id);
-        return lessonRepository.findById(id).orElseThrow(() -> new BadRequestException(String.format("lesson with %s not found", id)));
+        return lessonRepository.findById(id).orElseThrow(() ->
+                new BadRequestException(String.format("lesson with %s not found", id)));
     }
+
 }
