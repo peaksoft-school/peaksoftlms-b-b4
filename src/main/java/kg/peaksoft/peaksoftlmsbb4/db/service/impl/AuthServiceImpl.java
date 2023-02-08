@@ -15,8 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
 @AllArgsConstructor
+@Service
 public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
