@@ -14,4 +14,5 @@ public interface VariantService {
     VariantResponse update(Long id, VariantRequest variantRequest);
 
     void delete(Long id);
+
 }
