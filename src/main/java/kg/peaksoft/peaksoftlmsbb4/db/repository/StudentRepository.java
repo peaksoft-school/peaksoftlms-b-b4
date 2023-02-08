@@ -15,13 +15,14 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>, PagingAndSortingRepository<Student, Long> {
 
-    @Query("select s from Student s where s.studentName like %?1%")
+    @Query("SELECT s FROM Student s WHERE s.studentName LIKE %?1%")
     List<Student> findByStudentName(@Param("studentName") String studentName);
 
     Page<Student> findStudentByStudyFormat(StudyFormat studyFormat, Pageable pageable);
 
     Student findStudentByUser_Email(String email);
 
-    @Query("select s from Student s")
+    @Query("SELECT s FROM Student s")
     Page<Student> findAllByStudent(Pageable pageable);
+
 }
