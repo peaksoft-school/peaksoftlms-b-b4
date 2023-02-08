@@ -2,8 +2,8 @@ package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AssignGroupRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.GroupRequest;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupPaginationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.GroupResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.StudentResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.GroupMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.StudentMapper;
@@ -25,11 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@AllArgsConstructor
 @Slf4j
 @Transactional
+@AllArgsConstructor
+@Service
 public class GroupServiceImpl implements GroupService {
+
     private final GroupMapper groupMapper;
     private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;
@@ -41,9 +42,7 @@ public class GroupServiceImpl implements GroupService {
         String name = groupRequest.getGroupName();
         if (groupRepository.existsByGroupName((name))) {
             log.error("there is such a group name:{}", name);
-            throw new BadRequestException(
-                    String.format("There is such a group name = %s", name)
-            );
+            throw new BadRequestException(String.format("There is such a group name = %s", name));
         }
         Group group = groupMapper.convert(groupRequest);
         Group save = groupRepository.save(group);
@@ -69,9 +68,7 @@ public class GroupServiceImpl implements GroupService {
             return groupMapper.deConvert(group);
         } else {
             log.error("not found group with id:{}", id);
-            throw new NotFoundException(
-                    String.format("not found group =%s id", id)
-            );
+            throw new NotFoundException(String.format("not found group =%s id", id));
         }
     }
 
@@ -80,14 +77,13 @@ public class GroupServiceImpl implements GroupService {
         boolean exists = groupRepository.existsById(id);
         if (!exists) {
             log.error("not found group with id:{}", id);
-            throw new NotFoundException(
-                    String.format("group with id = %s does not exists", id)
-            );
+            throw new NotFoundException(String.format("group with id = %s does not exists", id));
         }
         if (!groupRepository.getById(id).getImage().equals("")) {
             awss3Service.deleteFile(groupRepository.getById(id).getImage());
         }
-        Group byId = groupRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Course with id %s not found", id)));
+        Group byId = groupRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("Course with id %s not found", id)));
         groupRepository.deleteById(id);
         log.info("successful delete group by id:{}", id);
         return groupMapper.deConvert(byId);
@@ -96,9 +92,8 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public GroupResponse update(Long id, GroupRequest groupRequest) {
-        Group group = groupRepository.findById(id).orElseThrow(
-                () -> new NotFoundException(String.format("Group with id=%s not found", id))
-        );
+        Group group = groupRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("Group with id=%s not found", id)));
         if (!group.getGroupName().equals(groupRequest.getGroupName())) {
             group.setGroupName(groupRequest.getGroupName());
         }
@@ -118,11 +113,8 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Group findBy(Long id) {
         log.info("successful find group by id:{}", id);
-        return groupRepository.findById(id)
-                .orElseThrow(() ->
-                        new NotFoundException(
-                                String.format("group with id = %s does not exists", id)
-                        ));
+        return groupRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("group with id = %s does not exists", id)));
     }
 
     @Override
@@ -137,22 +129,19 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public String assignGroupToCourse(AssignGroupRequest assignGroupRequest) {
-        Course course = courseRepository.findById(assignGroupRequest.getCourseId())
-                .orElseThrow(() ->
-                        new NotFoundException(
-                                String.format("Not found course with id=%s",
-                                        assignGroupRequest.getCourseId())));
-        Group group = groupRepository.findById(assignGroupRequest.getGroupId()).
-                orElseThrow(() -> new NotFoundException("student with id = %s does not exists " + assignGroupRequest.getGroupId()));
+        Course course = courseRepository.findById(assignGroupRequest.getCourseId()).orElseThrow(() ->
+                new NotFoundException(String.format("Not found course with id=%s", assignGroupRequest.getCourseId())));
+        Group group = groupRepository.findById(assignGroupRequest.getGroupId()).orElseThrow(() ->
+                new NotFoundException("student with id = %s does not exists " + assignGroupRequest.getGroupId()));
         for (Group s : course.getGroups()) {
             if (s.getId().equals(group.getId())) {
-                throw new BadRequestException(
-                        String.format("There is such a student with id = %s", group.getId()));
+                throw new BadRequestException(String.format("There is such a student with id = %s", group.getId()));
             }
         }
         course.setGroup(group);
         log.info("successfully assign student to course by student id:{}", assignGroupRequest.getCourseId());
         return String.format("%s added to %s course", group.getGroupName(), course.getCourseName());
     }
+
 }
 
