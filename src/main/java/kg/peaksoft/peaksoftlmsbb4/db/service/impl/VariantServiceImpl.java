@@ -14,19 +14,19 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
-@AllArgsConstructor
-@Transactional
 @Slf4j
+@Transactional
+@AllArgsConstructor
+@Service
 public class VariantServiceImpl implements VariantService {
+
     private final VariantRepository variantRepository;
     private final VariantMapper variantMapper;
 
     @Override
     public VariantResponse findById(Long id) {
-        Variant variant = variantRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("this id not found=%s", id)
-        ));
+        Variant variant = variantRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("this id not found=%s", id)));
         log.info("successful find by id:{}", id);
         return variantMapper.deConvert(variant);
     }
@@ -38,18 +38,15 @@ public class VariantServiceImpl implements VariantService {
     }
 
     @Override
-    public VariantResponse update(Long id, VariantRequest variantRequest) {
+    public VariantResponse update(Long id, VariantRequest request) {
         boolean exists = variantRepository.existsById(id);
         if (!exists) {
-            throw new NotFoundException(
-                    String.format("question id not found=%s", id)
-            );
+            throw new NotFoundException(String.format("question id not found=%s", id));
         }
-        Variant variant = variantRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("not found this question id=%s", id)
-        ));
+        Variant variant = variantRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("not found this question id=%s", id)));
         String currentVariantName = variant.getOption();
-        String newVariantName = variantRequest.getOption();
+        String newVariantName = request.getOption();
         if (!currentVariantName.equals(newVariantName)) {
             variant.setOption(newVariantName);
         }
@@ -62,4 +59,5 @@ public class VariantServiceImpl implements VariantService {
         variantRepository.deleteById(id);
         log.info("successful delete this id:{}", id);
     }
+
 }
