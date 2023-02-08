@@ -2,8 +2,8 @@ package kg.peaksoft.peaksoftlmsbb4.exceptions.handler;
 
 import com.amazonaws.services.kms.model.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.ExceptionResponse;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(
-            BadRequestException.class)
+    @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionResponse handleMethodArgumentNotValidException(BadRequestException e) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
@@ -42,8 +41,7 @@ public class GlobalExceptionHandler {
         return exceptionResponse;
     }
 
-    @ExceptionHandler(
-            AlreadyExistsException.class)
+    @ExceptionHandler(AlreadyExistsException.class)
     @ResponseStatus(HttpStatus.ALREADY_REPORTED)
     public ExceptionResponse handleMethodValidException(AlreadyExistsException e) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
@@ -51,4 +49,5 @@ public class GlobalExceptionHandler {
         exceptionResponse.setMessage(e.getMessage());
         return exceptionResponse;
     }
+
 }
