@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface LinkService {
+
     LinkResponse saveLinks(LinkRequest linkRequest);
 
     LinkResponse findById(Long id);
@@ -15,4 +16,5 @@ public interface LinkService {
     LinkResponse delete(Long id);
 
     LinkResponse findLinkByLessonId(Long id);
+
 }
