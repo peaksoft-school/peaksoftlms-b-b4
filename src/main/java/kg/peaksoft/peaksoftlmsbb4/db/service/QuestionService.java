@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface QuestionService {
 
+    QuestionResponse saveQuestion(QuestionRequest questionRequest);
+
     QuestionResponse findById(Long id);
 
     List<QuestionResponse> findAll();
