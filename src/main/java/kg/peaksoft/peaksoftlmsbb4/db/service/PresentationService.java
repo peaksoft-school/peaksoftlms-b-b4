@@ -6,14 +6,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface PresentationService {
+
     PresentationResponse savePresentation(PresentationRequest presentationRequest);
 
     PresentationResponse findById(Long id);
 
     PresentationResponse update(Long id, PresentationRequest presentationRequest);
 
-
     PresentationResponse delete(Long id);
 
     PresentationResponse findPresentationByLessonId(Long id);
+
 }
