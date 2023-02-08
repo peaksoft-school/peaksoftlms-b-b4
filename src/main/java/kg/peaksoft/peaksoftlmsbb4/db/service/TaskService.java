@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface TaskService {
+
     TaskResponse saveTasks(TaskRequest taskRequest);
 
     TaskResponse update(Long id, TaskRequest taskRequest);
@@ -15,4 +16,5 @@ public interface TaskService {
     TaskResponse findTaskByLessonId(Long id);
 
     TaskResponse getById(Long id);
+
 }
