@@ -1,12 +1,13 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.switcher.SwitcherRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.SwitcherRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TestRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TestResponse;
 
 import java.util.List;
 
 public interface TestService {
+
     TestResponse saveTest(TestRequest testRequest);
 
     TestResponse findById(Long id);

@@ -18,20 +18,17 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.util.UUID;
 
+@Slf4j
 @AllArgsConstructor
 @Service
-@Slf4j
 public class AWSS3Service implements FileService {
 
     private AmazonS3Client awsS3Client;
 
     @Override
     public String uploadFile(MultipartFile file) {
-
         String filenameExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-
-        String key = UUID.randomUUID().toString() + "." + filenameExtension;
-
+        String key = UUID.randomUUID() + "." + filenameExtension;
         ObjectMetadata metaData = new ObjectMetadata();
         metaData.setContentLength(file.getSize());
         metaData.setContentType(file.getContentType());
@@ -43,9 +40,7 @@ public class AWSS3Service implements FileService {
             log.error("an exception occured while uploading the file");
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An exception occured while uploading the file");
         }
-
         awsS3Client.setObjectAcl("peaksoft-lms-a4", key, CannedAccessControlList.PublicRead);
-
         return awsS3Client.getResourceUrl("peaksoft-lms-a4", key);
     }
 
@@ -68,6 +63,5 @@ public class AWSS3Service implements FileService {
             throw new RuntimeException(e);
         }
     }
-
 
 }

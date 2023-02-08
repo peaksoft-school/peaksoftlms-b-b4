@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface TestRepository extends JpaRepository<Test, Long> {
 
     boolean existsByTestName(String name);
+
 }

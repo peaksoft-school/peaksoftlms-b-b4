@@ -5,28 +5,24 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "variants")
+import static javax.persistence.CascadeType.*;
+
 @Getter
 @Setter
+@Entity
+@Table(name = "variants")
 public class Variant {
+
     @Id
-    @SequenceGenerator(
-            name = "variant_id_seq",
-            sequenceName = "variant_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "variant_id_seq"
-    )
+    @SequenceGenerator(name = "variant_id_gen", sequenceName = "variant_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "variant_id_gen")
     private Long id;
+
     private String option;
     private Boolean answer = false;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToOne(cascade = {MERGE, REFRESH, DETACH})
     @JoinColumn(name = "question_id")
     private Question question;
-
 
 }

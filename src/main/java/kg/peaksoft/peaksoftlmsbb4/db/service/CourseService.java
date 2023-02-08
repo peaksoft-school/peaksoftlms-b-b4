@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CoursePaginationResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.student.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.AssignTeacherRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AssignTeacherRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.CourseRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.CoursePaginationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.StudentResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TeacherResponse;
 
 import java.util.List;
 
@@ -28,4 +28,5 @@ public interface CourseService {
     List<TeacherResponse> getAllTeacherByCourseId(Long id);
 
     String assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest);
+
 }

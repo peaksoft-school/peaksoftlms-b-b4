@@ -1,8 +1,8 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.question.QuestionResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.question.QuestionMapper;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.QuestionRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.QuestionResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.QuestionMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Question;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.QuestionRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.QuestionService;
@@ -15,11 +15,12 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
-@AllArgsConstructor
-@Transactional
 @Slf4j
+@Transactional
+@AllArgsConstructor
+@Service
 public class QuestionServiceImpl implements QuestionService {
+
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
 
@@ -27,11 +28,8 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionResponse saveQuestion(QuestionRequest questionRequest) {
         String question = questionRequest.getQuestion();
         if (questionRepository.existsByQuestion(question)) {
-            throw new BadRequestException(
-                    String.format("Sorry, please try another question=%s", question)
-            );
+            throw new BadRequestException(String.format("Sorry, please try another question=%s", question));
         }
-
         Question question1 = questionMapper.convert(questionRequest);
         questionRepository.save(question1);
         log.info("successful save question:{}", question);
@@ -40,9 +38,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionResponse findById(Long id) {
-        Question question = questionRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("this id not found =%s", id)
-        ));
+        Question question = questionRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("this id not found =%s", id)));
         log.info("successful find by this id:{}", id);
         return questionMapper.deConvert(question);
     }
@@ -57,13 +54,10 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionResponse update(Long id, QuestionRequest questionRequest) {
         boolean exists = questionRepository.existsById(id);
         if (!exists) {
-            throw new NotFoundException(
-                    String.format("question id not found=%s", id)
-            );
+            throw new NotFoundException(String.format("question id not found=%s", id));
         }
-        Question question = questionRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("this id not found=%s", id)
-        ));
+        Question question = questionRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("this id not found=%s", id)));
         String currentQuestion = question.getQuestion();
         String newQuestion = questionRequest.getQuestion();
         if (!currentQuestion.equals(newQuestion)) {
@@ -78,4 +72,5 @@ public class QuestionServiceImpl implements QuestionService {
         questionRepository.deleteById(id);
         log.info("successful delete this id:{}", id);
     }
+
 }

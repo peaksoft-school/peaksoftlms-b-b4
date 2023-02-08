@@ -10,30 +10,20 @@ import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
-@Entity
-@Table(name = "teachers")
 @Getter
 @Setter
+@Entity
+@Table(name = "teachers")
 public class Teacher {
 
     @Id
-    @SequenceGenerator(
-            name = "teachers_id_seq",
-            sequenceName = "teachers_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "teachers_id_seq"
-    )
+    @SequenceGenerator(name = "teachers_id_gen", sequenceName = "teachers_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "teachers_id_gen")
     private Long id;
 
     private String name;
-
     private String lastName;
-
     private String phoneNumber;
-
     private String specialization;
 
     @OneToOne(cascade = {MERGE, REFRESH, PERSIST}, orphanRemoval = true)
@@ -50,6 +40,5 @@ public class Teacher {
         }
         this.courses.add(course);
     }
-
 
 }

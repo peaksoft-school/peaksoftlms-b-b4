@@ -7,22 +7,17 @@ import javax.persistence.*;
 
 import static javax.persistence.CascadeType.*;
 
-@Entity
-@Table(name = "presentation")
 @Getter
 @Setter
+@Entity
+@Table(name = "presentations")
 public class Presentation {
+
     @Id
-    @SequenceGenerator(
-            name = "presentation_id_seq",
-            sequenceName = "presentation_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "presentation_id_seq"
-    )
+    @SequenceGenerator(name = "presentation_id_gen", sequenceName = "presentation_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "presentation_id_gen")
     private Long id;
+
     private String name;
     private String description;
     private String file;

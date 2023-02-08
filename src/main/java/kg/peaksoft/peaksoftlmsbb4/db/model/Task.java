@@ -8,26 +8,23 @@ import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
-@Entity
-@Table(name = "tasks")
 @Getter
 @Setter
+@Entity
+@Table(name = "tasks")
 public class Task {
+
     @Id
-    @SequenceGenerator(
-            name = "task_id_seq",
-            sequenceName = "task_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "task_id_seq"
-    )
+    @SequenceGenerator(name = "task_id_gen", sequenceName = "task_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_id_gen")
     private Long id;
+
     private String name;
 
     @OneToMany(cascade = ALL)
     private List<Resource> resources;
+
     @OneToOne(cascade = {REMOVE, DETACH, REFRESH, MERGE}, mappedBy = "task")
     private Lesson lessons;
+
 }

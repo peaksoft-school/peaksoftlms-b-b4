@@ -8,10 +8,11 @@ public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumbe
     @Override
     public boolean isValid(String phoneNumber,
                            ConstraintValidatorContext constraintValidatorContext) {
-        if(phoneNumber.length() == 10 || phoneNumber.length() == 13){
+        if (phoneNumber.length() == 10 || phoneNumber.length() == 13) {
             return phoneNumber.matches("^[0-9/-/+]{9,15}$");
-        }else {
+        } else {
             return false;
         }
     }
+
 }

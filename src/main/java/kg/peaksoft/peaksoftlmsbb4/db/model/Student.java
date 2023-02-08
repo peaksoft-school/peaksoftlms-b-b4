@@ -16,19 +16,14 @@ import static javax.persistence.CascadeType.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "student")
+@Table(name = "students")
 public class Student {
 
     @Id
-    @SequenceGenerator(
-            name = "student_id_seq",
-            sequenceName = "student_id_seq",
-            allocationSize = 1)
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "student_id_seq"
-    )
+    @SequenceGenerator(name = "student_id_gen", sequenceName = "student_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_id_gen")
     private Long id;
+
     private String studentName;
     private String lastName;
     private String phoneNumber;
@@ -56,6 +51,5 @@ public class Student {
         }
         courses.add(course);
     }
-
 
 }

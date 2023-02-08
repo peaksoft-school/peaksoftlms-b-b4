@@ -7,9 +7,11 @@ import java.io.UnsupportedEncodingException;
 
 @Service
 public interface FileService {
+
     String uploadFile(MultipartFile file);
 
     String deleteFile(String file) throws UnsupportedEncodingException;
 
     byte[] downloadFile(String file);
+
 }

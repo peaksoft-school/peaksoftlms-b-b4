@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.course.CourseResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherPaginationResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.teacher.TeacherResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.course.CourseMapper;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.teacher.TeacherMapper;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TeacherRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.CourseResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TeacherPaginationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TeacherResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.CourseMapper;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.TeacherMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Course;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
@@ -26,11 +26,10 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
-
-@Service
 @Slf4j
-@AllArgsConstructor
 @Transactional
+@AllArgsConstructor
+@Service
 public class TeacherServiceImpl implements TeacherService {
 
     private final TeacherRepository teacherRepository;
@@ -41,57 +40,48 @@ public class TeacherServiceImpl implements TeacherService {
     private final CourseRepository courseRepository;
 
     @Override
-    public TeacherResponse saveTeacher(TeacherRequest teacherRequest) {
-
-        String email = teacherRequest.getEmail();
-
+    public TeacherResponse saveTeacher(TeacherRequest request) {
+        String email = request.getEmail();
         if (userRepository.existsByEmail((email))) {
             log.error("user with this email already exists:{}", email);
-            throw new BadRequestException(
-                    String.format("user with this email = %s already exists:", email)
-            );
+            throw new BadRequestException(String.format("user with this email = %s already exists:", email));
         }
-        String encodedPassword = passwordEncoder.encode(teacherRequest.getPassword());
-        teacherRequest.setPassword(encodedPassword);
-
-        Teacher teacher = teacherMapper.convert(teacherRequest);
-
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+        request.setPassword(encodedPassword);
+        Teacher teacher = teacherMapper.convert(request);
         Teacher teacher1 = teacherRepository.save(teacher);
-
         log.info("successful save  teacher:{}", teacher1);
         return teacherMapper.deConvert(teacher1);
-
     }
 
     @Override
-    public TeacherResponse updateTeacher(Long id, TeacherRequest teacherRequest) {
+    public TeacherResponse updateTeacher(Long id, TeacherRequest request) {
         boolean exists = teacherRepository.existsById(id);
         if (!exists) {
             log.error("not found teacher with id:{}", id);
             throw new NotFoundException(String.format("Not found teacher with id=%s", id));
         }
         Teacher teacher = findBy(id);
-        if (!teacher.getName().equals(teacherRequest.getTeacherName())) {
-            teacher.setName(teacherRequest.getTeacherName());
+        if (!teacher.getName().equals(request.getTeacherName())) {
+            teacher.setName(request.getTeacherName());
         }
-        if (!teacher.getLastName().equals(teacherRequest.getLastName())) {
-            teacher.setLastName(teacherRequest.getLastName());
+        if (!teacher.getLastName().equals(request.getLastName())) {
+            teacher.setLastName(request.getLastName());
         }
-        if (!teacher.getPhoneNumber().equals(teacherRequest.getPhoneNumber())) {
-            teacher.setPhoneNumber(teacherRequest.getPhoneNumber());
+        if (!teacher.getPhoneNumber().equals(request.getPhoneNumber())) {
+            teacher.setPhoneNumber(request.getPhoneNumber());
         }
-        if (!teacher.getSpecialization().equals(teacherRequest.getSpecialization())) {
-            teacher.setSpecialization(teacherRequest.getSpecialization());
+        if (!teacher.getSpecialization().equals(request.getSpecialization())) {
+            teacher.setSpecialization(request.getSpecialization());
         }
-        if (!teacher.getUser().getEmail().equals(teacherRequest.getEmail())) {
-            teacher.getUser().setEmail(teacherRequest.getEmail());
+        if (!teacher.getUser().getEmail().equals(request.getEmail())) {
+            teacher.getUser().setEmail(request.getEmail());
         }
-        if (!passwordEncoder.matches(teacherRequest.getPassword(), teacher.getUser().getPassword())) {
-            teacher.getUser().setPassword(passwordEncoder.encode(teacherRequest.getPassword()));
+        if (!passwordEncoder.matches(request.getPassword(), teacher.getUser().getPassword())) {
+            teacher.getUser().setPassword(passwordEncoder.encode(request.getPassword()));
         }
         log.info("successful update teacher by id:{}", id);
         return teacherMapper.deConvert(teacher);
-
     }
 
     @Override
@@ -103,21 +93,19 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teacher findBy(Long id) {
         log.info("successful find teacher by id :{}", id);
-        return teacherRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("teacher with id = %s does not exists", id)
-                ));
+        return teacherRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("teacher with id = %s does not exists", id)));
     }
 
     @Override
     public TeacherResponse deleteTeacher(Long id) {
         boolean exists = teacherRepository.existsById(id);
-
         if (!exists) {
             log.error("not found teacher with id:{}", id);
             throw new BadRequestException(String.format("teacher with id = %s does not exists", id));
         }
-        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("teacher not found %s with id", id)));
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("teacher not found %s with id", id)));
         log.info("successful delete teacher by id:{}", id);
         teacherRepository.deleteById(id);
         return teacherMapper.deConvert(teacher);
@@ -143,13 +131,11 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Deque<TeacherResponse> teacherResponsesForAssign(Long id) {
-        Deque<TeacherResponse> teacherResponses = new ArrayDeque<>();
         List<Teacher> all = teacherRepository.findAll();
-        Course course = courseRepository.findById(id).orElseThrow(() -> new NotFoundException("here have mistake id course not found!!! "));
+        Course course = courseRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("here have mistake id course not found!!! "));
         all.removeAll(course.getTeachers());
-        teacherResponses.addAll(teacherMapper.deConvert(all));
-        return teacherResponses;
+        return new ArrayDeque<>(teacherMapper.deConvert(all));
     }
-
 
 }

@@ -11,32 +11,27 @@ import java.util.List;
 
 import static javax.persistence.CascadeType.*;
 
-@Entity
-@Table(name = "groups")
 @Getter
 @Setter
+@Entity
+@Table(name = "groups")
 public class Group {
+
     @Id
-    @SequenceGenerator(
-            name = "groups_id_seq",
-            sequenceName = "groups_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "groups_id_seq"
-    )
+    @SequenceGenerator(name = "groups_id_gen", sequenceName = "groups_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groups_id_gen")
     private Long id;
+
     private String groupName;
     private String description;
     private String image;
     private LocalDate dateOfStart;
     private LocalDate dateOfFinish;
 
-    @OneToMany(mappedBy = "group", cascade = {DETACH,PERSIST,MERGE,REFRESH,REMOVE})
+    @OneToMany(mappedBy = "group", cascade = ALL)
     private List<Student> students = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, DETACH}, mappedBy = "groups")
+    @ManyToMany(cascade = {MERGE, REFRESH, DETACH}, mappedBy = "groups")
     private List<Course> courses = new ArrayList<>();
 
     @JsonIgnore
@@ -55,4 +50,5 @@ public class Group {
         }
         students.add(student);
     }
+
 }

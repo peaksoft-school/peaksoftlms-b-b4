@@ -1,15 +1,13 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.AnswerResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.ResultResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.result.TestResultResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
-
-import java.util.List;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AnswerRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.AnswerResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TestResultResponse;
 
 public interface ResultService {
+
     AnswerResponse saveResult(AnswerRequest answerRequest, String email);
 
     TestResultResponse getResults(Long id);
+
 }

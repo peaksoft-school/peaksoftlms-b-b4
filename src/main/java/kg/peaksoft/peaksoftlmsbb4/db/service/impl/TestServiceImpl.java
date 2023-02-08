@@ -1,9 +1,9 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
-import kg.peaksoft.peaksoftlmsbb4.db.dto.switcher.SwitcherRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestRequest;
-import kg.peaksoft.peaksoftlmsbb4.db.dto.test.TestResponse;
-import kg.peaksoft.peaksoftlmsbb4.db.mapper.test.TestMapper;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.SwitcherRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.TestRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TestResponse;
+import kg.peaksoft.peaksoftlmsbb4.db.mapper.TestMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Lesson;
 import kg.peaksoft.peaksoftlmsbb4.db.model.Test;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.LessonRepository;
@@ -18,28 +18,25 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
-@AllArgsConstructor
 @Slf4j
+@AllArgsConstructor
+@Service
 public class TestServiceImpl implements TestService {
+
     private final TestRepository testRepository;
     private final LessonRepository lessonRepository;
     private final TestMapper testMapper;
 
     @Override
-    public TestResponse saveTest(TestRequest testRequest) {
-        Lesson lesson = lessonRepository.findById(testRequest.getLessonsId()).orElseThrow(() -> new BadRequestException(
-                String.format("Course with id %s does not exists", testRequest.getLessonsId())
-        ));
+    public TestResponse saveTest(TestRequest request) {
+        Lesson lesson = lessonRepository.findById(request.getLessonsId()).orElseThrow(() ->
+                new BadRequestException(String.format("Course with id %s does not exists", request.getLessonsId())));
         if (lesson.getTest() == null) {
-            String name = testRequest.getTestName();
+            String name = request.getTestName();
             if (testRepository.existsByTestName((name))) {
-                throw new BadRequestException(
-                        String.format("There is such a = %s ", name)
-                );
+                throw new BadRequestException(String.format("There is such a = %s ", name));
             }
-
-            Test test = testMapper.convert(testRequest);
+            Test test = testMapper.convert(request);
             test.setLessons(lesson);
             lesson.setTest(test);
             log.info("successful test save :{}", test);
@@ -52,9 +49,8 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public TestResponse findById(Long id) {
-        Test test = testRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("not found this id=%s", id)
-        ));
+        Test test = testRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("not found this id=%s", id)));
         log.info("successful find by this id:{}", id);
         return testMapper.deConvert(test);
     }
@@ -65,7 +61,6 @@ public class TestServiceImpl implements TestService {
                 new NotFoundException(String.format("lesson with id = %s not found", id))).getTest());
     }
 
-
     @Override
     public List<TestResponse> findAll() {
         log.info("successful find all");
@@ -75,23 +70,19 @@ public class TestServiceImpl implements TestService {
 
     @Override
     @Transactional
-    public TestResponse update(Long id, TestRequest testRequest) {
+    public TestResponse update(Long id, TestRequest request) {
         boolean exists = testRepository.existsById(id);
         if (!exists) {
-            throw new NotFoundException(
-                    String.format("not found this id=%s", id)
-            );
+            throw new NotFoundException(String.format("not found this id=%s", id));
         }
-        Test test = testRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("not found this id=%s", id)
-        ));
+        Test test = testRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("not found this id=%s", id)));
         String currentTestName = test.getTestName();
-        String newTestName = testRequest.getTestName();
+        String newTestName = request.getTestName();
         if (!currentTestName.equals(newTestName)) {
             test.setTestName(newTestName);
         }
         log.info("successful test update :{}", test);
-
         return testMapper.deConvert(test);
     }
 
@@ -102,18 +93,18 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public boolean switcher(Long id, SwitcherRequest switcherRequest) {
-        Test test = testRepository.findById(id).orElseThrow(()-> new NotFoundException("test not found"));
-        if (switcherRequest.isEnabled()){
-            test.setIsEnabled(switcherRequest.isEnabled());
+    public boolean switcher(Long id, SwitcherRequest request) {
+        Test test = testRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("test not found"));
+        if (request.isEnabled()) {
+            test.setIsEnabled(request.isEnabled());
             testRepository.save(test);
             return true;
-        }else {
-            test.setIsEnabled(switcherRequest.isEnabled());
+        } else {
+            test.setIsEnabled(request.isEnabled());
             testRepository.save(test);
             return false;
         }
-
     }
 
 }

@@ -7,5 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ResultsRepository extends JpaRepository<Results, Long> {
+
     List<Results> findAllByTest(Test test);
+
 }

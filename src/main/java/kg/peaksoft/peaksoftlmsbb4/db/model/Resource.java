@@ -11,27 +11,24 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor
+@Table(name = "resources")
 public class Resource {
 
     @Id
-    @SequenceGenerator(
-            name = "resource_id_seq",
-            sequenceName = "resource_id_seq",
-            allocationSize = 1)
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "resource_id_seq"
-    )
+    @SequenceGenerator(name = "resource_id_gen", sequenceName = "resource_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resource_id_gen")
     private Long id;
+
     private String name;
     private ResourceType resourceType;
 
     @Column(length = 10000000)
     private String value;
 
-    public Resource(ResourceType resourceType, String value,String name) {
+    public Resource(ResourceType resourceType, String value, String name) {
         this.resourceType = resourceType;
         this.value = value;
         this.name = name;
     }
+
 }

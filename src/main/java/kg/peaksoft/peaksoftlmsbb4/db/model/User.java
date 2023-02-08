@@ -10,26 +10,20 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
-
-@Entity
-@Table(name = "users")
 @Getter
 @Setter
+@Entity
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
-    @SequenceGenerator(
-            name = "users_id_seq",
-            sequenceName = "users_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "users_id_seq"
-    )
+    @SequenceGenerator(name = "users_id_gen", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_gen")
     private Long id;
+
     @Column(unique = true)
     private String email;
+
     private String password;
     private boolean isAccountNonExpired = true;
     private boolean isAccountNonLocked = true;
@@ -38,7 +32,6 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
