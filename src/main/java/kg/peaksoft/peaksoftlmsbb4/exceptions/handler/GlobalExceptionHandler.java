@@ -3,7 +3,7 @@ package kg.peaksoft.peaksoftlmsbb4.exceptions.handler;
 import com.amazonaws.services.kms.model.AlreadyExistsException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
-import kg.peaksoft.peaksoftlmsbb4.exceptions.model.ExceptionResponse;
+import kg.peaksoft.peaksoftlmsbb4.exceptions.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
