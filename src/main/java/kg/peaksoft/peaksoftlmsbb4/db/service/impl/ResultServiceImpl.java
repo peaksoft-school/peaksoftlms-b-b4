@@ -11,16 +11,17 @@ import kg.peaksoft.peaksoftlmsbb4.db.service.ResultService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service
 @AllArgsConstructor
+@Service
 public class ResultServiceImpl implements ResultService {
+
     private final ResultMapper resultMapper;
     private final ResultsRepository resultsRepository;
     private final TestRepository testRepository;
 
     @Override
-    public AnswerResponse saveResult(AnswerRequest answerRequest, String email) {
-        return resultMapper.deConvert(resultsRepository.save(resultMapper.convert(answerRequest, email)));
+    public AnswerResponse saveResult(AnswerRequest request, String email) {
+        return resultMapper.deConvert(resultsRepository.save(resultMapper.convert(request, email)));
     }
 
     @Override
@@ -28,6 +29,5 @@ public class ResultServiceImpl implements ResultService {
         Test test = testRepository.findById(id).orElseThrow();
         return resultMapper.deConvertToResultResponse(test);
     }
-
 
 }
