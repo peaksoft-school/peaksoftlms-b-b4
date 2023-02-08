@@ -1,11 +1,11 @@
 package kg.peaksoft.peaksoftlmsbb4.db.service.impl;
 
 import com.amazonaws.services.kms.model.AlreadyExistsException;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.CoursePaginationResponse;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.CourseRequest;
+import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.CoursePaginationResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.CourseResponse;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.StudentResponse;
-import kg.peaksoft.peaksoftlmsbb4.controller.payload.request.AssignTeacherRequest;
 import kg.peaksoft.peaksoftlmsbb4.controller.payload.response.TeacherResponse;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.CourseMapper;
 import kg.peaksoft.peaksoftlmsbb4.db.mapper.StudentMapper;
@@ -16,7 +16,6 @@ import kg.peaksoft.peaksoftlmsbb4.db.model.Teacher;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.CourseRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.repository.TeacherRepository;
 import kg.peaksoft.peaksoftlmsbb4.db.service.CourseService;
-import kg.peaksoft.peaksoftlmsbb4.db.service.TeacherService;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.BadRequestException;
 import kg.peaksoft.peaksoftlmsbb4.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -30,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@AllArgsConstructor
 @Slf4j
 @Transactional
+@AllArgsConstructor
+@Service
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
@@ -111,7 +110,8 @@ public class CourseServiceImpl implements CourseService {
         if (!courseRepository.getById(id).getImage().equals("")) {
             awss3Service.deleteFile(courseRepository.getById(id).getImage());
         }
-        Course course = courseRepository.findById(id).orElseThrow(() -> new NotFoundException("course with id %s does not found"));
+        Course course = courseRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("course with id %s does not found"));
         courseRepository.deleteById(id);
         log.info("successful delete by this id:{}", id);
         return courseMapper.deConvert(course);
@@ -141,15 +141,14 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public String assignTeachersToCourse(AssignTeacherRequest assignTeacherRequest) {
-        Course course = courseRepository.findById(assignTeacherRequest.getCourseId())
-                .orElseThrow(() -> new NotFoundException("Course not found by this id"));
+        Course course = courseRepository.findById(assignTeacherRequest.getCourseId()).orElseThrow(() ->
+                new NotFoundException("Course not found by this id"));
         for (Long id : assignTeacherRequest.getTeacherId()) {
             Teacher instructor = teacherRepository.findById(id).orElseThrow(() ->
                     new NotFoundException("Instructor not found by this id"));
             for (Teacher instructorEntity : course.getTeachers()) {
                 if (instructor.getId().equals(instructorEntity.getId())) {
-                    throw new AlreadyExistsException(
-                            "Instructors with id  already assigned to course");
+                    throw new AlreadyExistsException("Instructors with id  already assigned to course");
                 }
             }
             course.addTeacher(instructor);
@@ -159,8 +158,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private Course getById(Long id) {
-        return courseRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("Course with id=%s does not exists", id)
-        ));
+        return courseRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("Course with id=%s does not exists", id)));
     }
+
 }
